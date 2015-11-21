@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.service.rest;
 
 import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.IloginListener;
+import com.triangleleft.flashcards.service.ICommonListener;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.LoginError;
 import com.triangleleft.flashcards.service.error.LoginFieldError;
@@ -18,7 +18,7 @@ import retrofit.Retrofit;
 public class RestLoginModule implements ILoginModule {
     private final IDuolingoRest service;
     private boolean logged;
-    private IloginListener listener;
+    private ICommonListener listener;
 
     @Inject
     public RestLoginModule(IDuolingoRest service) {
@@ -70,12 +70,12 @@ public class RestLoginModule implements ILoginModule {
     }
 
     @Override
-    public void registerListener(IloginListener listener) {
+    public void registerListener(ICommonListener listener) {
         this.listener = listener;
     }
 
     @Override
-    public void unregisterListener(IloginListener listener) {
+    public void unregisterListener(ICommonListener listener) {
         if (this.listener == listener) {
             this.listener = null;
         }

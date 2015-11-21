@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards;
 
+import com.triangleleft.flashcards.service.IVocabularWord;
 import com.triangleleft.flashcards.vocab.VocabularListFragment;
-import com.triangleleft.flashcards.vocab.VocabularWord;
 import com.triangleleft.flashcards.vocab.VocabularWordFragment;
 
 import android.animation.ValueAnimator;
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void onWordSelected(View itemView, VocabularWord word) {
+    public void onWordSelected(View itemView, IVocabularWord word) {
         toggle.setDrawerIndicatorEnabled(false);
         playDrawerToggleAnim(arrowDrawable);
 
@@ -154,12 +154,9 @@ public class MainActivity extends AppCompatActivity
         ValueAnimator offsetAnimator = ValueAnimator.ofFloat(start, end);
         offsetAnimator.setDuration(300);
         offsetAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        offsetAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float offset = (Float) animation.getAnimatedValue();
-                d.setProgress(offset);
-            }
+        offsetAnimator.addUpdateListener(animation -> {
+            float offset = (Float) animation.getAnimatedValue();
+            d.setProgress(offset);
         });
         offsetAnimator.start();
     }

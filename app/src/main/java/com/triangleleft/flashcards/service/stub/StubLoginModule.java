@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.service.stub;
 
 import com.triangleleft.flashcards.Injector;
 import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.IloginListener;
+import com.triangleleft.flashcards.service.ICommonListener;
 import com.triangleleft.flashcards.service.error.LoginFieldError;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 
@@ -23,7 +23,7 @@ public class StubLoginModule implements ILoginModule {
         isLogged = preferences.getBoolean(KEY_LOGGED, false);
     }
 
-    private IloginListener listener;
+    private ICommonListener listener;
     private boolean isLogged;
 
     @Override
@@ -53,12 +53,12 @@ public class StubLoginModule implements ILoginModule {
     }
 
     @Override
-    public void registerListener(IloginListener listener) {
+    public void registerListener(ICommonListener listener) {
         this.listener = listener;
     }
 
     @Override
-    public void unregisterListener(IloginListener listener) {
+    public void unregisterListener(ICommonListener listener) {
         if (this.listener == listener) {
             this.listener = null;
         }

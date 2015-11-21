@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.vocab;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.IVocabularWord;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,18 +20,15 @@ public class VocabularViewHolder extends RecyclerView.ViewHolder {
                                final OnItemClickListener<VocabularViewHolder> itemClickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (itemClickListener != null) {
-                    itemClickListener.onItemClick(VocabularViewHolder.this, getAdapterPosition());
-                }
+        itemView.setOnClickListener(view -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(VocabularViewHolder.this, getAdapterPosition());
             }
         });
 
     }
 
-    public void show(VocabularWord word) {
-        textView.setText(word.word);
+    public void show(IVocabularWord word) {
+        textView.setText(word.getWord());
     }
 }

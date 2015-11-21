@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.vocab;
 
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.IVocabularWord;
 
 import android.animation.FloatEvaluator;
 import android.animation.IntEvaluator;
@@ -41,7 +42,7 @@ public class VocabularWordFragment extends Fragment implements MainActivity.IBac
         ButterKnife.bind(this, view);
 
         Bundle arguments = getArguments();
-        VocabularWord word = arguments.getParcelable(ARGUMENT_WORD);
+        IVocabularWord word = arguments.getParcelable(ARGUMENT_WORD);
         int[] position = arguments.getIntArray(KEY_LOCATION);
         final float top = arguments.getInt(KEY_TOP);
         final int startHeight = arguments.getInt(KEY_START_HEIGHT);
@@ -80,7 +81,7 @@ public class VocabularWordFragment extends Fragment implements MainActivity.IBac
         return view;
     }
 
-    private void show(VocabularWord word) {
+    private void show(IVocabularWord word) {
         // wordView.setText(word.word);
     }
 

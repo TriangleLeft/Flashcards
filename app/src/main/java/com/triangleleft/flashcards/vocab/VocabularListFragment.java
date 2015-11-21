@@ -2,9 +2,9 @@ package com.triangleleft.flashcards.vocab;
 
 import com.triangleleft.flashcards.Injector;
 import com.triangleleft.flashcards.MainActivity;
-import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.IVocabularModule;
+import com.triangleleft.flashcards.service.IVocabularWord;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,10 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class VocabularListFragment extends Fragment {
 
@@ -26,6 +30,8 @@ public class VocabularListFragment extends Fragment {
     IVocabularModule vocabularModule;
     @Bind(R.id.vocab_list)
     RecyclerView vocabList;
+    private Observable<List<IVocabularWord>>
+            listObservable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,25 +41,20 @@ public class VocabularListFragment extends Fragment {
         Injector.INSTANCE.getComponent().inject(this);
 
 
+        listObservable = vocabularModule.loadWords();
+        listObservable.subscribeOn(AndroidSchedulers.mainThread()).subscribe().
         final VocabularAdapter adapter = new VocabularAdapter();
-        adapter.setData(vocabularModule.getWords());
-        adapter.setItemClickListener(new OnItemClickListener<VocabularViewHolder>() {
-
-            @Override
-            public void onItemClick(final VocabularViewHolder viewHolder, int position) {
-                VocabularWord word = adapter.getItem(position);
-                MainActivity activity = (MainActivity) getActivity();
-                if (activity != null) {
-                    activity.onWordSelected(viewHolder.itemView, word);
-                }
-
+        adapter.setItemClickListener((viewHolder, position) -> {
+            IVocabularWord word = adapter.getItem(position);
+            MainActivity activity = (MainActivity) getActivity();
+            if (activity != null) {
+                activity.onWordSelected(viewHolder.itemView, word);
             }
+
         });
         vocabList.setAdapter(adapter);
         vocabList.setLayoutManager(
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-//        vocabList.addItemDecoration(
-//                new HorizontalDividerItemDecoration.Builder(getContext()).build());
 
         return view;
     }

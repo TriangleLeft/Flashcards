@@ -2,7 +2,7 @@ package com.triangleleft.flashcards;
 
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.IloginListener;
+import com.triangleleft.flashcards.service.ICommonListener;
 import com.triangleleft.flashcards.service.error.CommonError;
 
 import android.content.Intent;
@@ -35,7 +35,7 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
 
-    IloginListener loginListener = new IloginListener() {
+    ICommonListener loginListener = new ICommonListener() {
         @Override
         public void onSuccess() {
             advanceToMainScreen();

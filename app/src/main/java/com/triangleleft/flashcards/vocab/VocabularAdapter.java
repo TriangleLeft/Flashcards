@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.vocab;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.IVocabularWord;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +13,10 @@ import java.util.List;
 
 public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> {
 
-    private List<VocabularWord> list;
+    private List<IVocabularWord> list;
     private OnItemClickListener<VocabularViewHolder> itemClickListener;
 
-    public void setData(List<VocabularWord> list) {
+    public void setData(List<IVocabularWord> list) {
         this.list = list;
     }
     
@@ -28,10 +29,10 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
 
     @Override
     public void onBindViewHolder(VocabularViewHolder holder, int position) {
-        VocabularWord word = getItem(position);
+        IVocabularWord word = getItem(position);
         holder.show(word);
     }
-    public VocabularWord getItem(int position) {
+    public IVocabularWord getItem(int position) {
         return list.get(position);
     }
 
