@@ -20,6 +20,7 @@ public class CacheContainer<T> {
         this.expireDuration = TimeUnit.MILLISECONDS.convert(expireDuration, timeUnit);
     }
 
+
     public void put(@Nullable T data) {
         this.data = data;
         this.putTime = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());

@@ -1,13 +1,19 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.login;
 
 import com.triangleleft.assertdialog.AssertDialog;
-import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.BaseActivity;
+import com.triangleleft.flashcards.Injector;
+import com.triangleleft.flashcards.MainActivity;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.service.ICommonListener;
 import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.login.view.ILoginView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +28,13 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements ILoginView {
 
     private static final String KEY_STATE = "key_state";
     private static final String TAG = LoginActivity.class.getSimpleName();
+
     @Inject
-    ILoginModule loginModule;
+    ILoginPresenter presenter;
     @Bind(R.id.login)
     TextView loginView;
     @Bind(R.id.password)
@@ -53,16 +60,13 @@ public class LoginActivity extends BaseActivity {
                 .show();
     }
 
-    ;
-    private LoginState state;
-
-    private void setState(@NonNull LoginState state) {
-        this.state = state;
+    @Override
+    public void setState(@NonNull LoginViewState state) {
         switch (state) {
-            case INPUT:
+            case ENTER_CREDENTIAL:
                 flipperView.setDisplayedChild(1);
                 break;
-            case CHECK:
+            case PROGRESS:
                 flipperView.setDisplayedChild(0);
                 break;
             default:
@@ -78,24 +82,13 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         Injector.INSTANCE.getComponent().inject(this);
 
-
-        if (loginModule.isLogged()) {
-            // If we are logged, open main screen
-            advanceToMainScreen();
-        } else {
-            // Check saved state
-            if (savedInstanceState != null && savedInstanceState.getString(KEY_STATE) != null) {
-                setState(LoginState.valueOf(savedInstanceState.getString(KEY_STATE)));
-            } else {
-                setState(LoginState.INPUT);
-            }
-        }
+        presenter.onBind(this);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(KEY_STATE, state.name());
+        presenter.onSaveInstanceState(outState);
     }
 
     private void advanceToMainScreen() {
@@ -108,28 +101,33 @@ public class LoginActivity extends BaseActivity {
     protected void onResume() {
         Log.d(TAG, "onResume()");
         super.onResume();
-        loginModule.registerListener(loginListener);
+        presenter.onResume();
     }
 
     @Override
     protected void onPause() {
         Log.d(TAG, "onPause()");
         super.onPause();
-        loginModule.unregisterListener(loginListener);
+        presenter.onPause();
+    }
+
+    @Override
+    public void setLoginError(@Nullable String error) {
+
+    }
+
+    @Override
+    public void setPasswordError(@Nullable String error) {
+
     }
 
     @OnClick(R.id.login_button)
-    public void onLoginClick() {
-        setState(LoginState.CHECK);
+    protected void onLoginClick() {
         String login = loginView.getText().toString();
         String password = passwordView.getText().toString();
-        loginModule.login(login, password);
+        presenter.onLoginClick(login, password);
     }
 
-    private enum LoginState {
-        INPUT,
-        CHECK
-    }
 
 }
 

@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards;
 
+import com.triangleleft.flashcards.login.LoginActivity;
 import com.triangleleft.flashcards.service.IFlashcardsService;
 import com.triangleleft.flashcards.service.stub.StubLoginModule;
 import com.triangleleft.flashcards.vocab.VocabularListFragment;
