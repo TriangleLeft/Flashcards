@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import com.triangleleft.flashcards.service.IVocabularWord;
 
+import android.os.Parcel;
+
 import java.util.List;
 
 public class VocabularResponseModel {
@@ -33,6 +35,16 @@ public class VocabularResponseModel {
         @Override
         public int getStrength() {
             return strengthBars;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+
         }
     }
 

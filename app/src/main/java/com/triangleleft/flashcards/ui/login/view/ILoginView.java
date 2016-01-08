@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.login.view;
+package com.triangleleft.flashcards.ui.login.view;
 
 import com.triangleleft.flashcards.view.IView;
 
@@ -28,6 +28,11 @@ public interface ILoginView extends IView {
      * @param state new state
      */
     void setState(@NonNull LoginViewState state);
+
+    /**
+     * Advance to next screen.
+     */
+    void advance();
 
     /**
      * Current view state.

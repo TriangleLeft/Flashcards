@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -22,9 +23,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    lintOptions {
+        abortOnError false // ignoring some references from dagger-compiler
+    }
 }
 
-apply plugin: 'com.neenbedankt.android-apt'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -40,6 +43,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:+'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
     compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+    compile 'javax.inject:javax.inject:1'
+    compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'io.reactivex:rxandroid:1.0.1'
     apt 'com.google.dagger:dagger-compiler:2.0'
     compile 'com.google.dagger:dagger:2.0'

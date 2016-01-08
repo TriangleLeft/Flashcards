@@ -1,14 +1,14 @@
-package com.triangleleft.flashcards.login;
+package com.triangleleft.flashcards.ui.login;
 
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.BaseActivity;
-import com.triangleleft.flashcards.Injector;
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.service.ICommonListener;
-import com.triangleleft.flashcards.service.error.CommonError;
-import com.triangleleft.flashcards.login.view.ILoginView;
+import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.dagger.LoginActivityComponent;
+import com.triangleleft.flashcards.dagger.LoginActivityModule;
+import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
+import com.triangleleft.flashcards.ui.login.view.ILoginView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +16,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import javax.inject.Inject;
@@ -30,7 +29,6 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity implements ILoginView {
 
-    private static final String KEY_STATE = "key_state";
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Inject
@@ -41,27 +39,11 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     TextView passwordView;
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
-
-    ICommonListener loginListener = new ICommonListener() {
-        @Override
-        public void onSuccess() {
-            advanceToMainScreen();
-        }
-
-        @Override
-        public void onError(@NonNull CommonError error) {
-            setState(LoginState.INPUT);
-            handleError(error);
-        }
-    };
-
-    private void handleError(@NonNull CommonError error) {
-        Toast.makeText(LoginActivity.this, "Failed: " + error.getMessage(), Toast.LENGTH_SHORT)
-                .show();
-    }
+    private LoginActivityComponent component;
 
     @Override
     public void setState(@NonNull LoginViewState state) {
+        Log.d(TAG, "setState() called with: " + "state = [" + state + "]");
         switch (state) {
             case ENTER_CREDENTIAL:
                 flipperView.setDisplayedChild(1);
@@ -77,24 +59,23 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        Injector.INSTANCE.getComponent().inject(this);
+        component = DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent())
+                .loginActivityModule(new LoginActivityModule()).build();
+        component.inject(this);
+
 
         presenter.onBind(this);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
         super.onSaveInstanceState(outState);
         presenter.onSaveInstanceState(outState);
-    }
-
-    private void advanceToMainScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override
@@ -113,21 +94,30 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void setLoginError(@Nullable String error) {
-
+        Log.d(TAG, "setLoginError() called with: " + "error = [" + error + "]");
+        loginView.setError(error);
     }
 
     @Override
     public void setPasswordError(@Nullable String error) {
-
+        Log.d(TAG, "setPasswordError() called with: " + "error = [" + error + "]");
+        passwordView.setError(error);
     }
 
     @OnClick(R.id.login_button)
     protected void onLoginClick() {
+        Log.d(TAG, "onLoginClick()");
         String login = loginView.getText().toString();
         String password = passwordView.getText().toString();
         presenter.onLoginClick(login, password);
     }
 
-
+    @Override
+    public void advance() {
+        Log.d(TAG, "advance()");
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
 

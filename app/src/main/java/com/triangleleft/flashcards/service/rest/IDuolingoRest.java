@@ -4,6 +4,7 @@ import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.rest.model.VocabularResponseModel;
 
 import retrofit.Call;
+import retrofit.Response;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -20,6 +21,6 @@ public interface IDuolingoRest {
     Call<LoginResponseModel> login(@Field("login") String login, @Field("password") String password);
 
     @GET("/vocabulary/overview")
-    Observable<VocabularResponseModel> getVocabularList(@Query("_") long timestamp);
+    Observable<Response<VocabularResponseModel>> getVocabularList(@Query("_") long timestamp);
 
 }

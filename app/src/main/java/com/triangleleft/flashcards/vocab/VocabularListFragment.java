@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.vocab;
 
-import com.triangleleft.flashcards.Injector;
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.IVocabularModule;
@@ -14,14 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 public class VocabularListFragment extends Fragment {
 
@@ -30,19 +25,14 @@ public class VocabularListFragment extends Fragment {
     IVocabularModule vocabularModule;
     @Bind(R.id.vocab_list)
     RecyclerView vocabList;
-    private Observable<List<IVocabularWord>>
-            listObservable;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_vocabular_list, container, false);
         ButterKnife.bind(this, view);
-        Injector.INSTANCE.getComponent().inject(this);
 
 
-        listObservable = vocabularModule.loadWords();
-        listObservable.subscribeOn(AndroidSchedulers.mainThread()).subscribe().
         final VocabularAdapter adapter = new VocabularAdapter();
         adapter.setItemClickListener((viewHolder, position) -> {
             IVocabularWord word = adapter.getItem(position);
