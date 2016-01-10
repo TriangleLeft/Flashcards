@@ -20,9 +20,13 @@ public class FlashcardsApplication extends Application {
         super.onCreate();
         debugInstace = this;
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
-        component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this))
-                .netModule(new NetModule()).build();
+        component = buildComponent();
+    }
 
+    @NonNull
+    protected ApplicationComponent buildComponent() {
+        return DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this))
+                .netModule(new NetModule()).build();
     }
 
     @NonNull

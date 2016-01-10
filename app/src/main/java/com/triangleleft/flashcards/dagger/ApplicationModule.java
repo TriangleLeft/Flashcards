@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.dagger;
 
 import com.triangleleft.flashcards.FlashcardsApplication;
-import com.triangleleft.flashcards.dagger.scope.ApplcationScope;
+import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.IFlashcardsService;
 import com.triangleleft.flashcards.service.ILoginModule;
 import com.triangleleft.flashcards.service.IVocabularModule;
@@ -24,31 +24,31 @@ public class ApplicationModule {
         this.application = application;
     }
 
-    @ApplcationScope
+    @ApplicationScope
     @Provides
     public FlashcardsApplication application() {
         return application;
     }
 
-    @ApplcationScope
+    @ApplicationScope
     @Provides
     public IFlashcardsService service() {
         return new StubFlashcardsService();
     }
 
-    @ApplcationScope
+    @ApplicationScope
     @Provides
     public IVocabularModule vocabularModule() {
         return new StubVocabularModule();
     }
 
-    @ApplcationScope
+    @ApplicationScope
     @Provides
     public ILoginModule loginModule(IDuolingoRest duolingoRest) {
         return new RestLoginModule(duolingoRest);
     }
 
-    @ApplcationScope
+    @ApplicationScope
     @Provides
     public SharedPreferences preferences() {
         return application.getSharedPreferences(ApplicationModule.class.getSimpleName(),
