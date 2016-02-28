@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.ICommonListener;
+import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.IVocabularModule;
 import com.triangleleft.flashcards.service.IVocabularWord;
 
@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 public class RestVocabularModule implements IVocabularModule {
     private final IDuolingoRest service;
-    private ICommonListener listener;
+    private IListener listener;
 
     @Inject
     public RestVocabularModule(IDuolingoRest service) {
@@ -29,12 +29,12 @@ public class RestVocabularModule implements IVocabularModule {
     }
 
     @Override
-    public void registerListener(ICommonListener listener) {
+    public void registerListener(IListener listener) {
 
     }
 
     @Override
-    public void unregisterListener(ICommonListener listener) {
+    public void unregisterListener(IListener listener) {
 
     }
 }

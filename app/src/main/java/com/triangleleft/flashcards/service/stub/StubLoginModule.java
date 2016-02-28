@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.stub;
 
-import com.triangleleft.flashcards.service.ICommonListener;
+import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.ILoginModule;
 import com.triangleleft.flashcards.service.error.LoginError;
 
@@ -17,7 +17,7 @@ public class StubLoginModule implements ILoginModule {
     private static final String TAG = StubLoginModule.class.getSimpleName();
 
     private final SharedPreferences preferences;
-    private ICommonListener listener;
+    private IListener listener;
     private boolean isLogged;
 
     @Inject
@@ -52,13 +52,13 @@ public class StubLoginModule implements ILoginModule {
     }
 
     @Override
-    public void registerListener(@NonNull ICommonListener listener) {
+    public void registerListener(@NonNull IListener listener) {
         Log.d(TAG, "registerListener() called with: " + "listener = [" + listener + "]");
         this.listener = listener;
     }
 
     @Override
-    public void unregisterListener(@NonNull ICommonListener listener) {
+    public void unregisterListener(@NonNull IListener listener) {
         Log.d(TAG, "unregisterListener() called with: " + "listener = [" + listener + "]");
         if (this.listener == listener) {
             this.listener = null;

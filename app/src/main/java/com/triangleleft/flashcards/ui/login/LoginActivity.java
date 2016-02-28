@@ -79,6 +79,13 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     }
 
     @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        Log.d(TAG, "onRestoreInstanceState() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+        super.onRestoreInstanceState(savedInstanceState);
+        presenter.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
     protected void onResume() {
         Log.d(TAG, "onResume()");
         super.onResume();

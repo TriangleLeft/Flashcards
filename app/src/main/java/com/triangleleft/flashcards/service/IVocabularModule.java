@@ -5,7 +5,7 @@ import java.util.List;
 public interface IVocabularModule {
     List<IVocabularWord> getData();
     void loadData();
-    void registerListener(ICommonListener listener);
-    void unregisterListener(ICommonListener listener);
+    void registerListener(IListener listener);
+    void unregisterListener(IListener listener);
 
 }

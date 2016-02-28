@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.stub;
 
-import com.triangleleft.flashcards.service.ICommonListener;
+import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.IVocabularModule;
 import com.triangleleft.flashcards.service.IVocabularWord;
 
@@ -13,12 +13,12 @@ import java.util.Random;
  *
  * Calling {@link IVocabularModule#getData()} would always returns stub data.
  * Calling {@link IVocabularModule#loadData()} would immediately trigger {@link
- * ICommonListener#onSuccess()} if there is any listener.
+ * IListener#onSuccess()} if there is any listener.
  */
 public class StubVocabularModule implements IVocabularModule {
 
     private final ArrayList<IVocabularWord> list;
-    private ICommonListener listener;
+    private IListener listener;
 
     public StubVocabularModule() {
         this.list = new ArrayList<>();
@@ -44,12 +44,12 @@ public class StubVocabularModule implements IVocabularModule {
     }
 
     @Override
-    public void registerListener(ICommonListener listener) {
+    public void registerListener(IListener listener) {
         this.listener = listener;
     }
 
     @Override
-    public void unregisterListener(ICommonListener listener) {
+    public void unregisterListener(IListener listener) {
         if (this.listener == listener) {
             this.listener = null;
         }

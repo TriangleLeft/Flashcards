@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.dagger.MockApplicationComponent;
-import com.triangleleft.flashcards.service.ICommonListener;
+import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.ILoginModule;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
@@ -52,11 +52,11 @@ public class LoginActivityTestCase extends Assert {
     public void testStuff() throws InterruptedException {
         final CountDownLatch latch = new CountDownLatch(1);
 
-        final ICommonListener[] listener = new ICommonListener[1];
+        final IListener[] listener = new IListener[1];
         Mockito.doAnswer(answer -> {
-            listener[0] = (ICommonListener) answer.getArguments()[0];
+            listener[0] = (IListener) answer.getArguments()[0];
             return null;
-        }).when(loginModule).registerListener(Mockito.any(ICommonListener.class));
+        }).when(loginModule).registerListener(Mockito.any(IListener.class));
         Mockito.doAnswer(answer -> {
             listener[0].onError(new CommonError("Fuuu"));
             return null;

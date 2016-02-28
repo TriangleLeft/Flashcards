@@ -2,8 +2,12 @@ package com.triangleleft.flashcards.ui.login;
 
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.FlashcardsApplication;
-import com.triangleleft.flashcards.service.ICommonListener;
+import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.service.ILoginRequest;
+import com.triangleleft.flashcards.service.ILoginResult;
+import com.triangleleft.flashcards.service.IProvider;
+import com.triangleleft.flashcards.service.SimpleLoginRequest;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
@@ -21,11 +25,12 @@ public class ILoginPresenterImpl implements ILoginPresenter {
     private static final String KEY_STATE = TAG + "key_state";
 
     private ILoginView.LoginViewState currentState = ILoginView.LoginViewState.ENTER_CREDENTIAL;
-    private final ILoginModule loginModule;
+    private final IProvider<ILoginRequest, ILoginResult> loginModule;
     private ILoginView view;
     private CommonError error;
+    private ILoginRequest loginRequest;
 
-    private ICommonListener loginListener = new ICommonListener() {
+    private IListener loginListener = new IListener() {
         @Override
         public void onSuccess() {
             Log.d(TAG, "onSuccess() called");
@@ -49,7 +54,8 @@ public class ILoginPresenterImpl implements ILoginPresenter {
     public void onLoginClick(@NonNull String login, @NonNull String password) {
         Log.d(TAG, "onLoginClick() called with: " + "login = [" + login + "], password = [" + password + "]");
         setCurrentState(ILoginView.LoginViewState.PROGRESS);
-        loginModule.login(login, password);
+        loginRequest = new SimpleLoginRequest(login, password);
+        loginModule.doRequest(loginRequest, loginListener);
     }
 
     @Override
@@ -62,17 +68,17 @@ public class ILoginPresenterImpl implements ILoginPresenter {
     @Override
     public void onPause() {
         Log.d(TAG, "onPause()");
-        loginModule.unregisterListener(loginListener);
+        if (loginRequest != null) {
+            loginModule.unregisterListener(loginRequest, loginListener);
+        }
     }
 
     @Override
     public void onResume() {
         Log.d(TAG, "onResume()");
-        loginModule.registerListener(loginListener);
-        if (loginModule.isLogged()) {
-            advance();
+        if (loginRequest != null) {
+            loginModule.registerListener(loginRequest, loginListener);
         }
-        // Else, we have to wait for listener
     }
 
     @Override
@@ -87,17 +93,22 @@ public class ILoginPresenterImpl implements ILoginPresenter {
         if (inState != null) {
             AssertDialog.assertNotNull(inState.getString(KEY_STATE), "Got null value for state");
             ILoginView.LoginViewState state = ILoginView.LoginViewState.valueOf(inState.getString(KEY_STATE));
-            switch (state) {
-                case ENTER_CREDENTIAL:
-                    // Restore error messages, if any
-                    break;
-                case PROGRESS:
-                    // No need to change view here
-                    break;
-                default:
-                    AssertDialog.fail("Unknown state: " + state);
-            }
-            setCurrentState(state);
+            restoreState(state);
+        }
+    }
+
+    private void restoreState(ILoginView.LoginViewState state) {
+        setCurrentState(state);
+        switch (state) {
+            case ENTER_CREDENTIAL:
+                // Restore error messages, if any
+                break;
+            case PROGRESS:
+                // We were waiting for request to complete
+                // Do nothing, listener is guaranteed to be called
+                break;
+            default:
+                AssertDialog.fail("Unknown state: " + state);
         }
     }
 
