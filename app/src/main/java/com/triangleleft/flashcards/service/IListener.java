@@ -1,10 +1,7 @@
 package com.triangleleft.flashcards.service;
 
-import com.triangleleft.flashcards.service.error.CommonError;
-
 import android.support.annotation.NonNull;
 
-public interface IListener {
-    void onSuccess();
-    void onError(@NonNull CommonError error);
+public interface IListener<Result extends IProviderResult<?>> {
+    void onResult(@NonNull Result result);
 }

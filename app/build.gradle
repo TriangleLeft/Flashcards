@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "com.triangleleft.flashcards.MockTestRunner"
+        //testInstrumentationRunner "com.triangleleft.flashcards.MockTestRunner"
     }
     buildTypes {
         release {
@@ -41,16 +41,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.triangleleft.assertdialog:assert-dialog:0.8.5'
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:recyclerview-v7:23.0.1'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
-    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'javax.inject:javax.inject:1'
     compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.arcao:slf4j-timber:2.1'
 
     compile "com.google.dagger:dagger:${DAGGER_VERSION}"
     apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
@@ -64,6 +66,14 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+
+    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.android.support:support-annotations:23.0.1'
+    testCompile 'com.android.support.test:runner:0.4.1'
+    testCompile 'com.android.support.test:rules:0.4.1'
+    testCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
 
     androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 

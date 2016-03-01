@@ -1,11 +1,11 @@
 package com.triangleleft.flashcards.dagger;
 
-import com.squareup.okhttp.HttpUrl;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.rest.IDuolingoRest;
 
 import dagger.Subcomponent;
-import retrofit.Retrofit;
+import okhttp3.HttpUrl;
+import retrofit2.Retrofit;
 
 @ApplicationScope
 @Subcomponent(modules = {NetModule.class})

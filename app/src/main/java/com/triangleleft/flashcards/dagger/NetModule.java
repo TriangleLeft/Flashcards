@@ -1,13 +1,13 @@
 package com.triangleleft.flashcards.dagger;
 
-import com.squareup.okhttp.HttpUrl;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.rest.IDuolingoRest;
 
 import dagger.Module;
 import dagger.Provides;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
+import okhttp3.HttpUrl;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetModule {

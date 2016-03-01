@@ -1,70 +1,74 @@
 package com.triangleleft.flashcards.service.rest;
 
 import com.triangleleft.flashcards.service.AbstractProvider;
-import com.triangleleft.flashcards.service.SimpleLoginRequest;
+import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.service.ILoginRequest;
+import com.triangleleft.flashcards.service.ILoginResult;
+import com.triangleleft.flashcards.service.LoginStatus;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 
-import android.support.annotation.NonNull;
-import android.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class RestLoginModule extends AbstractProvider<SimpleLoginRequest, RestLoginResult> {
-    private static final String TAG = RestLoginModule.class.getSimpleName();
+public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResult> implements ILoginModule {
+
+
+    private static final Logger log = LoggerFactory.getLogger(RestLoginModule.class);
+
     private final IDuolingoRest service;
-    private Set<SimpleLoginRequest> requests = Collections.newSetFromMap(new ConcurrentHashMap<>());
-
 
     @Inject
     public RestLoginModule(IDuolingoRest service) {
         this.service = service;
     }
 
-    @NonNull
     @Override
-    public RestLoginResult getResult(@NonNull SimpleLoginRequest request) {
-        return null;
-    }
-
-    @Override
-    public void doRequest(@NonNull SimpleLoginRequest request) {
-        Log.d(TAG, "doRequest() called with: " + "request = [" + request + "]");
-        requests.add(request);
+    protected void processRequest(@NonNull ILoginRequest request) {
+        log.debug("processRequest() called with: {}", request);
         Call<LoginResponseModel> loginCall = service.login(request.getLogin(), request.getPassword());
-        loginCall.enqueue(new LoginResponseCallback());
+        loginCall.enqueue(new LoginResponseCallback(request));
     }
 
     private class LoginResponseCallback implements Callback<LoginResponseModel> {
 
-        @Override
-        public void onResponse(Response<LoginResponseModel> response, Retrofit retrofit) {
-            Log.d(TAG, "onResponse() called with: " + "response = [" + response + "], retrofit = [" + retrofit + "]");
-            if (response.isSuccess()) {
-                LoginResponseModel model = response.body();
-                if (model.isSuccess()) {
-                    notifySuccess();
-                } else {
-                    notifyFailure(new CommonError("model failure"));
-                }
-            } else {
-                notifyFailure(new CommonError("responce failure"));
-            }
+        private final ILoginRequest request;
+
+        public LoginResponseCallback(@NonNull ILoginRequest request) {
+            this.request = request;
         }
 
         @Override
-        public void onFailure(Throwable t) {
-            Log.d(TAG, "onFailure() called with: " + "t = [" + t + "]");
-            notifyFailure(new CommonError("internal"));
+        public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
+            log.debug("onResponse() called with: call = [{}], response = [{}]", call, response);
+            LoginStatus status = null;
+            CommonError error = null;
+            if (response.isSuccess()) {
+                LoginResponseModel model = response.body();
+                if (model.isSuccess()) {
+                    status = LoginStatus.LOGGED;
+                } else {
+                    error = new CommonError("model failure");
+                }
+            } else {
+                error = new CommonError("responce failure");
+            }
+            RestLoginResult result = new RestLoginResult(status, error);
+            notifyResult(request, result);
+        }
+
+        @Override
+        public void onFailure(Call<LoginResponseModel> call, Throwable t) {
+            log.debug("onFailure() called with: call = [{}], t = [{}]", call, t);
+            notifyResult(request, new RestLoginResult(new CommonError("internal")));
         }
     }
 

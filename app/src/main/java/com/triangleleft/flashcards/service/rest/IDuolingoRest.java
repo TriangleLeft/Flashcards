@@ -3,14 +3,15 @@ package com.triangleleft.flashcards.service.rest;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.rest.model.VocabularResponseModel;
 
-import retrofit.Call;
-import retrofit.Response;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
+
 
 /**
  * Created by lekz112 on 08.10.2015.

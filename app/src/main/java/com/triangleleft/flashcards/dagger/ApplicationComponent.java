@@ -7,7 +7,7 @@ import com.triangleleft.flashcards.service.ILoginModule;
 import dagger.Component;
 
 @ApplicationScope
-@Component(modules = {ApplicationModule.class, NetModule.class})
+@Component(modules = {ApplicationModule.class, ServiceModule.class, NetModule.class})
 public interface ApplicationComponent {
 
     ILoginModule loginModule();

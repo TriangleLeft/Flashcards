@@ -30,17 +30,11 @@ public class ILoginPresenterImpl implements ILoginPresenter {
     private CommonError error;
     private ILoginRequest loginRequest;
 
-    private IListener loginListener = new IListener() {
+    private IListener<ILoginResult> loginListener = new IListener<ILoginResult>() {
         @Override
-        public void onSuccess() {
-            Log.d(TAG, "onSuccess() called");
-            advance();
-        }
-
-        @Override
-        public void onError(@NonNull CommonError error) {
-            Log.d(TAG, "onError() called with: " + "error = [" + error + "]");
-            handleError(error);
+        public void onResult(@NonNull ILoginResult result) {
+            Log.d(TAG, "onResult() called with: " + "result = [" + result + "]");
+            // TODO
         }
     };
 
