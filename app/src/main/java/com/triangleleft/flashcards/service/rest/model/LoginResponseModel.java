@@ -2,14 +2,30 @@ package com.triangleleft.flashcards.service.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.service.error.ErrorType;
+import com.triangleleft.flashcards.util.TextUtils;
+
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by lekz112 on 08.10.2015.
+ * Model object for server response to /login request
  */
 public class LoginResponseModel {
-    private final static String RESPONSE_OK = "OK";
+    /*package*/ final static String RESPONSE_OK = "OK";
+    /*package*/ final static String FAILURE_LOGIN = "login";
+    /*package*/ final static String FAILURE_PASSWORD = "password";
+
+    private static final Map<FailureReason, ErrorType> errorMap = new HashMap<>();
+
+    static {
+        errorMap.put(FailureReason.WRONG_LOGIN, ErrorType.LOGIN);
+        errorMap.put(FailureReason.WRONG_PASSWORD, ErrorType.PASSWORD);
+    }
 
     @SerializedName("response")
     public String response;
@@ -27,23 +43,39 @@ public class LoginResponseModel {
     }
 
     @Nullable
-    public ErrorField getErrorField() {
-        return ErrorField.fromString(failure);
+    public FailureReason getFailureReason() {
+        return FailureReason.fromString(failure);
     }
 
-    public static enum ErrorField {
-        LOGIN("login"), PASSWORD("password");
+    @Nullable
+    public CommonError buildError() {
+        if (isSuccess()) {
+            return null;
+        } else {
+            ErrorType type = errorMap.get(getFailureReason());
+            if (type == null) {
+                // No map for type, say that it's internal error
+                // Should we fail here for debug builds?
+                type = ErrorType.INTERNAL;
+            }
+            return new CommonError(type, message);
+        }
+    }
 
-        private String field;
+    public enum FailureReason {
+        WRONG_LOGIN(FAILURE_LOGIN),
+        WRONG_PASSWORD(FAILURE_PASSWORD);
 
-        private ErrorField(String field) {
-            this.field = field;
+        private final String reason;
+
+        FailureReason(@NonNull String reason) {
+            this.reason = reason;
         }
 
         @Nullable
-        public static ErrorField fromString(@Nullable String field) {
-            for (ErrorField value : values()) {
-                if (value.field.equals(field)) {
+        public static FailureReason fromString(@Nullable String field) {
+            for (FailureReason value : values()) {
+                if (value.reason.equals(field)) {
                     return value;
                 }
             }

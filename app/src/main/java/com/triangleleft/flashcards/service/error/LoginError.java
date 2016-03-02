@@ -11,7 +11,7 @@ public class LoginError extends CommonError {
     private final String passwordError;
 
     private LoginError(@Nullable String message, @Nullable String loginError, @Nullable String passwordError) {
-        super(message);
+        super(ErrorType.LOGIN, message);
         this.loginError = loginError;
         this.passwordError = passwordError;
         if (message == null && loginError == null && passwordError == null) {

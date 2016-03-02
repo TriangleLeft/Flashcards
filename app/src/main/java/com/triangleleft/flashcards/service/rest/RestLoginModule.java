@@ -6,6 +6,7 @@ import com.triangleleft.flashcards.service.ILoginRequest;
 import com.triangleleft.flashcards.service.ILoginResult;
 import com.triangleleft.flashcards.service.LoginStatus;
 import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 
 import org.slf4j.Logger;
@@ -56,10 +57,11 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
                 if (model.isSuccess()) {
                     status = LoginStatus.LOGGED;
                 } else {
-                    error = new CommonError("model failure");
+                    error = model.buildError();
                 }
             } else {
-                error = new CommonError("responce failure");
+                // Non-200 response code, for now, we don't expect them
+                error = new CommonError(ErrorType.SERVER, response.message());
             }
             RestLoginResult result = new RestLoginResult(status, error);
             notifyResult(request, result);
@@ -68,7 +70,7 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
         @Override
         public void onFailure(Call<LoginResponseModel> call, Throwable t) {
             log.debug("onFailure() called with: call = [{}], t = [{}]", call, t);
-            notifyResult(request, new RestLoginResult(new CommonError("internal")));
+            notifyResult(request, new RestLoginResult(CommonError.fromThrowable(t)));
         }
     }
 
