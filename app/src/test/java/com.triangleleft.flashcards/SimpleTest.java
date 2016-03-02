@@ -17,16 +17,21 @@ import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import android.support.annotation.NonNull;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -35,15 +40,13 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import timber.log.Timber;
 
-@RunWith(JUnit4.class)
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(constants = BuildConfig.class, sdk = 21)
 @SmallTest
 public class SimpleTest extends Assert {
 
-    private static final String VALID_LOGIN = "login";
-    private static final String VALID_PASSWORD = "password";
-
-//    @Rule
-//    public Timeout globalTimeout = Timeout.seconds(5); // 5 seconds max per method tested
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(5); // 5 seconds max per method tested
 
     @Inject
     ILoginModule loginModule;
@@ -61,11 +64,11 @@ public class SimpleTest extends Assert {
         });
 
         webServer = new MockWebServer();
-        webServer.start();
     }
 
     @Before
     public void setUp() throws IOException {
+        System.out.println("setUp");
         ApplicationComponent component =
                 DaggerApplicationComponent.builder().applicationModule(Mockito.mock(ApplicationModule.class))
                         .netModule(new NetModule() {
@@ -75,13 +78,12 @@ public class SimpleTest extends Assert {
                             }
                         }).serviceModule(new ServiceModule()).build();
         loginModule = component.loginModule();
-
     }
 
     @Test
     public void loginWithValidLoginAndPassword() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-        ILoginRequest request = new SimpleLoginRequest(VALID_LOGIN, VALID_PASSWORD);
+        ILoginRequest request = new SimpleLoginRequest("login", "password");
         IListener<ILoginResult> listener = new IListener<ILoginResult>() {
             @Override
             public void onResult(@NonNull ILoginResult result) {
@@ -99,6 +101,12 @@ public class SimpleTest extends Assert {
 
         loginModule.doRequest(request, listener);
 
-        latch.await();
+        while(!latch.await(1, TimeUnit.SECONDS)) {
+            System.out.println("loop");
+            Robolectric.flushForegroundThreadScheduler();
+
+
+        }
     }
+
 }

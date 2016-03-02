@@ -5,16 +5,17 @@ import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.dagger.LoginActivityComponent;
 import com.triangleleft.flashcards.dagger.LoginActivityModule;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -29,7 +30,7 @@ import butterknife.OnClick;
  */
 public class LoginActivity extends BaseActivity implements ILoginView {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
 
     @Inject
     ILoginPresenter presenter;
@@ -39,11 +40,10 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     TextView passwordView;
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
-    private LoginActivityComponent component;
 
     @Override
     public void setState(@NonNull LoginViewState state) {
-        Log.d(TAG, "setState() called with: " + "state = [" + state + "]");
+        logger.debug("setState() called with: state = [{}]", state);
         switch (state) {
             case ENTER_CREDENTIAL:
                 flipperView.setDisplayedChild(1);
@@ -59,61 +59,60 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+        logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        component = DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent())
-                .loginActivityModule(new LoginActivityModule()).build();
-        component.inject(this);
-
+        DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent())
+                .loginActivityModule(new LoginActivityModule()).build().inject(this);
 
         presenter.onBind(this);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
+        logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
+
         super.onSaveInstanceState(outState);
         presenter.onSaveInstanceState(outState);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
-        Log.d(TAG, "onRestoreInstanceState() called with: " + "savedInstanceState = [" + savedInstanceState + "]");
+        logger.debug("onRestoreInstanceState() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
         presenter.onRestoreInstanceState(savedInstanceState);
     }
 
     @Override
     protected void onResume() {
-        Log.d(TAG, "onResume()");
+        logger.debug("onResume() called");
         super.onResume();
         presenter.onResume();
     }
 
     @Override
     protected void onPause() {
-        Log.d(TAG, "onPause()");
+        logger.debug("onPause() called");
         super.onPause();
         presenter.onPause();
     }
 
     @Override
     public void setLoginError(@Nullable String error) {
-        Log.d(TAG, "setLoginError() called with: " + "error = [" + error + "]");
+        logger.debug("setLoginError() called with: error = [{}]", error);
         loginView.setError(error);
     }
 
     @Override
     public void setPasswordError(@Nullable String error) {
-        Log.d(TAG, "setPasswordError() called with: " + "error = [" + error + "]");
+        logger.debug("setPasswordError() called with: error = [{}]", error);
         passwordView.setError(error);
     }
 
     @OnClick(R.id.login_button)
     protected void onLoginClick() {
-        Log.d(TAG, "onLoginClick()");
+        logger.debug("onLoginClick() called");
         String login = loginView.getText().toString();
         String password = passwordView.getText().toString();
         presenter.onLoginClick(login, password);
@@ -121,7 +120,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void advance() {
-        Log.d(TAG, "advance()");
+        logger.debug("advance() called");
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
