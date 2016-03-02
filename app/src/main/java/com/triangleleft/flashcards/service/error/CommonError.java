@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import java.io.IOException;
 
 public class CommonError {
-    private static String INTERNAL_ERROR = "Internal error";
+    private static final String INTERNAL_ERROR = "Internal error";
 
     private final String message;
     private final ErrorType type;

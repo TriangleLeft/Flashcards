@@ -47,10 +47,10 @@ public class LoginResponseModel {
         return FailureReason.fromString(failure);
     }
 
-    @Nullable
+    @NonNull
     public CommonError buildError() {
         if (isSuccess()) {
-            return null;
+            throw new IllegalStateException("Can't build error for successful result");
         } else {
             ErrorType type = errorMap.get(getFailureReason());
             if (type == null) {

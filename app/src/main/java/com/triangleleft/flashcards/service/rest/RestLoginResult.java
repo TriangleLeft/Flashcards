@@ -16,10 +16,6 @@ public class RestLoginResult implements ILoginResult {
         this(null, error);
     }
 
-    public RestLoginResult(@NonNull LoginStatus status) {
-        this(status, null);
-    }
-
     public RestLoginResult(@Nullable LoginStatus status, @Nullable CommonError error) {
         this.error = error;
         this.status = status;

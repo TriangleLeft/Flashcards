@@ -20,10 +20,10 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
         log.debug("registerListener() called with: request = [{}], listener = [{}]", request, listener);
 
         // Check that we re-attaching listener to valid request
-        if (!requestMap.containsKey(request.getTag())) {
+        RequestInfo info = requestMap.get(request.getTag());
+        if (info == null) {
             throw new UnknownRequestException(request.getTag());
         } else {
-            RequestInfo info = requestMap.get(request.getTag());
             // If request was already completed, notify listener immediately
             if (info.isCompleted()) {
                 notifyListener(listener, info);
@@ -34,21 +34,16 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
         }
     }
 
-    protected void notifyListener(@NonNull IListener<Result> listener, @NonNull RequestInfo info) {
-        listener.onResult(info.getResult());
-        // Clean up
-        requestMap.remove(info.getRequest().getTag());
-    }
-
     @Override
     public void unregisterListener(@NonNull Request request, @NonNull IListener<Result> listener) {
         log.debug("unregisterListener() called with: request = [{}], listener = [{}]", request, listener);
 
         String tag = request.getTag();
-        if (!requestMap.containsKey(tag)) {
+        RequestInfo requestInfo = requestMap.get(tag);
+        if (requestInfo == null) {
             throw new UnknownRequestException(tag);
         } else {
-            requestMap.remove(tag);
+            requestInfo.setListener(null);
         }
     }
 
@@ -69,6 +64,14 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
 
     protected abstract void processRequest(@NonNull Request request);
 
+
+    protected void notifyListener(@NonNull IListener<Result> listener, @NonNull RequestInfo info) {
+        listener.onResult(info.getResult());
+        // Clean up
+        requestMap.remove(info.getRequest().getTag());
+    }
+
+
     protected void notifyResult(@NonNull Request request,@NonNull Result result) {
         log.debug("notifyResult() called with: request = [{}], result = [{}]", request, result);
 
@@ -79,7 +82,7 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
         RequestInfo requestInfo = requestMap.get(tag);
         requestInfo.setResult(result);
         IListener<Result> listener = requestInfo.getListener();
-        // If we have listener attached, notify imediately
+        // If we have listener attached, notify immediately
         // Otherwise, set the result, we would notify user when he would re-attach listener
         if (listener != null) {
             notifyListener(listener, requestInfo);
