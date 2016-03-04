@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.dagger;
 
 import com.triangleleft.flashcards.dagger.scope.ActivityScope;
-import com.triangleleft.flashcards.ui.login.LoginActivity;
+import com.triangleleft.flashcards.android.LoginActivity;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 
 import dagger.Component;

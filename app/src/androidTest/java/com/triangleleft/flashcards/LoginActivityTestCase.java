@@ -4,7 +4,7 @@ import com.triangleleft.flashcards.dagger.MockApplicationComponent;
 import com.triangleleft.flashcards.service.IListener;
 import com.triangleleft.flashcards.service.ILoginModule;
 import com.triangleleft.flashcards.service.error.CommonError;
-import com.triangleleft.flashcards.ui.login.LoginActivity;
+import com.triangleleft.flashcards.android.LoginActivity;
 
 import org.junit.Assert;
 import org.junit.Before;

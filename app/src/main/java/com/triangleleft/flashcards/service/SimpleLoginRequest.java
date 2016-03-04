@@ -4,26 +4,27 @@ import android.support.annotation.NonNull;
 
 public class SimpleLoginRequest implements ILoginRequest {
 
-    private final String login;
-    private final String password;
+    private final Credentials credentials;
     private final String tag;
 
-    public SimpleLoginRequest(@NonNull String login, @NonNull String password) {
-        this.login = login;
-        this.password = password;
-        this.tag = login + '@' + hashCode();
+    public SimpleLoginRequest(@NonNull Credentials credentials) {
+        this.credentials = credentials;
+        this.tag = credentials.getLogin() + '@' + hashCode();
     }
 
+    @NonNull
     @Override
     public String getLogin() {
-        return login;
+        return credentials.getLogin();
     }
 
+    @NonNull
     @Override
     public String getPassword() {
-        return password;
+        return credentials.getPassword();
     }
 
+    @NonNull
     @Override
     public String getTag() {
         return tag;

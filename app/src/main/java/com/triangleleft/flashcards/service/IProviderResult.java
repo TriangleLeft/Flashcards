@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.service;
 
-import com.triangleleft.flashcards.service.error.CommonError;
+import android.support.annotation.Nullable;
 
 public interface IProviderResult<T> {
-    boolean isSuccess();
-    CommonError getError();
+
+    @Nullable
     T getResult();
 }

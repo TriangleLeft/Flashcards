@@ -30,6 +30,11 @@ public class CommonError {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + '@' + type + '@' + message + '@' + Integer.toHexString(hashCode());
+    }
+
     @NonNull
     public static CommonError fromThrowable(@Nullable Throwable throwable) {
         String message;

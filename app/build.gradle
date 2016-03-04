@@ -52,6 +52,7 @@ dependencies {
     compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'com.arcao:slf4j-timber:2.1'
+    compile 'com.google.guava:guava:19.0'
 
     compile "com.google.dagger:dagger:${DAGGER_VERSION}"
     apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"

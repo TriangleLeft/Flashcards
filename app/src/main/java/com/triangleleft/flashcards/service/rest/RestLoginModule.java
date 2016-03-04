@@ -50,12 +50,12 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
         @Override
         public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
             log.debug("onResponse() called with: call = [{}], response = [{}]", call, response);
-            LoginStatus status = null;
+            SimpleLoginResult result = null;
             CommonError error = null;
             if (response.isSuccess()) {
                 LoginResponseModel model = response.body();
                 if (model.isSuccess()) {
-                    status = LoginStatus.LOGGED;
+                    result = new SimpleLoginResult(LoginStatus.LOGGED);
                 } else {
                     error = model.buildError();
                 }
@@ -63,14 +63,14 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
                 // Non-200 response code, for now, we don't expect them
                 error = new CommonError(ErrorType.SERVER, response.message());
             }
-            RestLoginResult result = new RestLoginResult(status, error);
-            notifyResult(request, result);
+
+            notifyResult(request, result, error);
         }
 
         @Override
         public void onFailure(Call<LoginResponseModel> call, Throwable t) {
             log.debug("onFailure() called with: call = [{}], t = [{}]", call, t);
-            notifyResult(request, new RestLoginResult(CommonError.fromThrowable(t)));
+            notifyResult(request, null, CommonError.fromThrowable(t));
         }
     }
 
