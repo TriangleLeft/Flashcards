@@ -8,10 +8,10 @@ import com.triangleleft.flashcards.dagger.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerApplicationComponent;
 import com.triangleleft.flashcards.dagger.NetModule;
 import com.triangleleft.flashcards.dagger.ServiceModule;
-import com.triangleleft.flashcards.service.Credentials;
-import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.ILoginRequest;
-import com.triangleleft.flashcards.service.SimpleLoginRequest;
+import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.IListener;
+import com.triangleleft.flashcards.service.provider.IListener;
 import com.triangleleft.flashcards.service.IVocabularModule;
 import com.triangleleft.flashcards.service.IVocabularWord;
 

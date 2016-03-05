@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
 import com.triangleleft.flashcards.dagger.LoginActivityModule;
-import com.triangleleft.flashcards.service.Credentials;
+import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;

@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
 import com.triangleleft.flashcards.SystemOutTree;
-import com.triangleleft.flashcards.service.IListener;
-import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.ILoginRequest;
-import com.triangleleft.flashcards.service.ILoginResult;
-import com.triangleleft.flashcards.service.LoginStatus;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.ErrorType;
-import com.triangleleft.flashcards.service.rest.SimpleLoginResult;
+import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginStatus;
+import com.triangleleft.flashcards.service.login.SimpleLoginResult;
+import com.triangleleft.flashcards.service.provider.IListener;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;
 
@@ -26,10 +26,14 @@ import java.io.IOException;
 
 import timber.log.Timber;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JUnit4.class)
 public class ILoginPresenterImplLoginTest {
+
+    private static final String LOGIN = "login";
+    private static final String PASSWORD = "password";
 
     @Mock
     ILoginModule module;
@@ -54,8 +58,8 @@ public class ILoginPresenterImplLoginTest {
         presenter = new ILoginPresenterImpl(module);
         presenter.onBind(view);
         // Set login and password
-        presenter.onLoginChanged("login");
-        presenter.onPasswordChanged("password");
+        presenter.onLoginChanged(LOGIN);
+        presenter.onPasswordChanged(PASSWORD);
         // Click login
         presenter.onLoginClick();
         // Verify that do request is called, and capture listener
@@ -119,4 +123,49 @@ public class ILoginPresenterImplLoginTest {
         // Verify listener attached
         verify(module).registerListener(requestCaptor.getValue(), listenerCaptor.getValue());
     }
+
+    @Test
+    public void saveRequestState() {
+        ILoginPresenterState state = new MemoryLoginPresenterState();
+        presenter.onSaveInstanceState(state);
+
+        assertEquals(LoginViewState.PROGRESS, state.getViewState());
+        assertEquals(LOGIN, state.getCredentials().getLogin());
+        assertEquals(PASSWORD, state.getCredentials().getPassword());
+        assertEquals(requestCaptor.getValue(), state.getRequest());
+        assertNull(state.getError());
+    }
+
+    @Test
+    public void saveLoginState() {
+        String errorMessage = "error";
+        CommonError error = new CommonError(ErrorType.LOGIN, errorMessage);
+        listenerCaptor.getValue().onFailure(error);
+
+        ILoginPresenterState state = new MemoryLoginPresenterState();
+        presenter.onSaveInstanceState(state);
+
+        assertEquals(LoginViewState.ENTER_CREDENTIAL, state.getViewState());
+        assertEquals(LOGIN, state.getCredentials().getLogin());
+        assertEquals(PASSWORD, state.getCredentials().getPassword());
+        assertNull(state.getRequest());
+        assertEquals(error, state.getError());
+    }
+
+    @Test
+    public void doNotSaveGenericError() {
+        String errorMessage = "error";
+        CommonError error = new CommonError(ErrorType.NETWORK, errorMessage);
+        listenerCaptor.getValue().onFailure(error);
+
+        ILoginPresenterState state = new MemoryLoginPresenterState();
+        presenter.onSaveInstanceState(state);
+
+        assertEquals(LoginViewState.ENTER_CREDENTIAL, state.getViewState());
+        assertEquals(LOGIN, state.getCredentials().getLogin());
+        assertEquals(PASSWORD, state.getCredentials().getPassword());
+        assertNull(state.getRequest());
+        assertNull(state.getError());
+    }
+
 }

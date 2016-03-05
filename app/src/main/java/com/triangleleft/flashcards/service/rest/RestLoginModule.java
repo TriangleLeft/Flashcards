@@ -1,12 +1,13 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.AbstractProvider;
-import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.ILoginRequest;
-import com.triangleleft.flashcards.service.ILoginResult;
-import com.triangleleft.flashcards.service.LoginStatus;
+import com.triangleleft.flashcards.service.provider.AbstractProvider;
+import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.ErrorType;
+import com.triangleleft.flashcards.service.login.SimpleLoginResult;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 
 import org.slf4j.Logger;

@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.dagger.MockApplicationComponent;
-import com.triangleleft.flashcards.service.IListener;
-import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.service.provider.IListener;
+import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.android.LoginActivity;
 

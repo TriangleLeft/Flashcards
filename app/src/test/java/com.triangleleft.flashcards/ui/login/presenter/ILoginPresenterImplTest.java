@@ -1,10 +1,16 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
 import com.triangleleft.flashcards.SystemOutTree;
-import com.triangleleft.flashcards.service.IListener;
-import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.ILoginResult;
+import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.service.error.ErrorType;
+import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
+import com.triangleleft.flashcards.service.provider.IListener;
+import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
+import com.triangleleft.flashcards.ui.login.view.LoginViewState;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,6 +26,8 @@ import java.io.IOException;
 
 import timber.log.Timber;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.isNull;
 import static org.mockito.Mockito.verify;
 
@@ -64,5 +72,29 @@ public class ILoginPresenterImplTest {
         verify(view).setPasswordError(isNull(String.class));
     }
 
+    @Test
+    public void restoreRequest() {
+        ILoginPresenterState state = new MemoryLoginPresenterState();
+        ILoginRequest request = new SimpleLoginRequest(new Credentials("login", "password"));
+        state.setRequest(request);
+        state.setViewState(LoginViewState.PROGRESS);
+        presenter.onRestoreInstanceState(state);
+        presenter.onResume();
+        verify(module).registerListener(eq(request), any());
+    }
+
+    @Test
+    public void restoreError() {
+        ILoginPresenterState state = new MemoryLoginPresenterState();
+        Credentials credentials = new Credentials("login", "password");
+        CommonError error = new CommonError(ErrorType.LOGIN, "message");
+        state.setViewState(LoginViewState.ENTER_CREDENTIAL);
+        state.setCredentials(credentials);
+        state.setError(error);
+        presenter.onRestoreInstanceState(state);
+        presenter.onResume();
+        verify(view).setCredentials(credentials);
+        verify(view).setLoginError(error.getMessage());
+    }
 
 }

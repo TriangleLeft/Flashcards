@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.login.view;
 
-import com.triangleleft.flashcards.service.Credentials;
+import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.ui.common.view.IView;
 
 import android.support.annotation.NonNull;

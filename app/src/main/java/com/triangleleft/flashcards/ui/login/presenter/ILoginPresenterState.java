@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
-import com.triangleleft.flashcards.service.Credentials;
-import com.triangleleft.flashcards.service.ILoginRequest;
+import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenterState;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;

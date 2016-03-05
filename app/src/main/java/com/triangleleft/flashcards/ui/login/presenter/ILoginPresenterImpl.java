@@ -1,13 +1,12 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
-import com.triangleleft.assertdialog.AssertDialog;
-import com.triangleleft.flashcards.service.Credentials;
-import com.triangleleft.flashcards.service.IListener;
-import com.triangleleft.flashcards.service.ILoginModule;
-import com.triangleleft.flashcards.service.ILoginRequest;
-import com.triangleleft.flashcards.service.ILoginResult;
-import com.triangleleft.flashcards.service.LoginStatus;
-import com.triangleleft.flashcards.service.SimpleLoginRequest;
+import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.service.provider.IListener;
+import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginStatus;
+import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
@@ -116,7 +115,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
                     // Do nothing, listener is guaranteed to be called
                     break;
                 default:
-                    AssertDialog.fail("Unknown state: " + state);
+                    throw new IllegalStateException("Unknown state: " + state);
             }
         }
     }
@@ -153,6 +152,8 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
         @Override
         public void onResult(@NonNull ILoginResult result) {
             logger.debug("onResult() called with: result = [{}]", result);
+            loginRequest = null;
+
             checkState(result.getResult() == LoginStatus.LOGGED, "Got unknown status: " + result.getResult());
             // Advance to next screen
             getView().advance();
@@ -161,6 +162,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
         @Override
         public void onFailure(@NonNull CommonError error) {
             logger.debug("onFailure() called with: error = [{}]", error);
+            loginRequest = null;
             handleError(error);
         }
     }

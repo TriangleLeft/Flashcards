@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service;
+package com.triangleleft.flashcards.service.provider;
 
 import android.support.annotation.NonNull;
 

@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service;
+package com.triangleleft.flashcards.service.provider;
 
 import com.triangleleft.flashcards.service.error.CommonError;
 

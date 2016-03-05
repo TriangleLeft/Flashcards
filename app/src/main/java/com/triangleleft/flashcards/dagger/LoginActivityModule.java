@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.dagger;
 
 import com.triangleleft.flashcards.dagger.scope.ActivityScope;
-import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenterImpl;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 

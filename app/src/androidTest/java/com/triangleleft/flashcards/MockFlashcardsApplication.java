@@ -4,7 +4,7 @@ import com.triangleleft.flashcards.dagger.ApplicationComponent;
 import com.triangleleft.flashcards.dagger.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerMockApplicationComponent;
 import com.triangleleft.flashcards.dagger.NetModule;
-import com.triangleleft.flashcards.service.ILoginModule;
+import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.rest.IDuolingoRest;
 
 import org.mockito.Mockito;

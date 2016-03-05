@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service;
+package com.triangleleft.flashcards.service.provider;
 
 public class UnknownRequestException extends RuntimeException {
     public UnknownRequestException(String tag) {

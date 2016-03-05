@@ -1,7 +1,7 @@
-package com.triangleleft.flashcards.service.rest;
+package com.triangleleft.flashcards.service.login;
 
-import com.triangleleft.flashcards.service.ILoginResult;
-import com.triangleleft.flashcards.service.LoginStatus;
+import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginStatus;
 
 import android.support.annotation.Nullable;
 
