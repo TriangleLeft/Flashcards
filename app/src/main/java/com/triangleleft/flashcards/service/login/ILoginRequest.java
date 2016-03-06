@@ -4,7 +4,9 @@ import com.triangleleft.flashcards.service.provider.IProviderRequest;
 
 import android.support.annotation.NonNull;
 
-public interface ILoginRequest extends IProviderRequest {
+import java.io.Serializable;
+
+public interface ILoginRequest extends IProviderRequest, Serializable {
 
     @NonNull
     String getLogin();

@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.service.rest;
 
 import com.google.gson.Gson;
 
-import com.triangleleft.flashcards.SystemOutTree;
+import com.triangleleft.flashcards.util.SystemOutTree;
 import com.triangleleft.flashcards.dagger.ApplicationComponent;
 import com.triangleleft.flashcards.dagger.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerApplicationComponent;

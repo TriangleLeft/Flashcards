@@ -1,9 +1,9 @@
-package com.triangleleft.flashcards.android;
+package com.triangleleft.flashcards.android.login;
 
-import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.android.SimpleTextWatcher;
 import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
 import com.triangleleft.flashcards.dagger.LoginActivityModule;
 import com.triangleleft.flashcards.service.login.Credentials;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
@@ -46,22 +47,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
     Button loginButton;
-
-    @Override
-    public void setState(@NonNull LoginViewState state) {
-        logger.debug("setState() called with: state = [{}]", state);
-        switch (state) {
-            case ENTER_CREDENTIAL:
-                flipperView.setDisplayedChild(1);
-                break;
-            case PROGRESS:
-                flipperView.setDisplayedChild(0);
-                break;
-            default:
-                AssertDialog.fail("Unknown state " + state.name());
-                break;
-        }
-    }
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,15 +78,16 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     protected void onSaveInstanceState(Bundle outState) {
         logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
         super.onSaveInstanceState(outState);
-
-        //presenter.onSaveInstanceState();
+        presenter.onSaveInstanceState(new BundleLoginPresenterState(outState));
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         logger.debug("onRestoreInstanceState() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onRestoreInstanceState(savedInstanceState);
-        //presenter.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            presenter.onRestoreInstanceState(new BundleLoginPresenterState(savedInstanceState));
+        }
     }
 
     @Override
@@ -115,6 +102,23 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         logger.debug("onPause() called");
         super.onPause();
         presenter.onPause();
+    }
+
+    @Override
+    public void setState(@NonNull LoginViewState state) {
+        logger.debug("setState() called with: state = [{}]", state);
+        handler.post(() -> {
+            switch (state) {
+                case ENTER_CREDENTIAL:
+                    flipperView.setDisplayedChild(1);
+                    break;
+                case PROGRESS:
+                    flipperView.setDisplayedChild(0);
+                    break;
+                default:
+                    throw new IllegalStateException("Unknown state " + state.name());
+            }
+        });
     }
 
     @Override

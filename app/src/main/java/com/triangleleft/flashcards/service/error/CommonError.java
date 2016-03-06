@@ -8,8 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class CommonError {
+public class CommonError implements Serializable {
     private static final String INTERNAL_ERROR = "Internal error";
 
     private final String message;

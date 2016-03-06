@@ -1,0 +1,6 @@
+ext.ver = [
+        DEXMAKER: ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
+                   "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
+                   "com.github.crittercism.dexmaker:dexmaker-mockito:f8e7c23e41"
+        ]
+]

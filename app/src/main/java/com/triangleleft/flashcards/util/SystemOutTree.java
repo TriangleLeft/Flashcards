@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.util;
 
 import timber.log.Timber;
 

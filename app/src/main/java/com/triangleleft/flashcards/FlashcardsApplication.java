@@ -10,6 +10,8 @@ import android.app.Application;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import timber.log.Timber;
+
 public class FlashcardsApplication extends Application {
 
     private ApplicationComponent component;
@@ -21,6 +23,7 @@ public class FlashcardsApplication extends Application {
         debugInstace = this;
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
         component = buildComponent();
+        Timber.plant(new Timber.DebugTree());
     }
 
     @NonNull

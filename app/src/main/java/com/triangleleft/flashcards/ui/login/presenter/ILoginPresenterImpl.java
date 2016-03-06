@@ -1,13 +1,13 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
+import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.login.Credentials;
-import com.triangleleft.flashcards.service.provider.IListener;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
-import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.service.provider.IListener;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;
@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
@@ -39,6 +38,12 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
     public ILoginPresenterImpl(@NonNull ILoginModule loginModule) {
         logger.debug("ILoginPresenterImpl() called with: loginModule = [{}]", loginModule);
         this.loginModule = loginModule;
+    }
+
+    @Override
+    public void onBind(@NonNull ILoginView view) {
+        super.onBind(view);
+        view.setState(LoginViewState.ENTER_CREDENTIAL);
     }
 
     @Override
@@ -95,28 +100,26 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
     }
 
     @Override
-    public void onRestoreInstanceState(@Nullable ILoginPresenterState inState) {
+    public void onRestoreInstanceState(@NonNull ILoginPresenterState inState) {
         logger.debug("onRestoreInstanceState() called with: inState = [{}]", inState);
-        if (inState != null) {
-            credentials = inState.getCredentials();
-            loginRequest = inState.getRequest();
-            LoginViewState state = inState.getViewState();
-            setCurrentState(state);
-            switch (state) {
-                case ENTER_CREDENTIAL:
-                    getView().setCredentials(credentials);
-                    CommonError error = inState.getError();
-                    if (error != null) {
-                        handleError(error);
-                    }
-                    break;
-                case PROGRESS:
-                    // We were waiting for request to complete
-                    // Do nothing, listener is guaranteed to be called
-                    break;
-                default:
-                    throw new IllegalStateException("Unknown state: " + state);
-            }
+        credentials = inState.getCredentials();
+        loginRequest = inState.getRequest();
+        LoginViewState state = inState.getViewState();
+        setCurrentState(state);
+        switch (state) {
+            case ENTER_CREDENTIAL:
+                getView().setCredentials(credentials);
+                CommonError error = inState.getError();
+                if (error != null) {
+                    handleError(error);
+                }
+                break;
+            case PROGRESS:
+                // We were waiting for request to complete
+                // Do nothing, listener is guaranteed to be called
+                break;
+            default:
+                throw new IllegalStateException("Unknown state: " + state);
         }
     }
 

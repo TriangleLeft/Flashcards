@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.login.presenter;
 
-import com.triangleleft.flashcards.SystemOutTree;
+import com.triangleleft.flashcards.util.SystemOutTree;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.login.ILoginModule;

@@ -13,7 +13,7 @@ public class ServiceModule {
 
     @ApplicationScope
     @Provides
-    ILoginModule loginModule(IDuolingoRest service) {
+    public ILoginModule loginModule(IDuolingoRest service) {
         return new RestLoginModule(service);
     }
 }
