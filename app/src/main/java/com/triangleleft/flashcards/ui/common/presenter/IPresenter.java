@@ -14,4 +14,6 @@ public interface IPresenter<View extends IView, State extends IPresenterState> {
     void onRestoreInstanceState(@NonNull State inState);
 
     void onSaveInstanceState(@NonNull State outState);
+
+    void onCreateInstanceState();
 }

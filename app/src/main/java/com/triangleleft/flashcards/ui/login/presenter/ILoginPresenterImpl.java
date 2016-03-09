@@ -41,12 +41,6 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
     }
 
     @Override
-    public void onBind(@NonNull ILoginView view) {
-        super.onBind(view);
-        view.setState(LoginViewState.ENTER_CREDENTIAL);
-    }
-
-    @Override
     public void onLoginChanged(@NonNull String login) {
         credentials.setLogin(login);
         // TODO: really looks like a task for ViewModel
@@ -121,6 +115,13 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
             default:
                 throw new IllegalStateException("Unknown state: " + state);
         }
+    }
+
+    @Override
+    public void onCreateInstanceState() {
+        logger.debug("onCreateInstanceState() called");
+        setCurrentState(LoginViewState.ENTER_CREDENTIAL);
+        // TODO: check whether we need to login or not
     }
 
     private void handleError(@NonNull CommonError error) {

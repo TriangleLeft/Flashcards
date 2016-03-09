@@ -4,8 +4,7 @@ import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.SimpleTextWatcher;
-import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.dagger.LoginActivityModule;
+import com.triangleleft.flashcards.dagger.LoginActivityComponent;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
@@ -47,7 +45,7 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
     Button loginButton;
-    private Handler handler = new Handler();
+    private LoginActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent())
-                .loginActivityModule(new LoginActivityModule()).build().inject(this);
+        component = getApplicationComponent().getApplication().buildLoginActivityComponent();
+        component.inject(this);
 
         loginView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
@@ -71,7 +69,19 @@ public class LoginActivity extends BaseActivity implements ILoginView {
             }
         });
 
+
         presenter.onBind(this);
+
+        if (savedInstanceState != null) {
+            presenter.onRestoreInstanceState(new BundleLoginPresenterState(savedInstanceState));
+        } else {
+            presenter.onCreateInstanceState();
+        }
+    }
+
+    public LoginActivityComponent getComponent() {
+        logger.debug("getComponent() called");
+        return component;
     }
 
     @Override
@@ -107,18 +117,16 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @Override
     public void setState(@NonNull LoginViewState state) {
         logger.debug("setState() called with: state = [{}]", state);
-        handler.post(() -> {
-            switch (state) {
-                case ENTER_CREDENTIAL:
-                    flipperView.setDisplayedChild(1);
-                    break;
-                case PROGRESS:
-                    flipperView.setDisplayedChild(0);
-                    break;
-                default:
-                    throw new IllegalStateException("Unknown state " + state.name());
-            }
-        });
+        switch (state) {
+            case ENTER_CREDENTIAL:
+                flipperView.setDisplayedChild(1);
+                break;
+            case PROGRESS:
+                flipperView.setDisplayedChild(0);
+                break;
+            default:
+                throw new IllegalStateException("Unknown state " + state.name());
+        }
     }
 
     @Override

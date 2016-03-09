@@ -4,6 +4,9 @@ import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.dagger.ApplicationComponent;
 import com.triangleleft.flashcards.dagger.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerApplicationComponent;
+import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.dagger.LoginActivityComponent;
+import com.triangleleft.flashcards.dagger.LoginActivityModule;
 import com.triangleleft.flashcards.dagger.NetModule;
 
 import android.app.Application;
@@ -11,6 +14,8 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import timber.log.Timber;
+
+import static com.google.common.base.Preconditions.checkState;
 
 public class FlashcardsApplication extends Application {
 
@@ -34,11 +39,16 @@ public class FlashcardsApplication extends Application {
 
     @NonNull
     public ApplicationComponent getComponent() {
-        AssertDialog.assertNotNull(component, "Calling getComponent() before application was created!");
+        checkState(component != null, "Calling getComponent() before application was created!");
         return component;
     }
 
     public static void showDebugToast(String text) {
         Toast.makeText(debugInstace, text, Toast.LENGTH_LONG).show();
+    }
+
+    public LoginActivityComponent buildLoginActivityComponent() {
+        return DaggerLoginActivityComponent.builder().applicationComponent(getComponent())
+                .loginActivityModule(new LoginActivityModule()).build();
     }
 }
