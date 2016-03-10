@@ -10,4 +10,5 @@ public interface IProvider<Request extends IProviderRequest,Result extends IProv
 
     void doRequest(@NonNull Request request, @NonNull IListener<Result> listener);
 
+    void cancelRequest(@NonNull Request loginRequest);
 }

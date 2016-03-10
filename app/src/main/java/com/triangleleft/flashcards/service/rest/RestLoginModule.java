@@ -40,6 +40,11 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
         loginCall.enqueue(new LoginResponseCallback(request));
     }
 
+    @Override
+    public void cancelRequest(@NonNull ILoginRequest loginRequest) {
+
+    }
+
     private class LoginResponseCallback implements Callback<LoginResponseModel> {
 
         private final ILoginRequest request;

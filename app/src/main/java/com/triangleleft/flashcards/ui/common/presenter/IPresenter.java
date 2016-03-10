@@ -8,12 +8,8 @@ public interface IPresenter<View extends IView, State extends IPresenterState> {
     void onBind(@NonNull View view);
 
     void onUnbind(@NonNull View view);
-    void onPause();
-    void onResume();
 
-    void onRestoreInstanceState(@NonNull State inState);
+    void onCreate();
 
-    void onSaveInstanceState(@NonNull State outState);
-
-    void onCreateInstanceState();
+    void onDestroy();
 }

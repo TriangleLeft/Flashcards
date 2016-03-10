@@ -2,9 +2,12 @@ package com.triangleleft.flashcards.dagger;
 
 import com.triangleleft.flashcards.FlashcardsApplication;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
+import com.triangleleft.flashcards.ui.common.presenter.PresenterManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import java.util.concurrent.TimeUnit;
 
 import dagger.Module;
 import dagger.Provides;
@@ -28,5 +31,11 @@ public class ApplicationModule {
     public SharedPreferences preferences() {
         return application.getSharedPreferences(ApplicationModule.class.getSimpleName(),
                 Context.MODE_PRIVATE);
+    }
+
+    @ApplicationScope
+    @Provides
+    public PresenterManager presenterManager() {
+        return new PresenterManager(10, 1, TimeUnit.MINUTES);
     }
 }

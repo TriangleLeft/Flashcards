@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.dagger;
 import com.triangleleft.flashcards.FlashcardsApplication;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.ui.common.presenter.PresenterManager;
 
 import dagger.Component;
 
@@ -14,4 +15,5 @@ public interface ApplicationComponent {
 
     FlashcardsApplication getApplication();
 
+    PresenterManager presenterManager();
 }

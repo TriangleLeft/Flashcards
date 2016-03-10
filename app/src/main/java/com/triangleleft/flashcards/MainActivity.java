@@ -1,6 +1,8 @@
 package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
+import com.triangleleft.flashcards.ui.common.view.IView;
 import com.triangleleft.flashcards.vocab.VocabularListFragment;
 import com.triangleleft.flashcards.vocab.VocabularWordFragment;
 
@@ -81,6 +83,16 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //showList();
+    }
+
+    @Override
+    protected IPresenter buildPresenter() {
+        return null;
+    }
+
+    @Override
+    protected IView getView() {
+        return null;
     }
 
     private void showList() {

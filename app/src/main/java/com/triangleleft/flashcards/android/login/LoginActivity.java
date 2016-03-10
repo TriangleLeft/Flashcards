@@ -7,6 +7,7 @@ import com.triangleleft.flashcards.android.SimpleTextWatcher;
 import com.triangleleft.flashcards.dagger.LoginActivityComponent;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
+import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenterState;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;
 
@@ -31,7 +32,8 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity implements ILoginView {
+public class LoginActivity extends BaseActivity<ILoginView, ILoginPresenterState, ILoginPresenter>
+        implements ILoginView {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
 
@@ -50,11 +52,12 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
+        component = getApplicationComponent().getApplication().buildLoginActivityComponent();
+        component.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        component = getApplicationComponent().getApplication().buildLoginActivityComponent();
-        component.inject(this);
+
 
         loginView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
@@ -68,50 +71,23 @@ public class LoginActivity extends BaseActivity implements ILoginView {
                 presenter.onPasswordChanged(passwordView.getText().toString());
             }
         });
+    }
 
+    @Override
+    protected ILoginPresenter buildPresenter() {
+        logger.debug("buildPresenter() called");
+        return component.loginPresenter();
+    }
 
-        presenter.onBind(this);
-
-        if (savedInstanceState != null) {
-            presenter.onRestoreInstanceState(new BundleLoginPresenterState(savedInstanceState));
-        } else {
-            presenter.onCreateInstanceState();
-        }
+    @Override
+    protected ILoginView getView() {
+        logger.debug("getView() called");
+        return this;
     }
 
     public LoginActivityComponent getComponent() {
         logger.debug("getComponent() called");
         return component;
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
-        super.onSaveInstanceState(outState);
-        presenter.onSaveInstanceState(new BundleLoginPresenterState(outState));
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        logger.debug("onRestoreInstanceState() called with: savedInstanceState = [{}]", savedInstanceState);
-        super.onRestoreInstanceState(savedInstanceState);
-        if (savedInstanceState != null) {
-            presenter.onRestoreInstanceState(new BundleLoginPresenterState(savedInstanceState));
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        logger.debug("onResume() called");
-        super.onResume();
-        presenter.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        logger.debug("onPause() called");
-        super.onPause();
-        presenter.onPause();
     }
 
     @Override

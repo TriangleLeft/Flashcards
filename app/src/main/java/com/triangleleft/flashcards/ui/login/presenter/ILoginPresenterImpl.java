@@ -42,21 +42,23 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
 
     @Override
     public void onLoginChanged(@NonNull String login) {
+        logger.debug("onLoginChanged() called with: login = [{}]", login);
         credentials.setLogin(login);
         // TODO: really looks like a task for ViewModel
         // clear error
         error = null;
         // update view
-        getView().setLoginError(null);
+        //getView().setLoginError(null);
     }
 
     @Override
     public void onPasswordChanged(@NonNull String password) {
+        logger.debug("onPasswordChanged() called with: password = [{}]", password);
         credentials.setPassword(password);
         // clear error
         error = null;
         // update view
-        getView().setPasswordError(null);
+        //getView().setPasswordError(null);
     }
 
     @Override
@@ -69,59 +71,22 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPre
     }
 
     @Override
-    public void onPause() {
-        logger.debug("onPause() called");
-        if (loginRequest != null) {
-            loginModule.unregisterListener(loginRequest, loginListener);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        logger.debug("onResume() called");
-        if (loginRequest != null) {
-            loginModule.registerListener(loginRequest, loginListener);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull ILoginPresenterState outState) {
-        logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
-        outState.setCredentials(credentials);
-        outState.setRequest(loginRequest);
-        outState.setViewState(currentState);
-        outState.setError(error);
-    }
-
-    @Override
-    public void onRestoreInstanceState(@NonNull ILoginPresenterState inState) {
-        logger.debug("onRestoreInstanceState() called with: inState = [{}]", inState);
-        credentials = inState.getCredentials();
-        loginRequest = inState.getRequest();
-        LoginViewState state = inState.getViewState();
-        setCurrentState(state);
-        switch (state) {
-            case ENTER_CREDENTIAL:
-                getView().setCredentials(credentials);
-                CommonError error = inState.getError();
-                if (error != null) {
-                    handleError(error);
-                }
-                break;
-            case PROGRESS:
-                // We were waiting for request to complete
-                // Do nothing, listener is guaranteed to be called
-                break;
-            default:
-                throw new IllegalStateException("Unknown state: " + state);
-        }
-    }
-
-    @Override
-    public void onCreateInstanceState() {
-        logger.debug("onCreateInstanceState() called");
-        setCurrentState(LoginViewState.ENTER_CREDENTIAL);
+    public void onCreate() {
+        logger.debug("onCreate() called");
         // TODO: check whether we need to login or not
+    }
+
+    @Override
+    public void onBind(@NonNull ILoginView view) {
+        super.onBind(view);
+        setCurrentState(LoginViewState.ENTER_CREDENTIAL);
+    }
+
+    @Override
+    public void onDestroy() {
+        logger.debug("onDestroy() called");
+        loginModule.cancelRequest(loginRequest);
+        loginRequest = null;
     }
 
     private void handleError(@NonNull CommonError error) {
