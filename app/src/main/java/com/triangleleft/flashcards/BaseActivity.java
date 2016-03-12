@@ -1,42 +1,42 @@
 package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.dagger.ApplicationComponent;
+import com.triangleleft.flashcards.dagger.IComponent;
+import com.triangleleft.flashcards.ui.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
-import com.triangleleft.flashcards.ui.common.presenter.IPresenterState;
-import com.triangleleft.flashcards.ui.common.presenter.PresenterManager;
 import com.triangleleft.flashcards.ui.common.view.IView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-import javax.inject.Inject;
-
-public abstract class BaseActivity<View extends IView, State extends IPresenterState,
-        Presenter extends IPresenter<View, State>> extends AppCompatActivity {
+public abstract class BaseActivity<Component extends IComponent, View extends IView,
+        Presenter extends IPresenter<View>> extends AppCompatActivity {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
-    private static final String KEY_PRESENTER_ID = "keyPresenterId";
+    private static final String KEY_COMPONENT_ID = "keyComponentId";
 
-    @Inject
-    PresenterManager presenterManager;
+    ComponentManager componentManager;
 
-    private Presenter presenter;
+    private Component component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
 
+        componentManager = getApplicationComponent().componentManager();
+
         if (savedInstanceState == null) {
-            presenter = buildPresenter();
+            component = buildComponent();
         } else {
-            long presenterId = savedInstanceState.getLong(KEY_PRESENTER_ID);
-            presenter = presenterManager.restorePresenter(presenterId);
-            if (presenter == null) {
-                presenter = buildPresenter();
+            long presenterId = savedInstanceState.getLong(KEY_COMPONENT_ID);
+            component = componentManager.restorePresenter(presenterId);
+            if (component == null) {
+                component = buildComponent();
             }
         }
     }
@@ -59,8 +59,8 @@ public abstract class BaseActivity<View extends IView, State extends IPresenterS
     protected void onSaveInstanceState(Bundle outState) {
         logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
         super.onSaveInstanceState(outState);
-        long presenterId = presenterManager.savePresenter(getPresenter());
-        outState.putLong(KEY_PRESENTER_ID, presenterId);
+        long componentId = componentManager.saveComponent(getComponent());
+        outState.putLong(KEY_COMPONENT_ID, componentId);
     }
 
     @Override
@@ -74,12 +74,18 @@ public abstract class BaseActivity<View extends IView, State extends IPresenterS
         return ((FlashcardsApplication) getApplication()).getComponent();
     }
 
-    protected abstract Presenter buildPresenter();
-
-    protected Presenter getPresenter() {
-        return presenter;
+    @NonNull
+    protected Component getComponent() {
+        return component;
     }
 
+    @NonNull
+    protected abstract Component buildComponent();
+
+    @NonNull
+    protected abstract Presenter getPresenter();
+
+    @NonNull
     protected abstract View getView();
 
 }

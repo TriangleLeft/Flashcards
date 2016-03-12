@@ -45,6 +45,11 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
 
     }
 
+    @Override
+    public boolean isLogged() {
+        return false;
+    }
+
     private class LoginResponseCallback implements Callback<LoginResponseModel> {
 
         private final ILoginRequest request;

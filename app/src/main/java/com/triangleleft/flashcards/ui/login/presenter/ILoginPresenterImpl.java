@@ -21,7 +21,7 @@ import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkState;
 
-public class ILoginPresenterImpl extends AbstractPresenter<ILoginView, ILoginPresenterState>
+public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
         implements ILoginPresenter {
 
     private static final Logger logger = LoggerFactory.getLogger(ILoginPresenterImpl.class);

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
-public abstract class AbstractPresenter<View extends IView, State extends IPresenterState>
-        implements IPresenter<View, State> {
+public abstract class AbstractPresenter<View extends IView>
+        implements IPresenter<View> {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractPresenter.class);
 

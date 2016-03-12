@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards;
 
+import com.triangleleft.flashcards.dagger.IComponent;
 import com.triangleleft.flashcards.service.IVocabularWord;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
@@ -8,6 +9,7 @@ import com.triangleleft.flashcards.vocab.VocabularWordFragment;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -85,11 +87,19 @@ public class MainActivity extends BaseActivity
         //showList();
     }
 
+    @NonNull
     @Override
-    protected IPresenter buildPresenter() {
+    protected IComponent buildComponent() {
         return null;
     }
 
+    @NonNull
+    @Override
+    protected IPresenter getPresenter() {
+        return null;
+    }
+
+    @NonNull
     @Override
     protected IView getView() {
         return null;

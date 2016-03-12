@@ -5,7 +5,7 @@ import com.triangleleft.flashcards.ui.login.view.ILoginView;
 
 import android.support.annotation.NonNull;
 
-public interface ILoginPresenter extends IPresenter<ILoginView, ILoginPresenterState> {
+public interface ILoginPresenter extends IPresenter<ILoginView> {
 
     void onLoginChanged(@NonNull String login);
 

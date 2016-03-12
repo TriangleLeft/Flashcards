@@ -7,7 +7,6 @@ import com.triangleleft.flashcards.android.SimpleTextWatcher;
 import com.triangleleft.flashcards.dagger.LoginActivityComponent;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenterState;
 import com.triangleleft.flashcards.ui.login.view.ILoginView;
 import com.triangleleft.flashcards.ui.login.view.LoginViewState;
 
@@ -32,7 +31,7 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity<ILoginView, ILoginPresenterState, ILoginPresenter>
+public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginView, ILoginPresenter>
         implements ILoginView {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
@@ -47,17 +46,15 @@ public class LoginActivity extends BaseActivity<ILoginView, ILoginPresenterState
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
     Button loginButton;
-    private LoginActivityComponent component;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
-        component = getApplicationComponent().getApplication().buildLoginActivityComponent();
-        component.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        getComponent().inject(this);
 
         loginView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
@@ -73,21 +70,25 @@ public class LoginActivity extends BaseActivity<ILoginView, ILoginPresenterState
         });
     }
 
+    @NonNull
     @Override
-    protected ILoginPresenter buildPresenter() {
-        logger.debug("buildPresenter() called");
-        return component.loginPresenter();
+    protected LoginActivityComponent buildComponent() {
+        logger.debug("buildComponent() called");
+        return getApplicationComponent().getApplication().buildLoginActivityComponent();
     }
 
+    @NonNull
+    @Override
+    protected ILoginPresenter getPresenter() {
+        logger.debug("getPresenter() called");
+        return presenter;
+    }
+
+    @NonNull
     @Override
     protected ILoginView getView() {
         logger.debug("getView() called");
         return this;
-    }
-
-    public LoginActivityComponent getComponent() {
-        logger.debug("getComponent() called");
-        return component;
     }
 
     @Override

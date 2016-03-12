@@ -8,7 +8,7 @@ import dagger.Component;
 
 @ActivityScope
 @Component(dependencies = ApplicationComponent.class, modules = LoginActivityModule.class)
-public interface LoginActivityComponent {
+public interface LoginActivityComponent extends IComponent {
 
     ILoginPresenter loginPresenter();
 

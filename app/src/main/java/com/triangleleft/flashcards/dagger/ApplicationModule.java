@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.dagger;
 
 import com.triangleleft.flashcards.FlashcardsApplication;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
-import com.triangleleft.flashcards.ui.common.presenter.PresenterManager;
+import com.triangleleft.flashcards.ui.common.presenter.ComponentManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -35,7 +35,7 @@ public class ApplicationModule {
 
     @ApplicationScope
     @Provides
-    public PresenterManager presenterManager() {
-        return new PresenterManager(10, 1, TimeUnit.MINUTES);
+    public ComponentManager presenterManager() {
+        return new ComponentManager(10, 1, TimeUnit.MINUTES);
     }
 }

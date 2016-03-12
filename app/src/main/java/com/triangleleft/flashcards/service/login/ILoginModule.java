@@ -4,4 +4,6 @@ import com.triangleleft.flashcards.service.provider.IProvider;
 
 public interface ILoginModule extends IProvider<ILoginRequest, ILoginResult> {
 
+    boolean isLogged();
+
 }
