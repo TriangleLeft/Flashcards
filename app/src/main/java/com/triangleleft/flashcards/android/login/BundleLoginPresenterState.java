@@ -3,8 +3,8 @@ package com.triangleleft.flashcards.android.login;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
-import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenterState;
-import com.triangleleft.flashcards.ui.login.view.LoginViewState;
+import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenterState;
+import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

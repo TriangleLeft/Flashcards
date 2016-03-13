@@ -1,21 +1,21 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.provider.AbstractProvider;
+import com.triangleleft.flashcards.service.error.CommonError;
+import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
-import com.triangleleft.flashcards.service.error.CommonError;
-import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.login.SimpleLoginResult;
+import com.triangleleft.flashcards.service.provider.AbstractProvider;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
+import com.triangleleft.flashcards.util.IPersistentStorage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
-
-import javax.inject.Inject;
+import android.support.annotation.Nullable;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,12 +25,16 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
 
 
     private static final Logger log = LoggerFactory.getLogger(RestLoginModule.class);
+    private static final String LOGIN_KEY = "RestLoginModule:loginKey";
 
     private final IDuolingoRest service;
+    private final IPersistentStorage storage;
+    private LoginStatus loginStatus;
 
-    @Inject
-    public RestLoginModule(IDuolingoRest service) {
+    public RestLoginModule(@NonNull IDuolingoRest service, @NonNull IPersistentStorage storage) {
         this.service = service;
+        this.storage = storage;
+        loginStatus = storage.get(LOGIN_KEY, LoginStatus.class, LoginStatus.NOT_LOGGED);
     }
 
     @Override
@@ -45,9 +49,27 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
 
     }
 
+    @NonNull
     @Override
-    public boolean isLogged() {
-        return false;
+    public LoginStatus getLoginStatus() {
+        return loginStatus;
+    }
+
+    private void setLoginStatus(@NonNull LoginStatus status) {
+        loginStatus = status;
+        storage.put(LOGIN_KEY, status);
+    }
+
+    @Override
+    protected void notifyResult(@NonNull ILoginRequest request, @Nullable ILoginResult result,
+                                @Nullable CommonError error) {
+        if (result != null) {
+            setLoginStatus(result.getResult());
+        } else if (error != null) {
+            setLoginStatus(LoginStatus.NOT_LOGGED);
+        }
+        // Case when both result and error are null is handled by parent
+        super.notifyResult(request, result, error);
     }
 
     private class LoginResponseCallback implements Callback<LoginResponseModel> {

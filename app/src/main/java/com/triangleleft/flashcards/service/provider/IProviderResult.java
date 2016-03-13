@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.service.provider;
 
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 
 public interface IProviderResult<T> {
 
-    @Nullable
+    @NonNull
     T getResult();
 }

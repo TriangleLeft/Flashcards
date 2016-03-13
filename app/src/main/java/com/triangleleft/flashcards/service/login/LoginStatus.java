@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.service.login;
 
 public enum LoginStatus {
-    LOGGED
+    LOGGED,
+    NOT_LOGGED
 }

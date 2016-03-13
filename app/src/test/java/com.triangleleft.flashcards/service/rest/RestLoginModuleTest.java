@@ -3,11 +3,11 @@ package com.triangleleft.flashcards.service.rest;
 import com.google.gson.Gson;
 
 import com.triangleleft.flashcards.util.SystemOutTree;
-import com.triangleleft.flashcards.dagger.ApplicationComponent;
-import com.triangleleft.flashcards.dagger.ApplicationModule;
+import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
+import com.triangleleft.flashcards.dagger.module.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerApplicationComponent;
-import com.triangleleft.flashcards.dagger.NetModule;
-import com.triangleleft.flashcards.dagger.ServiceModule;
+import com.triangleleft.flashcards.dagger.module.NetModule;
+import com.triangleleft.flashcards.dagger.module.ServiceModule;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;

@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.vocab;
 
-import com.triangleleft.flashcards.MainActivity;
+import com.triangleleft.flashcards.android.main.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.IVocabularModule;
 import com.triangleleft.flashcards.service.IVocabularWord;

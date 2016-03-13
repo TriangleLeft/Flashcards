@@ -7,9 +7,9 @@ import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.provider.IListener;
-import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.ui.login.view.ILoginView;
-import com.triangleleft.flashcards.ui.login.view.LoginViewState;
+import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
+import com.triangleleft.flashcards.mvp.login.view.ILoginView;
+import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
 
 import org.junit.Before;
 import org.junit.BeforeClass;

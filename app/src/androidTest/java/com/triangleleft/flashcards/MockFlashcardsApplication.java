@@ -1,16 +1,17 @@
 package com.triangleleft.flashcards;
 
-import com.triangleleft.flashcards.dagger.ApplicationComponent;
-import com.triangleleft.flashcards.dagger.ApplicationModule;
+import com.triangleleft.flashcards.android.FlashcardsApplication;
+import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
+import com.triangleleft.flashcards.dagger.module.ApplicationModule;
 import com.triangleleft.flashcards.dagger.DaggerApplicationComponent;
 import com.triangleleft.flashcards.dagger.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.dagger.LoginActivityComponent;
-import com.triangleleft.flashcards.dagger.LoginActivityModule;
-import com.triangleleft.flashcards.dagger.NetModule;
-import com.triangleleft.flashcards.dagger.ServiceModule;
+import com.triangleleft.flashcards.dagger.component.LoginActivityComponent;
+import com.triangleleft.flashcards.dagger.module.LoginActivityModule;
+import com.triangleleft.flashcards.dagger.module.NetModule;
+import com.triangleleft.flashcards.dagger.module.ServiceModule;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.rest.IDuolingoRest;
-import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
+import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
 
 import org.mockito.Mockito;
 

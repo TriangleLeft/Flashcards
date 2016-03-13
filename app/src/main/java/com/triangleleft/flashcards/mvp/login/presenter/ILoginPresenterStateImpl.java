@@ -1,60 +1,56 @@
 package com.triangleleft.flashcards.mvp.login.presenter;
 
-import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class MemoryLoginPresenterState implements ILoginPresenterState {
-    private LoginViewState state;
-    private Credentials credentials;
-    private CommonError error;
-    private ILoginRequest request;
-
-    @Override
-    public void setViewState(@NonNull LoginViewState state) {
-        this.state = state;
-    }
+public class ILoginPresenterStateImpl implements ILoginPresenterState {
 
     @NonNull
     @Override
     public LoginViewState getViewState() {
-        return state;
+        return null;
     }
 
     @Override
     public void setCredentials(@NonNull Credentials credentials) {
-        this.credentials = credentials;
+
     }
 
     @NonNull
     @Override
     public Credentials getCredentials() {
-        return credentials;
+        return null;
     }
 
     @Override
     public void setError(@Nullable CommonError error) {
-        this.error = error;
+
     }
 
     @Nullable
     @Override
     public CommonError getError() {
-        return error;
+        return null;
     }
 
     @Override
     public void setRequest(@Nullable ILoginRequest loginRequest) {
-        this.request = loginRequest;
+
     }
 
     @Nullable
     @Override
     public ILoginRequest getRequest() {
-        return request;
+        return null;
+    }
+
+    @Override
+    public void setViewState(@NonNull LoginViewState state) {
+
     }
 }

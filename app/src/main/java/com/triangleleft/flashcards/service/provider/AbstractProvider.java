@@ -89,6 +89,9 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
     protected void notifyResult(@NonNull Request request, @Nullable Result result, @Nullable CommonError error) {
         logger.debug("notifyResult() called with: request = [{}], result = [{}], error = [{}]", request, result, error);
 
+        if (result == null && error == null) {
+            throw new IllegalArgumentException("Result and error cannot be null at the same time");
+        }
         String tag = request.getTag();
         if (!requestMap.containsKey(tag)) {
             throw new UnknownRequestException(tag);

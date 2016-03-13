@@ -1,6 +1,6 @@
-package com.triangleleft.flashcards.ui.common.presenter;
+package com.triangleleft.flashcards.mvp.common.presenter;
 
-import com.triangleleft.flashcards.ui.common.view.IView;
+import com.triangleleft.flashcards.mvp.common.view.IView;
 
 import org.junit.Rule;
 import org.junit.Test;

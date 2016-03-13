@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.android.login;
 
-import com.triangleleft.flashcards.BaseActivity;
-import com.triangleleft.flashcards.MainActivity;
+import com.triangleleft.flashcards.android.BaseActivity;
+import com.triangleleft.flashcards.android.main.MainActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.SimpleTextWatcher;
-import com.triangleleft.flashcards.dagger.LoginActivityComponent;
+import com.triangleleft.flashcards.dagger.component.LoginActivityComponent;
 import com.triangleleft.flashcards.service.login.Credentials;
-import com.triangleleft.flashcards.ui.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.ui.login.view.ILoginView;
-import com.triangleleft.flashcards.ui.login.view.LoginViewState;
+import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
+import com.triangleleft.flashcards.mvp.login.view.ILoginView;
+import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
                 presenter.onPasswordChanged(passwordView.getText().toString());
             }
         });
+        getPresenter().onBind(this);
     }
 
     @NonNull
@@ -96,10 +97,10 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         logger.debug("setState() called with: state = [{}]", state);
         switch (state) {
             case ENTER_CREDENTIAL:
-                flipperView.setDisplayedChild(1);
+                flipperView.setDisplayedChild(0);
                 break;
             case PROGRESS:
-                flipperView.setDisplayedChild(0);
+                flipperView.setDisplayedChild(1);
                 break;
             default:
                 throw new IllegalStateException("Unknown state " + state.name());

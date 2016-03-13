@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.service.login;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 public class SimpleLoginResult implements ILoginResult {
@@ -13,6 +14,7 @@ public class SimpleLoginResult implements ILoginResult {
         this.status = status;
     }
 
+    @NonNull
     @Override
     public LoginStatus getResult() {
         return status;
