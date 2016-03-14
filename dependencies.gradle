@@ -1,6 +1,12 @@
-ext.ver = [
-        DEXMAKER: ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
-                   "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
-                   "com.github.crittercism.dexmaker:dexmaker-mockito:f8e7c23e41"
-        ]
+def SUPPORT_VERSION = '23.2.1'
+ext.dep = [
+        DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
+                             "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
+                             "com.github.crittercism.dexmaker:dexmaker-mockito:f8e7c23e41"
+        ],
+        SUPPORT           : ["com.android.support:appcompat-v7:$SUPPORT_VERSION",
+                             "com.android.support:design:$SUPPORT_VERSION",
+                             "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
+        ],
+        SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION"
 ]

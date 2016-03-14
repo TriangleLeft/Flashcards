@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply from: '../dependencies.gradle'
+
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.triangleleft.flashcards"
@@ -36,20 +36,20 @@ android {
 
 final DAGGER_VERSION = '2.0.1'
 
-
+apply from: '../dependencies.gradle'
 
 dependencies {
 
     compile 'com.google.code.gson:gson:2.4'
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
+
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.triangleleft.assertdialog:assert-dialog:0.8.5'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
+    compile dep.SUPPORT
+    compile dep.SUPPORT_ANNOTATION
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'javax.inject:javax.inject:1'
@@ -62,23 +62,24 @@ dependencies {
     apt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
     provided 'javax.annotation:jsr250-api:1.0'
 
+    androidTestCompile dep.SUPPORT_ANNOTATION
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile ver.DEXMAKER
+    androidTestCompile dep.DEXMAKER
     androidTestCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support:support-annotations:23.0.1'
     androidTestCompile 'com.android.support.test:runner:0.4.1'
     androidTestCompile 'com.android.support.test:rules:0.4.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
+    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+
+    testCompile dep.SUPPORT_ANNOTATION
     testCompile 'org.mockito:mockito-core:1.10.19'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.android.support:support-annotations:23.0.1'
     testCompile 'com.android.support.test:runner:0.4.1'
     testCompile 'com.android.support.test:rules:0.4.1'
     testCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
     testCompile "org.robolectric:robolectric:3.0"
 
-    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 
 }

@@ -9,7 +9,5 @@ public interface IPresenter<View extends IView> {
 
     void onUnbind();
 
-    void onCreate();
-
     void onDestroy();
 }

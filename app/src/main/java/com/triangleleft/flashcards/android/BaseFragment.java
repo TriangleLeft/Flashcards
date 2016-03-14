@@ -11,14 +11,14 @@ import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
 
-public abstract class BaseActivity<Component extends IComponent, View extends IView,
-        Presenter extends IPresenter<View>> extends AppCompatActivity {
+public abstract class BaseFragment<Component extends IComponent, View extends IView,
+        Presenter extends IPresenter<View>> extends Fragment {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseFragment.class);
     private static final String KEY_COMPONENT_ID = "keyComponentId";
 
     ComponentManager componentManager;
@@ -29,9 +29,9 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     Presenter presenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        logger.debug("onActivityCreated() called with: savedInstanceState = [{}]", savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
 
         componentManager = getApplicationComponent().componentManager();
 
@@ -51,21 +51,21 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     protected abstract void inject();
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         logger.debug("onResume() called");
         super.onResume();
         getPresenter().onBind(getMvpView());
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         logger.debug("onPause() called");
         super.onPause();
         getPresenter().onUnbind();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
         super.onSaveInstanceState(outState);
         long componentId = componentManager.saveComponent(getComponent());
@@ -73,18 +73,18 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
         getPresenter().onDestroy();
     }
 
     protected ApplicationComponent getApplicationComponent() {
-        return ((FlashcardsApplication) getApplication()).getComponent();
+        return ((FlashcardsApplication) getActivity().getApplication()).getComponent();
     }
 
     @NonNull
-    public Component getComponent() {
+    protected Component getComponent() {
         return component;
     }
 

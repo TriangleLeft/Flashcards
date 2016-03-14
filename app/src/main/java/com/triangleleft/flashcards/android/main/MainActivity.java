@@ -2,12 +2,12 @@ package com.triangleleft.flashcards.android.main;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseActivity;
-import com.triangleleft.flashcards.dagger.component.IComponent;
+import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
+import com.triangleleft.flashcards.mvp.main.presenter.IMainPresenter;
+import com.triangleleft.flashcards.mvp.main.view.IMainView;
 import com.triangleleft.flashcards.service.IVocabularWord;
-import com.triangleleft.flashcards.mvp.common.presenter.IPresenter;
-import com.triangleleft.flashcards.mvp.common.view.IView;
-import com.triangleleft.flashcards.vocab.VocabularListFragment;
-import com.triangleleft.flashcards.vocab.VocabularWordFragment;
+import com.triangleleft.flashcards.android.vocabular.VocabularListFragment;
+import com.triangleleft.flashcards.android.vocabular.VocabularWordFragment;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
@@ -26,8 +26,8 @@ import android.widget.RelativeLayout;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity<MainActivityComponent, IMainView, IMainPresenter>
+        implements IMainView, NavigationView.OnNavigationItemSelectedListener {
 
     private VocabularWordFragment wordFragment;
 
@@ -37,6 +37,8 @@ public class MainActivity extends BaseActivity
 
     @Bind(R.id.main_container)
     RelativeLayout container;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private ActionBarDrawerToggle toggle;
     private DrawerArrowDrawable arrowDrawable;
 
@@ -46,7 +48,6 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -55,7 +56,7 @@ public class MainActivity extends BaseActivity
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 //        getSupportActionBar().setHomeButtonEnabled(false);
 
-        getSupportActionBar().setTitle("Haro!");
+        toolbar.setTitle("Haro!");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -89,22 +90,26 @@ public class MainActivity extends BaseActivity
         //showList();
     }
 
-    @NonNull
     @Override
-    protected IComponent buildComponent() {
-        return null;
+    protected void inject() {
+        getComponent().inject(this);
     }
 
     @NonNull
     @Override
-    protected IPresenter getPresenter() {
-        return null;
+    protected MainActivityComponent buildComponent() {
+        return getApplicationComponent().getApplication().buildMainActivityComponent();
     }
 
     @NonNull
     @Override
-    protected IView getView() {
-        return null;
+    protected IMainView getMvpView() {
+        return this;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        toolbar.setTitle(title);
     }
 
     private void showList() {

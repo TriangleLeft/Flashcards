@@ -75,12 +75,6 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
     }
 
     @Override
-    public void onCreate() {
-        logger.debug("onCreate() called");
-        // TODO: check whether we need to login or not
-    }
-
-    @Override
     public void onBind(@NonNull ILoginView view) {
         super.onBind(view);
         //  setCurrentState(LoginViewState.ENTER_CREDENTIAL);

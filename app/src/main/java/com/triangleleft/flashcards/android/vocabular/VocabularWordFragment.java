@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.vocab;
+package com.triangleleft.flashcards.android.vocabular;
 
 import com.triangleleft.flashcards.android.main.MainActivity;
 import com.triangleleft.flashcards.R;

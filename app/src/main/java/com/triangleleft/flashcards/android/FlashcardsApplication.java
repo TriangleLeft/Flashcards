@@ -4,10 +4,16 @@ import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
 import com.triangleleft.flashcards.dagger.component.DaggerApplicationComponent;
 import com.triangleleft.flashcards.dagger.component.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.dagger.component.DaggerMainActivityComponent;
+import com.triangleleft.flashcards.dagger.component.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.dagger.component.LoginActivityComponent;
+import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
+import com.triangleleft.flashcards.dagger.component.VocabularListComponent;
 import com.triangleleft.flashcards.dagger.module.ApplicationModule;
 import com.triangleleft.flashcards.dagger.module.LoginActivityModule;
+import com.triangleleft.flashcards.dagger.module.MainActivityModule;
 import com.triangleleft.flashcards.dagger.module.NetModule;
+import com.triangleleft.flashcards.dagger.module.VocabularListModule;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
@@ -50,5 +56,15 @@ public class FlashcardsApplication extends Application {
     public LoginActivityComponent buildLoginActivityComponent() {
         return DaggerLoginActivityComponent.builder().applicationComponent(getComponent())
                 .loginActivityModule(new LoginActivityModule()).build();
+    }
+
+    public MainActivityComponent buildMainActivityComponent() {
+        return DaggerMainActivityComponent.builder().applicationComponent(getComponent())
+                .mainActivityModule(new MainActivityModule()).build();
+    }
+
+    public VocabularListComponent buildVocabularListComponent(MainActivityComponent component) {
+        return DaggerVocabularListComponent.builder().mainActivityComponent(component)
+                .vocabularListModule(new VocabularListModule()).build();
     }
 }

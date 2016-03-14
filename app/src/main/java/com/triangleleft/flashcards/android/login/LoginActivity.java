@@ -54,8 +54,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        getComponent().inject(this);
-
         loginView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onChanged() {
@@ -69,6 +67,11 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
             }
         });
         getPresenter().onBind(this);
+    }
+
+    @Override
+    protected void inject() {
+        getComponent().inject(this);
     }
 
     @NonNull
@@ -87,8 +90,8 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @NonNull
     @Override
-    protected ILoginView getView() {
-        logger.debug("getView() called");
+    protected ILoginView getMvpView() {
+        logger.debug("getMvpView() called");
         return this;
     }
 

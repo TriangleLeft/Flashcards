@@ -34,6 +34,10 @@ public abstract class AbstractPresenter<View extends IView>
         viewDelegate.onUnbind();
     }
 
+    @Override
+    public void onDestroy() {
+        // Do nothing
+    }
 
     @NonNull
     public View getView() {
