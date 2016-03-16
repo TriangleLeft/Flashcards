@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.mvp.login.presenter;
 
+import com.triangleleft.flashcards.mvp.login.view.ILoginPresenterState;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.error.CommonError;

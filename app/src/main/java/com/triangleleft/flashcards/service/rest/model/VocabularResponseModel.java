@@ -2,10 +2,11 @@ package com.triangleleft.flashcards.service.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import android.os.Parcel;
 
+import java.util.Collections;
 import java.util.List;
 
 public class VocabularResponseModel {
@@ -19,7 +20,11 @@ public class VocabularResponseModel {
     @SerializedName("vocab_overview")
     public List<VocabularWordModel> wordList;
 
-    public class VocabularWordModel implements IVocabularWord {
+    public List<IVocabularWord> getWords() {
+        return Collections.unmodifiableList(wordList);
+    }
+
+    public static class VocabularWordModel implements IVocabularWord {
         @SerializedName("normalized_string")
         public String normalizedString;
         @SerializedName("strength_bars")
@@ -44,8 +49,29 @@ public class VocabularResponseModel {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-
+            dest.writeString(this.normalizedString);
+            dest.writeInt(this.strengthBars);
+            dest.writeString(this.wordString);
         }
+
+        public VocabularWordModel() {
+        }
+
+        protected VocabularWordModel(Parcel in) {
+            this.normalizedString = in.readString();
+            this.strengthBars = in.readInt();
+            this.wordString = in.readString();
+        }
+
+        public static final Creator<VocabularWordModel> CREATOR = new Creator<VocabularWordModel>() {
+            public VocabularWordModel createFromParcel(Parcel source) {
+                return new VocabularWordModel(source);
+            }
+
+            public VocabularWordModel[] newArray(int size) {
+                return new VocabularWordModel[size];
+            }
+        };
     }
 
 

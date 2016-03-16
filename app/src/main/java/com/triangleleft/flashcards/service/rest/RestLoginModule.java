@@ -6,8 +6,8 @@ import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
-import com.triangleleft.flashcards.service.login.SimpleLoginResult;
 import com.triangleleft.flashcards.service.provider.AbstractProvider;
+import com.triangleleft.flashcards.service.provider.SimpleProviderResult;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
@@ -18,7 +18,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResult> implements ILoginModule {
@@ -72,23 +71,21 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
         super.notifyResult(request, result, error);
     }
 
-    private class LoginResponseCallback implements Callback<LoginResponseModel> {
-
-        private final ILoginRequest request;
+    private class LoginResponseCallback extends AbstractCallback<LoginResponseModel> {
 
         public LoginResponseCallback(@NonNull ILoginRequest request) {
-            this.request = request;
+            super(request);
         }
 
         @Override
         public void onResponse(Call<LoginResponseModel> call, Response<LoginResponseModel> response) {
             log.debug("onResponse() called with: call = [{}], response = [{}]", call, response);
-            SimpleLoginResult result = null;
+            ILoginResult result = null;
             CommonError error = null;
             if (response.isSuccess()) {
                 LoginResponseModel model = response.body();
                 if (model.isSuccess()) {
-                    result = new SimpleLoginResult(LoginStatus.LOGGED);
+                    result = (ILoginResult) new SimpleProviderResult<>(LoginStatus.LOGGED);
                 } else {
                     error = model.buildError();
                 }
@@ -97,13 +94,7 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
                 error = new CommonError(ErrorType.SERVER, response.message());
             }
 
-            notifyResult(request, result, error);
-        }
-
-        @Override
-        public void onFailure(Call<LoginResponseModel> call, Throwable t) {
-            log.debug("onFailure() called with: call = [{}], t = [{}]", call, t);
-            notifyResult(request, null, CommonError.fromThrowable(t));
+            notifyResult(getRequest(), result, error);
         }
     }
 

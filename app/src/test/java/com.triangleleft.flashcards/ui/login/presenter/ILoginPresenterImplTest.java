@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.mvp.login.presenter;
 
+import com.triangleleft.flashcards.mvp.login.view.ILoginPresenterState;
 import com.triangleleft.flashcards.util.SystemOutTree;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.ErrorType;

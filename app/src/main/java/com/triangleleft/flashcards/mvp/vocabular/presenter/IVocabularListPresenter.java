@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.mvp.vocabular.presenter;
 
 import com.triangleleft.flashcards.mvp.common.presenter.IPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListView;
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import android.support.annotation.NonNull;
 

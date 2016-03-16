@@ -5,9 +5,13 @@ import com.triangleleft.flashcards.android.BaseActivity;
 import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
 import com.triangleleft.flashcards.mvp.main.presenter.IMainPresenter;
 import com.triangleleft.flashcards.mvp.main.view.IMainView;
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.mvp.main.view.MainViewPage;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 import com.triangleleft.flashcards.android.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.android.vocabular.VocabularWordFragment;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
@@ -29,7 +33,11 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity<MainActivityComponent, IMainView, IMainPresenter>
         implements IMainView, NavigationView.OnNavigationItemSelectedListener {
 
+    private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
+
     private VocabularWordFragment wordFragment;
+    private VocabularListFragment vocabularListFragment;
+    private VocabularWordFragment vocabularWordFragment;
 
     public interface IBackPressable {
         void onBackPressed();
@@ -39,6 +47,10 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
     RelativeLayout container;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
     private DrawerArrowDrawable arrowDrawable;
 
@@ -58,9 +70,8 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
 
         toolbar.setTitle("Haro!");
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open,
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -68,26 +79,35 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
                 super.onDrawerSlide(drawerView, 0);
             }
         };
-        drawer.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         arrowDrawable = (DrawerArrowDrawable) toolbar.getNavigationIcon();
 
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toggle.setToolbarNavigationClickListener(v -> onBackPressed());
 
         toggle.setHomeAsUpIndicator(arrowDrawable);
         toggle.setDrawerIndicatorEnabled(true);
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //showList();
+        // We should always show first vocabular list page
+        initPages();
+    }
+
+    private void initPages() {
+        vocabularListFragment = new VocabularListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
+                .commit();
+
+        vocabularWordFragment = new VocabularWordFragment();
+        // Hide word fragment
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
+                .hide(vocabularWordFragment)
+                .commit();
     }
 
     @Override
@@ -112,17 +132,29 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
         toolbar.setTitle(title);
     }
 
-    private void showList() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, new VocabularListFragment(), VocabularListFragment.TAG)
-                .commit();
+    @Override
+    public void setPage(@NonNull MainViewPage state) {
+        logger.debug("setState() called with: state = [{}]", state);
+        switch (state) {
+            case LIST:
+                getSupportFragmentManager().beginTransaction()
+                        .detach(vocabularWordFragment)
+                        .commit();
+                break;
+            case WORD:
+                getSupportFragmentManager().beginTransaction()
+                        .attach(vocabularWordFragment)
+                        .commit();
+                break;
+            default:
+                throw new IllegalStateException("Unknown state " + state.name());
+        }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 toggle.setDrawerIndicatorEnabled(true);
@@ -132,28 +164,13 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camara) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

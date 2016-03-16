@@ -11,6 +11,9 @@ import android.support.annotation.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class AbstractProvider<Request extends IProviderRequest, Result extends IProviderResult<?>>
@@ -150,6 +153,26 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
 
         public void setError(CommonError error) {
             this.error = error;
+        }
+    }
+
+    protected abstract class AbstractCallback<T> implements Callback<T> {
+
+        private final Request request;
+
+        public AbstractCallback(@NonNull Request request) {
+            this.request = request;
+        }
+
+        @Override
+        public void onFailure(Call<T> call, Throwable t) {
+            logger.debug("onFailure() called with: call = [{}], t = [{}]", call, t);
+            notifyResult(request, null, CommonError.fromThrowable(t));
+        }
+
+        @NonNull
+        protected Request getRequest() {
+            return request;
         }
     }
 

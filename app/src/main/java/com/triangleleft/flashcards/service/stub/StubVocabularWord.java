@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.stub;
 
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import android.os.Parcel;
 

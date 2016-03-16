@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.mvp.login.presenter;
+package com.triangleleft.flashcards.mvp.login.view;
 
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;

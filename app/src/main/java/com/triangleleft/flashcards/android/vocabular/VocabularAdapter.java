@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.android.vocabular;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

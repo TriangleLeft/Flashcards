@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.mvp.vocabular.view;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import android.support.annotation.NonNull;
 

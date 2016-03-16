@@ -29,7 +29,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/main_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,7 +37,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".android.main.MainActivity">
 
-        </RelativeLayout>
+        </FrameLayout>
 
 
     </android.support.design.widget.CoordinatorLayout>

@@ -9,7 +9,7 @@ import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
 import com.triangleleft.flashcards.dagger.component.VocabularListComponent;
 import com.triangleleft.flashcards.mvp.vocabular.presenter.IVocabularListPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListView;
-import com.triangleleft.flashcards.service.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +68,12 @@ public class VocabularListFragment
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     @Override
