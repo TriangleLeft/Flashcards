@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FAFAFA" />
-
-    <include android:id="@+id/list_item" layout="@layout/vocabular_card" />
+    <TextView
+        android:id="@+id/fragment_vocabular_word_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="8dp"
+        android:text="Error" />
 
 </RelativeLayout>

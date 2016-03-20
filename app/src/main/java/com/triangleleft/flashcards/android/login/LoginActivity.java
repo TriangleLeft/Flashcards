@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.android.login;
 
-import com.triangleleft.flashcards.android.BaseActivity;
-import com.triangleleft.flashcards.android.main.MainActivity;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.android.BaseActivity;
 import com.triangleleft.flashcards.android.SimpleTextWatcher;
-import com.triangleleft.flashcards.dagger.component.LoginActivityComponent;
-import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.android.main.MainActivity;
+import com.triangleleft.flashcards.mvp.login.di.LoginActivityComponent;
 import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.mvp.login.view.ILoginView;
 import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
+import com.triangleleft.flashcards.service.login.Credentials;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +22,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,8 +34,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
 
-    @Inject
-    ILoginPresenter presenter;
     @Bind(R.id.login)
     EditText loginView;
     @Bind(R.id.password)
@@ -57,16 +53,18 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         loginView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onChanged() {
-                presenter.onLoginChanged(loginView.getText().toString());
+                getPresenter().onLoginChanged(loginView.getText().toString());
             }
         });
         passwordView.addTextChangedListener(new SimpleTextWatcher() {
             @Override
             public void onChanged() {
-                presenter.onPasswordChanged(passwordView.getText().toString());
+                getPresenter().onPasswordChanged(passwordView.getText().toString());
             }
         });
-        getPresenter().onBind(this);
+
+        loginView.setText("lekz112@gmail.com");
+        passwordView.setText("samsung112");
     }
 
     @Override
@@ -79,13 +77,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     protected LoginActivityComponent buildComponent() {
         logger.debug("buildComponent() called");
         return getApplicationComponent().getApplication().buildLoginActivityComponent();
-    }
-
-    @NonNull
-    @Override
-    protected ILoginPresenter getPresenter() {
-        logger.debug("getPresenter() called");
-        return presenter;
     }
 
     @NonNull
@@ -142,7 +133,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @OnClick(R.id.login_button)
     protected void onLoginClick() {
         logger.debug("onLoginClick() called");
-        presenter.onLoginClick();
+        getPresenter().onLoginClick();
     }
 
     @Override

@@ -2,13 +2,12 @@ package com.triangleleft.flashcards.android.main;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseActivity;
-import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
+import com.triangleleft.flashcards.android.vocabular.VocabularListFragment;
+import com.triangleleft.flashcards.android.vocabular.VocabularWordFragment;
+import com.triangleleft.flashcards.mvp.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.presenter.IMainPresenter;
 import com.triangleleft.flashcards.mvp.main.view.IMainView;
 import com.triangleleft.flashcards.mvp.main.view.MainViewPage;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
-import com.triangleleft.flashcards.android.vocabular.VocabularListFragment;
-import com.triangleleft.flashcards.android.vocabular.VocabularWordFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,27 +23,22 @@ import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.RelativeLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivity<MainActivityComponent, IMainView, IMainPresenter>
+public class MainActivity extends BaseActivity<MainPageComponent, IMainView, IMainPresenter>
         implements IMainView, NavigationView.OnNavigationItemSelectedListener {
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
 
-    private VocabularWordFragment wordFragment;
     private VocabularListFragment vocabularListFragment;
     private VocabularWordFragment vocabularWordFragment;
 
-    public interface IBackPressable {
-        void onBackPressed();
-    }
-
     @Bind(R.id.main_container)
-    RelativeLayout container;
+    ViewGroup container;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.drawer_layout)
@@ -61,13 +55,6 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
-//        getSupportActionBar().setHomeButtonEnabled(true);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//        getSupportActionBar().setHomeButtonEnabled(false);
-
         toolbar.setTitle("Haro!");
 
         toggle = new ActionBarDrawerToggle(
@@ -99,14 +86,14 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
     private void initPages() {
         vocabularListFragment = new VocabularListFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
+                .add(R.id.main_container, vocabularListFragment, null)
                 .commit();
 
         vocabularWordFragment = new VocabularWordFragment();
         // Hide word fragment
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
-                .hide(vocabularWordFragment)
+                .add(R.id.main_container, vocabularWordFragment, null)
+                .detach(vocabularWordFragment)
                 .commit();
     }
 
@@ -117,7 +104,7 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
 
     @NonNull
     @Override
-    protected MainActivityComponent buildComponent() {
+    protected MainPageComponent buildComponent() {
         return getApplicationComponent().getApplication().buildMainActivityComponent();
     }
 
@@ -134,7 +121,7 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
 
     @Override
     public void setPage(@NonNull MainViewPage state) {
-        logger.debug("setState() called with: state = [{}]", state);
+        logger.debug("setPage() called with: state = [{}]", state);
         switch (state) {
             case LIST:
                 getSupportFragmentManager().beginTransaction()
@@ -174,24 +161,24 @@ public class MainActivity extends BaseActivity<MainActivityComponent, IMainView,
         return true;
     }
 
-    public void onWordSelected(View itemView, IVocabularWord word) {
-        toggle.setDrawerIndicatorEnabled(false);
-        playDrawerToggleAnim(arrowDrawable);
-
-        wordFragment = new VocabularWordFragment();
-        int[] screenLocation = new int[2];
-        itemView.getLocationOnScreen(screenLocation);
-        Bundle args = new Bundle();
-        args.putParcelable(VocabularWordFragment.ARGUMENT_WORD, word);
-        args.putIntArray(VocabularWordFragment.KEY_LOCATION, screenLocation);
-        args.putInt(VocabularWordFragment.KEY_TOP, itemView.getTop());
-        args.putInt(VocabularWordFragment.KEY_START_HEIGHT, itemView.getHeight());
-        args.putInt(VocabularWordFragment.KEY_TARGET_HEIGHT, container.getHeight());
-        wordFragment.setArguments(args);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.main_container, wordFragment, VocabularWordFragment.TAG)
-                .addToBackStack(VocabularWordFragment.TAG).commit();
-    }
+//    public void onWordSelected(View itemView, IVocabularWord word) {
+//        toggle.setDrawerIndicatorEnabled(false);
+//        playDrawerToggleAnim(arrowDrawable);
+//
+//        wordFragment = new VocabularWordFragment();
+//        int[] screenLocation = new int[2];
+//        itemView.getLocationOnScreen(screenLocation);
+//        Bundle args = new Bundle();
+//        args.putParcelable(VocabularWordFragment.ARGUMENT_WORD, word);
+//        args.putIntArray(VocabularWordFragment.KEY_LOCATION, screenLocation);
+//        args.putInt(VocabularWordFragment.KEY_TOP, itemView.getTop());
+//        args.putInt(VocabularWordFragment.KEY_START_HEIGHT, itemView.getHeight());
+//        args.putInt(VocabularWordFragment.KEY_TARGET_HEIGHT, container.getHeight());
+//        wordFragment.setArguments(args);
+//        getSupportFragmentManager().beginTransaction()
+//                .add(R.id.main_container, wordFragment, VocabularWordFragment.TAG)
+//                .addToBackStack(VocabularWordFragment.TAG).commit();
+//    }
 
     public static void playDrawerToggleAnim(final DrawerArrowDrawable d) {
         float start = d.getProgress();

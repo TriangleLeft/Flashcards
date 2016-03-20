@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.service.rest;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.error.ErrorType;
 import com.triangleleft.flashcards.service.provider.AbstractProvider;
-import com.triangleleft.flashcards.service.provider.SimpleProviderResult;
 import com.triangleleft.flashcards.service.rest.model.VocabularResponseModel;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularRequest;
@@ -54,7 +53,7 @@ public class RestVocabularModule extends AbstractProvider<IVocabularRequest, IVo
             CommonError error = null;
             if (response.isSuccess()) {
                 VocabularResponseModel model = response.body();
-                result = (IVocabularResult) new SimpleProviderResult<>(model.getWords());
+                result = new IVocabularResultImpl(model.getWords());
             } else {
                 // Non-200 response code, for now, we don't expect them
                 error = new CommonError(ErrorType.SERVER, response.message());

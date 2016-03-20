@@ -46,6 +46,8 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         }
 
         inject();
+        getPresenter().onBind(getMvpView());
+        getPresenter().onCreate();
     }
 
     protected abstract void inject();

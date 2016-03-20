@@ -1,9 +1,11 @@
-package com.triangleleft.flashcards.dagger.module;
+package com.triangleleft.flashcards.mvp.login.di;
 
-import com.triangleleft.flashcards.android.login.LoginViewDelegate;
+import com.triangleleft.flashcards.android.AndroidViewDelegate;
 import com.triangleleft.flashcards.dagger.scope.ActivityScope;
+import com.triangleleft.flashcards.mvp.common.view.IViewDelegate;
 import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
 import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenterImpl;
+import com.triangleleft.flashcards.mvp.login.view.ILoginView;
 import com.triangleleft.flashcards.mvp.login.view.ILoginViewDelegate;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 
@@ -17,13 +19,14 @@ public class LoginActivityModule {
 
     @ActivityScope
     @Provides
-    public ILoginPresenter loginPresenter(@NonNull ILoginModule module, @NonNull ILoginViewDelegate viewDelegate) {
+    public ILoginPresenter loginPresenter(@NonNull ILoginModule module,
+                                          @NonNull IViewDelegate<ILoginView> viewDelegate) {
         return new ILoginPresenterImpl(module, viewDelegate);
     }
 
     @ActivityScope
     @Provides
-    public ILoginViewDelegate loginViewDelegate() {
-        return new LoginViewDelegate();
+    public IViewDelegate<ILoginView> loginViewDelegate() {
+        return new AndroidViewDelegate<>();
     }
 }

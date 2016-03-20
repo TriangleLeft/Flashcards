@@ -7,6 +7,7 @@ import com.triangleleft.flashcards.dagger.module.ServiceModule;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
+import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
 import dagger.Component;
@@ -16,6 +17,8 @@ import dagger.Component;
 public interface ApplicationComponent extends IComponent {
 
     ILoginModule loginModule();
+
+    IVocabularModule vocabularModule();
 
     FlashcardsApplication getApplication();
 

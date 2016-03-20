@@ -3,17 +3,20 @@ package com.triangleleft.flashcards.android;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
 import com.triangleleft.flashcards.dagger.component.DaggerApplicationComponent;
-import com.triangleleft.flashcards.dagger.component.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.dagger.component.DaggerMainActivityComponent;
-import com.triangleleft.flashcards.dagger.component.DaggerVocabularListComponent;
-import com.triangleleft.flashcards.dagger.component.LoginActivityComponent;
-import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
-import com.triangleleft.flashcards.dagger.component.VocabularListComponent;
 import com.triangleleft.flashcards.dagger.module.ApplicationModule;
-import com.triangleleft.flashcards.dagger.module.LoginActivityModule;
-import com.triangleleft.flashcards.dagger.module.MainActivityModule;
 import com.triangleleft.flashcards.dagger.module.NetModule;
-import com.triangleleft.flashcards.dagger.module.VocabularListModule;
+import com.triangleleft.flashcards.mvp.login.di.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.mvp.login.di.LoginActivityComponent;
+import com.triangleleft.flashcards.mvp.login.di.LoginActivityModule;
+import com.triangleleft.flashcards.mvp.main.di.DaggerMainPageComponent;
+import com.triangleleft.flashcards.mvp.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.main.di.MainPageModule;
+import com.triangleleft.flashcards.mvp.vocabular.di.DaggerVocabularListComponent;
+import com.triangleleft.flashcards.mvp.vocabular.di.DaggerVocabularWordComponent;
+import com.triangleleft.flashcards.mvp.vocabular.di.VocabularListComponent;
+import com.triangleleft.flashcards.mvp.vocabular.di.VocabularListModule;
+import com.triangleleft.flashcards.mvp.vocabular.di.VocabularWordComponent;
+import com.triangleleft.flashcards.mvp.vocabular.di.VocabularWordModule;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
@@ -58,13 +61,18 @@ public class FlashcardsApplication extends Application {
                 .loginActivityModule(new LoginActivityModule()).build();
     }
 
-    public MainActivityComponent buildMainActivityComponent() {
-        return DaggerMainActivityComponent.builder().applicationComponent(getComponent())
-                .mainActivityModule(new MainActivityModule()).build();
+    public MainPageComponent buildMainActivityComponent() {
+        return DaggerMainPageComponent.builder().applicationComponent(getComponent())
+                .mainPageModule(new MainPageModule()).build();
     }
 
-    public VocabularListComponent buildVocabularListComponent(MainActivityComponent component) {
-        return DaggerVocabularListComponent.builder().mainActivityComponent(component)
+    public VocabularListComponent buildVocabularListComponent(MainPageComponent component) {
+        return DaggerVocabularListComponent.builder().mainPageComponent(component)
                 .vocabularListModule(new VocabularListModule()).build();
+    }
+
+    public VocabularWordComponent buildVocabularWordComponent(MainPageComponent component) {
+        return DaggerVocabularWordComponent.builder().mainPageComponent(component)
+                .vocabularWordModule(new VocabularWordModule()).build();
     }
 }

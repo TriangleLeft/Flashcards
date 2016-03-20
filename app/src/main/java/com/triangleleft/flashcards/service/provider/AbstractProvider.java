@@ -57,7 +57,8 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
 
     @Override
     public void doRequest(@NonNull Request request, @NonNull IListener<Result> listener) {
-        logger.debug("doRequest() called with: request = [{}], listener = [{}]", request, listener);
+        logger.debug("doRequest() called with: request = [{}], tag = [{}], listener = [{}]", request, request.getTag(),
+                listener);
 
         // Dissalow duplicate requests
         String tag = request.getTag();
@@ -112,7 +113,7 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
 
     protected class RequestInfo {
         private final Request request;
-        private IListener<Result>  listener;
+        private IListener<Result> listener;
         private Result result;
         private CommonError error;
 
@@ -134,7 +135,7 @@ public abstract class AbstractProvider<Request extends IProviderRequest, Result 
         }
 
         @Nullable
-        public IListener<Result>  getListener() {
+        public IListener<Result> getListener() {
             return listener;
         }
 

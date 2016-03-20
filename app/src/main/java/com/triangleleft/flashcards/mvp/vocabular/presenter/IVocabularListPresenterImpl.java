@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.mvp.vocabular.presenter;
 
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
-import com.triangleleft.flashcards.mvp.main.IMainNavigator;
+import com.triangleleft.flashcards.mvp.common.view.IViewDelegate;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
 import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListView;
-import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListViewDelegate;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.provider.IListener;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
@@ -22,16 +22,16 @@ public class IVocabularListPresenterImpl extends AbstractPresenter<IVocabularLis
     private static final Logger logger = LoggerFactory.getLogger(IVocabularListPresenterImpl.class);
 
     private final IVocabularModule vocabularModule;
-    private final IMainNavigator mainNavigator;
+    private final IVocabularNavigator navigator;
     private final IListener<IVocabularResult> vocabularListener = new VocabularListener();
     private IVocabularRequest vocabularRequest;
 
     public IVocabularListPresenterImpl(@NonNull IVocabularModule vocabularModule,
-                                       @NonNull IVocabularListViewDelegate delegate,
-                                       @NonNull IMainNavigator mainNavigator) {
-        super(delegate, delegate);
+                                       @NonNull IViewDelegate<IVocabularListView> delegate,
+                                       @NonNull IVocabularNavigator navigator) {
+        super(delegate);
         this.vocabularModule = vocabularModule;
-        this.mainNavigator = mainNavigator;
+        this.navigator = navigator;
 
         // Start loading
         onRetryClick();
@@ -40,14 +40,15 @@ public class IVocabularListPresenterImpl extends AbstractPresenter<IVocabularLis
     @Override
     public void onWordSelected(@NonNull IVocabularWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
-        mainNavigator.showWord(word);
+        navigator.onWordSelected(word);
     }
 
     @Override
     public void onRetryClick() {
         logger.debug("onRetryClick() called");
-        getView().showProgress();
-        vocabularRequest = () -> System.currentTimeMillis() + "@" + hashCode();
+        getViewDelegate().post(view -> view.showProgress());
+        long time = System.currentTimeMillis();
+        vocabularRequest = () -> time + "@" + hashCode();
         vocabularModule.doRequest(vocabularRequest, vocabularListener);
     }
 
@@ -65,14 +66,14 @@ public class IVocabularListPresenterImpl extends AbstractPresenter<IVocabularLis
         public void onResult(@NonNull IVocabularResult result) {
             logger.debug("onResult() called with: result = [{}]", result);
             vocabularRequest = null;
-            getView().showWords(result.getResult());
+            getViewDelegate().post(view -> view.showWords(result.getResult()));
         }
 
         @Override
         public void onFailure(@NonNull CommonError error) {
             logger.debug("onFailure() called with: error = [{}]", error);
             vocabularRequest = null;
-            getView().showError();
+            getViewDelegate().post(view -> view.showError());
         }
     }
 }

@@ -5,8 +5,8 @@ import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseFragment;
 import com.triangleleft.flashcards.android.main.MainActivity;
-import com.triangleleft.flashcards.dagger.component.MainActivityComponent;
-import com.triangleleft.flashcards.dagger.component.VocabularListComponent;
+import com.triangleleft.flashcards.mvp.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.vocabular.di.VocabularListComponent;
 import com.triangleleft.flashcards.mvp.vocabular.presenter.IVocabularListPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListView;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
@@ -25,8 +25,6 @@ import android.widget.ViewFlipper;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,8 +40,6 @@ public class VocabularListFragment
     private static final int LIST = 1;
     private static final int ERROR = 2;
 
-    @Inject
-    IVocabularListPresenter presenter;
     @Bind(R.id.vocab_list)
     RecyclerView vocabList;
     @Bind(R.id.view_flipper)
@@ -61,7 +57,7 @@ public class VocabularListFragment
         vocabularAdapter = new VocabularAdapter();
         vocabularAdapter.setItemClickListener((viewHolder, position) -> {
             IVocabularWord word = vocabularAdapter.getItem(position);
-            presenter.onWordSelected(word);
+            getPresenter().onWordSelected(word);
         });
         vocabList.setAdapter(vocabularAdapter);
         vocabList.setLayoutManager(
@@ -98,7 +94,7 @@ public class VocabularListFragment
     @OnClick(R.id.button_retry)
     public void onRetryClick() {
         logger.debug("onRetryClick() called");
-        presenter.onRetryClick();
+        getPresenter().onRetryClick();
     }
 
     @Override
@@ -122,7 +118,7 @@ public class VocabularListFragment
     }
 
     @NonNull
-    private MainActivityComponent getMainActivityComponent() {
+    private MainPageComponent getMainActivityComponent() {
         logger.debug("getMainActivityComponent() called");
         Preconditions.checkState(getActivity() != null, "Shouldn't call this while activity is not bound");
         MainActivity activity = (MainActivity) getActivity();

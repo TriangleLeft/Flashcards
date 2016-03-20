@@ -7,7 +7,6 @@ import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.provider.AbstractProvider;
-import com.triangleleft.flashcards.service.provider.SimpleProviderResult;
 import com.triangleleft.flashcards.service.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
@@ -85,7 +84,7 @@ public class RestLoginModule extends AbstractProvider<ILoginRequest, ILoginResul
             if (response.isSuccess()) {
                 LoginResponseModel model = response.body();
                 if (model.isSuccess()) {
-                    result = (ILoginResult) new SimpleProviderResult<>(LoginStatus.LOGGED);
+                    result = new ILoginResultImpl(LoginStatus.LOGGED);
                 } else {
                     error = model.buildError();
                 }

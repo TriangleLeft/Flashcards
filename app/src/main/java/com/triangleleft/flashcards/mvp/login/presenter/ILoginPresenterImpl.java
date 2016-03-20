@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.mvp.login.presenter;
 
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.mvp.common.view.IViewDelegate;
 import com.triangleleft.flashcards.mvp.login.view.ILoginView;
-import com.triangleleft.flashcards.mvp.login.view.ILoginViewDelegate;
 import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
 import com.triangleleft.flashcards.service.error.CommonError;
 import com.triangleleft.flashcards.service.login.Credentials;
@@ -33,15 +33,15 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
     private IListener<ILoginResult> loginListener = new LoginListener();
     private Credentials credentials = new Credentials();
 
-    public ILoginPresenterImpl(@NonNull ILoginModule loginModule, @NonNull ILoginViewDelegate viewDelegate) {
-        super(viewDelegate, viewDelegate);
+    public ILoginPresenterImpl(@NonNull ILoginModule loginModule, @NonNull IViewDelegate<ILoginView> viewDelegate) {
+        super(viewDelegate);
         logger.debug("ILoginPresenterImpl() called with: loginModule = [{}]", loginModule);
         this.loginModule = loginModule;
 
         // If we are already logged, advance immediately.
-        if (loginModule.getLoginStatus() == LoginStatus.LOGGED) {
-            getView().advance();
-        }
+//        if (loginModule.getLoginStatus() == LoginStatus.LOGGED) {
+//            getViewDelegate().post(view -> view.advance());
+//        }
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
         // clear error
         error = null;
         // update view
-        getView().setLoginError(null);
+        getViewDelegate().post(view -> view.setLoginError(null));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
         // clear error
         error = null;
         // update view
-        getView().setPasswordError(null);
+        getViewDelegate().post(view -> view.setPasswordError(null));
     }
 
     @Override
@@ -75,12 +75,6 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
     }
 
     @Override
-    public void onBind(@NonNull ILoginView view) {
-        super.onBind(view);
-        //  setCurrentState(LoginViewState.ENTER_CREDENTIAL);
-    }
-
-    @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
         loginModule.cancelRequest(loginRequest);
@@ -90,16 +84,17 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
     private void handleError(@NonNull CommonError error) {
         this.error = error;
         setCurrentState(LoginViewState.ENTER_CREDENTIAL);
+        String message = error.getMessage();
         // TODO: probably we don't want to rely on messages here and use predefined strings instead
         switch (error.getType()) {
             case LOGIN:
-                getView().setLoginError(error.getMessage());
+                getViewDelegate().post(view -> view.setLoginError(message));
                 break;
             case PASSWORD:
-                getView().setPasswordError(error.getMessage());
+                getViewDelegate().post(view -> view.setPasswordError(message));
                 break;
             default:
-                getView().setGenericError(error.getMessage());
+                getViewDelegate().post(view -> view.setGenericError(message));
                 // Don't save error
                 this.error = null;
                 // TODO: why?
@@ -111,7 +106,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
     private void setCurrentState(@NonNull LoginViewState state) {
         logger.debug("setCurrentState() called with: state = [{}]", state);
         currentState = state;
-        getView().setState(state);
+        getViewDelegate().post(view -> view.setState(state));
     }
 
     private class LoginListener implements IListener<ILoginResult> {
@@ -123,7 +118,7 @@ public class ILoginPresenterImpl extends AbstractPresenter<ILoginView>
 
             checkState(result.getResult() == LoginStatus.LOGGED, "Got unknown status: " + result.getResult());
             // Advance to next screen
-            getView().advance();
+            getViewDelegate().post(view -> view.advance());
         }
 
         @Override

@@ -3,9 +3,16 @@ package com.triangleleft.flashcards.dagger.module;
 import com.triangleleft.flashcards.dagger.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.rest.IDuolingoRest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -22,9 +29,39 @@ public class NetModule {
 
     @ApplicationScope
     @Provides
-    public Retrofit retrofit(HttpUrl url) {
-        return new Retrofit.Builder().baseUrl(url)
+    public Retrofit retrofit(HttpUrl url, OkHttpClient client) {
+        return new Retrofit.Builder().baseUrl(url).client(client)
                 .addConverterFactory(GsonConverterFactory.create()).build();
+    }
+
+    @ApplicationScope
+    @Provides
+    public OkHttpClient client(CookieJar cookieJar) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return new OkHttpClient.Builder().cookieJar(cookieJar).addInterceptor(interceptor).build();
+    }
+
+    @ApplicationScope
+    @Provides
+    public CookieJar cookieJar() {
+        return new CookieJar() {
+            public List<Cookie> cookieList;
+
+            @Override
+            public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+                this.cookieList = cookies;
+            }
+
+            @Override
+            public List<Cookie> loadForRequest(HttpUrl url) {
+                if (cookieList != null) {
+                    return cookieList;
+                } else {
+                    return new ArrayList<>();
+                }
+            }
+        };
     }
 
     @ApplicationScope

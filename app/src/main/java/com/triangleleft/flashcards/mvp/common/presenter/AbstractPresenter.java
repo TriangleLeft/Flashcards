@@ -13,22 +13,25 @@ public abstract class AbstractPresenter<View extends IView>
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractPresenter.class);
     private final IViewDelegate<View> viewDelegate;
-    private final View viewDelegateAsView;
 
-    public AbstractPresenter(@NonNull IViewDelegate<View> viewDelegate, @NonNull View viewDelegateAsView) {
+    public AbstractPresenter(@NonNull IViewDelegate<View> viewDelegate) {
         this.viewDelegate = viewDelegate;
-        this.viewDelegateAsView = viewDelegateAsView;
     }
 
     @Override
-    public void onBind(@NonNull View view) {
+    public void onCreate() {
+        logger.debug("onCreate() called");
+    }
+
+    @Override
+    public final void onBind(@NonNull View view) {
         logger.debug("onBind() called with: view = [{}]", view);
         viewDelegate.onBind(view);
         //     Preconditions.checkState(this.view == null, "Presenter is already bound");
     }
 
     @Override
-    public void onUnbind() {
+    public final void onUnbind() {
         logger.debug("onUnbind() called");
 //        Preconditions.checkState(this.view != null, "Presenter is already unbound");
         viewDelegate.onUnbind();
@@ -36,11 +39,11 @@ public abstract class AbstractPresenter<View extends IView>
 
     @Override
     public void onDestroy() {
-        // Do nothing
+        logger.debug("onDestroy() called");
     }
 
     @NonNull
-    public View getView() {
-        return viewDelegateAsView;
+    public IViewDelegate<View> getViewDelegate() {
+        return viewDelegate;
     }
 }

@@ -1,7 +1,11 @@
 package com.triangleleft.flashcards.android;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
+import com.triangleleft.flashcards.mvp.common.view.IViewAction;
 import com.triangleleft.flashcards.mvp.common.view.IViewDelegate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractViewDelegate<View extends IView> implements IViewDelegate<View> {
+public class AndroidViewDelegate<View extends IView> implements IViewDelegate<View> {
+
+    private static final Logger logger = LoggerFactory.getLogger(AndroidViewDelegate.class);
 
     private View view;
 
@@ -19,6 +25,7 @@ public abstract class AbstractViewDelegate<View extends IView> implements IViewD
 
     @Override
     public synchronized void onBind(@NonNull View view) {
+        logger.debug("onBind() called with: view = [{}]", view);
         this.view = view;
         handler.resume();
     }
@@ -29,11 +36,19 @@ public abstract class AbstractViewDelegate<View extends IView> implements IViewD
 
     @Override
     public synchronized void onUnbind() {
+        logger.debug("onUnbind() called");
         handler.pause();
         this.view = null;
     }
 
-    public Handler getHandler() {
+    @Override
+    public void post(@NonNull IViewAction<View> action) {
+        logger.debug("post() called with: action = [{}]", action);
+        // TODO: I believe this can be made simpler (sendMessage instead of post?)
+        getHandler().post(() -> action.apply(getView()));
+    }
+
+    private Handler getHandler() {
         return handler;
     }
 
