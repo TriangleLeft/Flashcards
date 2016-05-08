@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.android;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
 import com.triangleleft.flashcards.mvp.common.view.IViewAction;
-import com.triangleleft.flashcards.mvp.common.view.IViewDelegate;
+import com.triangleleft.flashcards.mvp.common.view.delegate.IViewDelegate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ public class AndroidViewDelegate<View extends IView> implements IViewDelegate<Vi
 
     @Override
     public synchronized void onBind(@NonNull View view) {
-        logger.debug("onBind() called with: view = [{}]", view);
+        logger.debug("onRebind() called with: view = [{}]", view);
         this.view = view;
         handler.resume();
     }
@@ -43,8 +43,8 @@ public class AndroidViewDelegate<View extends IView> implements IViewDelegate<Vi
 
     @Override
     public void post(@NonNull IViewAction<View> action) {
-        logger.debug("post() called with: action = [{}]", action);
         // TODO: I believe this can be made simpler (sendMessage instead of post?)
+        logger.debug("post() called with: action = [{}], paused = [{}], {}", action, handler.isPaused, this);
         getHandler().post(() -> action.apply(getView()));
     }
 
@@ -56,7 +56,7 @@ public class AndroidViewDelegate<View extends IView> implements IViewDelegate<Vi
 
         private final List<Message> messageQueueBuffer = Collections.synchronizedList(new ArrayList<>());
 
-        private volatile boolean isPaused = false;
+        public volatile boolean isPaused = true;
 
         public synchronized void resume() {
             while (messageQueueBuffer.size() > 0) {
@@ -79,6 +79,13 @@ public class AndroidViewDelegate<View extends IView> implements IViewDelegate<Vi
                 messageQueueBuffer.add(msgCopy);
             } else {
                 msg.getCallback().run();
+            }
+        }
+
+        @Override
+        public void dispatchMessage(Message msg) {
+            if (msg.getCallback() != null) {
+                handleMessage(msg);
             }
         }
     }

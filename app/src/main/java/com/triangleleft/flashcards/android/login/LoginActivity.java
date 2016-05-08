@@ -2,13 +2,13 @@ package com.triangleleft.flashcards.android.login;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseActivity;
-import com.triangleleft.flashcards.android.SimpleTextWatcher;
+import com.triangleleft.flashcards.android.common.CustomEditText;
 import com.triangleleft.flashcards.android.main.MainActivity;
-import com.triangleleft.flashcards.mvp.login.di.LoginActivityComponent;
-import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.mvp.login.view.ILoginView;
-import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
-import com.triangleleft.flashcards.service.login.Credentials;
+import com.triangleleft.flashcards.mvp.login.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.mvp.login.ILoginView;
+import com.triangleleft.flashcards.mvp.login.LoginActivityComponent;
+import com.triangleleft.flashcards.mvp.login.LoginPresenter;
+import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -29,15 +28,15 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginView, ILoginPresenter>
+public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginView, LoginPresenter>
         implements ILoginView {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
 
     @Bind(R.id.login)
-    EditText loginView;
+    CustomEditText loginView;
     @Bind(R.id.password)
-    EditText passwordView;
+    CustomEditText passwordView;
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
@@ -47,24 +46,12 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     protected void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        loginView.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onChanged() {
-                getPresenter().onLoginChanged(loginView.getText().toString());
-            }
-        });
-        passwordView.addTextChangedListener(new SimpleTextWatcher() {
-            @Override
-            public void onChanged() {
-                getPresenter().onPasswordChanged(passwordView.getText().toString());
-            }
-        });
-
-        loginView.setText("lekz112@gmail.com");
-        passwordView.setText("samsung112");
+        loginView.setOnTextChangedListener(newText -> getPresenter().onLoginChanged(newText));
+        passwordView.setOnTextChangedListener(newText -> getPresenter().onPasswordChanged(newText));
     }
 
     @Override
@@ -76,7 +63,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     protected LoginActivityComponent buildComponent() {
         logger.debug("buildComponent() called");
-        return getApplicationComponent().getApplication().buildLoginActivityComponent();
+        return DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent()).build();
     }
 
     @NonNull
@@ -87,7 +74,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void setState(@NonNull LoginViewState state) {
+    public void setState(@NonNull LoginViewStatePage state) {
         logger.debug("setState() called with: state = [{}]", state);
         switch (state) {
             case ENTER_CREDENTIAL:
@@ -108,9 +95,16 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void setCredentials(@NonNull Credentials credentials) {
-
+    public void setLogin(@Nullable String login) {
+        logger.debug("setLogin() called with: login = [{}]", login);
+        loginView.replaceText(login);
     }
+
+    @Override
+    public void setPassword(@Nullable String password) {
+        passwordView.replaceText(password);
+    }
+
 
     @Override
     public void setLoginError(@Nullable String error) {
@@ -142,6 +136,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         finish();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
 

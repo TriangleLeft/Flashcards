@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.android;
 
-import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
-import com.triangleleft.flashcards.dagger.component.IComponent;
+import com.triangleleft.flashcards.mvp.common.di.component.ApplicationComponent;
+import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.mvp.common.presenter.IPresenter;
 import com.triangleleft.flashcards.mvp.common.view.IView;
@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import javax.inject.Inject;
@@ -28,13 +30,14 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     @Inject
     Presenter presenter;
 
+    @CallSuper
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        logger.debug("onActivityCreated() called with: savedInstanceState = [{}]", savedInstanceState);
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
+        super.onCreate(savedInstanceState);
 
+        boolean newComponent = true;
         componentManager = getApplicationComponent().componentManager();
-
         if (savedInstanceState == null) {
             component = buildComponent();
         } else {
@@ -42,23 +45,34 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
             component = componentManager.restoreComponent(presenterId);
             if (component == null) {
                 component = buildComponent();
+            } else {
+                newComponent = false;
             }
         }
 
         inject();
+        if (newComponent) {
+            getPresenter().onCreate();
+        }
+    }
+
+    @Override
+    public void onViewCreated(android.view.View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getPresenter().onBind(getMvpView());
-        getPresenter().onCreate();
     }
 
     protected abstract void inject();
 
+    @CallSuper
     @Override
     public void onResume() {
         logger.debug("onResume() called");
         super.onResume();
-        getPresenter().onBind(getMvpView());
+        getPresenter().onRebind(getMvpView());
     }
 
+    @CallSuper
     @Override
     public void onPause() {
         logger.debug("onPause() called");
@@ -66,6 +80,7 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         getPresenter().onUnbind();
     }
 
+    @CallSuper
     @Override
     public void onSaveInstanceState(Bundle outState) {
         logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
@@ -74,11 +89,14 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         outState.putLong(KEY_COMPONENT_ID, componentId);
     }
 
+    @CallSuper
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
-        getPresenter().onDestroy();
+        if (isRemoving() || !getActivity().isChangingConfigurations()) {
+            getPresenter().onDestroy();
+        }
     }
 
     protected ApplicationComponent getApplicationComponent() {

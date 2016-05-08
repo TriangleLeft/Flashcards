@@ -1,4 +1,5 @@
-def SUPPORT_VERSION = '23.2.1'
+def SUPPORT_VERSION = '23.3.0'
+def PCJ_VERSION = '1c351f68d3'
 ext.dep = [
         DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
                              "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
@@ -6,7 +7,8 @@ ext.dep = [
         ],
         SUPPORT           : ["com.android.support:appcompat-v7:$SUPPORT_VERSION",
                              "com.android.support:design:$SUPPORT_VERSION",
-                             "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
-        ],
-        SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION"
+                             "com.android.support:recyclerview-v7:$SUPPORT_VERSION",
+                             "com.android.support:cardview-v7:$SUPPORT_VERSION"],
+        SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION",
+        PCJ               : "com.github.franmontiel:PersistentCookieJar:$PCJ_VERSION"
 ]

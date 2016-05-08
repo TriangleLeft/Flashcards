@@ -1,12 +1,12 @@
 package com.triangleleft.flashcards.service.login;
 
-import com.triangleleft.flashcards.service.provider.IProvider;
+import com.triangleleft.flashcards.service.common.IListener;
+import com.triangleleft.flashcards.service.common.IProvider;
 
-import android.support.annotation.NonNull;
+public interface ILoginModule extends IProvider {
 
-public interface ILoginModule extends IProvider<ILoginRequest, ILoginResult> {
+    void login(ILoginRequest request, IListener<ILoginResult> listener);
 
-    @NonNull
     LoginStatus getLoginStatus();
 
 }

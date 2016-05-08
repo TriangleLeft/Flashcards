@@ -1,7 +1,12 @@
 package com.triangleleft.flashcards.service.vocabular;
 
-import com.triangleleft.flashcards.service.provider.IProvider;
+import com.triangleleft.flashcards.service.common.IProvider;
 
-public interface IVocabularModule extends IProvider<IVocabularRequest, IVocabularResult> {
+import java.util.List;
 
+import rx.Observable;
+
+public interface IVocabularModule extends IProvider {
+
+    Observable<List<IVocabularWord>> getVocabularList(boolean refresh);
 }

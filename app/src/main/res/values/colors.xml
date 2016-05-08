@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textColorPrimary">#FFFFFF</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="flashcard_top">#ffffff</color>
+    <color name="flashcard_bottom">#ffffff</color>
+    <color name="flashcard_bg_wrong">#FFD4CC</color>
+    <color name="flashcard_bg_right">#DEF0A5</color>
+    <color name="flashcard_text_wrong">#DD381D</color>
+    <color name="flashcard_text_right">#7EB530</color>
+
 </resources>

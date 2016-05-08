@@ -10,12 +10,12 @@ public class TextUtils {
      * @param str the string to be examined
      * @return true if str is null or zero length
      */
-    public static boolean isEmpty(@Nullable CharSequence str) {
-        if (str == null || str.length() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+    public static boolean isEmpty(@Nullable String str) {
+        return str == null || str.length() == 0;
+    }
+
+    public static boolean notEquals(@Nullable String a, @Nullable String b) {
+        return !TextUtils.equals(a, b);
     }
 
     /**
@@ -27,23 +27,7 @@ public class TextUtils {
      * @param b second CharSequence to check
      * @return true if a and b are equal
      */
-    public static boolean equals(@Nullable CharSequence a, @Nullable CharSequence b) {
-        if (a == b) {
-            return true;
-        }
-        int length;
-        if (a != null && b != null && (length = a.length()) == b.length()) {
-            if (a instanceof String && b instanceof String) {
-                return a.equals(b);
-            } else {
-                for (int i = 0; i < length; i++) {
-                    if (a.charAt(i) != b.charAt(i)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        }
-        return false;
+    public static boolean equals(@Nullable String a, @Nullable String b) {
+        return a != null && a.equals(b);
     }
 }

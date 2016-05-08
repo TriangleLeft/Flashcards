@@ -1,14 +1,13 @@
 package com.triangleleft.flashcards.android.vocabular;
 
-import com.google.common.base.Preconditions;
-
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseFragment;
 import com.triangleleft.flashcards.android.main.MainActivity;
-import com.triangleleft.flashcards.mvp.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.vocabular.di.VocabularWordComponent;
-import com.triangleleft.flashcards.mvp.vocabular.presenter.IVocabularWordPresenter;
-import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularWordView;
+import com.triangleleft.flashcards.mvp.main.MainPageComponent;
+import com.triangleleft.flashcards.mvp.vocabular.DaggerVocabularWordComponent;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularWordComponent;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.slf4j.Logger;
@@ -25,22 +24,41 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class VocabularWordFragment
-        extends BaseFragment<VocabularWordComponent, IVocabularWordView, IVocabularWordPresenter>
+        extends BaseFragment<VocabularWordComponent, IVocabularWordView, VocabularWordPresenter>
         implements IVocabularWordView {
 
     private static final Logger logger = LoggerFactory.getLogger(VocabularWordFragment.class);
+    public static final String KEY_WORD = "keyWord";
+    public static final String TAG = VocabularWordFragment.class.getSimpleName();
 
     @Bind(R.id.fragment_vocabular_word_title)
     TextView titleView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_vocabular_word, container, false);
         ButterKnife.bind(this, view);
-
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tryShowWord();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            tryShowWord();
+        }
     }
 
     @Override
@@ -52,7 +70,11 @@ public class VocabularWordFragment
     @Override
     protected VocabularWordComponent buildComponent() {
         logger.debug("buildComponent() called");
-        return getApplicationComponent().getApplication().buildVocabularWordComponent(getMainActivityComponent());
+        return DaggerVocabularWordComponent.builder().mainPageComponent(getMainPageComponent()).build();
+    }
+
+    private MainPageComponent getMainPageComponent() {
+        return ((MainActivity) getActivity()).getComponent();
     }
 
     @NonNull
@@ -62,16 +84,10 @@ public class VocabularWordFragment
         return this;
     }
 
-    @NonNull
-    private MainPageComponent getMainActivityComponent() {
-        logger.debug("getMainActivityComponent() called");
-        Preconditions.checkState(getActivity() != null, "Shouldn't call this while activity is not bound");
-        MainActivity activity = (MainActivity) getActivity();
-        return activity.getComponent();
-    }
-
-    @Override
-    public void showWord(@NonNull IVocabularWord selectedWord) {
-        titleView.setText(selectedWord.getWord());
+    private void tryShowWord() {
+        IVocabularWord word = getArguments().getParcelable(KEY_WORD);
+        if (word != null) {
+            titleView.setText(word.getWord());
+        }
     }
 }

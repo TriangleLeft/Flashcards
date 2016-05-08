@@ -3,6 +3,8 @@
     package="com.triangleleft.flashcards" >
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- TODO: remove before release -->
+    <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
 
     <application
         android:name=".android.FlashcardsApplication"
@@ -21,9 +23,9 @@
         </activity>
         <activity
             android:name=".android.main.MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity android:name=".android.cards.FlashcardsActivity" />
     </application>
 
 </manifest>

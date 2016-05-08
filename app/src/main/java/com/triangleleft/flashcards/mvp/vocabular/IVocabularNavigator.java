@@ -6,7 +6,4 @@ import android.support.annotation.NonNull;
 
 public interface IVocabularNavigator {
     void onWordSelected(@NonNull IVocabularWord word);
-
-    @NonNull
-    IVocabularWord getSelectedWord();
 }

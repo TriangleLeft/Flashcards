@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper
-    android:id="@+id/view_flipper"
+<ViewFlipper android:id="@+id/view_flipper"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".android.login.LoginActivity"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -16,13 +16,13 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_email">
 
-            <EditText
+            <com.triangleleft.flashcards.android.common.CustomEditText
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -31,13 +31,13 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_password">
 
-            <EditText
+            <com.triangleleft.flashcards.android.common.CustomEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_password"
                 android:imeActionLabel="@string/action_sign_in"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -57,12 +57,12 @@
 
     </LinearLayout>
 
-
-    <com.triangleleft.flashcards.android.CustomProgressBar
+    <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        app:matProg_barColor="@color/colorPrimary"
+        app:matProg_progressIndeterminate="true" />
 
 </ViewFlipper>

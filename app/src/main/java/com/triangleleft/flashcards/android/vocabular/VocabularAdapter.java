@@ -9,15 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collections;
 import java.util.List;
 
 public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> {
 
-    private List<IVocabularWord> list;
+    private List<IVocabularWord> list = Collections.emptyList();
     private OnItemClickListener<VocabularViewHolder> itemClickListener;
 
     public void setData(List<IVocabularWord> list) {
         this.list = list;
+        notifyDataSetChanged();
     }
     
     @Override

@@ -1,14 +1,13 @@
 package com.triangleleft.flashcards.android.vocabular;
 
-import com.google.common.base.Preconditions;
-
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.BaseFragment;
 import com.triangleleft.flashcards.android.main.MainActivity;
-import com.triangleleft.flashcards.mvp.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.vocabular.di.VocabularListComponent;
-import com.triangleleft.flashcards.mvp.vocabular.presenter.IVocabularListPresenter;
-import com.triangleleft.flashcards.mvp.vocabular.view.IVocabularListView;
+import com.triangleleft.flashcards.mvp.main.MainPageComponent;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularListView;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularListComponent;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
+import com.triangleleft.flashcards.mvp.vocabular.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.slf4j.Logger;
@@ -16,6 +15,8 @@ import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,10 +28,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class VocabularListFragment
-        extends BaseFragment<VocabularListComponent, IVocabularListView, IVocabularListPresenter>
+        extends BaseFragment<VocabularListComponent, IVocabularListView, VocabularListPresenter>
         implements IVocabularListView {
 
     private static final Logger logger = LoggerFactory.getLogger(VocabularListFragment.class);
@@ -44,11 +44,12 @@ public class VocabularListFragment
     RecyclerView vocabList;
     @Bind(R.id.view_flipper)
     ViewFlipper viewFlipper;
+    @Bind(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefresh;
     private VocabularAdapter vocabularAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         logger.debug("onCreateView() called with: inflater = [{}], container = [{}], savedInstanceState = [{}]",
                 inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_vocabular_list, container, false);
@@ -60,8 +61,9 @@ public class VocabularListFragment
             getPresenter().onWordSelected(word);
         });
         vocabList.setAdapter(vocabularAdapter);
-        vocabList.setLayoutManager(
-                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        vocabList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+
+        swipeRefresh.setOnRefreshListener(() -> getPresenter().onRefreshList());
 
         return view;
     }
@@ -76,6 +78,7 @@ public class VocabularListFragment
     public void showWords(@NonNull List<IVocabularWord> words) {
         logger.debug("showWords() called with: words = [{}]", words);
         viewFlipper.setDisplayedChild(LIST);
+        swipeRefresh.setRefreshing(false);
         vocabularAdapter.setData(words);
     }
 
@@ -91,11 +94,13 @@ public class VocabularListFragment
         viewFlipper.setDisplayedChild(ERROR);
     }
 
-    @OnClick(R.id.button_retry)
-    public void onRetryClick() {
-        logger.debug("onRetryClick() called");
-        getPresenter().onRetryClick();
+    @Override
+    public void showErrorNoContent() {
+        Snackbar.make(getView(), "No connection", Snackbar.LENGTH_INDEFINITE).setAction("Retry", view -> {
+            getPresenter().onRetryClick();
+        });
     }
+
 
     @Override
     protected void inject() {
@@ -107,7 +112,11 @@ public class VocabularListFragment
     @Override
     protected VocabularListComponent buildComponent() {
         logger.debug("buildComponent() called");
-        return getApplicationComponent().getApplication().buildVocabularListComponent(getMainActivityComponent());
+        return DaggerVocabularListComponent.builder().mainPageComponent(getMainPageComponent()).build();
+    }
+
+    private MainPageComponent getMainPageComponent() {
+        return ((MainActivity) getActivity()).getComponent();
     }
 
     @NonNull
@@ -115,13 +124,5 @@ public class VocabularListFragment
     protected IVocabularListView getMvpView() {
         logger.debug("getMvpView() called");
         return this;
-    }
-
-    @NonNull
-    private MainPageComponent getMainActivityComponent() {
-        logger.debug("getMainActivityComponent() called");
-        Preconditions.checkState(getActivity() != null, "Shouldn't call this while activity is not bound");
-        MainActivity activity = (MainActivity) getActivity();
-        return activity.getComponent();
     }
 }

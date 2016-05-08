@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.android;
 
-import com.triangleleft.flashcards.dagger.component.ApplicationComponent;
-import com.triangleleft.flashcards.dagger.component.IComponent;
+import com.triangleleft.flashcards.mvp.common.di.component.ApplicationComponent;
+import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.mvp.common.presenter.IPresenter;
 import com.triangleleft.flashcards.mvp.common.view.IView;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,6 +36,7 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
 
         componentManager = getApplicationComponent().componentManager();
 
+        boolean newComponent = true;
         if (savedInstanceState == null) {
             component = buildComponent();
         } else {
@@ -42,12 +44,21 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
             component = componentManager.restoreComponent(presenterId);
             if (component == null) {
                 component = buildComponent();
+            } else {
+                newComponent = false;
             }
         }
 
         inject();
+        if (newComponent) {
+            getPresenter().onCreate();
+        }
+    }
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
         getPresenter().onBind(getMvpView());
-        getPresenter().onCreate();
     }
 
     protected abstract void inject();
@@ -56,7 +67,7 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     protected void onResume() {
         logger.debug("onResume() called");
         super.onResume();
-        getPresenter().onBind(getMvpView());
+        getPresenter().onRebind(getMvpView());
     }
 
     @Override
@@ -78,7 +89,9 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     protected void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
-        getPresenter().onDestroy();
+        if (!isChangingConfigurations()) {
+            getPresenter().onDestroy();
+        }
     }
 
     protected ApplicationComponent getApplicationComponent() {

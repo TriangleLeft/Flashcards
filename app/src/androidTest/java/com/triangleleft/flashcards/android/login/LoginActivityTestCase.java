@@ -2,14 +2,14 @@ package com.triangleleft.flashcards.android.login;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.android.CustomProgressBar;
-import com.triangleleft.flashcards.service.error.CommonError;
-import com.triangleleft.flashcards.service.error.ErrorType;
+import com.triangleleft.flashcards.mvp.login.LoginPresenter;
+import com.triangleleft.flashcards.mvp.login.ILoginView;
+import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;
+import com.triangleleft.flashcards.service.common.error.CommonError;
+import com.triangleleft.flashcards.service.common.error.ErrorType;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
-import com.triangleleft.flashcards.service.provider.IListener;
-import com.triangleleft.flashcards.mvp.login.presenter.ILoginPresenter;
-import com.triangleleft.flashcards.mvp.login.view.ILoginView;
-import com.triangleleft.flashcards.mvp.login.view.LoginViewState;
+import com.triangleleft.flashcards.service.common.IListener;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -51,7 +51,7 @@ public class LoginActivityTestCase {
     public ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<>(LoginActivity.class, true, true);
 
     private ILoginView loginView;
-    private ILoginPresenter presenter;
+    private LoginPresenter presenter;
 
     @BeforeClass
     public static void beforeClass() {
@@ -65,7 +65,7 @@ public class LoginActivityTestCase {
         presenter = activityRule.getActivity().getComponent().loginPresenter();
         loginView = activityRule.getActivity();
 
-        loginView.setState(LoginViewState.ENTER_CREDENTIAL);
+        loginView.setState(LoginViewStatePage.ENTER_CREDENTIAL);
     }
 
 //    @Test
@@ -87,7 +87,7 @@ public class LoginActivityTestCase {
         String message = "fail";
         CommonError error = new CommonError(ErrorType.NETWORK, message);
         doAnswer(invocation -> {
-            loginView.setState(LoginViewState.ENTER_CREDENTIAL);
+            loginView.setState(LoginViewStatePage.ENTER_CREDENTIAL);
             loginView.setGenericError(message);
             return null;
         }).when(presenter).onLoginClick();
