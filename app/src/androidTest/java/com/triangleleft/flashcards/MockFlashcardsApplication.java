@@ -1,10 +1,10 @@
 package com.triangleleft.flashcards;
 
 
-import com.triangleleft.flashcards.android.FlashcardsApplication;
-import com.triangleleft.flashcards.mvp.common.di.component.ApplicationComponent;
+import com.triangleleft.flashcards.common.FlashcardsApplication;
+import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.mvp.common.di.component.DaggerApplicationComponent;
-import com.triangleleft.flashcards.mvp.common.di.module.ApplicationModule;
+import com.triangleleft.flashcards.common.di.ApplicationModule;
 import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
 import com.triangleleft.flashcards.mvp.common.di.module.ServiceModule;
 import com.triangleleft.flashcards.service.IDuolingoRest;

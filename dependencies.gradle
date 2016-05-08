@@ -1,5 +1,6 @@
-def SUPPORT_VERSION = '23.3.0'
-def PCJ_VERSION = '1c351f68d3'
+final SUPPORT_VERSION = '23.3.0'
+final PCJ_VERSION = '1c351f68d3'
+final DAGGER_VERSION = '2.0.1'
 ext.dep = [
         DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
                              "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
@@ -10,5 +11,7 @@ ext.dep = [
                              "com.android.support:recyclerview-v7:$SUPPORT_VERSION",
                              "com.android.support:cardview-v7:$SUPPORT_VERSION"],
         SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION",
-        PCJ               : "com.github.franmontiel:PersistentCookieJar:$PCJ_VERSION"
+        PCJ               : "com.github.franmontiel:PersistentCookieJar:$PCJ_VERSION",
+        DAGGER            : "com.google.dagger:dagger:${DAGGER_VERSION}",
+        DAGGER_COMPILER   : "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 ]

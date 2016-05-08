@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".android.login.LoginActivity"
+    tools:context=".login.LoginActivity"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email">
 
-            <com.triangleleft.flashcards.android.common.CustomEditText
+            <com.triangleleft.flashcards.common.CustomEditText
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/prompt_password">
 
-            <com.triangleleft.flashcards.android.common.CustomEditText
+            <com.triangleleft.flashcards.common.CustomEditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

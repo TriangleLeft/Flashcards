@@ -7,14 +7,14 @@
     <uses-permission android:name="android.permission.SET_ANIMATION_SCALE" />
 
     <application
-        android:name=".android.FlashcardsApplication"
+        android:name=".common.FlashcardsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".android.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,10 +22,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".android.main.MainActivity"
+            android:name=".main.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".android.cards.FlashcardsActivity" />
+        <activity android:name=".cards.FlashcardsActivity" />
     </application>
 
 </manifest>
