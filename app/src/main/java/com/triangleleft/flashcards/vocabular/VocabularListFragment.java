@@ -1,13 +1,13 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.BaseFragment;
+import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularListView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
-import com.triangleleft.flashcards.mvp.vocabular.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
 
 import org.slf4j.Logger;
@@ -97,7 +97,7 @@ public class VocabularListFragment
     @Override
     public void showErrorNoContent() {
         Snackbar.make(getView(), "No connection", Snackbar.LENGTH_INDEFINITE).setAction("Retry", view -> {
-            getPresenter().onRetryClick();
+            getPresenter().onLoadList();
         });
     }
 

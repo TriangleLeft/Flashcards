@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -104,20 +103,16 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         return ((FlashcardsApplication) getActivity().getApplication()).getComponent();
     }
 
-    @NonNull
     protected Component getComponent() {
         return component;
     }
 
-    @NonNull
     protected abstract Component buildComponent();
 
-    @NonNull
-    protected Presenter getPresenter() {
+    public Presenter getPresenter() {
         return presenter;
     }
 
-    @NonNull
     protected abstract View getMvpView();
 
 }

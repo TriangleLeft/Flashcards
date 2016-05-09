@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.common.di;
 
-import com.triangleleft.flashcards.android.FlashcardsApplication;
+import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
 import com.triangleleft.flashcards.mvp.common.di.module.ServiceModule;
@@ -13,6 +13,7 @@ import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
 import dagger.Component;
+import rx.Scheduler;
 
 @ApplicationScope
 @Component(modules = {ApplicationModule.class, ServiceModule.class, NetModule.class})
@@ -31,4 +32,6 @@ public interface ApplicationComponent extends IComponent {
     IPersistentStorage persistentStorage();
 
     IDuolingoRest duolingoRest();
+
+    Scheduler mainThreadScheduler();
 }

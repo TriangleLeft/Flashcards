@@ -10,4 +10,6 @@ public interface IFlashcardsView extends IView {
     void showFlashcards(List<IFlashcardWord> result);
 
     void showProgress();
+
+    void showErrorNoContent();
 }

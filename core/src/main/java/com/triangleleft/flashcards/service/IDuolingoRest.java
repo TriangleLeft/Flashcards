@@ -1,10 +1,13 @@
 package com.triangleleft.flashcards.service;
 
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResponseModel;
+import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsModel;
+import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsResponseModel;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,7 +25,11 @@ public interface IDuolingoRest {
     Observable<VocabularResponseModel> getVocabularList(@Query("_") long timestamp);
 
     @GET("/api/1/flashcards")
-    Call<FlashcardResponseModel> getFlashcardData();
+    Observable<FlashcardResponseModel> getFlashcardData(@Query("n") int count,
+                                                        @Query("allow_partial_deck") boolean allowPartialDeck,
+                                                        @Query("_") long timestamp);
 
+    @POST("/api/1/flashcards")
+    Observable<PostFlashcardsResponseModel> postFlashcardResults(@Body PostFlashcardsModel model);
 
 }

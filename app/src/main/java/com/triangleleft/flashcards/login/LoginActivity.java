@@ -1,12 +1,12 @@
 package com.triangleleft.flashcards.login;
 
-import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.BaseActivity;
+import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.CustomEditText;
-import com.triangleleft.flashcards.main.MainActivity;
-import com.triangleleft.flashcards.mvp.login.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.mvp.login.ILoginView;
+import com.triangleleft.flashcards.login.di.DaggerLoginActivityComponent;
 import com.triangleleft.flashcards.login.di.LoginActivityComponent;
+import com.triangleleft.flashcards.main.MainActivity;
+import com.triangleleft.flashcards.mvp.login.ILoginView;
 import com.triangleleft.flashcards.mvp.login.LoginPresenter;
 import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;
 

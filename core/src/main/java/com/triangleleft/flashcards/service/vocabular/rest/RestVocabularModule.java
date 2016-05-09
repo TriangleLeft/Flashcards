@@ -43,8 +43,8 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
     public Observable<List<IVocabularWord>> getVocabularList(boolean refresh) {
         logger.debug("getVocabularList() called");
         Observable<List<IVocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
-                .map(model -> model.getWords())
                 .subscribeOn(Schedulers.io())
+                .map(model -> model.getWords())
                 .doOnNext(list -> setCachedList(list));
         // For fresh calls, try to return db cache
         if (!refresh) {

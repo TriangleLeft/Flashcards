@@ -31,8 +31,7 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
 
     @Inject
     public VocabularListPresenter(@NonNull IVocabularModule vocabularModule, @NonNull IVocabularNavigator navigator,
-                                  @NonNull
-                                  Scheduler mainThreadScheduler) {
+                                  @NonNull Scheduler mainThreadScheduler) {
         super(IVocabularListView.class);
         this.vocabularModule = vocabularModule;
         this.navigator = navigator;
@@ -40,17 +39,12 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        // Start loading list
-        onRetryClick();
-    }
-
-    @Override
     public void onBind(IVocabularListView view) {
         super.onBind(view);
         if (wordList != null) {
             getView().showWords(wordList);
+        } else {
+            onLoadList();
         }
     }
 
@@ -59,8 +53,8 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
         navigator.onWordSelected(word);
     }
 
-    public void onRetryClick() {
-        logger.debug("onRetryClick() called");
+    public void onLoadList() {
+        logger.debug("onLoadList() called");
         getView().showProgress();
         loadList(false);
     }
@@ -77,13 +71,16 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
 
     private void loadList(boolean refresh) {
         subscription.unsubscribe();
-        subscription = vocabularModule.getVocabularList(refresh).
-                observeOn(mainThreadScheduler)
+        subscription = vocabularModule.getVocabularList(refresh)
+                .observeOn(mainThreadScheduler)
                 .subscribe(
                         list -> getView().showWords(wordList = list),
-                        error -> getView().showError(),
-                        () -> {
-                        } // Do nothing
-                );
+                        error -> {
+                            if (refresh) {
+                                getView().showError();
+                            } else {
+                                getView().showErrorNoContent();
+                            }
+                        });
     }
 }

@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.BaseFragment;
+import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.vocabular.DaggerVocabularWordComponent;
-import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
-import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularWordComponent;
+import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,6 @@ public class VocabularWordFragment
         implements IVocabularWordView {
 
     private static final Logger logger = LoggerFactory.getLogger(VocabularWordFragment.class);
-    public static final String KEY_WORD = "keyWord";
     public static final String TAG = VocabularWordFragment.class.getSimpleName();
 
     @Bind(R.id.fragment_vocabular_word_title)
@@ -45,20 +44,6 @@ public class VocabularWordFragment
         final View view = inflater.inflate(R.layout.fragment_vocabular_word, container, false);
         ButterKnife.bind(this, view);
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        tryShowWord();
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            tryShowWord();
-        }
     }
 
     @Override
@@ -84,10 +69,8 @@ public class VocabularWordFragment
         return this;
     }
 
-    private void tryShowWord() {
-        IVocabularWord word = getArguments().getParcelable(KEY_WORD);
-        if (word != null) {
-            titleView.setText(word.getWord());
-        }
+    @Override
+    public void showWord(IVocabularWord word) {
+        titleView.setText(word.getWord());
     }
 }

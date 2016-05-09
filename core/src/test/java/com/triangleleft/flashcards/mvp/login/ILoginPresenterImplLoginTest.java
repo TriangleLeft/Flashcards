@@ -1,26 +1,17 @@
-package com.triangleleft.flashcards.ui.login.presenter;
+package com.triangleleft.flashcards.mvp.login;
 
-import com.triangleleft.flashcards.mvp.login.ILoginView;
-import com.triangleleft.flashcards.mvp.login.LoginPresenter;
-import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;
+import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
-import com.triangleleft.flashcards.service.common.IListener;
-import com.triangleleft.flashcards.util.SystemOutTree;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.io.IOException;
-
-import timber.log.Timber;
 
 import static org.mockito.Mockito.verify;
 
@@ -63,10 +54,6 @@ public class ILoginPresenterImplLoginTest {
         verify(view).setState(LoginViewStatePage.PROGRESS);
     }
 
-    @BeforeClass
-    public static void beforeClass() throws IOException {
-        Timber.plant(new SystemOutTree());
-    }
 
 //    @Test
 //    public void successfulLogin() {

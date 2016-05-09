@@ -2,17 +2,14 @@ package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import javax.inject.Inject;
 
 @FragmentScope
 public class VocabularWordPresenter extends AbstractPresenter<IVocabularWordView> {
 
-    private static final Logger logger = LoggerFactory.getLogger(VocabularWordPresenter.class);
-
+    private IVocabularWord word;
 
     @Inject
     public VocabularWordPresenter() {
@@ -20,10 +17,15 @@ public class VocabularWordPresenter extends AbstractPresenter<IVocabularWordView
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        logger.debug("onCreate() called");
-        //  getViewDelegate().post(view -> view.showWord(container.getSelectedWord()));
+    public void onBind(IVocabularWordView view) {
+        super.onBind(view);
+        if (word != null) {
+            getView().showWord(word);
+        }
     }
 
+    public void setWord(IVocabularWord word) {
+        this.word = word;
+        getView().showWord(word);
+    }
 }

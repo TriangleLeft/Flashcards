@@ -1,5 +1,6 @@
-package com.triangleleft.flashcards.mvp.common.presenter;
+package com.triangleleft.flashcards.mvp.common;
 
+import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.common.view.IView;
 import com.triangleleft.flashcards.mvp.common.view.IViewAction;
 import com.triangleleft.flashcards.mvp.common.view.delegate.IViewDelegate;
@@ -15,9 +16,6 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import android.support.annotation.NonNull;
-
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractPresenterTest {

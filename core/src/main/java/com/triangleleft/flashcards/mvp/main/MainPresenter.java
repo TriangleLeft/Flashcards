@@ -16,18 +16,12 @@ import javax.inject.Inject;
 public class MainPresenter extends AbstractPresenter<IMainView> implements IVocabularNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
-    private IMainView.Page currentPage;
+    private IMainView.Page currentPage = IMainView.Page.LIST;
     private IVocabularWord selectedWord;
 
     @Inject
     public MainPresenter() {
         super(IMainView.class);
-    }
-
-    @Override
-    public void onCreate() {
-        // vocabular list is first shown screen
-        setViewPage(IMainView.Page.LIST);
     }
 
     @Override

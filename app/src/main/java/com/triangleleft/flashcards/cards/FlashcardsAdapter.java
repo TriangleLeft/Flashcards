@@ -15,10 +15,12 @@ public class FlashcardsAdapter extends BaseAdapter {
 
     private final Context context;
     private final List<IFlashcardWord> list;
+    private final View.OnClickListener listener;
 
-    public FlashcardsAdapter(Context context, List<IFlashcardWord> list) {
+    public FlashcardsAdapter(Context context, List<IFlashcardWord> list, View.OnClickListener listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     @Override
@@ -46,6 +48,7 @@ public class FlashcardsAdapter extends BaseAdapter {
             view.setTag(viewHolder);
         }
         FlashcardViewHolder viewHolder = (FlashcardViewHolder) view.getTag();
+        viewHolder.setOnClickListener(listener);
         viewHolder.showFlashcard((IFlashcardWord) getItem(position));
 
         return view;

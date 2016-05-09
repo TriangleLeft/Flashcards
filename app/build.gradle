@@ -57,17 +57,25 @@ dependencies {
 
     compile('com.arcao:slf4j-timber:2.1') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
     }
     compile 'com.jakewharton.timber:timber:4.1.2'
+
     compile dep.PCJ
     compile 'com.daprlabs.aaron:cardstack:0.3.0'
     compile 'com.pnikosis:materialish-progress:1.7'
 
     compile dep.DAGGER
     apt dep.DAGGER_COMPILER
-    provided 'javax.annotation:jsr250-api:1.0'
+    //   provided 'javax.annotation:jsr250-api:1.0'
 
+    androidTestCompile('com.arcao:slf4j-timber:2.1') {
+        exclude group: 'com.jakewharton.timber', module: 'timber'
+        exclude group: 'org.slf4j', module: 'slf4j-api'
+    }
+    androidTestCompile 'com.jakewharton.timber:timber:4.1.2'
     androidTestCompile dep.SUPPORT_ANNOTATION
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile dep.DEXMAKER
     androidTestCompile 'junit:junit:4.12'

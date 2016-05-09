@@ -5,6 +5,8 @@ import com.triangleleft.flashcards.mvp.common.view.IView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.support.annotation.CallSuper;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -58,9 +60,9 @@ public abstract class AbstractPresenter<View extends IView>
 
     @Override
     public void onCreate() {
-        logger.debug("onCreate() called");
     }
 
+    @CallSuper
     @Override
     public void onBind(View view) {
         logger.debug("onBind() called with: view = [{}]", view);
@@ -68,6 +70,7 @@ public abstract class AbstractPresenter<View extends IView>
         applyState(view, statelessCalls.entrySet());
     }
 
+    @CallSuper
     @Override
     public void onRebind(View view) {
         logger.debug("onRebind() called with: view = [{}]", view);
@@ -87,6 +90,7 @@ public abstract class AbstractPresenter<View extends IView>
         }
     }
 
+    @CallSuper
     @Override
     public void onUnbind() {
         logger.debug("onUnbind() called");
@@ -96,7 +100,6 @@ public abstract class AbstractPresenter<View extends IView>
 
     @Override
     public void onDestroy() {
-        logger.debug("onDestroy() called");
     }
 
     @Override

@@ -1,17 +1,17 @@
 package com.triangleleft.flashcards.main;
 
-import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.BaseActivity;
-import com.triangleleft.flashcards.common.FlashcardsApplication;
+import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.vocabular.VocabularListFragment;
-import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
-import com.triangleleft.flashcards.mvp.main.DaggerMainPageComponent;
-import com.triangleleft.flashcards.mvp.main.IMainView;
+import com.triangleleft.flashcards.common.FlashcardsApplication;
+import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.main.IMainView;
 import com.triangleleft.flashcards.mvp.main.MainPageModule;
 import com.triangleleft.flashcards.mvp.main.MainPresenter;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.vocabular.VocabularListFragment;
+import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         implements IMainView, NavigationView.OnNavigationItemSelectedListener {
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
-
 
     @Bind(R.id.main_container)
     ViewGroup container;
@@ -165,7 +164,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularListFragment();
-            vocabularListFragment.setArguments(new Bundle());
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
                     .commit();
@@ -184,12 +182,11 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         if (vocabularWordFragment == null) {
             vocabularWordFragment = new VocabularWordFragment();
-            vocabularWordFragment.setArguments(new Bundle());
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
                     .commit();
         }
-        vocabularWordFragment.getArguments().putParcelable(VocabularWordFragment.KEY_WORD, word);
+        vocabularWordFragment.getPresenter().setWord(word);
         getSupportFragmentManager().beginTransaction().show(vocabularWordFragment).commit();
 
         setArrowIndicator(false);

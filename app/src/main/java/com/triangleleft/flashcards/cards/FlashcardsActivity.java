@@ -1,12 +1,12 @@
 package com.triangleleft.flashcards.cards;
 
 import com.daprlabs.cardstack.SwipeDeck;
-import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.BaseActivity;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.cards.di.CardsComponent;
+import com.triangleleft.flashcards.cards.di.DaggerCardsComponent;
 import com.triangleleft.flashcards.mvp.cards.FlashcardsPresenter;
 import com.triangleleft.flashcards.mvp.cards.IFlashcardsView;
-import com.triangleleft.flashcards.cards.di.CardsComponent;
-import com.triangleleft.flashcards.mvp.cards.di.DaggerCardsComponent;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 
 import android.os.Bundle;
@@ -25,6 +25,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     private static final int PROGRESS = 0;
     private static final int CARDS = 1;
     private static final int END = 2;
+    private static final int ERROR = 3;
 
     @Bind(R.id.view_flipper)
     ViewFlipper viewFlipper;
@@ -84,7 +85,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
 
     @Override
     public void showFlashcards(List<IFlashcardWord> result) {
-        deck.setAdapter(new FlashcardsAdapter(this, result));
+        //deck.setAdapter(new FlashcardsAdapter(this, result, ));
         viewFlipper.setDisplayedChild(CARDS);
     }
 
@@ -93,9 +94,19 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
         viewFlipper.setDisplayedChild(PROGRESS);
     }
 
-    @OnClick(R.id.restart_button)
+    @Override
+    public void showErrorNoContent() {
+        viewFlipper.setDisplayedChild(ERROR);
+    }
+
+    @OnClick(R.id.button_retry)
+    public void onRetryClick() {
+        getPresenter().onLoadFlashcards();
+    }
+
+    @OnClick(R.id.button_restart)
     public void onRestartClick() {
-        getPresenter().onRestartClick();
+        getPresenter().onLoadFlashcards();
     }
 
 

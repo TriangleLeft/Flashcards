@@ -11,8 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
@@ -57,8 +56,8 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     }
 
     @Override
-    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onPostCreate(savedInstanceState, persistentState);
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         getPresenter().onBind(getMvpView());
     }
 
@@ -99,20 +98,16 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         return ((FlashcardsApplication) getApplication()).getComponent();
     }
 
-    @NonNull
     public Component getComponent() {
         return component;
     }
 
-    @NonNull
     protected abstract Component buildComponent();
 
-    @NonNull
-    protected Presenter getPresenter() {
+    public Presenter getPresenter() {
         return presenter;
     }
 
-    @NonNull
     protected abstract View getMvpView();
 
 }

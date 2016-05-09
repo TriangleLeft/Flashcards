@@ -24,5 +24,6 @@
 
     <string name="flashcard_wrong">I was wrong</string>
     <string name="flashcard_right">I was right</string>
+    <string name="placeholder">[Placeholder]</string>
 
 </resources>

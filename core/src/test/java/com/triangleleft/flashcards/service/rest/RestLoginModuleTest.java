@@ -1,18 +1,9 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.google.gson.Gson;
-
-import com.triangleleft.flashcards.mvp.common.di.component.ApplicationComponent;
-import com.triangleleft.flashcards.mvp.common.di.component.DaggerApplicationComponent;
-import com.triangleleft.flashcards.mvp.common.di.module.ApplicationModule;
-import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
-import com.triangleleft.flashcards.mvp.common.di.module.ServiceModule;
 import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
-import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
-import com.triangleleft.flashcards.util.SystemOutTree;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -20,22 +11,13 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.Mockito;
-
-import android.support.annotation.NonNull;
-import android.test.suitebuilder.annotation.SmallTest;
 
 import java.io.IOException;
 
 import javax.inject.Inject;
 
-import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import timber.log.Timber;
 
 @RunWith(JUnit4.class)
-@SmallTest
 public class RestLoginModuleTest {
 
 //    @Rule
@@ -47,9 +29,6 @@ public class RestLoginModuleTest {
     @Inject
     static ILoginModule loginModule;
 
-    private static MockWebServer webServer;
-    private static Gson gson = new Gson();
-    private static ApplicationComponent component;
 
     // We don't check for actual login/password here
     private ILoginRequest request = new SimpleLoginRequest(new Credentials("login", "password"));
@@ -57,22 +36,11 @@ public class RestLoginModuleTest {
 
     @BeforeClass
     public static void setUpClass() throws IOException {
-        Timber.plant(new SystemOutTree());
     }
 
     @Before
     public void before() throws IOException {
         System.out.println("setUp");
-        component = DaggerApplicationComponent.builder().applicationModule(Mockito.mock(ApplicationModule.class))
-                .netModule(new NetModule() {
-                    @Override
-                    public HttpUrl endpoint() {
-                        return webServer.url("/");
-                    }
-                }).serviceModule(new ServiceModule()).build();
-
-        webServer = new MockWebServer();
-        loginModule = component.loginModule();
     }
 
 //    @Test
@@ -262,10 +230,5 @@ public class RestLoginModuleTest {
 //    }
 
 
-    private void enqueueResponseModel(@NonNull LoginResponseModel model) {
-        MockResponse response = new MockResponse();
-        response.setBody(gson.toJson(model));
-        webServer.enqueue(response);
-    }
 
 }
