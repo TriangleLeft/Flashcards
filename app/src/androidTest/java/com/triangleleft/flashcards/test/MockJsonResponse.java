@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MockJsonResponse {
     String value();
+    int errorCode() default 200;
 }

@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.cards;
 
-import com.triangleleft.flashcards.MockFlashcardsApplication;
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
@@ -22,7 +21,6 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -36,7 +34,7 @@ public class FlashcardsActivityTest {
 //    public static DisableAnimationsRule animationsRule = new DisableAnimationsRule();
 
     @Rule
-    public MockWebServerRule webServerRule = new MockWebServerRule(MockFlashcardsApplication.MOCK_SERVER_URL);
+    public MockWebServerRule webServerRule = new MockWebServerRule();
 
     @Rule
     public ActivityTestRule<FlashcardsActivity> activityRule =
@@ -65,39 +63,39 @@ public class FlashcardsActivityTest {
         // First card is shown
         onView(withText("sino")).check(matches(isDisplayed()));
         // Click it
-        onView(withId(R.id.swipe_deck)).perform(click());
+        onView(withId(R.id.deckView)).perform(click());
         // Check that translation is shown
         onView(withText("but")).check(matches(isDisplayed()));
     }
 
-    @Test
-    @MockJsonResponse("flashcards_valid_response.json")
-    public void testCardsCantBeSwipedWithoutFlippingIt() {
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-
-        // First card is shown
-        onView(withText("sino")).check(matches(isDisplayed()));
-        // Try to swipe it
-        onView(withId(R.id.swipe_deck)).perform(swipeRight());
-        // Check that it's still same card
-        onView(withText("sino")).check(matches(isDisplayed()));
-    }
-
-
-    @Test
-    @MockJsonResponse("flashcards_valid_response.json")
-    public void testCardsCantBeSwiped() {
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-
-        // First card is shown
-        onView(withText("sino")).check(matches(isDisplayed()));
-        // Click it
-        onView(withId(R.id.swipe_deck)).perform(click());
-        // Swipe it
-        onView(withId(R.id.swipe_deck)).perform(swipeRight());
-        // Check that next card is shown
-        onView(withText("si")).check(matches(isDisplayed()));
-    }
+//    @Test
+//    @MockJsonResponse("flashcards_valid_response.json")
+//    public void testCardsCantBeSwipedWithoutFlippingIt() {
+//        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+//
+//        // First card is shown
+//        onView(withText("sino")).check(matches(isDisplayed()));
+//        // Try to swipe it
+//        onView(withId(R.id.deckView)).perform(swipeRight());
+//        // Check that it's still same card
+//        onView(withText("sino")).check(matches(isDisplayed()));
+//    }
+//
+//
+//    @Test
+//    @MockJsonResponse("flashcards_valid_response.json")
+//    public void testCardsCantBeSwiped() {
+//        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+//
+//        // First card is shown
+//        onView(withText("sino")).check(matches(isDisplayed()));
+//        // Click it
+//        onView(withId(R.id.deckView)).perform(click());
+//        // Swipe it
+//        onView(withId(R.id.deckView)).perform(swipeRight());
+//        // Check that next card is shown
+//        onView(withText("si")).check(matches(isDisplayed()));
+//    }
 
 
 }

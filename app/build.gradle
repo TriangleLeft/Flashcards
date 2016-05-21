@@ -62,7 +62,7 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.2'
 
     compile dep.PCJ
-    compile 'com.daprlabs.aaron:cardstack:0.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'com.pnikosis:materialish-progress:1.7'
 
     compile dep.DAGGER

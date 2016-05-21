@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewFlipper android:id="@+id/view_flipper"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:swipedeck="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/view_flipper"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Progress -->
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/progress_wheel"
         android:layout_width="80dp"
@@ -14,24 +14,23 @@
         app:matProg_barColor="@color/colorPrimary"
         app:matProg_progressIndeterminate="true" />
 
+    <!-- Cards -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
         android:orientation="vertical">
 
-        <com.daprlabs.cardstack.SwipeDeck
-            android:id="@+id/swipe_deck"
+        <com.triangleleft.flashcards.cards.view.DeckView
+            android:id="@+id/deckView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
-            swipedeck:card_spacing="10dp"
-            swipedeck:max_visible="3"
-            swipedeck:render_above="true"
-            swipedeck:rotation_degrees="15" />
+            android:clipToPadding="false"
+            android:padding="30dp" />
 
     </FrameLayout>
 
+    <!-- Result -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,6 +49,7 @@
             android:text="Restart" />
     </LinearLayout>
 
+    <!-- Error -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

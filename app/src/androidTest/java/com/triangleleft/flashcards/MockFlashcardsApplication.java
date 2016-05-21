@@ -19,7 +19,6 @@ import okhttp3.HttpUrl;
 public class MockFlashcardsApplication extends FlashcardsApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(MockFlashcardsApplication.class);
-    public static final HttpUrl MOCK_SERVER_URL = HttpUrl.parse("http://localhost:8080/");
 
     @NonNull
     @Override
@@ -32,7 +31,7 @@ public class MockFlashcardsApplication extends FlashcardsApplication {
                 .netModule(new NetModule() {
                     @Override
                     public HttpUrl endpoint() {
-                        return MOCK_SERVER_URL;
+                        return MockWebServerRule.MOCK_SERVER_URL;
                     }
                 })
                 .build();

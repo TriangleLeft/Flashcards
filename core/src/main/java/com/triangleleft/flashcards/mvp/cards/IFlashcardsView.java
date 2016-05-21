@@ -12,4 +12,6 @@ public interface IFlashcardsView extends IView {
     void showProgress();
 
     void showErrorNoContent();
+
+    void showResults();
 }

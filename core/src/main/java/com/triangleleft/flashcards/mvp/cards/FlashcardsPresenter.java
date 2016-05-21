@@ -37,7 +37,17 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         if (flashcardList == null) {
             onLoadFlashcards();
         } else {
+            showFlashcards(flashcardList);
+        }
+    }
+
+    private void showFlashcards(List<IFlashcardWord> list) {
+        flashcardList = list;
+        if (flashcardList.size() != 0) {
             getView().showFlashcards(flashcardList);
+        } else {
+            // We expect to always have flashcards
+            getView().showErrorNoContent();
         }
     }
 
@@ -53,9 +63,26 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         subscription = module.getFlashcards()
                 .observeOn(mainThreadScheduler)
                 .subscribe(
-                        list -> getView().showFlashcards(flashcardList = list),
-                        error -> getView().showErrorNoContent()
+                        this::showFlashcards,
+                        error -> {
+                            error.printStackTrace();
+                            getView().showErrorNoContent();
+                        }
                 );
     }
 
+    public void onWordRight(IFlashcardWord word) {
+        logger.debug("onWordRight() called with: word = [{}]", word);
+    }
+
+    public void onWordWrong(IFlashcardWord word) {
+        logger.debug("onWordWrong() called with: word = [{}]", word);
+
+    }
+
+    public void onCardsDepleted() {
+        logger.debug("onCardsDepleted() called");
+        // TODO: send results
+        getView().showResults();
+    }
 }

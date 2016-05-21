@@ -20,25 +20,26 @@ import okhttp3.mockwebserver.MockWebServer;
 
 public class MockWebServerRule implements TestRule {
 
-    private final MockWebServer webServer;
-    private final HttpUrl url;
+    public static final HttpUrl MOCK_SERVER_URL = HttpUrl.parse("http://localhost:8080/");
 
-    public MockWebServerRule(HttpUrl url) {
-        this.url = url;
+    private final MockWebServer webServer;
+
+    public MockWebServerRule() {
         webServer = new MockWebServer();
     }
 
     @Override
     public Statement apply(Statement base, Description description) {
         try {
-            webServer.start(InetAddress.getByName(url.host()), url.port());
+            webServer.start(InetAddress.getByName(MOCK_SERVER_URL.host()), MOCK_SERVER_URL.port());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         // If method is annotated with our annotation, read json from assets and add it server responses
         MockJsonResponse annotation = description.getAnnotation(MockJsonResponse.class);
         if (annotation != null) {
-            webServer.enqueue(new MockResponse().setBody(getJsonFromAsset(annotation.value())));
+            webServer.enqueue(new MockResponse().setBody(getJsonFromAsset(annotation.value()))
+                    .setResponseCode(annotation.errorCode()));
         }
         return webServer.apply(base, description);
     }
