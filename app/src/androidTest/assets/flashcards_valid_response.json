@@ -2,19 +2,19 @@
   "ui_language": "en",
   "flashcard_data": [
     {
-      "learning_word": "sino",
-      "id": "ee3858c524ceab47bc102716a9640aa0",
-      "ui_word": "but"
+      "learning_word": "word1",
+      "id": "id1",
+      "ui_word": "translation1"
     },
     {
-      "learning_word": "si",
-      "id": "7e416735d7d43c3c0fc30d10801a352d",
-      "ui_word": "if"
+      "learning_word": "word2",
+      "id": "id2",
+      "ui_word": "translation2"
     },
     {
-      "learning_word": "fruta",
-      "id": "8d97dc81cb3844281262ee45b3d33f3c",
-      "ui_word": "fruit"
+      "learning_word": "word3",
+      "id": "id3",
+      "ui_word": "translation3"
     }
   ],
   "learning_language": "es"

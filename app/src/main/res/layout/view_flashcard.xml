@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="@color/flashcard_bg_wrong"
-                    android:text="@string/flashcard_wrong"
+                    android:text="@string/button_flashcard_wrong"
                     android:textColor="@color/flashcard_text_wrong" />
 
                 <Button
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="@color/flashcard_bg_right"
-                    android:text="@string/flashcard_right"
+                    android:text="@string/button_flashcard_right"
                     android:textColor="@color/flashcard_text_right" />
             </LinearLayout>
         </RelativeLayout>

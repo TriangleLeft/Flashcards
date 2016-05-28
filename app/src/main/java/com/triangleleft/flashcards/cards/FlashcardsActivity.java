@@ -11,6 +11,7 @@ import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     ViewFlipper viewFlipper;
     @Bind(R.id.deckView)
     DeckView deckView;
+    @Bind(R.id.flashcard_result)
+    TextView resultTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

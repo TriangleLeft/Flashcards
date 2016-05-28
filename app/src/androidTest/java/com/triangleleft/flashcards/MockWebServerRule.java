@@ -1,21 +1,16 @@
 package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.test.MockJsonResponse;
+import com.triangleleft.flashcards.test.MockServerResponse;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import android.annotation.SuppressLint;
-import android.support.test.InstrumentationRegistry;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 
 import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 public class MockWebServerRule implements TestRule {
@@ -38,8 +33,7 @@ public class MockWebServerRule implements TestRule {
         // If method is annotated with our annotation, read json from assets and add it server responses
         MockJsonResponse annotation = description.getAnnotation(MockJsonResponse.class);
         if (annotation != null) {
-            webServer.enqueue(new MockResponse().setBody(getJsonFromAsset(annotation.value()))
-                    .setResponseCode(annotation.errorCode()));
+            webServer.enqueue(MockServerResponse.make(annotation.value(), annotation.httpCode()));
         }
         return webServer.apply(base, description);
     }
@@ -48,19 +42,4 @@ public class MockWebServerRule implements TestRule {
         return webServer;
     }
 
-    @SuppressLint("NewApi")
-    private String getJsonFromAsset(String name) {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(InstrumentationRegistry.getContext().getAssets().open(name)))) {
-
-            StringBuilder builder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-            return builder.toString();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

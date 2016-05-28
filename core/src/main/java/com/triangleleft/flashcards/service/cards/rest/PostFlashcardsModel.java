@@ -4,7 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.service.cards.FlashcardsResult;
+import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
+import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 
 import java.util.List;
 
@@ -17,10 +18,11 @@ public class PostFlashcardsModel {
     @SerializedName("ui_language")
     String uiLanguage;
 
-    public PostFlashcardsModel(String learningLanguage, String uiLanguage, List<FlashcardsResult> results) {
-        this.learningLanguage = learningLanguage;
-        this.uiLanguage = uiLanguage;
-        flashcardResults = Stream.of(results).map(FlashcardResultModel::new).collect(Collectors.toList());
+    public PostFlashcardsModel(FlashcardTestResult result) {
+        learningLanguage = result.getLearningLanguage();
+        uiLanguage = result.getUiLanguage();
+        flashcardResults = Stream.of(result.getWordResults()).map(FlashcardResultModel::new)
+                .collect(Collectors.toList());
     }
 
     private static class FlashcardResultModel {
@@ -32,7 +34,7 @@ public class PostFlashcardsModel {
         @SerializedName("correct")
         int correct;
 
-        private FlashcardResultModel(FlashcardsResult result) {
+        private FlashcardResultModel(FlashcardWordResult result) {
             id = result.getId();
             correct = result.isCorrect() ? 1 : 0;
         }

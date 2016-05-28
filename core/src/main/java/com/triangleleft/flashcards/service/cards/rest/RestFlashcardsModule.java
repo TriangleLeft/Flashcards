@@ -1,14 +1,13 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
 import com.triangleleft.flashcards.service.IDuolingoRest;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
+import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
+import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -27,10 +26,15 @@ public class RestFlashcardsModule extends AbstractProvider implements IFlashcard
     }
 
     @Override
-    public Observable<List<IFlashcardWord>> getFlashcards() {
+    public Observable<IFlashcardTestData> getFlashcards() {
         return service.getFlashcardData(15, true, System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
-                .map(model -> model.getWords());
+                .cast(IFlashcardTestData.class);
+    }
+
+    @Override
+    public void postResult(FlashcardTestResult result) {
+        service.postFlashcardResults(new PostFlashcardsModel(result));
     }
 
 }

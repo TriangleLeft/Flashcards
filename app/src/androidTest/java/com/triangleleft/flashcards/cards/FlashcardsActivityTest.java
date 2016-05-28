@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.cards;
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
+import com.triangleleft.flashcards.test.MockServerResponse;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,6 +26,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static com.triangleleft.flashcards.test.EspressoUtils.visible;
 
 @RunWith(AndroidJUnit4.class)
 public class FlashcardsActivityTest {
@@ -46,56 +48,63 @@ public class FlashcardsActivityTest {
     public void before() throws IOException {
         logger.debug("before() called");
         webServer = webServerRule.getWebServer();
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
     }
 
     @Test
     public void testStartsWithProgress() {
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-
         onView(withId(R.id.progress_wheel)).check(matches(isDisplayed()));
+        // Have to send some response, else we would wait 5 seconds for timeout
+        webServer.enqueue(MockServerResponse.make("flashcards_valid_response.json"));
     }
 
     @Test
     @MockJsonResponse("flashcards_valid_response.json")
     public void testCardsCanBeFlipped() {
-        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-
-        // First card is shown
-        onView(withText("sino")).check(matches(isDisplayed()));
-        // Click it
-        onView(withId(R.id.deckView)).perform(click());
+        // Click on card
+        onView(withText("word1")).perform(click());
         // Check that translation is shown
-        onView(withText("but")).check(matches(isDisplayed()));
+        onView(withText("translation1")).check(matches(isDisplayed()));
     }
 
-//    @Test
-//    @MockJsonResponse("flashcards_valid_response.json")
-//    public void testCardsCantBeSwipedWithoutFlippingIt() {
-//        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-//
-//        // First card is shown
-//        onView(withText("sino")).check(matches(isDisplayed()));
-//        // Try to swipe it
-//        onView(withId(R.id.deckView)).perform(swipeRight());
-//        // Check that it's still same card
-//        onView(withText("sino")).check(matches(isDisplayed()));
-//    }
-//
-//
-//    @Test
-//    @MockJsonResponse("flashcards_valid_response.json")
-//    public void testCardsCantBeSwiped() {
-//        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
-//
-//        // First card is shown
-//        onView(withText("sino")).check(matches(isDisplayed()));
-//        // Click it
-//        onView(withId(R.id.deckView)).perform(click());
-//        // Swipe it
-//        onView(withId(R.id.deckView)).perform(swipeRight());
-//        // Check that next card is shown
-//        onView(withText("si")).check(matches(isDisplayed()));
-//    }
+    @Test
+    @MockJsonResponse("flashcards_valid_response.json")
+    public void testNextCardIsShown() {
+        // Click flashcard
+        onView(withText("word1")).perform(click());
+        // Click "I was right"
+        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        // Check that next card is shown
+        onView(withText("word2")).check(matches(isDisplayed()));
+    }
 
+    @Test
+    @MockJsonResponse(value = "internal_server_error.txt", httpCode = 500)
+    public void testErrorRetry() {
+        // Check error message is shown
+        onView(withText(R.string.flashcard_error)).check(matches(isDisplayed()));
+        webServer.enqueue(MockServerResponse.make("flashcards_valid_response.json"));
+        // Click retry
+        onView(withText(R.string.button_retry)).perform(click());
+        // Check word is shown
+        onView(withText("word1")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    @MockJsonResponse("flashcards_valid_response.json")
+    public void testRestartAfterCardsDepleted() {
+        // Click through all cards
+        onView(withText("word1")).perform(click());
+        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(withText("word2")).perform(click());
+        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(withText("word3")).perform(click());
+        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+
+        webServer.enqueue(MockServerResponse.make("flashcards_valid_response2.json"));
+        onView(withText(R.string.button_restart)).perform(click());
+        // Check new response is shown
+        onView(withText("word4")).check(matches(isDisplayed()));
+    }
 
 }

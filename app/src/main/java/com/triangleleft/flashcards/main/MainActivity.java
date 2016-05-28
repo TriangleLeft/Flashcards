@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.main;
 import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.IMainView;
@@ -18,18 +17,14 @@ import org.slf4j.LoggerFactory;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +32,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter>
         implements IMainView, NavigationView.OnNavigationItemSelectedListener {
@@ -101,25 +97,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         // We should always show first vocabular list page
         initPages();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        Drawable drawable = menu.findItem(R.id.action_flashcards).getIcon();
-
-        drawable = DrawableCompat.wrap(drawable);
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.textColorPrimary));
-        menu.findItem(R.id.action_flashcards).setIcon(drawable);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        FlashcardsApplication.showDebugToast(item.getTitle().toString());
-        Intent intent = new Intent(this, FlashcardsActivity.class);
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -216,6 +193,12 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @OnClick(R.id.button_flashcards)
+    public void onFlashcardsClick() {
+        Intent intent = new Intent(this, FlashcardsActivity.class);
+        startActivity(intent);
     }
 
 

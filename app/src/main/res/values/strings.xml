@@ -22,8 +22,11 @@
     <string name="vocabular_list_error_retry">Retry</string>
     <string name="button_retry">Retry</string>
 
-    <string name="flashcard_wrong">I was wrong</string>
-    <string name="flashcard_right">I was right</string>
+    <string name="button_flashcard_wrong">I was wrong</string>
+    <string name="button_flashcard_right">I was right</string>
     <string name="placeholder">[Placeholder]</string>
+    <string name="flashcard_error">Error</string>
+    <string name="button_restart">Restart</string>
+    <string name="flashcard_result">Result</string>
 
 </resources>

@@ -29,6 +29,8 @@ public class VocabularResponseModel {
         public int strengthBars;
         @SerializedName("word_string")
         public String wordString;
+        @SerializedName("id")
+        public String id;
 
         @Override
         public String getWord() {

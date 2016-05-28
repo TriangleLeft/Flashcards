@@ -10,6 +10,10 @@ repositories {
     maven { url "$sdkDir/extras/android/m2repository" }
 }
 
+retrolambda {
+    oldJdk System.getenv("JAVA7_HOME")
+}
+
 apply from: '../dependencies.gradle'
 
 dependencies {

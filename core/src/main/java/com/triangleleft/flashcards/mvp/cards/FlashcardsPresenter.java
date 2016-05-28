@@ -1,12 +1,16 @@
 package com.triangleleft.flashcards.mvp.cards;
 
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
+import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
+import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,7 +25,8 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private final IFlashcardsModule module;
     private final Scheduler mainThreadScheduler;
-    private List<IFlashcardWord> flashcardList;
+    private IFlashcardTestData testData;
+    private List<FlashcardWordResult> results = new ArrayList<>();
     private Subscription subscription = Subscriptions.empty();
 
     @Inject
@@ -34,17 +39,18 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     @Override
     public void onBind(IFlashcardsView view) {
         super.onBind(view);
-        if (flashcardList == null) {
+        if (testData == null) {
             onLoadFlashcards();
         } else {
-            showFlashcards(flashcardList);
+            showFlashcards(testData);
         }
     }
 
-    private void showFlashcards(List<IFlashcardWord> list) {
-        flashcardList = list;
-        if (flashcardList.size() != 0) {
-            getView().showFlashcards(flashcardList);
+    private void showFlashcards(IFlashcardTestData data) {
+        testData = data;
+        results.clear();
+        if (testData.getWords().size() != 0) {
+            getView().showFlashcards(testData.getWords());
         } else {
             // We expect to always have flashcards
             getView().showErrorNoContent();
@@ -73,16 +79,18 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     public void onWordRight(IFlashcardWord word) {
         logger.debug("onWordRight() called with: word = [{}]", word);
+        results.add(FlashcardWordResult.create(word.getId(), true));
     }
 
     public void onWordWrong(IFlashcardWord word) {
         logger.debug("onWordWrong() called with: word = [{}]", word);
-
+        results.add(FlashcardWordResult.create(word.getId(), false));
     }
 
     public void onCardsDepleted() {
         logger.debug("onCardsDepleted() called");
-        // TODO: send results
+        module.postResult(
+                FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
         getView().showResults();
     }
 }

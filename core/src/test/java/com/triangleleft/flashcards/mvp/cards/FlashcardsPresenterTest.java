@@ -1,7 +1,9 @@
 package com.triangleleft.flashcards.mvp.cards;
 
+import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.stub.StubFlashcardTestData;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -45,7 +47,7 @@ public class FlashcardsPresenterTest {
     public void onDestroyWouldUnsubscribe() {
         AtomicBoolean unsubscribed = new AtomicBoolean(false);
         // Create empty observable to notify us when it's unsubscribed from
-        Observable<List<IFlashcardWord>> observable = Observable.empty();
+        Observable<IFlashcardTestData> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
         when(module.getFlashcards()).thenReturn(observable);
 
@@ -69,7 +71,8 @@ public class FlashcardsPresenterTest {
     @Test
     public void whenHasListOnBindWouldShowList() {
         List<IFlashcardWord> list = Collections.singletonList(mock(IFlashcardWord.class));
-        when(module.getFlashcards()).thenReturn(Observable.just(list));
+        IFlashcardTestData data = StubFlashcardTestData.create("en", "es", list);
+        when(module.getFlashcards()).thenReturn(Observable.just(data));
         presenter.onBind(view);
         presenter.onUnbind();
         reset(view);
@@ -78,7 +81,6 @@ public class FlashcardsPresenterTest {
 
         verify(view).showFlashcards(list);
     }
-
 
     @Test
     public void onFlashcardsLoadErrorWouldShowError() {
@@ -89,4 +91,7 @@ public class FlashcardsPresenterTest {
         verify(view).showErrorNoContent();
     }
 
-}
+    @Test
+    public void onCardsDepletedWouldPostResults() {
+        presenter.onCardsDepleted();
+    }

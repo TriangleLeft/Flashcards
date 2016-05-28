@@ -2,9 +2,21 @@
   "language_string": "en",
   "learning_language": "es",
   "from_language": "en",
-  "vocab_overview": {
-    "normalized_string": "camisa",
-    "strength_bars": 0,
-    "word_string": "camisa"
-  }
+  "vocab_overview": [
+    {
+      "normalized_string": "word1",
+      "strength_bars": 0,
+      "word_string": "word1"
+    },
+    {
+      "normalized_string": "word2",
+      "strength_bars": 0,
+      "word_string": "word2"
+    },
+    {
+      "normalized_string": "word3",
+      "strength_bars": 0,
+      "word_string": "word3"
+    }
+  ]
 }

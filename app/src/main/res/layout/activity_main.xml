@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -37,6 +37,16 @@
 
         </FrameLayout>
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_flashcards"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_flashcards"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@color/textColorPrimary"
+            app:fabSize="normal"
+            app:layout_anchor="@id/main_container"
+            app:layout_anchorGravity="bottom|right|end" />
 
     </android.support.design.widget.CoordinatorLayout>
 
