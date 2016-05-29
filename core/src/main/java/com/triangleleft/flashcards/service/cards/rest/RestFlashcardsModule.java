@@ -34,7 +34,7 @@ public class RestFlashcardsModule extends AbstractProvider implements IFlashcard
 
     @Override
     public void postResult(FlashcardTestResult result) {
-        service.postFlashcardResults(new PostFlashcardsModel(result));
+        service.postFlashcardResults(new FlashcardResultsController(result));
     }
 
 }

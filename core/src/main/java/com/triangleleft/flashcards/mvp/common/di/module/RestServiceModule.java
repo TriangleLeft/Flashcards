@@ -7,7 +7,7 @@ import com.triangleleft.flashcards.service.cards.rest.RestFlashcardsModule;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.rest.RestLoginModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.stub.StubVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.rest.RestVocabularModule;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
 import android.support.annotation.NonNull;
@@ -27,14 +27,12 @@ public class RestServiceModule {
     @ApplicationScope
     @Provides
     public IVocabularModule vocabularModule(@NonNull IDuolingoRest service) {
-        return new StubVocabularModule();
-        //return new RestVocabularModule(service);
+        return new RestVocabularModule(service);
     }
 
     @ApplicationScope
     @Provides
     public IFlashcardsModule flashcardsModule(@NonNull IDuolingoRest service) {
         return new RestFlashcardsModule(service);
-        //return new StubFlashcardsModule();
     }
 }

@@ -9,7 +9,7 @@ import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 
 import java.util.List;
 
-public class PostFlashcardsModel {
+public class FlashcardResultsController {
 
     @SerializedName("flashcard_results")
     List<FlashcardResultModel> flashcardResults;
@@ -18,7 +18,7 @@ public class PostFlashcardsModel {
     @SerializedName("ui_language")
     String uiLanguage;
 
-    public PostFlashcardsModel(FlashcardTestResult result) {
+    public FlashcardResultsController(FlashcardTestResult result) {
         learningLanguage = result.getLearningLanguage();
         uiLanguage = result.getUiLanguage();
         flashcardResults = Stream.of(result.getWordResults()).map(FlashcardResultModel::new)

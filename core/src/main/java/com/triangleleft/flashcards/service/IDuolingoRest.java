@@ -1,9 +1,11 @@
 package com.triangleleft.flashcards.service;
 
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResponseModel;
-import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsModel;
+import com.triangleleft.flashcards.service.cards.rest.FlashcardResultsController;
 import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsResponseModel;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
+import com.triangleleft.flashcards.service.settings.rest.model.LanguageDataModel;
+import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel;
 
 import retrofit2.Call;
@@ -30,6 +32,14 @@ public interface IDuolingoRest {
                                                         @Query("_") long timestamp);
 
     @POST("/api/1/flashcards")
-    Observable<PostFlashcardsResponseModel> postFlashcardResults(@Body PostFlashcardsModel model);
+    Observable<PostFlashcardsResponseModel> postFlashcardResults(@Body FlashcardResultsController model);
+
+    @FormUrlEncoded
+    @POST("/switch_language")
+    Observable<LanguageDataModel> switchLanguage(@Field("learning_language") String language);
+
+    @GET("/api/1//users/show")
+    Observable<UserDataModel> getUserData(@Query("id") String userId);
+
 
 }

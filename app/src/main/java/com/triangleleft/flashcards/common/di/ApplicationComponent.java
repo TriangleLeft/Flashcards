@@ -9,6 +9,7 @@ import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.login.ILoginModule;
+import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
@@ -24,6 +25,8 @@ public interface ApplicationComponent extends IComponent {
     IVocabularModule vocabularModule();
 
     IFlashcardsModule flashcardsModule();
+
+    ISettingsModule settingsModule();
 
     FlashcardsApplication getApplication();
 

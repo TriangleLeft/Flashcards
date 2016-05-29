@@ -95,3 +95,4 @@ public class FlashcardsPresenterTest {
     public void onCardsDepletedWouldPostResults() {
         presenter.onCardsDepleted();
     }
+}

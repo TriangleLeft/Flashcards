@@ -5,6 +5,8 @@ import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.cards.stub.StubFlashcardsModule;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.stub.StubLoginModule;
+import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.stub.StubSettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.stub.StubVocabularModule;
 import com.triangleleft.flashcards.util.IPersistentStorage;
@@ -33,5 +35,11 @@ public class StubServiceModule {
     @Provides
     public IFlashcardsModule flashcardsModule() {
         return new StubFlashcardsModule();
+    }
+
+    @ApplicationScope
+    @Provides
+    public ISettingsModule settingsModule() {
+        return new StubSettingsModule();
     }
 }

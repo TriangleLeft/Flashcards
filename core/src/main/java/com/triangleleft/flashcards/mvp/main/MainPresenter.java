@@ -3,6 +3,8 @@ package com.triangleleft.flashcards.mvp.main;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
+import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.slf4j.Logger;
@@ -12,16 +14,36 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+import rx.Scheduler;
+
 @ActivityScope
 public class MainPresenter extends AbstractPresenter<IMainView> implements IVocabularNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
+    private final ISettingsModule settingsModule;
+    private final Scheduler scheduler;
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private IVocabularWord selectedWord;
 
+
     @Inject
-    public MainPresenter() {
+    public MainPresenter(ISettingsModule settingsModule, Scheduler scheduler) {
         super(IMainView.class);
+        this.settingsModule = settingsModule;
+        this.scheduler = scheduler;
+    }
+
+    @Override
+    public void onCreate() {
+        settingsModule.getUserData()
+                .observeOn(scheduler)
+                .subscribe(
+                        userData -> {
+                            getView().showUserData(userData);
+                        },
+                        error -> {
+                        }
+                );
     }
 
     @Override
@@ -59,5 +81,11 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             default:
                 throw new RuntimeException("Unknown page: " + currentPage);
         }
+    }
+
+    public void onLanguageSelected(ILanguage language) {
+        settingsModule.switchLanguage(language)
+                .observeOn(scheduler)
+                .subscribe(nothing -> getView().setCurrentLanguage(language));
     }
 }
