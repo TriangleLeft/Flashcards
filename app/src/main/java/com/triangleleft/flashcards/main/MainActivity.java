@@ -8,6 +8,7 @@ import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.IMainView;
@@ -42,6 +43,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,6 +66,9 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     TextView drawerUserName;
     @Bind(R.id.drawer_user_avatar)
     ImageView drawerUserAvatar;
+
+    @Inject
+    FlagImagesProvider flagImagesProvider;
 
     private ActionBarDrawerToggle toggle;
     private DrawerArrowDrawable arrowDrawable;
@@ -108,7 +114,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         toggle.setHomeAsUpIndicator(arrowDrawable);
         toggle.setDrawerIndicatorEnabled(true);
 
-        adapter = new DrawerLanguagesAdapter((viewHolder, position) -> {
+        adapter = new DrawerLanguagesAdapter(flagImagesProvider, (viewHolder, position) -> {
             getPresenter().onLanguageSelected(languages.get(position));
             drawerLayout.closeDrawer(GravityCompat.START);
         });

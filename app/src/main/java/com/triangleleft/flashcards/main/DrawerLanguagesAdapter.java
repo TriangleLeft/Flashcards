@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.main;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 
 import android.support.v7.widget.RecyclerView;
@@ -14,10 +15,13 @@ import java.util.List;
 
 public class DrawerLanguagesAdapter extends RecyclerView.Adapter<DrawerLanguageViewHolder> {
 
+    private final FlagImagesProvider flagImagesProvider;
     private List<ILanguage> languages = Collections.emptyList();
     private OnItemClickListener<DrawerLanguageViewHolder> listener;
 
-    public DrawerLanguagesAdapter(OnItemClickListener<DrawerLanguageViewHolder> listener) {
+    public DrawerLanguagesAdapter(FlagImagesProvider flagImagesProvider,
+                                  OnItemClickListener<DrawerLanguageViewHolder> listener) {
+        this.flagImagesProvider = flagImagesProvider;
         this.listener = listener;
     }
 
@@ -35,7 +39,7 @@ public class DrawerLanguagesAdapter extends RecyclerView.Adapter<DrawerLanguageV
     @Override
     public void onBindViewHolder(DrawerLanguageViewHolder holder, int position) {
         ILanguage language = languages.get(position);
-        holder.showLanguage(language);
+        holder.showLanguage(flagImagesProvider, language);
     }
 
     @Override

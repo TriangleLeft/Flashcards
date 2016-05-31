@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -17,8 +16,8 @@ public class SharedPreferencesPersistentStorage implements IPersistentStorage {
     private final SharedPreferences sharedPreferences;
     private final Gson gson = new GsonBuilder().create();
 
-    public SharedPreferencesPersistentStorage(@NonNull Application application) {
-        sharedPreferences = application.getSharedPreferences(NAME,
+    public SharedPreferencesPersistentStorage(@NonNull Context context) {
+        sharedPreferences = context.getSharedPreferences(NAME,
                 Context.MODE_PRIVATE);
     }
 

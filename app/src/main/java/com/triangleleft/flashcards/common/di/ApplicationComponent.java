@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.common.di;
 
-import com.triangleleft.flashcards.common.FlashcardsApplication;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
 import com.triangleleft.flashcards.mvp.common.di.module.StubServiceModule;
@@ -28,8 +28,6 @@ public interface ApplicationComponent extends IComponent {
 
     ISettingsModule settingsModule();
 
-    FlashcardsApplication getApplication();
-
     ComponentManager componentManager();
 
     IPersistentStorage persistentStorage();
@@ -37,4 +35,6 @@ public interface ApplicationComponent extends IComponent {
     IDuolingoRest duolingoRest();
 
     Scheduler mainThreadScheduler();
+
+    FlagImagesProvider flagImagesProvider();
 }

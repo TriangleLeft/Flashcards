@@ -5,10 +5,13 @@ import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.triangleleft.flashcards.SharedPreferencesPersistentStorage;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.util.IPersistentStorage;
+
+import android.content.Context;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,14 +31,14 @@ public class ApplicationModule {
 
     @ApplicationScope
     @Provides
-    public FlashcardsApplication application() {
+    public Context context() {
         return application;
     }
 
     @ApplicationScope
     @Provides
-    public IPersistentStorage persistentStorage(FlashcardsApplication application) {
-        return new SharedPreferencesPersistentStorage(application);
+    public IPersistentStorage persistentStorage(Context context) {
+        return new SharedPreferencesPersistentStorage(context);
     }
 
     @ApplicationScope
@@ -46,14 +49,20 @@ public class ApplicationModule {
 
     @ApplicationScope
     @Provides
-    public CookieJar cookieJar(FlashcardsApplication application) {
-        return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(application));
+    public CookieJar cookieJar(Context context) {
+        return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
     }
 
     @ApplicationScope
     @Provides
     public Scheduler mainThreadScheduler() {
         return AndroidSchedulers.mainThread();
+    }
+
+    @ApplicationScope
+    @Provides
+    public FlagImagesProvider flagImagesProvider(Context context) {
+        return new FlagImagesProvider(context);
     }
 
 }

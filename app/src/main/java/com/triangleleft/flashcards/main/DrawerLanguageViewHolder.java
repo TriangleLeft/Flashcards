@@ -2,10 +2,9 @@ package com.triangleleft.flashcards.main;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,8 +31,8 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void showLanguage(ILanguage language) {
-        iconView.setImageDrawable(new ColorDrawable(Color.RED));
+    public void showLanguage(FlagImagesProvider flagImagesProvider, ILanguage language) {
+        iconView.setImageDrawable(flagImagesProvider.getFlag(language.getId()));
         nameView.setText(language.getName());
         descriptionView.setVisibility(View.GONE);
         badgeView.setText(language.getLevel() + " lvl");
