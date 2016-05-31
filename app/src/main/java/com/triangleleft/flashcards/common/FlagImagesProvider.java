@@ -3,8 +3,6 @@ package com.triangleleft.flashcards.common;
 import com.triangleleft.flashcards.R;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
@@ -31,7 +29,7 @@ public class FlagImagesProvider {
         if (resource != null) {
             return ContextCompat.getDrawable(context, resource);
         } else {
-            return new ColorDrawable(Color.RED);
+            return ContextCompat.getDrawable(context, R.drawable.unknown);
         }
     }
 }
