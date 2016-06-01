@@ -1,14 +1,15 @@
 package com.triangleleft.flashcards.service.login.rest;
 
 import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.common.AbstractProvider;
+import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.error.CommonError;
 import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
-import com.triangleleft.flashcards.service.common.AbstractProvider;
-import com.triangleleft.flashcards.service.common.IListener;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.IPersistentStorage;
 
 import org.slf4j.Logger;
@@ -16,10 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 
+@FunctionsAreNonnullByDefault
 public class RestLoginModule extends AbstractProvider implements ILoginModule {
-
 
     private static final Logger logger = LoggerFactory.getLogger(RestLoginModule.class);
 
@@ -29,7 +32,8 @@ public class RestLoginModule extends AbstractProvider implements ILoginModule {
     private final IPersistentStorage storage;
     private LoginStatus loginStatus;
 
-    public RestLoginModule(@NonNull IDuolingoRest service, @NonNull IPersistentStorage storage) {
+    @Inject
+    public RestLoginModule(IDuolingoRest service, IPersistentStorage storage) {
         this.service = service;
         this.storage = storage;
         loginStatus = storage.get(LOGIN_KEY, LoginStatus.class, LoginStatus.NOT_LOGGED);
@@ -48,7 +52,7 @@ public class RestLoginModule extends AbstractProvider implements ILoginModule {
         return loginStatus;
     }
 
-    private void setLoginStatus(@NonNull LoginStatus status) {
+    private void setLoginStatus(LoginStatus status) {
         loginStatus = status;
         storage.put(LOGIN_KEY, status);
     }

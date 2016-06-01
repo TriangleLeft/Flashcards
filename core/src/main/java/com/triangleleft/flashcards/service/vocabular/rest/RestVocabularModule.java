@@ -4,18 +4,20 @@ import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.support.annotation.NonNull;
-
 import java.util.Collections;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+@FunctionsAreNonnullByDefault
 public class RestVocabularModule extends AbstractProvider implements IVocabularModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
@@ -35,7 +37,8 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
 
     private final IDuolingoRest service;
 
-    public RestVocabularModule(@NonNull IDuolingoRest service) {
+    @Inject
+    public RestVocabularModule(IDuolingoRest service) {
         this.service = service;
     }
 
@@ -44,8 +47,8 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
         logger.debug("getVocabularList() called");
         Observable<List<IVocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
-                .map(model -> model.getWords())
-                .doOnNext(list -> setCachedList(list));
+                .map(VocabularResponseModel::getWords)
+                .doOnNext(this::setCachedList);
         // For fresh calls, try to return db cache
         if (!refresh) {
             observable = observable.startWith(getCachedList());

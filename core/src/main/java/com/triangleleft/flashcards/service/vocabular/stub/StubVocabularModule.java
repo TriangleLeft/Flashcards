@@ -1,14 +1,15 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
-import com.triangleleft.flashcards.service.common.IProviderRequest;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.Arrays;
 import java.util.List;
 
 import rx.Observable;
 
+@FunctionsAreNonnullByDefault
 public class StubVocabularModule implements IVocabularModule {
 
     private List<IVocabularWord> list = Arrays.asList(
@@ -22,8 +23,4 @@ public class StubVocabularModule implements IVocabularModule {
         return Observable.just(list);
     }
 
-    @Override
-    public void cancelRequest(IProviderRequest loginRequest) {
-
-    }
 }

@@ -75,7 +75,6 @@ public abstract class AbstractProvider implements IProvider {
         requestMap.remove(request.getTag());
     }
 
-    @Override
     public void cancelRequest(IProviderRequest request) {
         Call<?> call = requestMap.get(request.getTag());
         if (call != null) {

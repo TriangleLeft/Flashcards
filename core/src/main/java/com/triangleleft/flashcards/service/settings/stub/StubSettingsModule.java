@@ -3,14 +3,18 @@ package com.triangleleft.flashcards.service.settings.stub;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.service.settings.IUserData;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
+@FunctionsAreNonnullByDefault
 public class StubSettingsModule implements ISettingsModule {
 
     private final static int DELAY = 300;
@@ -22,6 +26,11 @@ public class StubSettingsModule implements ISettingsModule {
     private final String avatarUrl =
             "http://i2.wp.com/bato.to/forums/public/style_images/subway/profile/default_large.png";
     private final IUserData userData = StubUserData.create(languages, avatarUrl, "UserName");
+
+    @Inject
+    public StubSettingsModule() {
+
+    }
 
     @Override
     public Observable<IUserData> getUserData() {

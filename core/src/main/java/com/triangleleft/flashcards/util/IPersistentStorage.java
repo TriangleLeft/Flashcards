@@ -10,6 +10,7 @@ public interface IPersistentStorage {
     @Nullable
     <T> T get(@NonNull String key, @NonNull Class<T> clazz);
 
+    // @Contract("_,_,!null -> !null")
     @Nullable
     <T> T get(@NonNull String key, @NonNull Class<T> clazz, @Nullable T defaultValue);
 }

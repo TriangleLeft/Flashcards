@@ -6,6 +6,7 @@ import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
+@FunctionsAreNonnullByDefault
 public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);

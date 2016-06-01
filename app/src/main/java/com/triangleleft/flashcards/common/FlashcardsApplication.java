@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.common.di.ApplicationModule;
 import com.triangleleft.flashcards.common.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
-import com.triangleleft.flashcards.mvp.common.di.module.StubServiceModule;
+import com.triangleleft.flashcards.mvp.common.di.module.ServiceModule;
 import com.triangleleft.flashcards.mvp.common.view.delegate.ViewDelegateFactory;
 
 import android.app.Application;
@@ -34,8 +34,11 @@ public class FlashcardsApplication extends Application {
 
     @NonNull
     protected ApplicationComponent buildComponent() {
-        return DaggerApplicationComponent.builder().stubServiceModule(new StubServiceModule())
-                .applicationModule(new ApplicationModule(this)).netModule(new NetModule()).build();
+        return DaggerApplicationComponent.builder()
+                .serviceModule(new ServiceModule())
+                .applicationModule(new ApplicationModule(this))
+                .netModule(new NetModule())
+                .build();
     }
 
     @NonNull

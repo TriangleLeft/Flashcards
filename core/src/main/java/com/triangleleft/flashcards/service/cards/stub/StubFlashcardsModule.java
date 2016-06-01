@@ -4,14 +4,20 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
-import com.triangleleft.flashcards.service.common.IProviderRequest;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
 
+@FunctionsAreNonnullByDefault
 public class StubFlashcardsModule implements IFlashcardsModule {
+
+    private static final Logger logger = LoggerFactory.getLogger(StubFlashcardsModule.class);
 
     private final IFlashcardTestData testData;
 
@@ -20,21 +26,17 @@ public class StubFlashcardsModule implements IFlashcardsModule {
         for (int i = 0; i < 5; i++) {
             words.add(StubFlashcardWord.create("word" + i, "translation" + i, "id" + i));
         }
-        testData = null;
+        testData = StubFlashcardTestData.create("en", "es", words);
     }
 
     @Override
     public Observable<IFlashcardTestData> getFlashcards() {
+        logger.debug("getFlashcards() called");
         return Observable.just(testData);
     }
 
     @Override
     public void postResult(FlashcardTestResult results) {
-
-    }
-
-    @Override
-    public void cancelRequest(IProviderRequest loginRequest) {
-
+        logger.debug("postResult() called with: results = [{}]", results);
     }
 }

@@ -8,6 +8,7 @@ import com.triangleleft.flashcards.cards.view.DeckView;
 import com.triangleleft.flashcards.mvp.cards.FlashcardsPresenter;
 import com.triangleleft.flashcards.mvp.cards.IFlashcardsView;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@FunctionsAreNonnullByDefault
 public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, FlashcardsPresenter> implements
         IFlashcardsView {
 
