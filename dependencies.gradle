@@ -1,6 +1,6 @@
 final SUPPORT_VERSION = '23.4.0'
 final PCJ_VERSION = '1c351f68d3'
-final DAGGER_VERSION = '2.0.1'
+final DAGGER_VERSION = '2.4'
 ext.dep = [
         DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
                              "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",

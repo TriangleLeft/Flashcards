@@ -10,33 +10,25 @@ import com.triangleleft.flashcards.service.settings.stub.StubSettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.rest.RestVocabularModule;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
 
 @Module
-public class ServiceModule {
+public abstract class ServiceModule {
 
     @ApplicationScope
-    @Provides
-    public ILoginModule loginModule(RestLoginModule module) {
-        return module;
-    }
+    @Binds
+    abstract ILoginModule loginModule(RestLoginModule module);
 
     @ApplicationScope
-    @Provides
-    public IVocabularModule vocabularModule(RestVocabularModule module) {
-        return module;
-    }
+    @Binds
+    abstract IVocabularModule vocabularModule(RestVocabularModule module);
 
     @ApplicationScope
-    @Provides
-    public IFlashcardsModule flashcardsModule(RestFlashcardsModule module) {
-        return module;
-    }
+    @Binds
+    abstract IFlashcardsModule flashcardsModule(RestFlashcardsModule module);
 
     @ApplicationScope
-    @Provides
-    public ISettingsModule settingsModule(StubSettingsModule module) {
-        return module;
-    }
+    @Binds
+    abstract ISettingsModule settingsModule(StubSettingsModule module);
 }
