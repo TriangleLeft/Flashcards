@@ -14,6 +14,8 @@ import com.triangleleft.flashcards.util.IPersistentStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+
 @FunctionsAreNonnullByDefault
 public class StubLoginModule implements ILoginModule {
 
@@ -22,6 +24,7 @@ public class StubLoginModule implements ILoginModule {
     private static final String STUB_LOGIN_KEY = "StubLoginModuleKey";
     private final IPersistentStorage storage;
 
+    @Inject
     public StubLoginModule(IPersistentStorage storage) {
         this.storage = storage;
     }

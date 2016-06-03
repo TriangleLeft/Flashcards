@@ -2,8 +2,6 @@ package com.triangleleft.flashcards.main;
 
 import com.google.common.base.Preconditions;
 
-import com.annimon.stream.Collectors;
-import com.annimon.stream.Stream;
 import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
@@ -15,8 +13,8 @@ import com.triangleleft.flashcards.mvp.main.IMainView;
 import com.triangleleft.flashcards.mvp.main.MainPageModule;
 import com.triangleleft.flashcards.mvp.main.MainPresenter;
 import com.triangleleft.flashcards.service.settings.ILanguage;
-import com.triangleleft.flashcards.service.settings.IUserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
@@ -40,6 +38,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import java.util.List;
 
@@ -49,10 +48,14 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter>
-        implements IMainView {
+@FunctionsAreNonnullByDefault
+public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter> implements IMainView {
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
+
+    private static final int DRAWER_PAGE_PROGRESS = 0;
+    private static final int DRAWER_PAGE_CONTENT = 1;
+
 
     @Bind(R.id.main_container)
     ViewGroup container;
@@ -66,6 +69,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     TextView drawerUserName;
     @Bind(R.id.drawer_user_avatar)
     ImageView drawerUserAvatar;
+    @Bind(R.id.drawer_content_flipper)
+    ViewFlipper drawerContentFlipper;
 
     @Inject
     FlagImagesProvider flagImagesProvider;
@@ -74,7 +79,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     private DrawerArrowDrawable arrowDrawable;
     private VocabularWordFragment vocabularWordFragment;
     private VocabularListFragment vocabularListFragment;
-    private List<ILanguage> languages;
     private DrawerLanguagesAdapter adapter;
 
     @Override
@@ -114,10 +118,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         toggle.setHomeAsUpIndicator(arrowDrawable);
         toggle.setDrawerIndicatorEnabled(true);
 
-        adapter = new DrawerLanguagesAdapter(flagImagesProvider, (viewHolder, position) -> {
-            getPresenter().onLanguageSelected(languages.get(position));
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
+        adapter = new DrawerLanguagesAdapter(flagImagesProvider,
+                ((viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position))));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -146,12 +148,12 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
                 (VocabularWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularWordFragment.TAG);
     }
 
-
     @NonNull
     @Override
     protected IMainView getMvpView() {
         return this;
     }
+
 
     @Override
     public void setTitle(String title) {
@@ -177,24 +179,29 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showUserData(IUserData userData) {
-        // TODO: split into several methods
-        languages = Stream.of(userData.getLanguages()).filter(ILanguage::isLearning)
-                .collect(Collectors.toList());
-        ILanguage learningLanguage = Stream.of(languages).filter(ILanguage::isCurrentLearning).findFirst().get();
-
-        Picasso.with(this).load(userData.getAvatar()).into(drawerUserAvatar);
-        drawerUserName.setText(userData.getUsername());
-
-        adapter.setData(languages);
-        setCurrentLanguage(learningLanguage);
+    public void showUserData(String username, String avatar) {
+        logger.debug("showUserData() called with: username = [{}], avatar = [{}]", username, avatar);
+        Picasso.with(this).load(avatar).into(drawerUserAvatar);
+        drawerUserName.setText(username);
     }
 
     @Override
-    public void setCurrentLanguage(ILanguage language) {
-        getSupportActionBar().setTitle(language.getName());
+    public void showUserLanguages(List<ILanguage> languages) {
+        logger.debug("showUserLanguages() called with: languages = [{}]", languages);
+        // We assume that first language in list is the one we are learning
+        // Though it's possible that we don't learn any languages
+        if (languages.size() > 0) {
+            getSupportActionBar().setTitle(languages.get(0).getName());
+        } else {
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
+        adapter.setData(languages);
+        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
+    }
 
-        // TODO:
+    @Override
+    public void showDrawerProgress() {
+        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
     }
 
     @Override
@@ -211,18 +218,13 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
                     .commit();
+            // FIXME: quick fix
+            getSupportFragmentManager().executePendingTransactions();
         }
         vocabularWordFragment.getPresenter().setWord(word);
         getSupportFragmentManager().beginTransaction().show(vocabularWordFragment).commit();
 
         setArrowIndicator(false);
-    }
-
-    private void setArrowIndicator(boolean visible) {
-        if (toggle.isDrawerIndicatorEnabled() != visible) {
-            toggle.setDrawerIndicatorEnabled(visible);
-            playDrawerToggleAnim(!visible);
-        }
     }
 
     @Override
@@ -248,8 +250,14 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         startActivity(intent);
     }
 
+    private void setArrowIndicator(boolean visible) {
+        if (toggle.isDrawerIndicatorEnabled() != visible) {
+            toggle.setDrawerIndicatorEnabled(visible);
+            playDrawerToggleAnim(!visible);
+        }
+    }
 
-    public void playDrawerToggleAnim(boolean showArrow) {
+    private void playDrawerToggleAnim(boolean showArrow) {
         float start = arrowDrawable.getProgress();
         float end = showArrow ? 1 : 0;
         ValueAnimator offsetAnimator = ValueAnimator.ofFloat(start, end);

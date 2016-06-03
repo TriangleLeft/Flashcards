@@ -37,15 +37,15 @@
     <dimen name="material_drawer_account_header_dropdown_margin_bottom">14dp</dimen>
 
     <!-- General profileIcon margins for the drawer item -->
-    <dimen name="material_drawer_item_padding">8dp</dimen>
+    <dimen name="drawer_top_padding">8dp</dimen>
     <!-- Definition for the primary item -->
-    <dimen name="material_drawer_item_primary">48dp</dimen>
-    <dimen name="material_drawer_item_primary_icon">56dp</dimen>
-    <dimen name="material_drawer_item_primary_icon_padding">12dp</dimen>
-    <dimen name="material_drawer_item_primary_icon_padding_right">32dp</dimen>
-    <dimen name="material_drawer_item_primary_text">14sp</dimen>
-    <dimen name="material_drawer_item_primary_description">14sp</dimen>
-    <dimen name="material_drawer_item_secondary_description">12sp</dimen>
+    <dimen name="drawer_item_language_height">72dp</dimen>
+    <dimen name="drawer_item_language_icon_size">40dp</dimen>
+    <dimen name="drawer_item_language_icon_padding_left">16dp</dimen>
+    <dimen name="drawer_item_language_text_padding_left">72dp</dimen>
+    <dimen name="drawer_item_language_badge_padding_right">16dp</dimen>
+    <dimen name="drawer_item_language_text_size">16sp</dimen>
+    <dimen name="drawer_item_language_description_size">14sp</dimen>
     <!-- Definition for the secondary item -->
     <dimen name="material_drawer_item_secondary">42dp</dimen>
     <dimen name="material_drawer_item_secondary_icon">56dp</dimen>
@@ -72,4 +72,5 @@
 
     <!-- Definition for the section item -->
     <dimen name="material_drawer_item_section_text">14sp</dimen>
+    <dimen name="progress_wheel_size">80dp</dimen>
 </resources>

@@ -2,8 +2,9 @@ package com.triangleleft.flashcards.mvp.main;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
 import com.triangleleft.flashcards.service.settings.ILanguage;
-import com.triangleleft.flashcards.service.settings.IUserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+
+import java.util.List;
 
 public interface IMainView extends IView {
 
@@ -15,9 +16,11 @@ public interface IMainView extends IView {
 
     void finish();
 
-    void showUserData(IUserData userData);
+    void showDrawerProgress();
 
-    void setCurrentLanguage(ILanguage language);
+    void showUserLanguages(List<ILanguage> languages);
+
+    void showUserData(String username, String avatar);
 
     enum Page {
         LIST,

@@ -7,10 +7,17 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public class StubVocabularModule implements IVocabularModule {
+
+    @Inject
+    public StubVocabularModule() {
+
+    }
 
     private List<IVocabularWord> list = Arrays.asList(
             StubVocabularWord.create("word1", 1),

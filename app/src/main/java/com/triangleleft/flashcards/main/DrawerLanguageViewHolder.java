@@ -15,13 +15,13 @@ import butterknife.ButterKnife;
 
 public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.navigation_item_icon)
+    @Bind(R.id.drawer_item_icon)
     ImageView iconView;
-    @Bind(R.id.navigation_item_name)
+    @Bind(R.id.drawer_item_name)
     TextView nameView;
-    @Bind(R.id.navigation_item_description)
+    @Bind(R.id.drawer_item_description)
     TextView descriptionView;
-    @Bind(R.id.navigation_item_badge)
+    @Bind(R.id.drawer_item_badge)
     TextView badgeView;
 
     public DrawerLanguageViewHolder(View view, OnItemClickListener<DrawerLanguageViewHolder> listener) {

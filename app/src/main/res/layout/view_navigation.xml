@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/material_drawer_width"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_gravity="start"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".main.MainActivity">
 
     <include layout="@layout/view_navigation_header" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawer_list"
+    <ViewFlipper
+        android:id="@+id/drawer_content_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="left"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content">
 
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:layout_width="@dimen/progress_wheel_size"
+            android:layout_height="@dimen/progress_wheel_size"
+            android:layout_gravity="center"
+            app:matProg_barColor="@color/colorPrimary"
+            app:matProg_progressIndeterminate="true" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drawer_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/drawer_top_padding"
+            android:layout_gravity="left"
+            android:scrollbars="vertical" />
+
+    </ViewFlipper>
 </LinearLayout>

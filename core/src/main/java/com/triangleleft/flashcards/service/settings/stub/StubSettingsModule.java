@@ -19,7 +19,7 @@ public class StubSettingsModule implements ISettingsModule {
 
     private final static int DELAY = 300;
     private final List<ILanguage> languages = Collections.unmodifiableList(Arrays.asList(
-            StubLanguage.create("en", " English", 4, false, false),
+            StubLanguage.create("en", "English", 4, false, false),
             StubLanguage.create("es", "Spanish", 3, true, false),
             StubLanguage.create("de", "German", 2, true, true)
     ));

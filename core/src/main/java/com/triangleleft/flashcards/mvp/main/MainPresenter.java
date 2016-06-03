@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.mvp.main;
 
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
@@ -11,6 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
+
+import java.util.Comparator;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,6 +29,9 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private final Scheduler scheduler;
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private IVocabularWord selectedWord;
+    private List<ILanguage> languages;
+    private Comparator<ILanguage> languageComparator =
+            (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
 
 
     @Inject
@@ -35,21 +43,20 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
 
     @Override
     public void onCreate() {
-        settingsModule.getUserData()
-                .observeOn(scheduler)
-                .subscribe(
-                        userData -> {
-                            getView().showUserData(userData);
-                        },
-                        error -> {
-                        }
-                );
+        loadUserData();
     }
 
     @Override
     public void onBind(IMainView view) {
         super.onBind(view);
         setViewPage(currentPage);
+    }
+
+    @Override
+    public void onWordSelected(@NonNull IVocabularWord word) {
+        logger.debug("onWordSelected() called with: word = [{}]", word);
+        selectedWord = word;
+        setViewPage(IMainView.Page.WORD);
     }
 
     public void onBackPressed() {
@@ -62,11 +69,30 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         }
     }
 
-    @Override
-    public void onWordSelected(@NonNull IVocabularWord word) {
-        logger.debug("onWordSelected() called with: word = [{}]", word);
-        selectedWord = word;
-        setViewPage(IMainView.Page.WORD);
+    public void onLanguageSelected(ILanguage language) {
+        getView().showDrawerProgress();
+        settingsModule.switchLanguage(language)
+                .observeOn(scheduler)
+                .subscribe(nothing -> loadUserData());
+    }
+
+    private void loadUserData() {
+        settingsModule.getUserData()
+                .observeOn(scheduler)
+                .subscribe(userData -> {
+                            // We assume that is only one language that we are currently learning
+                            // Sort it, so it is always top of the list
+                            languages = Stream.of(userData.getLanguages())
+                                    .filter(ILanguage::isLearning)
+                                    .sorted(languageComparator)
+                                    .collect(Collectors.toList());
+
+                            getView().showUserData(userData.getUsername(), userData.getAvatar());
+                            getView().showUserLanguages(languages);
+                        },
+                        error -> {
+                        }
+                );
     }
 
     private void setViewPage(IMainView.Page page) {
@@ -81,11 +107,5 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             default:
                 throw new RuntimeException("Unknown page: " + currentPage);
         }
-    }
-
-    public void onLanguageSelected(ILanguage language) {
-        settingsModule.switchLanguage(language)
-                .observeOn(scheduler)
-                .subscribe(nothing -> getView().setCurrentLanguage(language));
     }
 }

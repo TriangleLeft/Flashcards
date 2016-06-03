@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import rx.Observable;
 
 @FunctionsAreNonnullByDefault
@@ -21,6 +23,7 @@ public class StubFlashcardsModule implements IFlashcardsModule {
 
     private final IFlashcardTestData testData;
 
+    @Inject
     public StubFlashcardsModule() {
         List<IFlashcardWord> words = new ArrayList<>();
         for (int i = 0; i < 5; i++) {

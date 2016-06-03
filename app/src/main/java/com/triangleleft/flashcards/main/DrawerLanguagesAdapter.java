@@ -38,12 +38,16 @@ public class DrawerLanguagesAdapter extends RecyclerView.Adapter<DrawerLanguageV
 
     @Override
     public void onBindViewHolder(DrawerLanguageViewHolder holder, int position) {
-        ILanguage language = languages.get(position);
+        ILanguage language = getItem(position);
         holder.showLanguage(flagImagesProvider, language);
     }
 
     @Override
     public int getItemCount() {
         return languages.size();
+    }
+
+    public ILanguage getItem(int position) {
+        return languages.get(position);
     }
 }
