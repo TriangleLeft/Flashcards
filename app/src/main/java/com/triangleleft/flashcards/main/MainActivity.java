@@ -119,7 +119,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         toggle.setDrawerIndicatorEnabled(true);
 
         adapter = new DrawerLanguagesAdapter(flagImagesProvider,
-                ((viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position))));
+                (viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position)));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -195,13 +195,13 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         } else {
             getSupportActionBar().setTitle(R.string.app_name);
         }
-        adapter.setData(languages);
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
+        adapter.setData(languages);
     }
 
     @Override
     public void showDrawerProgress() {
-        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
+        //drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
     }
 
     @Override

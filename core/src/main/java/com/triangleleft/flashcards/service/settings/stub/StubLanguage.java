@@ -7,7 +7,11 @@ import com.triangleleft.flashcards.service.settings.ILanguage;
 @AutoValue
 public abstract class StubLanguage implements ILanguage {
 
-    public static ILanguage create(String id, String name, int level, boolean learning, boolean currentLearning) {
+    public static StubLanguage create(String id, String name, int level, boolean learning, boolean currentLearning) {
         return new AutoValue_StubLanguage(id, name, level, learning, currentLearning);
+    }
+
+    public StubLanguage withCurrentLearning(boolean currentLearning) {
+        return new AutoValue_StubLanguage(getId(), getName(), getLevel(), isLearning(), currentLearning);
     }
 }

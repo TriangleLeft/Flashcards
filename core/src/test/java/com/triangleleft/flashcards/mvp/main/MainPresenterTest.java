@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.mvp.main;
 
+import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.junit.Before;
@@ -8,21 +9,23 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
+import rx.schedulers.Schedulers;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainPresenterTest {
 
     @Mock
     IMainView view;
+    @Mock
+    ISettingsModule settingsModule;
 
     private MainPresenter presenter;
 
     @Before
     public void before() {
-        presenter = new MainPresenter();
+        presenter = new MainPresenter(settingsModule, Schedulers.immediate());
     }
 
     @Test

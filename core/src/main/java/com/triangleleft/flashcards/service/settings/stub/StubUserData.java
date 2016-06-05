@@ -13,4 +13,8 @@ public abstract class StubUserData implements IUserData {
     public static IUserData create(List<ILanguage> languages, String avatar, String username) {
         return new AutoValue_StubUserData(languages, avatar, username);
     }
+
+    public IUserData withLanguages(List<ILanguage> languages) {
+        return new AutoValue_StubUserData(languages, getAvatar(), getUsername());
+    }
 }

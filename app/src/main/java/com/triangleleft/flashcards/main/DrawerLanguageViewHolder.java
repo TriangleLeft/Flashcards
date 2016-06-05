@@ -27,7 +27,9 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
     public DrawerLanguageViewHolder(View view, OnItemClickListener<DrawerLanguageViewHolder> listener) {
         super(view);
         ButterKnife.bind(this, view);
-        view.setOnClickListener(clickedView -> listener.onItemClick(this, getAdapterPosition()));
+        view.setOnClickListener(clickedView -> {
+            listener.onItemClick(this, getAdapterPosition());
+        });
     }
 
 
@@ -41,5 +43,6 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
         } else {
             itemView.setAlpha(0.5f);
         }
+        itemView.invalidate();
     }
 }
