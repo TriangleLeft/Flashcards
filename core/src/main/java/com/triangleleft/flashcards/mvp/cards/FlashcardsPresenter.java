@@ -52,7 +52,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         testData = data;
         results.clear();
         if (testData.getWords().size() != 0) {
-            getView().showFlashcards(testData.getWords());
+            getView().showTestData(data);
         } else {
             // We expect to always have flashcards
             getView().showErrorNoContent();

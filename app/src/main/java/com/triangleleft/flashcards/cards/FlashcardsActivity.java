@@ -7,6 +7,7 @@ import com.triangleleft.flashcards.cards.di.DaggerCardsComponent;
 import com.triangleleft.flashcards.cards.view.DeckView;
 import com.triangleleft.flashcards.mvp.cards.FlashcardsPresenter;
 import com.triangleleft.flashcards.mvp.cards.IFlashcardsView;
+import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -14,8 +15,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -79,8 +78,8 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     }
 
     @Override
-    public void showFlashcards(List<IFlashcardWord> result) {
-        deckView.setWordList(result);
+    public void showTestData(IFlashcardTestData data) {
+        deckView.setTestData(data);
         viewFlipper.setDisplayedChild(CARDS);
     }
 

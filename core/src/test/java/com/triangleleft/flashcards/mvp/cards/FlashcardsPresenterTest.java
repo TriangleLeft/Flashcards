@@ -79,7 +79,7 @@ public class FlashcardsPresenterTest {
 
         presenter.onBind(view);
 
-        verify(view).showFlashcards(list);
+        verify(view).showTestData(data);
     }
 
     @Test

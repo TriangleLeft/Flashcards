@@ -10,6 +10,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -79,6 +80,7 @@ public class FlashcardView extends FrameLayout {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        setLayerType(View.LAYER_TYPE_NONE, null);
                         setEnabled(true);
                     }
                 });
@@ -116,6 +118,9 @@ public class FlashcardView extends FrameLayout {
         setRotationY(0f);
         requestLayout();
         invalidate();
+        // TODO: revisit
+        setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        buildLayer();
     }
 
     @OnClick(R.id.button_right)

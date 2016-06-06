@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.cards.view;
 
+import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardWord;
 
 import org.slf4j.Logger;
@@ -25,8 +26,8 @@ public class DeckView extends FrameLayout {
     private FlashcardView topCard;
     private FlashcardView bottomCard;
     private int currentPosition;
-    private List<IFlashcardWord> list;
     private DeckListener listener;
+    private List<IFlashcardWord> list;
 
 
     public DeckView(Context context, AttributeSet attrs) {
@@ -48,8 +49,8 @@ public class DeckView extends FrameLayout {
         addView(topCard, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    public void setWordList(List<IFlashcardWord> list) {
-        this.list = list;
+    public void setTestData(IFlashcardTestData testData) {
+        this.list = testData.getWords();
         if (list.size() == 0) {
             throw new IllegalArgumentException("Non-empty list expected");
         }
