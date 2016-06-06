@@ -45,7 +45,6 @@
             android:src="@drawable/ic_flashcards"
             android:layout_margin="@dimen/fab_margin"
             android:tint="@color/textColorPrimary"
-            app:layout_behavior="com.triangleleft.flashcards.main.ScrollAwareFABBehavior"
             app:fabSize="normal"
             app:layout_anchor="@id/main_container"
             app:layout_anchorGravity="bottom|right|end" />

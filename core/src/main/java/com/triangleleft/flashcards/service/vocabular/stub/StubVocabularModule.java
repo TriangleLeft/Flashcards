@@ -4,7 +4,7 @@ import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,16 +14,15 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public class StubVocabularModule implements IVocabularModule {
 
+    private final List<IVocabularWord> list;
+
     @Inject
     public StubVocabularModule() {
-
+        list = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            list.add(StubVocabularWord.create("word" + i, (int) (Math.random() * 4)));
+        }
     }
-
-    private List<IVocabularWord> list = Arrays.asList(
-            StubVocabularWord.create("word1", 1),
-            StubVocabularWord.create("word2", 2),
-            StubVocabularWord.create("word3", 3));
-
 
     @Override
     public Observable<List<IVocabularWord>> getVocabularList(boolean refresh) {
