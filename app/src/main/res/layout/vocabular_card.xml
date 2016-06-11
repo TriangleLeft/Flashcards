@@ -20,12 +20,13 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@+id/icon"
-        android:text="Test" />
+        android:text="@string/placeholder" />
 
+    <!-- Divider -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#000000" />
+        android:background="@color/divider" />
 
 </RelativeLayout>
