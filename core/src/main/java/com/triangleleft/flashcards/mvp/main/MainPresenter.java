@@ -7,6 +7,7 @@ import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.IUserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
 
 import org.slf4j.Logger;
@@ -27,11 +28,11 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
     private final ISettingsModule settingsModule;
     private final Scheduler scheduler;
+    private final Comparator<ILanguage> languageComparator =
+            (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private IVocabularWord selectedWord;
-    private List<ILanguage> languages;
-    private Comparator<ILanguage> languageComparator =
-            (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
+    private IUserData userData;
 
 
     @Inject
@@ -49,14 +50,17 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     @Override
     public void onBind(IMainView view) {
         super.onBind(view);
-        setViewPage(currentPage);
+        showViewPage(currentPage);
+        if (userData != null) {
+            showUserData(userData);
+        }
     }
 
     @Override
     public void onWordSelected(@NonNull IVocabularWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
         selectedWord = word;
-        setViewPage(IMainView.Page.WORD);
+        showViewPage(IMainView.Page.WORD);
     }
 
     public void onBackPressed() {
@@ -65,7 +69,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             getView().finish();
         } else {
             // Go to top-level screen
-            setViewPage(IMainView.Page.LIST);
+            showViewPage(IMainView.Page.LIST);
         }
     }
 
@@ -80,22 +84,27 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         settingsModule.getUserData()
                 .observeOn(scheduler)
                 .subscribe(userData -> {
-                            // We assume that is only one language that we are currently learning
-                            // Sort it, so it is always top of the list
-                            languages = Stream.of(userData.getLanguages())
-                                    .filter(ILanguage::isLearning)
-                                    .sorted(languageComparator)
-                                    .collect(Collectors.toList());
-
-                            getView().showUserData(userData.getUsername(), userData.getAvatar());
-                            getView().showUserLanguages(languages);
+                            this.userData = userData;
+                            showUserData(userData);
                         },
                         error -> {
                         }
                 );
     }
 
-    private void setViewPage(IMainView.Page page) {
+    private void showUserData(IUserData userData) {
+        // We assume that is only one language that we are currently learning
+        // Sort it, so it is always top of the list
+        List<ILanguage> languages = Stream.of(userData.getLanguages())
+                .filter(ILanguage::isLearning)
+                .sorted(languageComparator)
+                .collect(Collectors.toList());
+
+
+        getView().showUserData(userData.getUsername(), userData.getAvatar(), languages);
+    }
+
+    private void showViewPage(IMainView.Page page) {
         currentPage = page;
         switch (currentPage) {
             case LIST:

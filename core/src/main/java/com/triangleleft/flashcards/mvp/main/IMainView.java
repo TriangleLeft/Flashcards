@@ -18,9 +18,7 @@ public interface IMainView extends IView {
 
     void showDrawerProgress();
 
-    void showUserLanguages(List<ILanguage> languages);
-
-    void showUserData(String username, String avatar);
+    void showUserData(String username, String avatar, List<ILanguage> languages);
 
     enum Page {
         LIST,

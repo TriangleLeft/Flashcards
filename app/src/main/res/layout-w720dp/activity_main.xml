@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <android.support.v4.widget.SlidingPaneLayout
+        android:id="@+id/sliding_pane_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/drawer"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#ffffff"
+            android:orientation="vertical"
+            tools:context=".main.MainActivity">
+
+            <include layout="@layout/view_navigation_header" />
+
+            <ViewFlipper
+                android:id="@+id/drawer_content_flipper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.pnikosis.materialishprogress.ProgressWheel
+                    android:layout_width="@dimen/progress_wheel_size"
+                    android:layout_height="@dimen/progress_wheel_size"
+                    android:layout_gravity="center"
+                    app:matProg_barColor="@color/colorPrimary"
+                    app:matProg_progressIndeterminate="true" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/drawer_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:paddingTop="@dimen/drawer_top_padding"
+                    android:scrollbars="vertical" />
+
+            </ViewFlipper>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="72dp">
+
+            <android.support.design.widget.CoordinatorLayout
+                android:id="@+id/main_panel"
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                tools:context=".main.MainActivity">
+
+                <FrameLayout
+                    android:id="@+id/main_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:context=".main.MainActivity" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/button_flashcards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:src="@drawable/ic_flashcards"
+                    android:tint="@color/textColorPrimary"
+                    app:fabSize="normal"
+                    app:layout_anchor="@id/main_container"
+                    app:layout_anchorGravity="bottom|right|end" />
+
+            </android.support.design.widget.CoordinatorLayout>
+
+            <FrameLayout
+                android:id="@+id/secondary_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".main.MainActivity" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.SlidingPaneLayout>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+</RelativeLayout>
