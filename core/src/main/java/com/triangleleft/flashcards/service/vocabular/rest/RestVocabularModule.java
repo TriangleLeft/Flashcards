@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.service.vocabular.rest;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
 
     // FIXME: use proper cache
-    private volatile List<IVocabularWord> cachedList = Collections.singletonList(new IVocabularWord() {
+    private volatile List<VocabularWord> cachedList = Collections.singletonList(new VocabularWord() {
         @Override
         public String getWord() {
             return "Cached word!";
@@ -43,9 +43,9 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
     }
 
     @Override
-    public Observable<List<IVocabularWord>> getVocabularList(boolean refresh) {
+    public Observable<List<VocabularWord>> getVocabularList(boolean refresh) {
         logger.debug("getVocabularList() called");
-        Observable<List<IVocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
+        Observable<List<VocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
                 .map(VocabularResponseModel::getWords)
                 .doOnNext(this::setCachedList);
@@ -56,12 +56,12 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
         return observable;
     }
 
-    private void setCachedList(List<IVocabularWord> list) {
+    private void setCachedList(List<VocabularWord> list) {
         logger.debug("setCachedList() called with: list = [{}]", list);
         cachedList = list;
     }
 
-    private List<IVocabularWord> getCachedList() {
+    private List<VocabularWord> getCachedList() {
         logger.debug("getCachedList() called");
         return cachedList;
     }

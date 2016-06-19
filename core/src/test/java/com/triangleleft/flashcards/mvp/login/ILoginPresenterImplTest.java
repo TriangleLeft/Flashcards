@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.mvp.login;
 
 import com.triangleleft.flashcards.service.common.IListener;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginModule;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import org.mockito.MockitoAnnotations;
 public class ILoginPresenterImplTest {
 
     @Mock
-    ILoginModule module;
+    LoginModule module;
 
     @Mock
     ILoginView view;

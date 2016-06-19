@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.vocabular;
 
 import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,7 +28,7 @@ public class VocabularViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void show(IVocabularWord word) {
+    public void show(VocabularWord word) {
         textView.setText(word.getWord());
     }
 }

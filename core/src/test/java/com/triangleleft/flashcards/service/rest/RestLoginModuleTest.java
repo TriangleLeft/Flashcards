@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.service.rest;
 
 import com.triangleleft.flashcards.service.login.Credentials;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
+import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ public class RestLoginModuleTest {
     public final ExpectedException exception = ExpectedException.none();
 
     @Inject
-    static ILoginModule loginModule;
+    static LoginModule loginModule;
 
 
     // We don't check for actual login/password here

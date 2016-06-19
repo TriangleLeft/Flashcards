@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.main;
 import com.google.common.base.Preconditions;
 
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
@@ -19,6 +19,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     SlidingPaneLayout slidingPaneLayout;
     private final MainActivity activity;
     private VocabularWordFragment vocabularWordFragment;
+    private VocabularListFragment vocabularListFragment;
 
     public TabletWideDelegate(MainActivity activity) {
         this.activity = activity;
@@ -33,7 +34,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     }
 
     @Override
-    public void showWord(IVocabularWord word) {
+    public void showWord(VocabularWord word) {
         Preconditions.checkNotNull(vocabularWordFragment, "Vocabular word fragment was not bound!");
         vocabularWordFragment.getPresenter().setWord(word);
     }
@@ -48,9 +49,14 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         slidingPaneLayout.closePane();
     }
 
+    @Override
+    public void reloadList() {
+        vocabularListFragment.getPresenter().onLoadList();
+    }
+
     private void initPages() {
         // Try to get re-created fragments
-        VocabularListFragment vocabularListFragment = (VocabularListFragment) getSupportFragmentManager()
+        vocabularListFragment = (VocabularListFragment) getSupportFragmentManager()
                 .findFragmentByTag(VocabularListFragment.TAG);
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularListFragment();

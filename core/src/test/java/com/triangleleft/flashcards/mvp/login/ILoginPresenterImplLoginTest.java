@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.mvp.login;
 
 import com.triangleleft.flashcards.service.common.IListener;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginModule;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -13,7 +13,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class ILoginPresenterImplLoginTest {
@@ -22,7 +22,7 @@ public class ILoginPresenterImplLoginTest {
     private static final String PASSWORD = "password";
 
     @Mock
-    ILoginModule module;
+    LoginModule module;
 
     @Mock
     ILoginView view;

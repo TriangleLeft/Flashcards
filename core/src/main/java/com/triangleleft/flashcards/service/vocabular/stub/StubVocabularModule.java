@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public class StubVocabularModule implements IVocabularModule {
 
-    private final List<IVocabularWord> list;
+    private final List<VocabularWord> list;
 
     @Inject
     public StubVocabularModule() {
@@ -25,7 +25,7 @@ public class StubVocabularModule implements IVocabularModule {
     }
 
     @Override
-    public Observable<List<IVocabularWord>> getVocabularList(boolean refresh) {
+    public Observable<List<VocabularWord>> getVocabularList(boolean refresh) {
         return Observable.just(list);
     }
 

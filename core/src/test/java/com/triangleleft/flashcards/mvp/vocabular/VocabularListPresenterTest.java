@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,10 +18,7 @@ import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class VocabularListPresenterTest {
@@ -41,7 +38,7 @@ public class VocabularListPresenterTest {
 
     @Test
     public void onWordSelectedWouldDelegateToNavigator() {
-        IVocabularWord mockWord = mock(IVocabularWord.class);
+        VocabularWord mockWord = mock(VocabularWord.class);
 
         presenter.onWordSelected(mockWord);
         verify(navigator).onWordSelected(mockWord);
@@ -59,7 +56,7 @@ public class VocabularListPresenterTest {
     public void onDestroyWouldUnsubscribe() {
         AtomicBoolean unsubscribed = new AtomicBoolean(false);
         // Create empty observable to notify us when it's unsubscribed from
-        Observable<List<IVocabularWord>> observable = Observable.empty();
+        Observable<List<VocabularWord>> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
         when(module.getVocabularList(anyBoolean())).thenReturn(observable);
 
@@ -82,7 +79,7 @@ public class VocabularListPresenterTest {
 
     @Test
     public void whenHasListOnBindWouldShowList() {
-        List<IVocabularWord> list = Collections.singletonList(mock(IVocabularWord.class));
+        List<VocabularWord> list = Collections.singletonList(mock(VocabularWord.class));
         when(module.getVocabularList(false)).thenReturn(Observable.just(list));
         presenter.onBind(view);
         presenter.onUnbind();

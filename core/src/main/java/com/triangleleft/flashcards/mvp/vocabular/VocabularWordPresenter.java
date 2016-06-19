@@ -2,14 +2,14 @@ package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import javax.inject.Inject;
 
 @FragmentScope
 public class VocabularWordPresenter extends AbstractPresenter<IVocabularWordView> {
 
-    private IVocabularWord word;
+    private VocabularWord word;
 
     @Inject
     public VocabularWordPresenter() {
@@ -24,7 +24,7 @@ public class VocabularWordPresenter extends AbstractPresenter<IVocabularWordView
         }
     }
 
-    public void setWord(IVocabularWord word) {
+    public void setWord(VocabularWord word) {
         this.word = word;
         getView().showWord(word);
     }

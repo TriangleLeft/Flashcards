@@ -2,18 +2,20 @@ package com.triangleleft.flashcards.service.settings.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.triangleleft.flashcards.service.settings.ILanguage;
-import com.triangleleft.flashcards.service.settings.IUserData;
+import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.service.settings.stub.SimpleUserData;
 
 import java.util.Collections;
 import java.util.List;
 
-public class UserDataModel implements IUserData {
+public class UserDataModel {
 
     @SerializedName("languages")
     private List<LanguageDataModel> languages;
     @SerializedName("learning_language")
-    public String learning_language;
+    public String learningLanguage;
+    @SerializedName("ui_language")
+    public String uiLanguage;
     @SerializedName("avatar")
     private String avatar;
     @SerializedName("username")
@@ -21,19 +23,13 @@ public class UserDataModel implements IUserData {
     @SerializedName("email")
     public String email;
 
-    @Override
-    public List<ILanguage> getLanguages() {
-        return Collections.unmodifiableList(languages);
-    }
-
-    @Override
-    public String getAvatar() {
-        return avatar;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
+    public UserData toUserData() {
+        return SimpleUserData.create(
+                Collections.unmodifiableList(languages),
+                avatar,
+                username,
+                learningLanguage,
+                uiLanguage);
     }
 
 }

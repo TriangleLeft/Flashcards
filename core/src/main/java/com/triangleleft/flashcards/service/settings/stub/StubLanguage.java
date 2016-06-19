@@ -11,7 +11,5 @@ public abstract class StubLanguage implements ILanguage {
         return new AutoValue_StubLanguage(id, name, level, learning, currentLearning);
     }
 
-    public StubLanguage withCurrentLearning(boolean currentLearning) {
-        return new AutoValue_StubLanguage(getId(), getName(), getLevel(), isLearning(), currentLearning);
-    }
+    public abstract StubLanguage withCurrentLearning(boolean currentLearning);
 }

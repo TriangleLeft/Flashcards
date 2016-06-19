@@ -7,8 +7,8 @@ import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
-import com.triangleleft.flashcards.service.settings.IUserData;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +31,8 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private final Comparator<ILanguage> languageComparator =
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
-    private IVocabularWord selectedWord;
-    private IUserData userData;
+    private VocabularWord selectedWord;
+    private UserData userData;
 
 
     @Inject
@@ -57,7 +57,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     }
 
     @Override
-    public void onWordSelected(@NonNull IVocabularWord word) {
+    public void onWordSelected(@NonNull VocabularWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
         selectedWord = word;
         showViewPage(IMainView.Page.WORD);
@@ -77,7 +77,10 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         getView().showDrawerProgress();
         settingsModule.switchLanguage(language)
                 .observeOn(scheduler)
-                .subscribe(nothing -> loadUserData());
+                .subscribe(nothing -> loadUserData(),
+                        error -> {
+
+                        });
     }
 
     private void loadUserData() {
@@ -92,7 +95,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
                 );
     }
 
-    private void showUserData(IUserData userData) {
+    private void showUserData(UserData userData) {
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list
         List<ILanguage> languages = Stream.of(userData.getLanguages())

@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.di.DaggerVocabularWordComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
 
@@ -70,7 +70,7 @@ public class VocabularWordFragment
     }
 
     @Override
-    public void showWord(IVocabularWord word) {
+    public void showWord(VocabularWord word) {
         titleView.setText(word.getWord());
     }
 }

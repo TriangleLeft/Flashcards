@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.mvp.vocabular;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +26,7 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     private final IVocabularModule vocabularModule;
     private final IVocabularNavigator navigator;
     private final Scheduler mainThreadScheduler;
-    private List<IVocabularWord> wordList;
+    private List<VocabularWord> wordList;
     private Subscription subscription = Subscriptions.empty();
 
     @Inject
@@ -48,7 +48,7 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
         }
     }
 
-    public void onWordSelected(@NonNull IVocabularWord word) {
+    public void onWordSelected(@NonNull VocabularWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
         navigator.onWordSelected(word);
     }

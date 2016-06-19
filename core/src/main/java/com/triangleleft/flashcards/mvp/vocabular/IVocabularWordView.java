@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 public interface IVocabularWordView extends IView {
-    void showWord(IVocabularWord word);
+    void showWord(VocabularWord word);
 }

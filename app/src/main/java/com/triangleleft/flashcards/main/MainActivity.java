@@ -11,7 +11,7 @@ import com.triangleleft.flashcards.mvp.main.IMainView;
 import com.triangleleft.flashcards.mvp.main.MainPageModule;
 import com.triangleleft.flashcards.mvp.main.MainPresenter;
 import com.triangleleft.flashcards.service.settings.ILanguage;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -142,6 +142,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         }
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
         adapter.setData(languages);
+
+        delegate.reloadList();
     }
 
     @Override
@@ -150,7 +152,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showWord(@NonNull IVocabularWord word) {
+    public void showWord(@NonNull VocabularWord word) {
         logger.debug("showWord() called with: word = [{}]", word);
         delegate.showWord(word);
     }

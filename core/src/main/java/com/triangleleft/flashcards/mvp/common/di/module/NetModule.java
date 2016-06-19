@@ -15,6 +15,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.schedulers.Schedulers;
 
 @Module
 public class NetModule {
@@ -24,14 +25,19 @@ public class NetModule {
     @ApplicationScope
     @Provides
     public HttpUrl endpoint() {
-        return new HttpUrl.Builder().host(BASE_URL).scheme(BASE_SCHEME).build();
+        return new HttpUrl.Builder()
+                .host(BASE_URL)
+                .scheme(BASE_SCHEME)
+                .build();
     }
 
     @ApplicationScope
     @Provides
     public Retrofit retrofit(HttpUrl url, OkHttpClient client) {
-        return new Retrofit.Builder().baseUrl(url).client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+        return new Retrofit.Builder()
+                .baseUrl(url)
+                .client(client)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addConverterFactory(GsonConverterFactory.create()).build();
     }
 
@@ -40,8 +46,11 @@ public class NetModule {
     public OkHttpClient client(CookieJar cookieJar, NetworkDelayInterceptor delayInterceptor) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        return new OkHttpClient.Builder().cookieJar(cookieJar).addInterceptor(interceptor)
-                .addInterceptor(delayInterceptor).build();
+        return new OkHttpClient.Builder()
+                .cookieJar(cookieJar)
+                .addInterceptor(interceptor)
+                .addInterceptor(delayInterceptor)
+                .build();
     }
 
     @ApplicationScope

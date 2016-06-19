@@ -7,7 +7,7 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public interface ISettingsModule {
 
-    Observable<IUserData> getUserData();
+    Observable<UserData> getUserData();
 
     Observable<Void> switchLanguage(ILanguage language);
 }

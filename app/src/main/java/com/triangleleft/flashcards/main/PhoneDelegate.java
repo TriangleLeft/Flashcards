@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.main;
 
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
@@ -85,7 +85,7 @@ import butterknife.ButterKnife;
     }
 
     @Override
-    public void showWord(IVocabularWord word) {
+    public void showWord(VocabularWord word) {
         if (vocabularListFragment != null) {
             getSupportFragmentManager().beginTransaction().hide(vocabularListFragment).commit();
         }
@@ -111,6 +111,15 @@ import butterknife.ButterKnife;
     @Override
     public void closeDrawer() {
         drawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void reloadList() {
+        // No need to explicitly reload list if it's not added yet.
+        // When it's added it would load data for current language
+        if (vocabularListFragment != null) {
+            vocabularListFragment.getPresenter().onLoadList();
+        }
     }
 
     private void onBackPressed() {

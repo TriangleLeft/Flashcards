@@ -9,7 +9,7 @@ import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
-import com.triangleleft.flashcards.util.IPersistentStorage;
+import com.triangleleft.flashcards.util.PersistentStorage;
 
 import android.content.Context;
 
@@ -37,7 +37,7 @@ public class ApplicationModule {
 
     @ApplicationScope
     @Provides
-    public IPersistentStorage persistentStorage(Context context) {
+    public PersistentStorage persistentStorage(Context context) {
         return new SharedPreferencesPersistentStorage(context);
     }
 

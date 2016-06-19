@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularListView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
 
@@ -57,7 +57,7 @@ public class VocabularListFragment
 
         vocabularAdapter = new VocabularAdapter();
         vocabularAdapter.setItemClickListener((viewHolder, position) -> {
-            IVocabularWord word = vocabularAdapter.getItem(position);
+            VocabularWord word = vocabularAdapter.getItem(position);
             getPresenter().onWordSelected(word);
         });
         vocabList.setAdapter(vocabularAdapter);
@@ -75,7 +75,7 @@ public class VocabularListFragment
     }
 
     @Override
-    public void showWords(@NonNull List<IVocabularWord> words) {
+    public void showWords(@NonNull List<VocabularWord> words) {
         logger.debug("showWords() called with: words = [{}]", words);
         viewFlipper.setDisplayedChild(LIST);
         swipeRefresh.setRefreshing(false);

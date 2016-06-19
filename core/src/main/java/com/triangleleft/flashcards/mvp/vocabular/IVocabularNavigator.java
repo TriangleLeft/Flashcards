@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
-import com.triangleleft.flashcards.service.vocabular.IVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import android.support.annotation.NonNull;
 
 public interface IVocabularNavigator {
-    void onWordSelected(@NonNull IVocabularWord word);
+    void onWordSelected(@NonNull VocabularWord word);
 }

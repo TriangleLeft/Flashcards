@@ -36,10 +36,9 @@ public interface IDuolingoRest {
 
     @FormUrlEncoded
     @POST("/switch_language")
-    Observable<LanguageDataModel> switchLanguage(@Field("learning_language") String language);
+    Observable<LanguageDataModel> switchLanguage(@Field("learning_language") String languageId);
 
-    @GET("/api/1//users/show")
+    @GET("/api/1/users/show")
     Observable<UserDataModel> getUserData(@Query("id") String userId);
-
 
 }

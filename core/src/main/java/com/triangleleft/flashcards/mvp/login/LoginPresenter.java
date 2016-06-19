@@ -7,9 +7,9 @@ import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.error.CommonError;
 import com.triangleleft.flashcards.service.login.Credentials;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
 import com.triangleleft.flashcards.util.TextUtils;
@@ -26,7 +26,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginPresenter.class);
 
-    private final ILoginModule loginModule;
+    private final LoginModule loginModule;
     private ILoginRequest loginRequest;
 
     private IListener<ILoginResult> loginListener = new LoginListener();
@@ -34,10 +34,11 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
 
     @Inject
-    public LoginPresenter(@NonNull ILoginModule loginModule) {
+    public LoginPresenter(@NonNull LoginModule loginModule) {
         super(ILoginView.class);
         logger.debug("LoginPresenter() called with: loginModule = [{}]", loginModule);
         this.loginModule = loginModule;
+        credentials.setLogin(loginModule.getLogin());
     }
 
     @Override

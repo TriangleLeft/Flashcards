@@ -4,34 +4,38 @@ import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.IProviderRequest;
 import com.triangleleft.flashcards.service.common.error.CommonError;
 import com.triangleleft.flashcards.service.common.error.ErrorType;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.IPersistentStorage;
+import com.triangleleft.flashcards.util.PersistentStorage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.support.annotation.Nullable;
+
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
-public class StubLoginModule implements ILoginModule {
+public class StubLoginModule implements LoginModule {
 
     private static final Logger logger = LoggerFactory.getLogger(StubLoginModule.class);
 
     private static final String STUB_LOGIN_KEY = "StubLoginModuleKey";
-    private final IPersistentStorage storage;
+    private static final String STUB_USER_ID = "userId";
+    private static final String STUB_LOGIN = "login";
+    private final PersistentStorage storage;
 
     @Inject
-    public StubLoginModule(IPersistentStorage storage) {
+    public StubLoginModule(PersistentStorage storage) {
         this.storage = storage;
     }
 
     @Override
     public void login(ILoginRequest request, IListener<ILoginResult> listener) {
-        if ("login".equals(request.getLogin()) && "password".equals(request.getPassword())) {
+        if (STUB_LOGIN.equals(request.getLogin()) && "password".equals(request.getPassword())) {
             storage.put(STUB_LOGIN_KEY, LoginStatus.LOGGED);
             listener.onResult(() -> LoginStatus.LOGGED);
         } else {
@@ -54,8 +58,19 @@ public class StubLoginModule implements ILoginModule {
         return storage.get(STUB_LOGIN_KEY, LoginStatus.class, LoginStatus.NOT_LOGGED);
     }
 
+    @Nullable
+    @Override
+    public String getUserId() {
+        return STUB_USER_ID;
+    }
+
     @Override
     public void cancelRequest(IProviderRequest request) {
         logger.debug("cancelRequest() called with: request = [{}]", request);
+    }
+
+    @Override
+    public String getLogin() {
+        return STUB_LOGIN;
     }
 }

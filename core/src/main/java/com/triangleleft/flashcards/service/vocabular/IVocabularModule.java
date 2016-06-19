@@ -10,5 +10,5 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public interface IVocabularModule extends IProvider {
 
-    Observable<List<IVocabularWord>> getVocabularList(boolean refresh);
+    Observable<List<VocabularWord>> getVocabularList(boolean refresh);
 }

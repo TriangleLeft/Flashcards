@@ -1,11 +1,9 @@
 package com.triangleleft.flashcards.common;
 
 import com.triangleleft.assertdialog.AssertDialog;
-import com.triangleleft.flashcards.AndroidViewDelegate;
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.common.di.ApplicationModule;
 import com.triangleleft.flashcards.common.di.DaggerApplicationComponent;
-import com.triangleleft.flashcards.mvp.common.view.delegate.ViewDelegateFactory;
 
 import android.app.Application;
 import android.support.annotation.NonNull;
@@ -25,7 +23,6 @@ public class FlashcardsApplication extends Application {
         super.onCreate();
         debugInstance = this;
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
-        ViewDelegateFactory.setDefault(AndroidViewDelegate::new);
         component = buildComponent();
         Timber.plant(new Timber.DebugTree());
     }

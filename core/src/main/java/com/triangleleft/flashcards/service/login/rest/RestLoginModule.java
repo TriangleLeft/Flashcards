@@ -4,44 +4,49 @@ import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.error.CommonError;
-import com.triangleleft.flashcards.service.login.ILoginModule;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
+import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.IPersistentStorage;
+import com.triangleleft.flashcards.util.PersistentStorage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
 import retrofit2.Call;
 
 @FunctionsAreNonnullByDefault
-public class RestLoginModule extends AbstractProvider implements ILoginModule {
+public class RestLoginModule extends AbstractProvider implements LoginModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestLoginModule.class);
 
-    private static final String LOGIN_KEY = "RestLoginModule:loginKey";
+    private static final String KEY_USER_ID = "RestLoginModule::userId";
+    private static final String KEY_LOGIN = "RestLoginModule::login";
 
     private final IDuolingoRest service;
-    private final IPersistentStorage storage;
-    private LoginStatus loginStatus;
+    private final PersistentStorage storage;
+    private String userId;
+    private String login;
 
     @Inject
-    public RestLoginModule(IDuolingoRest service, IPersistentStorage storage) {
+    public RestLoginModule(IDuolingoRest service, PersistentStorage storage) {
         this.service = service;
         this.storage = storage;
-        loginStatus = storage.get(LOGIN_KEY, LoginStatus.class, LoginStatus.NOT_LOGGED);
+        userId = storage.get(KEY_USER_ID, String.class);
+        login = storage.get(KEY_LOGIN, String.class);
     }
 
     @Override
     public void login(ILoginRequest request, IListener<ILoginResult> listener) {
         logger.debug("processRequest() called with: {}", request);
+        setLogin(request.getLogin());
         Call<LoginResponseModel> loginCall = service.login(request.getLogin(), request.getPassword());
         loginCall.enqueue(new LoginResponseCallback(request, listener));
     }
@@ -49,12 +54,28 @@ public class RestLoginModule extends AbstractProvider implements ILoginModule {
     @NonNull
     @Override
     public LoginStatus getLoginStatus() {
-        return loginStatus;
+        return userId == null ? LoginStatus.NOT_LOGGED : LoginStatus.LOGGED;
     }
 
-    private void setLoginStatus(LoginStatus status) {
-        loginStatus = status;
-        storage.put(LOGIN_KEY, status);
+    @Nullable
+    @Override
+    public String getUserId() {
+        return userId;
+    }
+
+    @Override
+    public String getLogin() {
+        return login;
+    }
+
+    private void setUserId(@Nullable String userId) {
+        this.userId = userId;
+        storage.put(KEY_USER_ID, userId);
+    }
+
+    private void setLogin(@Nullable String login) {
+        this.login = login;
+        storage.put(KEY_LOGIN, login);
     }
 
     private class LoginResponseCallback extends AbstractCallback<LoginResponseModel> {
@@ -69,14 +90,15 @@ public class RestLoginModule extends AbstractProvider implements ILoginModule {
 
         @Override
         protected void onError(CommonError error) {
-            setLoginStatus(LoginStatus.NOT_LOGGED);
+            // Clear previously saved userId
+            setUserId(null);
             listener.onFailure(error);
         }
 
         @Override
         protected void onResult(LoginResponseModel result) {
             if (result.isSuccess()) {
-                setLoginStatus(LoginStatus.LOGGED);
+                setUserId(result.userId);
                 listener.onResult(() -> LoginStatus.LOGGED);
             } else {
                 onError(result.buildError());
