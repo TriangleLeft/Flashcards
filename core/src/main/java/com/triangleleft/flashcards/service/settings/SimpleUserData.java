@@ -1,9 +1,6 @@
-package com.triangleleft.flashcards.service.settings.stub;
+package com.triangleleft.flashcards.service.settings;
 
 import com.google.auto.value.AutoValue;
-
-import com.triangleleft.flashcards.service.settings.ILanguage;
-import com.triangleleft.flashcards.service.settings.UserData;
 
 import java.util.List;
 

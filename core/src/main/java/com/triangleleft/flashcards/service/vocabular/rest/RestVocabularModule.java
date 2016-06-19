@@ -3,39 +3,24 @@ package com.triangleleft.flashcards.service.vocabular.rest;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.List;
+import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 @FunctionsAreNonnullByDefault
 public class RestVocabularModule extends AbstractProvider implements IVocabularModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
-
-    // FIXME: use proper cache
-    private volatile List<VocabularWord> cachedList = Collections.singletonList(new VocabularWord() {
-        @Override
-        public String getWord() {
-            return "Cached word!";
-        }
-
-        @Override
-        public int getStrength() {
-            return 0;
-        }
-    });
-
     private final IDuolingoRest service;
+    private VocabularData cachedData;
 
     @Inject
     public RestVocabularModule(IDuolingoRest service) {
@@ -43,27 +28,25 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
     }
 
     @Override
-    public Observable<List<VocabularWord>> getVocabularList(boolean refresh) {
+    public Observable<VocabularData> getVocabularData(boolean refresh) {
         logger.debug("getVocabularList() called");
-        Observable<List<VocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
-                .subscribeOn(Schedulers.io())
-                .map(VocabularResponseModel::getWords)
-                .doOnNext(this::setCachedList);
+        Observable<VocabularData> observable = service.getVocabularList(System.currentTimeMillis())
+                .map(VocabularResponseModel::toVocabularData)
+                .doOnNext(this::updateCache);
         // For fresh calls, try to return db cache
-        if (!refresh) {
-            observable = observable.startWith(getCachedList());
+        if (!refresh && cachedData != null) {
+            observable = observable.startWith(getCachedData());
         }
         return observable;
     }
 
-    private void setCachedList(List<VocabularWord> list) {
-        logger.debug("setCachedList() called with: list = [{}]", list);
-        cachedList = list;
+    private void updateCache(VocabularData data) {
+        cachedData = data;
     }
 
-    private List<VocabularWord> getCachedList() {
-        logger.debug("getCachedList() called");
-        return cachedList;
+    @Nullable
+    private VocabularData getCachedData() {
+        return cachedData;
     }
 
 }

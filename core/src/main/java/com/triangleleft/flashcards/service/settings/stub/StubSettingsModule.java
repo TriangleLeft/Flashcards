@@ -40,7 +40,7 @@ public class StubSettingsModule implements ISettingsModule {
 
     @Override
     public Observable<UserData> getUserData() {
-        UserData userData = SimpleUserData.create(
+        UserData userData = com.triangleleft.flashcards.service.settings.SimpleUserData.create(
                 Collections.unmodifiableList(languages),
                 avatarUrl,
                 userName,

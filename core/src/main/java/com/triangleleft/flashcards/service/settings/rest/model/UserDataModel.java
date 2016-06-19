@@ -2,8 +2,8 @@ package com.triangleleft.flashcards.service.settings.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.triangleleft.flashcards.service.settings.SimpleUserData;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.settings.stub.SimpleUserData;
 
 import java.util.Collections;
 import java.util.List;

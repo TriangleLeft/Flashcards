@@ -2,10 +2,15 @@ package com.triangleleft.flashcards.service.vocabular.rest;
 
 import com.google.gson.annotations.SerializedName;
 
+import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
+import com.triangleleft.flashcards.service.vocabular.SimpleVocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
-import java.util.Collections;
 import java.util.List;
+
+import static com.annimon.stream.Collectors.toList;
 
 public class VocabularResponseModel {
 
@@ -16,11 +21,12 @@ public class VocabularResponseModel {
     @SerializedName("vocab_overview")
     public List<VocabularWordModel> wordList;
 
-    public List<VocabularWord> getWords() {
-        return Collections.unmodifiableList(wordList);
+    public VocabularData toVocabularData() {
+        List<VocabularWord> list = Stream.of(wordList).map(VocabularWordModel::toVocabularWord).collect(toList());
+        return SimpleVocabularData.create(list, fromLanguage, learningLanguage);
     }
 
-    private static class VocabularWordModel implements VocabularWord {
+    private static class VocabularWordModel {
         @SerializedName("normalized_string")
         public String normalizedString;
         @SerializedName("strength_bars")
@@ -30,21 +36,10 @@ public class VocabularResponseModel {
         @SerializedName("id")
         public String id;
 
-        @Override
-        public String getWord() {
-            return wordString;
+        public VocabularWord toVocabularWord() {
+            return SimpleVocabularWord.create(wordString, strengthBars);
         }
 
-        @Override
-        public int getStrength() {
-            return strengthBars;
-        }
-
-
-        @Override
-        public String toString() {
-            return getClass().getSimpleName() + "@" + normalizedString;
-        }
     }
 
 

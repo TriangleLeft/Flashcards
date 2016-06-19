@@ -3,14 +3,12 @@ package com.triangleleft.flashcards.mvp.vocabular;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.support.annotation.NonNull;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,6 +16,7 @@ import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
+@FunctionsAreNonnullByDefault
 @FragmentScope
 public class VocabularListPresenter extends AbstractPresenter<IVocabularListView> {
 
@@ -26,12 +25,12 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     private final IVocabularModule vocabularModule;
     private final IVocabularNavigator navigator;
     private final Scheduler mainThreadScheduler;
-    private List<VocabularWord> wordList;
+    private VocabularData vocabularData;
     private Subscription subscription = Subscriptions.empty();
 
     @Inject
-    public VocabularListPresenter(@NonNull IVocabularModule vocabularModule, @NonNull IVocabularNavigator navigator,
-                                  @NonNull Scheduler mainThreadScheduler) {
+    public VocabularListPresenter(IVocabularModule vocabularModule, IVocabularNavigator navigator,
+                                  Scheduler mainThreadScheduler) {
         super(IVocabularListView.class);
         this.vocabularModule = vocabularModule;
         this.navigator = navigator;
@@ -41,14 +40,14 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     @Override
     public void onBind(IVocabularListView view) {
         super.onBind(view);
-        if (wordList != null) {
-            getView().showWords(wordList);
+        if (vocabularData != null) {
+            getView().showWords(vocabularData.getWords());
         } else {
             onLoadList();
         }
     }
 
-    public void onWordSelected(@NonNull VocabularWord word) {
+    public void onWordSelected(VocabularWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
         navigator.onWordSelected(word);
     }
@@ -71,16 +70,20 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
 
     private void loadList(boolean refresh) {
         subscription.unsubscribe();
-        subscription = vocabularModule.getVocabularList(refresh)
+        subscription = vocabularModule.getVocabularData(refresh)
                 .observeOn(mainThreadScheduler)
                 .subscribe(
-                        list -> getView().showWords(wordList = list),
+                        data -> {
+                            vocabularData = data;
+                            getView().showWords(data.getWords());
+                        },
                         error -> {
                             if (refresh) {
                                 getView().showError();
                             } else {
                                 getView().showErrorNoContent();
                             }
-                        });
+                        }
+                );
     }
 }
