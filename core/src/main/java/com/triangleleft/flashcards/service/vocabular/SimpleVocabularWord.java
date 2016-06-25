@@ -9,6 +9,6 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 public abstract class SimpleVocabularWord implements VocabularWord {
 
     public static VocabularWord create(String word, int strength) {
-        return null;
+        return new AutoValue_SimpleVocabularWord(word, strength);
     }
 }

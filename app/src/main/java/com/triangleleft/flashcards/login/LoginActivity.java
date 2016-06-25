@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.login;
 
-import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseActivity;
 import com.triangleleft.flashcards.common.CustomEditText;
 import com.triangleleft.flashcards.login.di.DaggerLoginActivityComponent;
 import com.triangleleft.flashcards.login.di.LoginActivityComponent;

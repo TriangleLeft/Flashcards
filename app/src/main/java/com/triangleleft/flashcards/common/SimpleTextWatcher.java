@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.common;
 
 import android.text.Editable;
 import android.text.TextWatcher;

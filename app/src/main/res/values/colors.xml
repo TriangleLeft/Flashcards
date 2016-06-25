@@ -4,6 +4,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <drawable name="colorPrimary">@color/colorPrimary</drawable>
 
     <color name="flashcard_top">#ffffff</color>
     <color name="flashcard_bottom">#ffffff</color>

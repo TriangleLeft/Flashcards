@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.main;
 
-import com.triangleleft.flashcards.OnItemClickListener;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.FlagImagesProvider;
+import com.triangleleft.flashcards.common.OnItemClickListener;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 
 import android.support.v7.widget.RecyclerView;

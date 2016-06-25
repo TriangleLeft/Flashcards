@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.common;
 
-import com.triangleleft.flashcards.SimpleTextWatcher;
 import com.triangleleft.flashcards.util.TextUtils;
 
 import android.content.Context;

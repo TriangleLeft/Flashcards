@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.BaseFragment;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseFragment;
 import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;

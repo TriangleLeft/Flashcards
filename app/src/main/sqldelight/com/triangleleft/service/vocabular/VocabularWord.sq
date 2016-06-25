@@ -1,0 +1,10 @@
+CREATE TABLE VocabularWord (
+  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  word TEXT NOT NULL,
+  strength INTEGER NOT NULL
+);
+
+-- Select all words
+select_all:
+SELECT *
+FROM VocabularWord;

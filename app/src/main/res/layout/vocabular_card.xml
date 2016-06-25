@@ -6,12 +6,18 @@
     android:clickable="true">
 
     <View
+        android:id="@+id/vocabular_selected_mark"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_vocabular_select_mark" />
+
+    <View
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginLeft="8dp"
         android:layout_centerVertical="true"
-        android:background="@color/colorPrimary" />
+        android:layout_marginLeft="8dp"
+        android:background="@color/colorAccent" />
 
     <TextView
         android:id="@+id/vocabular_card_text"

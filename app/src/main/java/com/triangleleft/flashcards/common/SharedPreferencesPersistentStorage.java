@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.common;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

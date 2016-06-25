@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.main;
 
 import com.squareup.picasso.Picasso;
-import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
+import com.triangleleft.flashcards.common.BaseActivity;
 import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;

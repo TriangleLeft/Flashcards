@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.login;
 
-import com.triangleleft.flashcards.CustomProgressBar;
+import com.triangleleft.flashcards.common.CustomProgressBar;
 import com.triangleleft.flashcards.mvp.login.ILoginView;
 import com.triangleleft.flashcards.mvp.login.LoginPresenter;
 import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;

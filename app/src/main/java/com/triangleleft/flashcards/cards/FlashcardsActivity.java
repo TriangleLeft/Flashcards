@@ -1,10 +1,10 @@
 package com.triangleleft.flashcards.cards;
 
-import com.triangleleft.flashcards.BaseActivity;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.di.CardsComponent;
 import com.triangleleft.flashcards.cards.di.DaggerCardsComponent;
 import com.triangleleft.flashcards.cards.view.DeckView;
+import com.triangleleft.flashcards.common.BaseActivity;
 import com.triangleleft.flashcards.mvp.cards.FlashcardsPresenter;
 import com.triangleleft.flashcards.mvp.cards.IFlashcardsView;
 import com.triangleleft.flashcards.service.cards.IFlashcardTestData;

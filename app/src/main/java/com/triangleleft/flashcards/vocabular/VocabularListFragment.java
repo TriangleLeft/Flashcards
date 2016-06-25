@@ -1,12 +1,14 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.BaseFragment;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseFragment;
+import com.triangleleft.flashcards.common.OnItemClickListener;
 import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularListView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
 
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+@FunctionsAreNonnullByDefault
 public class VocabularListFragment
         extends BaseFragment<VocabularListComponent, IVocabularListView, VocabularListPresenter>
         implements IVocabularListView {
@@ -47,19 +51,26 @@ public class VocabularListFragment
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefresh;
     private VocabularAdapter vocabularAdapter;
+    private OnItemClickListener<VocabularViewHolder> itemClickListener;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         logger.debug("onCreateView() called with: inflater = [{}], container = [{}], savedInstanceState = [{}]",
                 inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_vocabular_list, container, false);
         ButterKnife.bind(this, view);
 
+        boolean twoPane = getResources().getBoolean(R.bool.two_panes);
         vocabularAdapter = new VocabularAdapter();
-        vocabularAdapter.setItemClickListener((viewHolder, position) -> {
+        itemClickListener = (viewHolder, position) -> {
             VocabularWord word = vocabularAdapter.getItem(position);
             getPresenter().onWordSelected(word);
-        });
+            if (twoPane) {
+                vocabularAdapter.setSelectedPosition(position);
+            }
+        };
+        vocabularAdapter.setItemClickListener(itemClickListener);
         vocabList.setAdapter(vocabularAdapter);
         vocabList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -78,8 +89,14 @@ public class VocabularListFragment
     public void showWords(@NonNull List<VocabularWord> words) {
         logger.debug("showWords() called with: words = [{}]", words);
         viewFlipper.setDisplayedChild(LIST);
-        swipeRefresh.setRefreshing(false);
         vocabularAdapter.setData(words);
+        boolean twoPane = getResources().getBoolean(R.bool.two_panes);
+        // In case it's two panes and we settings fresh data, make sure something is selected
+        // TODO: remeber position on rotate
+        if (twoPane && !swipeRefresh.isRefreshing()) {
+            itemClickListener.onItemClick(null, 0);
+        }
+        swipeRefresh.setRefreshing(false);
     }
 
     @Override

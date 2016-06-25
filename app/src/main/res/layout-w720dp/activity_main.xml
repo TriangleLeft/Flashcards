@@ -16,7 +16,8 @@
         android:id="@+id/sliding_pane_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:clipChildren="false">
 
         <LinearLayout
             android:id="@+id/drawer"
@@ -55,7 +56,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="72dp">
+            android:layout_marginLeft="72dp"
+            android:background="@android:color/transparent"
+            android:clipChildren="false"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/shadow_size"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/shadow_size_negative"
+                android:background="@drawable/shadow_left" />
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/main_panel"
@@ -83,10 +93,16 @@
 
             </android.support.design.widget.CoordinatorLayout>
 
+            <View
+                android:layout_width="@dimen/shadow_size"
+                android:layout_height="match_parent"
+                android:background="@drawable/shadow_right" />
+
             <FrameLayout
                 android:id="@+id/secondary_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/shadow_size_negative"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context=".main.MainActivity" />
 

@@ -22,7 +22,9 @@ public class VocabularResponseModel {
     public List<VocabularWordModel> wordList;
 
     public VocabularData toVocabularData() {
-        List<VocabularWord> list = Stream.of(wordList).map(VocabularWordModel::toVocabularWord).collect(toList());
+        List<VocabularWord> list = Stream.of(wordList)
+                .map(VocabularWordModel::toVocabularWord)
+                .collect(toList());
         return SimpleVocabularData.create(list, fromLanguage, learningLanguage);
     }
 

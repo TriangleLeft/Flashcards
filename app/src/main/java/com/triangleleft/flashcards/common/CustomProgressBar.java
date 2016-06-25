@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.common;
 
 import android.content.Context;
 import android.util.AttributeSet;
