@@ -1,6 +1,8 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
+import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.junit.Before;
@@ -56,7 +58,7 @@ public class VocabularListPresenterTest {
     public void onDestroyWouldUnsubscribe() {
         AtomicBoolean unsubscribed = new AtomicBoolean(false);
         // Create empty observable to notify us when it's unsubscribed from
-        Observable<List<VocabularWord>> observable = Observable.empty();
+        Observable<VocabularData> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
         when(module.getVocabularData(anyBoolean())).thenReturn(observable);
 
@@ -80,7 +82,8 @@ public class VocabularListPresenterTest {
     @Test
     public void whenHasListOnBindWouldShowList() {
         List<VocabularWord> list = Collections.singletonList(mock(VocabularWord.class));
-        when(module.getVocabularData(false)).thenReturn(Observable.just(list));
+        VocabularData data = SimpleVocabularData.create(list, "en", "es");
+        when(module.getVocabularData(false)).thenReturn(Observable.just(data));
         presenter.onBind(view);
         presenter.onUnbind();
         reset(view);

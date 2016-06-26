@@ -2,12 +2,12 @@ package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
-import com.triangleleft.flashcards.service.vocabular.SimpleVocabularWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,7 +23,14 @@ public class StubVocabularModule implements IVocabularModule {
     public StubVocabularModule() {
         List<VocabularWord> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            list.add(SimpleVocabularWord.create("word" + i, (int) (Math.random() * 4)));
+            list.add(VocabularWord.create(
+                    "word" + i,
+                    "word" + i,
+                    "pos",
+                    "gender",
+                    (int) (Math.random() * 4),
+                    Collections.singletonList("translation" + i))
+            );
         }
         data = SimpleVocabularData.create(list, "en", "es");
     }

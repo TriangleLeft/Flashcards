@@ -1,10 +1,15 @@
-CREATE TABLE VocabularWord (
+CREATE TABLE vocabular_word (
   _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  word TEXT NOT NULL,
+  word_string TEXT NOT NULL,
+  normalized_string TEXT NOT NULL,
+  pos TEXT NOT NULL,
+  gender TEXT NOT NULL,
   strength INTEGER NOT NULL
 );
 
--- Select all words
-select_all:
-SELECT *
-FROM VocabularWord;
+select_words:
+SELECT
+    vocabular_word.*,
+    b.translation
+FROM vocabular_word
+JOIN vocabular_word_translation b USING (normalized_string);

@@ -7,6 +7,10 @@ import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.rest.model.LanguageDataModel;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel;
+import com.triangleleft.flashcards.service.vocabular.rest.WordTranslationModel;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,10 +18,12 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
 
+@FunctionsAreNonnullByDefault
 public interface IDuolingoRest {
     @FormUrlEncoded
     @POST("/login")
@@ -40,5 +46,11 @@ public interface IDuolingoRest {
 
     @GET("/api/1/users/show")
     Observable<UserDataModel> getUserData(@Query("id") String userId);
+
+    @GET("https://d2.duolingo.com/api/1/dictionary/hints/{from}/{to}")
+    Observable<WordTranslationModel> getTranslation(@Path("from") String languageIdFrom,
+                                                    @Path("to") String languageIdTo,
+                                                    @Query("tokens") List<String> normalizedWords);
+
 
 }

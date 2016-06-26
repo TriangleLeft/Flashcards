@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
-import com.triangleleft.flashcards.service.vocabular.SimpleVocabularWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.annimon.stream.Collectors.toList;
@@ -37,9 +37,14 @@ public class VocabularResponseModel {
         public String wordString;
         @SerializedName("id")
         public String id;
+        @SerializedName("pos")
+        public String pos;
+        @SerializedName("gender")
+        public String gender;
 
         public VocabularWord toVocabularWord() {
-            return SimpleVocabularWord.create(wordString, strengthBars);
+            return VocabularWord
+                    .create(wordString, normalizedString, pos, gender, strengthBars, Collections.emptyList());
         }
 
     }
