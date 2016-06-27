@@ -48,6 +48,7 @@ public abstract class VocabularWordDao implements VocabularWordModel {
                 );
             }
         }
+        // TODO: try to rewrite using streams: get list of AllInfo, then group it, and map results
         return result;
     }
 

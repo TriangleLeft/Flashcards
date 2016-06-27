@@ -19,7 +19,6 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         Presenter extends IPresenter<View>> extends AppCompatActivity {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
-    private static final String KEY_COMPONENT_ID = "keyComponentId";
 
     ComponentManager componentManager;
 
@@ -36,16 +35,11 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         componentManager = getApplicationComponent().componentManager();
 
         boolean newComponent = true;
-        if (savedInstanceState == null) {
-            component = buildComponent();
+        this.component = getApplicationComponent().componentManager().restoreComponent(getClass());
+        if (this.component == null) {
+            this.component = buildComponent();
         } else {
-            long presenterId = savedInstanceState.getLong(KEY_COMPONENT_ID);
-            component = componentManager.restoreComponent(presenterId);
-            if (component == null) {
-                component = buildComponent();
-            } else {
-                newComponent = false;
-            }
+            newComponent = false;
         }
 
         inject();
@@ -77,19 +71,13 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
-        super.onSaveInstanceState(outState);
-        long componentId = componentManager.saveComponent(getComponent());
-        outState.putLong(KEY_COMPONENT_ID, componentId);
-    }
-
-    @Override
     protected void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
         if (!isChangingConfigurations()) {
             getPresenter().onDestroy();
+        } else {
+            getApplicationComponent().componentManager().saveComponent(getClass(), getComponent());
         }
     }
 

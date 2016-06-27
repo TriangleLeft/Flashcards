@@ -20,6 +20,7 @@ import rx.subscriptions.Subscriptions;
 @FragmentScope
 public class VocabularListPresenter extends AbstractPresenter<IVocabularListView> {
 
+    public static final int NO_POSITION = -1;
     private static final Logger logger = LoggerFactory.getLogger(VocabularListPresenter.class);
 
     private final IVocabularModule vocabularModule;
@@ -27,6 +28,7 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     private final Scheduler mainThreadScheduler;
     private VocabularData vocabularData;
     private Subscription subscription = Subscriptions.empty();
+    private int selectedPosition = NO_POSITION;
 
     @Inject
     public VocabularListPresenter(IVocabularModule vocabularModule, IVocabularNavigator navigator,
@@ -41,14 +43,15 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     public void onBind(IVocabularListView view) {
         super.onBind(view);
         if (vocabularData != null) {
-            getView().showWords(vocabularData.getWords());
+            getView().showWords(vocabularData.getWords(), selectedPosition);
         } else {
             onLoadList();
         }
     }
 
-    public void onWordSelected(VocabularWord word) {
-        logger.debug("onWordSelected() called with: word = [{}]", word);
+    public void onWordSelected(int position) {
+        selectedPosition = position;
+        VocabularWord word = vocabularData.getWords().get(position);
         navigator.onWordSelected(word);
     }
 
@@ -72,18 +75,27 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
         subscription.unsubscribe();
         subscription = vocabularModule.getVocabularData(refresh)
                 .observeOn(mainThreadScheduler)
-                .subscribe(
-                        data -> {
-                            vocabularData = data;
-                            getView().showWords(data.getWords());
-                        },
-                        error -> {
-                            if (refresh) {
-                                getView().showError();
-                            } else {
-                                getView().showErrorNoContent();
-                            }
-                        }
-                );
+                .subscribe(data -> processData(data, refresh), error -> processError(error, refresh));
+    }
+
+
+    private void processData(VocabularData data, boolean refresh) {
+        vocabularData = data;
+        // First load
+        if (data.getWords().size() > 0 && selectedPosition == NO_POSITION) {
+            // Have some words
+            // Select first one
+            selectedPosition = 0;
+        }
+        getView().showWords(data.getWords(), selectedPosition);
+    }
+
+    private void processError(Throwable error, boolean refresh) {
+        logger.error("processError() called with: error = [{}], refresh = [{}]", error, refresh);
+        if (refresh) {
+            getView().showError();
+        } else {
+            getView().showErrorNoContent();
+        }
     }
 }

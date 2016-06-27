@@ -90,7 +90,7 @@ public class VocabularListPresenterTest {
 
         presenter.onBind(view);
 
-        verify(view).showWords(list);
+        verify(view).showWords(list, );
     }
 
     @Test

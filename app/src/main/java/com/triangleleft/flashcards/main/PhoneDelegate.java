@@ -6,6 +6,7 @@ import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
 import android.animation.ValueAnimator;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -68,39 +69,51 @@ import butterknife.ButterKnife;
 
     @Override
     public void showList() {
-        if (vocabularWordFragment != null) {
-            getSupportFragmentManager().beginTransaction().hide(vocabularWordFragment).commit();
-        }
+        hideFragment(vocabularWordFragment);
 
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularListFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+                    .commitNow();
+        } else {
+            showFragment(vocabularListFragment);
         }
-        getSupportFragmentManager().beginTransaction().show(vocabularListFragment).commit();
 
         setArrowIndicator(true);
     }
 
     @Override
     public void showWord(VocabularWord word) {
-        if (vocabularListFragment != null) {
-            getSupportFragmentManager().beginTransaction().hide(vocabularListFragment).commit();
-        }
+        hideFragment(vocabularListFragment);
 
         if (vocabularWordFragment == null) {
             vocabularWordFragment = new VocabularWordFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+                    .commitNow();
+        } else {
+            showFragment(vocabularWordFragment);
         }
         vocabularWordFragment.getPresenter().setWord(word);
-        getSupportFragmentManager().beginTransaction().show(vocabularWordFragment).commit();
 
         setArrowIndicator(false);
+    }
+
+    private void hideFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .hide(fragment)
+                    .commitNow();
+        }
+    }
+
+    private void showFragment(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .show(fragment)
+                .commitNow();
     }
 
     @Override

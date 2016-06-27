@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IVocabularListView extends IView {
 
-    void showWords(@NonNull List<VocabularWord> words);
+    void showWords(@NonNull List<VocabularWord> words, int selectedPosition);
 
     void showProgress();
 

@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.common;
 
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
-import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.mvp.common.presenter.IPresenter;
 import com.triangleleft.flashcards.mvp.common.view.IView;
 
@@ -20,9 +19,6 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         Presenter extends IPresenter<View>> extends Fragment {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseFragment.class);
-    private static final String KEY_COMPONENT_ID = "keyComponentId";
-
-    ComponentManager componentManager;
 
     private Component component;
 
@@ -36,17 +32,11 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         super.onCreate(savedInstanceState);
 
         boolean newComponent = true;
-        componentManager = getApplicationComponent().componentManager();
-        if (savedInstanceState == null) {
-            component = buildComponent();
+        this.component = getApplicationComponent().componentManager().restoreComponent(getClass());
+        if (this.component == null) {
+            this.component = buildComponent();
         } else {
-            long presenterId = savedInstanceState.getLong(KEY_COMPONENT_ID);
-            component = componentManager.restoreComponent(presenterId);
-            if (component == null) {
-                component = buildComponent();
-            } else {
-                newComponent = false;
-            }
+            newComponent = false;
         }
 
         inject();
@@ -81,20 +71,13 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
 
     @CallSuper
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        logger.debug("onSaveInstanceState() called with: outState = [{}]", outState);
-        super.onSaveInstanceState(outState);
-        long componentId = componentManager.saveComponent(getComponent());
-        outState.putLong(KEY_COMPONENT_ID, componentId);
-    }
-
-    @CallSuper
-    @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
         if (isRemoving() || !getActivity().isChangingConfigurations()) {
             getPresenter().onDestroy();
+        } else {
+            getApplicationComponent().componentManager().saveComponent(getClass(), getComponent());
         }
     }
 

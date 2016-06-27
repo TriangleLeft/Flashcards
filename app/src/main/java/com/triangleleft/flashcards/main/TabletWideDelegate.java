@@ -63,7 +63,12 @@ public class TabletWideDelegate implements IMainActivityDelegate {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
-                    .commit();
+                    .commitNow();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .show(vocabularListFragment)
+                    .commitNow();
         }
 
         vocabularWordFragment =
@@ -73,9 +78,13 @@ public class TabletWideDelegate implements IMainActivityDelegate {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.secondary_container, vocabularWordFragment, VocabularWordFragment.TAG)
-                    .commit();
+                    .commitNow();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .show(vocabularWordFragment)
+                    .commitNow();
         }
-        getSupportFragmentManager().executePendingTransactions();
     }
 
     private FragmentManager getSupportFragmentManager() {

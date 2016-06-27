@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.vocabular;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.OnItemClickListener;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -16,10 +17,14 @@ import java.util.List;
 @FunctionsAreNonnullByDefault
 public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> {
 
-    private static final int NO_POSITION = -1;
+    private final boolean selectable;
     private List<VocabularWord> list = Collections.emptyList();
     private OnItemClickListener<VocabularViewHolder> itemClickListener;
-    private int selectedPosition = NO_POSITION;
+    private int selectedPosition = VocabularListPresenter.NO_POSITION;
+
+    public VocabularAdapter(boolean selectable) {
+        this.selectable = selectable;
+    }
 
     public void setData(List<VocabularWord> list) {
         this.list = list;
@@ -36,7 +41,7 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
     @Override
     public void onBindViewHolder(VocabularViewHolder holder, int position) {
         VocabularWord word = getItem(position);
-        holder.show(word, position == selectedPosition);
+        holder.show(word, selectable && position == selectedPosition);
     }
 
     public VocabularWord getItem(int position) {
@@ -57,11 +62,11 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
             return;
         }
         // Clear old selected position
-        if (selectedPosition != NO_POSITION) {
+        if (selectable && selectedPosition != VocabularListPresenter.NO_POSITION) {
             notifyItemChanged(selectedPosition);
         }
         this.selectedPosition = position;
-        if (position != NO_POSITION) {
+        if (selectable && position != VocabularListPresenter.NO_POSITION) {
             notifyItemChanged(position);
         }
     }

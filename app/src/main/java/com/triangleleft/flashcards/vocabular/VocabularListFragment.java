@@ -52,6 +52,7 @@ public class VocabularListFragment
     SwipeRefreshLayout swipeRefresh;
     private VocabularAdapter vocabularAdapter;
     private OnItemClickListener<VocabularViewHolder> itemClickListener;
+    private boolean twoPane;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -61,14 +62,11 @@ public class VocabularListFragment
         View view = inflater.inflate(R.layout.fragment_vocabular_list, container, false);
         ButterKnife.bind(this, view);
 
-        boolean twoPane = getResources().getBoolean(R.bool.two_panes);
-        vocabularAdapter = new VocabularAdapter();
+        twoPane = getResources().getBoolean(R.bool.two_panes);
+        vocabularAdapter = new VocabularAdapter(twoPane);
         itemClickListener = (viewHolder, position) -> {
-            VocabularWord word = vocabularAdapter.getItem(position);
-            getPresenter().onWordSelected(word);
-            if (twoPane) {
-                vocabularAdapter.setSelectedPosition(position);
-            }
+            getPresenter().onWordSelected(position);
+            vocabularAdapter.setSelectedPosition(position);
         };
         vocabularAdapter.setItemClickListener(itemClickListener);
         vocabList.setAdapter(vocabularAdapter);
@@ -86,15 +84,14 @@ public class VocabularListFragment
     }
 
     @Override
-    public void showWords(@NonNull List<VocabularWord> words) {
-        logger.debug("showWords() called with: words = [{}]", words);
+    public void showWords(@NonNull List<VocabularWord> words, int selectedPosition) {
         viewFlipper.setDisplayedChild(LIST);
         vocabularAdapter.setData(words);
-        boolean twoPane = getResources().getBoolean(R.bool.two_panes);
-        // In case it's two panes and we settings fresh data, make sure something is selected
-        // TODO: remeber position on rotate
-        if (twoPane && !swipeRefresh.isRefreshing()) {
-            itemClickListener.onItemClick(null, 0);
+        vocabularAdapter.setSelectedPosition(selectedPosition);
+        // If we are in two pane view, it's first time we show data, and we want to select some valid position
+        // simulate click, in order for second panel to display something
+        if (twoPane && !swipeRefresh.isRefreshing() && selectedPosition != VocabularListPresenter.NO_POSITION) {
+            itemClickListener.onItemClick(null, selectedPosition);
         }
         swipeRefresh.setRefreshing(false);
     }
