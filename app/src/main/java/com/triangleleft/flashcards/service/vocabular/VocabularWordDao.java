@@ -20,18 +20,18 @@ public abstract class VocabularWordDao implements VocabularWordModel {
             FACTORY.select_wordsMapper(AutoValue_VocabularWordDao_AllInfo::new);
 
 
-    public static List<VocabularWord> allInfo(SQLiteDatabase db) {
+    public static List<VocabularWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
         List<VocabularWord> result = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{})) {
+        try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{uiLanguage, learningLanguage})) {
             List<String> translations = new ArrayList<>();
             while (cursor.moveToNext()) {
                 AllInfo info = SELECT_WORDS_MAPPER.map(cursor);
-                VocabularWordDao word = info.vocabular_word();
+                VocabularWordDao word = info.a();
                 translations.add(info.translation());
                 // Loop over cursor, add translation while we have matching key
                 while (cursor.moveToNext()) {
                     info = SELECT_WORDS_MAPPER.map(cursor);
-                    if (word.normalized_string().equals(info.vocabular_word().normalized_string())) {
+                    if (word.normalized_string().equals(info.a().normalized_string())) {
                         translations.add(info.translation());
                     } else {
                         // Key changed, roll-back

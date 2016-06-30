@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.common;
 
+import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.common.di.ApplicationModule;
@@ -25,6 +26,7 @@ public class FlashcardsApplication extends Application {
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
         component = buildComponent();
         Timber.plant(new Timber.DebugTree());
+        Stetho.initializeWithDefaults(this);
     }
 
     @NonNull

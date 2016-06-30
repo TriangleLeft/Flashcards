@@ -32,8 +32,6 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private VocabularWord selectedWord;
-    private UserData userData;
-
 
     @Inject
     public MainPresenter(ISettingsModule settingsModule, Scheduler scheduler) {
@@ -44,16 +42,13 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
 
     @Override
     public void onCreate() {
-        loadUserData();
     }
 
     @Override
     public void onBind(IMainView view) {
         super.onBind(view);
         showViewPage(currentPage);
-        if (userData != null) {
-            showUserData(userData);
-        }
+        showUserData(settingsModule.getCurrentUserData());
     }
 
     @Override
@@ -77,7 +72,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         getView().showDrawerProgress();
         settingsModule.switchLanguage(language)
                 .observeOn(scheduler)
-                .subscribe(nothing -> loadUserData(),
+                .subscribe(success -> loadUserData(),
                         error -> {
 
                         });
@@ -86,10 +81,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private void loadUserData() {
         settingsModule.getUserData()
                 .observeOn(scheduler)
-                .subscribe(userData -> {
-                            this.userData = userData;
-                            showUserData(userData);
-                        },
+                .subscribe(this::showUserData,
                         error -> {
                         }
                 );

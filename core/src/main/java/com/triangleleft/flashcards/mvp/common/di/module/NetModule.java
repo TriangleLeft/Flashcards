@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.mvp.common.di.module;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
@@ -50,6 +51,7 @@ public class NetModule {
                 .cookieJar(cookieJar)
                 .addInterceptor(interceptor)
                 .addInterceptor(delayInterceptor)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .build();
     }
 

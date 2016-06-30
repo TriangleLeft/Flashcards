@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.service.login.rest;
 
 import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.error.CommonError;
@@ -9,6 +10,7 @@ import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
+import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
@@ -31,16 +33,17 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
     private static final String KEY_LOGIN = "RestLoginModule::login";
 
     private final IDuolingoRest service;
+    private final AccountModule accountModule;
+    private final ISettingsModule settingsModule;
     private final PersistentStorage storage;
-    private String userId;
-    private String login;
 
     @Inject
-    public RestLoginModule(IDuolingoRest service, PersistentStorage storage) {
+    public RestLoginModule(IDuolingoRest service, ISettingsModule settingsModule, AccountModule accountModule,
+                           PersistentStorage storage) {
         this.service = service;
+        this.settingsModule = settingsModule;
+        this.accountModule = accountModule;
         this.storage = storage;
-        userId = storage.get(KEY_USER_ID, String.class);
-        login = storage.get(KEY_LOGIN, String.class);
     }
 
     @Override
@@ -54,28 +57,21 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
     @NonNull
     @Override
     public LoginStatus getLoginStatus() {
-        return userId == null ? LoginStatus.NOT_LOGGED : LoginStatus.LOGGED;
-    }
-
-    @Nullable
-    @Override
-    public String getUserId() {
-        return userId;
+        return accountModule.getUserId() == null ? LoginStatus.NOT_LOGGED : LoginStatus.LOGGED;
     }
 
     @Override
     public String getLogin() {
-        return login;
+        return "";
     }
 
     private void setUserId(@Nullable String userId) {
-        this.userId = userId;
-        storage.put(KEY_USER_ID, userId);
+        accountModule.setUserId(userId);
+        //storage.put(KEY_USER_ID, userId);
     }
 
     private void setLogin(@Nullable String login) {
-        this.login = login;
-        storage.put(KEY_LOGIN, login);
+        //storage.put(KEY_LOGIN, login);
     }
 
     private class LoginResponseCallback extends AbstractCallback<LoginResponseModel> {
@@ -99,7 +95,7 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
         protected void onResult(LoginResponseModel result) {
             if (result.isSuccess()) {
                 setUserId(result.userId);
-                listener.onResult(() -> LoginStatus.LOGGED);
+                settingsModule.getUserData().subscribe(data -> listener.onResult(() -> LoginStatus.LOGGED));
             } else {
                 onError(result.buildError());
             }

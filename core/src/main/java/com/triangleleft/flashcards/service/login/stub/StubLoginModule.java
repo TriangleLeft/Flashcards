@@ -14,8 +14,6 @@ import com.triangleleft.flashcards.util.PersistentStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.support.annotation.Nullable;
-
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
@@ -56,12 +54,6 @@ public class StubLoginModule implements LoginModule {
     @Override
     public LoginStatus getLoginStatus() {
         return storage.get(STUB_LOGIN_KEY, LoginStatus.class, LoginStatus.NOT_LOGGED);
-    }
-
-    @Nullable
-    @Override
-    public String getUserId() {
-        return STUB_USER_ID;
     }
 
     @Override

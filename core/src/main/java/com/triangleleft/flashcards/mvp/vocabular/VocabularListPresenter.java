@@ -3,12 +3,13 @@ package com.triangleleft.flashcards.mvp.vocabular;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,9 +27,9 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     private final IVocabularModule vocabularModule;
     private final IVocabularNavigator navigator;
     private final Scheduler mainThreadScheduler;
-    private VocabularData vocabularData;
     private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
+    private List<VocabularWord> vocabularList;
 
     @Inject
     public VocabularListPresenter(IVocabularModule vocabularModule, IVocabularNavigator navigator,
@@ -42,8 +43,8 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     @Override
     public void onBind(IVocabularListView view) {
         super.onBind(view);
-        if (vocabularData != null) {
-            getView().showWords(vocabularData.getWords(), selectedPosition);
+        if (vocabularList != null) {
+            getView().showWords(vocabularList, selectedPosition);
         } else {
             onLoadList();
         }
@@ -51,7 +52,7 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
 
     public void onWordSelected(int position) {
         selectedPosition = position;
-        VocabularWord word = vocabularData.getWords().get(position);
+        VocabularWord word = vocabularList.get(position);
         navigator.onWordSelected(word);
     }
 
@@ -73,21 +74,21 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
 
     private void loadList(boolean refresh) {
         subscription.unsubscribe();
-        subscription = vocabularModule.getVocabularData(refresh)
+        subscription = vocabularModule.getVocabularWords(refresh)
                 .observeOn(mainThreadScheduler)
                 .subscribe(data -> processData(data, refresh), error -> processError(error, refresh));
     }
 
 
-    private void processData(VocabularData data, boolean refresh) {
-        vocabularData = data;
+    private void processData(List<VocabularWord> list, boolean refresh) {
+        vocabularList = list;
         // First load
-        if (data.getWords().size() > 0 && selectedPosition == NO_POSITION) {
+        if (vocabularList.size() > 0 && selectedPosition == NO_POSITION) {
             // Have some words
             // Select first one
             selectedPosition = 0;
         }
-        getView().showWords(data.getWords(), selectedPosition);
+        getView().showWords(vocabularList, selectedPosition);
     }
 
     private void processError(Throwable error, boolean refresh) {

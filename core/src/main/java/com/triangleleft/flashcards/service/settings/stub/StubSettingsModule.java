@@ -4,8 +4,12 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.settings.ILanguage;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SimpleUserData;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,19 +42,24 @@ public class StubSettingsModule implements ISettingsModule {
 
     }
 
+    @Nullable
     @Override
-    public Observable<UserData> getUserData() {
-        UserData userData = com.triangleleft.flashcards.service.settings.SimpleUserData.create(
+    public UserData getCurrentUserData() {
+        return SimpleUserData.create(
                 Collections.unmodifiableList(languages),
                 avatarUrl,
                 userName,
                 learningLanguage,
                 uiLanguage);
-        return Observable.just(userData).delay(DELAY, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    public Observable<Void> switchLanguage(ILanguage language) {
+    public Observable<UserData> getUserData() {
+        return Observable.just(getCurrentUserData()).delay(DELAY, TimeUnit.MILLISECONDS);
+    }
+
+    @Override
+    public Observable<Void> switchLanguage(@NonNull ILanguage language) {
         languages = Stream.of(languages)
                 .map(stub -> stub.withCurrentLearning(stub.getId().equals(language.getId())))
                 .sortBy(ILanguage::getId)

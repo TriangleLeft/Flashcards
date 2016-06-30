@@ -3,13 +3,19 @@ CREATE TABLE vocabular_word (
   word_string TEXT NOT NULL,
   normalized_string TEXT NOT NULL,
   pos TEXT NOT NULL,
-  gender TEXT NOT NULL,
-  strength INTEGER NOT NULL
+  gender TEXT NULL,
+  strength INTEGER NOT NULL,
+  uiLanguage TEXT NOT NULL,
+  learningLanguage TEXT NOT NULL
 );
 
 select_words:
 SELECT
-    vocabular_word.*,
+    a.*,
     b.translation
-FROM vocabular_word
-JOIN vocabular_word_translation b USING (normalized_string);
+FROM vocabular_word a
+JOIN vocabular_word_translation b USING (normalized_string)
+WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
+
+delete_words:
+DELETE FROM vocabular_word;

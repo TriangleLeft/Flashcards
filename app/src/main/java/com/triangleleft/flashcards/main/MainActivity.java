@@ -142,7 +142,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         }
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
         adapter.setData(languages);
-
+        // FIXME: this one is called when we rotate activity
         delegate.reloadList();
     }
 
