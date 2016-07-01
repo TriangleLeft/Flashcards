@@ -52,7 +52,7 @@ public class StubVocabularModule implements IVocabularModule {
         List<VocabularWord> words = Stream.of(data.getWords())
                 .map(word -> word.withWord("cached_" + word.getWord()))
                 .collect(toList());
-        provider.putWords(words, data.getUiLanguageId(), data.getLearningLanguageId());
+        provider.putWords(words);
     }
 
     private VocabularData buildVocabularData(String uiLanguage, String learningLanguage) {
@@ -64,7 +64,9 @@ public class StubVocabularModule implements IVocabularModule {
                     "pos",
                     "gender",
                     (int) (Math.random() * 4),
-                    Collections.singletonList(uiLanguage + "_translation_" + i))
+                    Collections.singletonList(uiLanguage + "_translation_" + i),
+                    uiLanguage,
+                    learningLanguage)
             );
         }
         return SimpleVocabularData.create(list, uiLanguage, learningLanguage);

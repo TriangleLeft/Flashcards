@@ -92,7 +92,9 @@ public class VocabularListPresenter extends AbstractPresenter<IVocabularListView
     }
 
     private void processError(Throwable error, boolean refresh) {
+        logger.error("processError() ", error);
         logger.error("processError() called with: error = [{}], refresh = [{}]", error, refresh);
+
         if (refresh) {
             getView().showError();
         } else {

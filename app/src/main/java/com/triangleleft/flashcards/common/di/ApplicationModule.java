@@ -9,8 +9,6 @@ import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.common.SharedPreferencesPersistentStorage;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
-import com.triangleleft.flashcards.service.account.AccountModule;
-import com.triangleleft.flashcards.service.account.SimpleAccountModule;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
 import android.content.Context;
@@ -65,11 +63,5 @@ public class ApplicationModule {
     @Provides
     public FlagImagesProvider flagImagesProvider(Context context) {
         return new FlagImagesProvider(context);
-    }
-
-    @ApplicationScope
-    @Provides
-    public AccountModule accountModule() {
-        return new SimpleAccountModule();
     }
 }

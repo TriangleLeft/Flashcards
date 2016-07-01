@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
+import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
@@ -21,6 +22,9 @@ import javax.inject.Inject;
 
 import rx.Observable;
 
+import static com.annimon.stream.Collectors.joining;
+import static com.annimon.stream.Collectors.toList;
+
 @FunctionsAreNonnullByDefault
 public class RestVocabularModule extends AbstractProvider implements IVocabularModule {
 
@@ -41,8 +45,13 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
         logger.debug("getVocabularList() called");
         Observable<List<VocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
                 .map(VocabularResponseModel::toVocabularData)
-                .doOnNext(this::updateCache)
-                .map(VocabularData::getWords);
+                .map(VocabularData::getWords)
+                .flatMapIterable(list -> list)
+                .buffer(10)
+                .map(this::translate)
+                .flatMapIterable(list -> list)
+                .toList()
+                .doOnNext(this::updateCache);
         // For fresh calls, try to return db cache
         if (!refresh) {
             observable = observable.startWith(getCachedData());
@@ -50,8 +59,23 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
         return observable;
     }
 
-    private void updateCache(VocabularData data) {
-        provider.putWords(data.getWords(), data.getUiLanguageId(), data.getLearningLanguageId());
+    private List<VocabularWord> translate(List<VocabularWord> words) {
+        String query = Stream.of(words)
+                .map(VocabularWord::getNormalizedWord)
+                .map(string -> '"' + string + '"')
+                .collect(joining(","));
+        query = "[" + query + "]";
+        WordTranslationModel model =
+                service.getTranslation(words.get(0).getLearningLanguage(), words.get(0).getUiLanguage(), query)
+                        .toBlocking().first();
+        return Stream.of(words)
+                .map(word -> word.withTranslations(model.get(word.getNormalizedWord())))
+                .collect(toList());
+    }
+
+
+    private void updateCache(List<VocabularWord> words) {
+        provider.putWords(words);
     }
 
     @Nullable

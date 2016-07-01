@@ -17,5 +17,5 @@ FROM vocabular_word a
 JOIN vocabular_word_translation b USING (normalized_string)
 WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
 
-delete_words:
+delete_all:
 DELETE FROM vocabular_word;

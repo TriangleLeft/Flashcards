@@ -44,7 +44,9 @@ public abstract class VocabularWordDao implements VocabularWordModel {
                         word.pos(),
                         word.gender(),
                         (int) word.strength(),
-                        translations)
+                        translations,
+                        word.uiLanguage(),
+                        word.learningLanguage())
                 );
             }
         }

@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.main;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.common.OnItemClickListener;
-import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.Language;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,7 +33,7 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
     }
 
 
-    public void showLanguage(FlagImagesProvider flagImagesProvider, ILanguage language) {
+    public void showLanguage(FlagImagesProvider flagImagesProvider, Language language) {
         iconView.setImageDrawable(flagImagesProvider.getFlag(language.getId()));
         nameView.setText(language.getName());
         descriptionView.setVisibility(View.GONE);

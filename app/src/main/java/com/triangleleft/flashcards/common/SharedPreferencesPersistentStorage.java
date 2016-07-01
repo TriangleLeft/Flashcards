@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.common;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import com.triangleleft.flashcards.util.AutoValueAdapterFactory;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
@@ -15,7 +16,7 @@ public class SharedPreferencesPersistentStorage implements PersistentStorage {
 
     private final static String NAME = "flashcards";
     private final SharedPreferences sharedPreferences;
-    private final Gson gson = new GsonBuilder().create();
+    private final Gson gson = new GsonBuilder().registerTypeAdapterFactory(new AutoValueAdapterFactory()).create();
 
     public SharedPreferencesPersistentStorage(Context context) {
         sharedPreferences = context.getSharedPreferences(NAME,

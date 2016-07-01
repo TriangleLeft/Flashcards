@@ -2,11 +2,14 @@ package com.triangleleft.flashcards.service.settings.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.triangleleft.flashcards.service.settings.SimpleUserData;
+import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 
-import java.util.Collections;
 import java.util.List;
+
+import static com.annimon.stream.Collectors.toList;
+import static com.triangleleft.flashcards.util.ListUtils.wrapList;
 
 public class UserDataModel {
 
@@ -24,8 +27,11 @@ public class UserDataModel {
     public String email;
 
     public UserData toUserData() {
-        return SimpleUserData.create(
-                Collections.unmodifiableList(languages),
+        List<Language> list = Stream.of(wrapList(languages))
+                .map(LanguageDataModel::toLanguage)
+                .collect(toList());
+        return UserData.create(
+                list,
                 avatar,
                 username,
                 learningLanguage,

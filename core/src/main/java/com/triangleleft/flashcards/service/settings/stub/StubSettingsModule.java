@@ -2,9 +2,8 @@ package com.triangleleft.flashcards.service.settings.stub;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
-import com.triangleleft.flashcards.service.settings.SimpleUserData;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -24,12 +23,12 @@ import rx.Observable;
 public class StubSettingsModule implements ISettingsModule {
 
     private final static int DELAY = 300;
-    private List<StubLanguage> languages = Arrays.asList(
-            StubLanguage.create("en", "English", 4, false, false),
-            StubLanguage.create("es", "Spanish", 3, true, false),
-            StubLanguage.create("de", "German", 2, true, true),
-            StubLanguage.create("fr", "French", 5, true, false),
-            StubLanguage.create("du", "Dutch", 1, true, false)
+    private List<Language> languages = Arrays.asList(
+            Language.create("en", "English", 4, false, false),
+            Language.create("es", "Spanish", 3, true, false),
+            Language.create("de", "German", 2, true, true),
+            Language.create("fr", "French", 5, true, false),
+            Language.create("du", "Dutch", 1, true, false)
     );
     private String avatarUrl =
             "http://i2.wp.com/bato.to/forums/public/style_images/subway/profile/default_large.png";
@@ -45,7 +44,7 @@ public class StubSettingsModule implements ISettingsModule {
     @Nullable
     @Override
     public UserData getCurrentUserData() {
-        return SimpleUserData.create(
+        return UserData.create(
                 Collections.unmodifiableList(languages),
                 avatarUrl,
                 userName,
@@ -59,10 +58,10 @@ public class StubSettingsModule implements ISettingsModule {
     }
 
     @Override
-    public Observable<Void> switchLanguage(@NonNull ILanguage language) {
+    public Observable<Void> switchLanguage(@NonNull Language language) {
         languages = Stream.of(languages)
                 .map(stub -> stub.withCurrentLearning(stub.getId().equals(language.getId())))
-                .sortBy(ILanguage::getId)
+                .sortBy(Language::getId)
                 .collect(Collectors.toList());
         return Observable.just((Void) null).delay(DELAY, TimeUnit.MILLISECONDS);
     }

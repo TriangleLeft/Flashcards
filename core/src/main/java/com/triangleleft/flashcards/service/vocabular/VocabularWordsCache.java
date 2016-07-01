@@ -9,5 +9,5 @@ public interface VocabularWordsCache {
 
     List<VocabularWord> getWords(String uiLanguageId, String learningLanguageId);
 
-    void putWords(List<VocabularWord> words, String uiLanguageId, String learningLanguageId);
+    void putWords(List<VocabularWord> words);
 }

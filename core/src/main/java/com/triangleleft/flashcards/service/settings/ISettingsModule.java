@@ -11,5 +11,5 @@ public interface ISettingsModule {
 
     Observable<UserData> getUserData();
 
-    Observable<Void> switchLanguage(ILanguage language);
+    Observable<Void> switchLanguage(Language language);
 }

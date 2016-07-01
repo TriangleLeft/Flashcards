@@ -23,7 +23,7 @@ public class VocabularResponseModel {
 
     public VocabularData toVocabularData() {
         List<VocabularWord> list = Stream.of(wordList)
-                .map(VocabularWordModel::toVocabularWord)
+                .map(word -> word.toVocabularWord(fromLanguage, learningLanguage))
                 .collect(toList());
         return SimpleVocabularData.create(list, fromLanguage, learningLanguage);
     }
@@ -42,9 +42,17 @@ public class VocabularResponseModel {
         @SerializedName("gender")
         public String gender;
 
-        public VocabularWord toVocabularWord() {
-            return VocabularWord
-                    .create(wordString, normalizedString, pos, gender, strengthBars, Collections.emptyList());
+        public VocabularWord toVocabularWord(String uiLanguage, String learningLanguage) {
+            return VocabularWord.create(
+                            wordString,
+                            normalizedString,
+                            pos,
+                            gender,
+                            strengthBars,
+                            Collections.emptyList(),
+                            uiLanguage,
+                            learningLanguage
+            );
         }
 
     }

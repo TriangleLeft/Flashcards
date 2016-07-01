@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.service.vocabular;
 
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.service.vocabular.VocabularWordModel;
+import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -25,20 +26,28 @@ public class DbVocabularWordsCache implements VocabularWordsCache {
     }
 
     @Override
-    public void putWords(List<VocabularWord> words, String uiLanguageId, String learningLanguageId) {
+    public void putWords(List<VocabularWord> words) {
         database.beginTransaction();
         try {
-            database.execSQL(VocabularWordModel.DELETE_WORDS);
+            database.execSQL(VocabularWordModel.DELETE_ALL);
+            database.execSQL(VocabularWordTranslationModel.DELETE_ALL);
             for (VocabularWord word : words) {
                 database.insert(VocabularWordModel.TABLE_NAME, null, VocabularWordDao.FACTORY.marshal()
-                        .uiLanguage(uiLanguageId)
-                        .learningLanguage(learningLanguageId)
+                        .uiLanguage(word.getUiLanguage())
+                        .learningLanguage(word.getLearningLanguage())
                         .word_string(word.getWord())
                         .normalized_string(word.getNormalizedWord())
                         .gender(word.getGender())
                         .pos(word.getPos())
                         .strength(word.getStrength())
                         .asContentValues());
+                for (String translation : word.getTranslations()) {
+                    database.insert(VocabularWordTranslationModel.TABLE_NAME, null,
+                            VocabularWordTranslationDao.FACTORY.marshal()
+                                    .normalized_string(word.getNormalizedWord())
+                                    .translation(translation)
+                                    .asContentValues());
+                }
             }
             database.setTransactionSuccessful();
         } finally {

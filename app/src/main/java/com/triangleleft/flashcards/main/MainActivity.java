@@ -10,7 +10,7 @@ import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.IMainView;
 import com.triangleleft.flashcards.mvp.main.MainPageModule;
 import com.triangleleft.flashcards.mvp.main.MainPresenter;
-import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showUserData(String username, String avatar, List<ILanguage> languages) {
+    public void showUserData(String username, String avatar, List<Language> languages) {
         logger.debug("showUserData() called with: username = [{}], avatar = [{}]", username, avatar);
         Picasso.with(this).load(avatar).into(drawerUserAvatar);
         drawerUserName.setText(username);

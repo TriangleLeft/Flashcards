@@ -2,9 +2,9 @@ package com.triangleleft.flashcards.service.settings.rest.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.Language;
 
-public class LanguageDataModel implements ILanguage {
+public class LanguageDataModel {
 
     @SerializedName("language_string")
     private String languageString;
@@ -17,29 +17,15 @@ public class LanguageDataModel implements ILanguage {
     @SerializedName("level")
     private Integer level;
 
-    @Override
-    public String getId() {
-        return languageId;
+    public Language toLanguage() {
+        return Language.create(
+                languageId,
+                languageString,
+                level == null ? 0 : level,
+                learning == null ? false : learning,
+                currentLearning == null ? false : currentLearning
+        );
     }
 
-    @Override
-    public String getName() {
-        return languageString;
-    }
-
-    @Override
-    public int getLevel() {
-        return level == null ? 0 : level;
-    }
-
-    @Override
-    public boolean isLearning() {
-        return learning == null ? false : learning;
-    }
-
-    @Override
-    public boolean isCurrentLearning() {
-        return currentLearning == null ? false : currentLearning;
-    }
 
 }

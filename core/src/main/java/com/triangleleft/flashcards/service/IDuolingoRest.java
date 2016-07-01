@@ -10,8 +10,6 @@ import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel
 import com.triangleleft.flashcards.service.vocabular.rest.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -50,7 +48,7 @@ public interface IDuolingoRest {
     @GET("https://d2.duolingo.com/api/1/dictionary/hints/{from}/{to}")
     Observable<WordTranslationModel> getTranslation(@Path("from") String languageIdFrom,
                                                     @Path("to") String languageIdTo,
-                                                    @Query("tokens") List<String> normalizedWords);
+                                                    @Query("tokens") String normalizedWords);
 
 
 }

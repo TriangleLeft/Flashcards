@@ -5,7 +5,7 @@ import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
-import com.triangleleft.flashcards.service.settings.ILanguage;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.ISettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
@@ -28,7 +28,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
     private final ISettingsModule settingsModule;
     private final Scheduler scheduler;
-    private final Comparator<ILanguage> languageComparator =
+    private final Comparator<Language> languageComparator =
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private VocabularWord selectedWord;
@@ -68,7 +68,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         }
     }
 
-    public void onLanguageSelected(ILanguage language) {
+    public void onLanguageSelected(Language language) {
         getView().showDrawerProgress();
         settingsModule.switchLanguage(language)
                 .observeOn(scheduler)
@@ -90,8 +90,8 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private void showUserData(UserData userData) {
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list
-        List<ILanguage> languages = Stream.of(userData.getLanguages())
-                .filter(ILanguage::isLearning)
+        List<Language> languages = Stream.of(userData.getLanguages())
+                .filter(Language::isLearning)
                 .sorted(languageComparator)
                 .collect(Collectors.toList());
 

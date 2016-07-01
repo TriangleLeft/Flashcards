@@ -1,37 +1,29 @@
 package com.triangleleft.flashcards.service.vocabular;
 
+import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
+
+import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 public class MemoryVocabularWordsCache implements VocabularWordsCache {
 
-    Map<String, Map<String, List<VocabularWord>>> cache = new HashMap<>();
+    Set<VocabularWord> cache = new HashSet<>();
 
     @Override
     public List<VocabularWord> getWords(String uiLanguageId, String learningLanguageId) {
-        List<VocabularWord> result = null;
-        Map<String, List<VocabularWord>> map = cache.get(uiLanguageId);
-        if (map != null) {
-            result = map.get(learningLanguageId);
-        }
-        if (result == null) {
-            result = Collections.emptyList();
-        }
-        return result;
+        return Stream.of(cache)
+                .filter(word -> word.getUiLanguage().equals(uiLanguageId))
+                .filter(word -> word.getLearningLanguage().equals(learningLanguageId))
+                .collect(toList());
     }
 
     @Override
-    public void putWords(List<VocabularWord> words, String uiLanguageId, String learningLanguageId) {
-        Map<String, List<VocabularWord>> map = cache.get(uiLanguageId);
-        if (map == null) {
-            map = new HashMap<>();
-            cache.put(uiLanguageId, map);
-        }
-        map.put(learningLanguageId, words);
+    public void putWords(List<VocabularWord> words) {
+        cache.addAll(words);
     }
 }

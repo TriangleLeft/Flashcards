@@ -29,9 +29,6 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestLoginModule.class);
 
-    private static final String KEY_USER_ID = "RestLoginModule::userId";
-    private static final String KEY_LOGIN = "RestLoginModule::login";
-
     private final IDuolingoRest service;
     private final AccountModule accountModule;
     private final ISettingsModule settingsModule;
@@ -67,7 +64,6 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
 
     private void setUserId(@Nullable String userId) {
         accountModule.setUserId(userId);
-        //storage.put(KEY_USER_ID, userId);
     }
 
     private void setLogin(@Nullable String login) {
