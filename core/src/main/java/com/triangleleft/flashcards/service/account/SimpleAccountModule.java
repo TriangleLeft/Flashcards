@@ -10,6 +10,7 @@ public class SimpleAccountModule implements AccountModule {
 
     private static final String KEY_USER_ID = "SimpleAccountModule::userId";
     private static final String KEY_LOGIN = "SimpleAccountModule::login";
+    private static final String KEY_REMEMBER_USER = "SimpleAccountModule::rememberUser";
     private final String login;
     private final PersistentStorage storage;
     private String userId = null;
@@ -30,5 +31,15 @@ public class SimpleAccountModule implements AccountModule {
     @Override
     public String getUserId() {
         return userId;
+    }
+
+    @Override
+    public boolean shouldRememberUser() {
+        return storage.get(KEY_REMEMBER_USER, Boolean.class, false);
+    }
+
+    @Override
+    public void setRememberUser(boolean rememberUser) {
+        storage.put(KEY_REMEMBER_USER, rememberUser);
     }
 }

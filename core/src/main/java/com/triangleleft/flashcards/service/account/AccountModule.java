@@ -8,4 +8,8 @@ public interface AccountModule {
 
     @Nullable
     String getUserId();
+
+    boolean shouldRememberUser();
+
+    void setRememberUser(boolean rememberUser);
 }

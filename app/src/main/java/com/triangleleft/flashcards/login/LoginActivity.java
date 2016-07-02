@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -33,14 +34,16 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
 
-    @Bind(R.id.login)
+    @Bind(R.id.login_email)
     CustomEditText loginView;
-    @Bind(R.id.password)
+    @Bind(R.id.login_password)
     CustomEditText passwordView;
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
     Button loginButton;
+    @Bind(R.id.login_checkbox)
+    CheckBox checkBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +108,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         passwordView.replaceText(password);
     }
 
-
     @Override
     public void setLoginError(@Nullable String error) {
         logger.debug("setLoginError() called with: error = [{}]", error);
@@ -124,6 +126,11 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         Toast.makeText(this, error, Toast.LENGTH_LONG).show();
     }
 
+    @OnClick(R.id.login_checkbox)
+    public void onCheckboxClick() {
+        getPresenter().onRememberCheck(checkBox.isChecked());
+    }
+
     @OnClick(R.id.login_button)
     protected void onLoginClick() {
         logger.debug("onLoginClick() called");
@@ -137,6 +144,11 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void setRememberUser(boolean rememberUser) {
+        checkBox.setChecked(rememberUser);
     }
 }
 

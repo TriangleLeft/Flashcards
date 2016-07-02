@@ -3,6 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/view_login_form" />
+    <include
+        layout="@layout/view_login_form"
+        android:layout_gravity="center"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content" />
 
 </FrameLayout>

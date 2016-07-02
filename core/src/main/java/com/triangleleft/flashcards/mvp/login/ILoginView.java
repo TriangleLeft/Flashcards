@@ -44,4 +44,5 @@ public interface ILoginView extends IView {
      */
     void advance();
 
+    void setRememberUser(boolean rememberUser);
 }

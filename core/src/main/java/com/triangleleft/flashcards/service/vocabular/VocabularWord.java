@@ -16,6 +16,7 @@ public abstract class VocabularWord {
 
     public abstract String getNormalizedWord();
 
+    @Nullable
     public abstract String getPos();
 
     @Nullable
@@ -32,7 +33,7 @@ public abstract class VocabularWord {
     public static VocabularWord create(
             String word,
             String normalizedWord,
-            String pos,
+            @Nullable String pos,
             @Nullable String gender,
             int strength,
             List<String> translations,

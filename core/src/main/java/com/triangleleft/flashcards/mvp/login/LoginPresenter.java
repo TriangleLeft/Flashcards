@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.error.CommonError;
-import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginModule;
@@ -30,44 +30,55 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private static final Logger logger = LoggerFactory.getLogger(LoginPresenter.class);
 
     private final LoginModule loginModule;
+    private final AccountModule accountModule;
     private final SettingsModule settingsModule;
     private ILoginRequest loginRequest;
 
     private IListener<ILoginResult> loginListener = new LoginListener();
-    private Credentials credentials = new Credentials();
+    private String login = "";
+    private String password = "";
+    private boolean rememberUser = false;
 
 
     @Inject
-    public LoginPresenter(LoginModule loginModule, SettingsModule settingsModule) {
+    public LoginPresenter(AccountModule accountModule, LoginModule loginModule, SettingsModule settingsModule) {
         super(ILoginView.class);
+        this.accountModule = accountModule;
         this.settingsModule = settingsModule;
         this.loginModule = loginModule;
-        credentials.setLogin(loginModule.getLogin());
+        rememberUser = accountModule.shouldRememberUser();
     }
 
     @Override
     public void onCreate() {
         logger.debug("onCreate() ");
         // If we are already logged, and we have saved user data, advance immediately
-        if (loginModule.getLoginStatus() == LoginStatus.LOGGED && settingsModule.getCurrentUserData() != null) {
+        if (rememberUser && loginModule.getLoginStatus() == LoginStatus.LOGGED &&
+                settingsModule.getCurrentUserData() != null) {
             getView().advance();
         }
     }
 
-    public void onLoginChanged(@NonNull String login) {
-        logger.debug("onLoginChanged() called with: login = [{}]", login);
-        if (TextUtils.notEquals(credentials.getLogin(), login)) {
-            credentials.setLogin(login);
-            getView().setLogin(login);
+    @Override
+    public void onBind(ILoginView view) {
+        super.onBind(view);
+        view.setLogin(login);
+        view.setPassword(password);
+        view.setRememberUser(rememberUser);
+    }
+
+    public void onLoginChanged(@NonNull String newLogin) {
+        logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
+        if (TextUtils.notEquals(login, newLogin)) {
+            login = newLogin;
             getView().setLoginError(null);
         }
     }
 
-    public void onPasswordChanged(@NonNull String password) {
-        logger.debug("onPasswordChanged() called with: password = [{}]", password);
-        if (TextUtils.notEquals(credentials.getPassword(), password)) {
-            credentials.setPassword(password);
-            getView().setPassword(password);
+    public void onPasswordChanged(@NonNull String newPassword) {
+        logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
+        if (TextUtils.notEquals(password, newPassword)) {
+            password = newPassword;
             getView().setPasswordError(null);
         }
     }
@@ -76,7 +87,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         logger.debug("onLoginClick() called");
         getView().setState(LoginViewStatePage.PROGRESS);
         Preconditions.checkState(loginRequest == null, "Doing login request while another one is pending");
-        loginRequest = new SimpleLoginRequest(credentials);
+        loginRequest = new SimpleLoginRequest(login, password);
         loginModule.login(loginRequest, loginListener);
     }
 
@@ -106,6 +117,11 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
                 break;
         }
 
+    }
+
+    public void onRememberCheck(boolean checked) {
+        rememberUser = checked;
+        accountModule.setRememberUser(rememberUser);
     }
 
     private class LoginListener implements IListener<ILoginResult> {

@@ -50,5 +50,8 @@ public interface IDuolingoRest {
                                                     @Path("to") String languageIdTo,
                                                     @Query("tokens") String normalizedWords);
 
+    @GET("https://d7mj4aqfscim2.cloudfront.net/tts/{id}/token/{word}")
+    Observable<Void> getAudio(@Path("id") String languageId, @Path("word") String normalizedWord);
+
 
 }

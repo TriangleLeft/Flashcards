@@ -36,9 +36,7 @@ import butterknife.ButterKnife;
         this.activity = activity;
         ButterKnife.bind(this, activity);
 
-        toggle = new ActionBarDrawerToggle(
-                activity, drawerLayout, toolbar, R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close) {
+        toggle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.app_name, R.string.app_name) {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 // Do nothing, we don't want icon animation
