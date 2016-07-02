@@ -10,7 +10,7 @@ import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
@@ -31,11 +31,11 @@ public class RestLoginModule extends AbstractProvider implements LoginModule {
 
     private final IDuolingoRest service;
     private final AccountModule accountModule;
-    private final ISettingsModule settingsModule;
+    private final SettingsModule settingsModule;
     private final PersistentStorage storage;
 
     @Inject
-    public RestLoginModule(IDuolingoRest service, ISettingsModule settingsModule, AccountModule accountModule,
+    public RestLoginModule(IDuolingoRest service, SettingsModule settingsModule, AccountModule accountModule,
                            PersistentStorage storage) {
         this.service = service;
         this.settingsModule = settingsModule;

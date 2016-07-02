@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.mvp.main;
 
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.junit.Before;
@@ -19,7 +19,7 @@ public class MainPresenterTest {
     @Mock
     IMainView view;
     @Mock
-    ISettingsModule settingsModule;
+    SettingsModule settingsModule;
 
     private MainPresenter presenter;
 

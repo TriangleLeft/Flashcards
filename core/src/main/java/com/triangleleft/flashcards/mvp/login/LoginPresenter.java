@@ -12,6 +12,8 @@ import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.LoginStatus;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.TextUtils;
 
 import org.slf4j.Logger;
@@ -21,12 +23,14 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
+@FunctionsAreNonnullByDefault
 @ActivityScope
 public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginPresenter.class);
 
     private final LoginModule loginModule;
+    private final SettingsModule settingsModule;
     private ILoginRequest loginRequest;
 
     private IListener<ILoginResult> loginListener = new LoginListener();
@@ -34,9 +38,9 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
 
     @Inject
-    public LoginPresenter(@NonNull LoginModule loginModule) {
+    public LoginPresenter(LoginModule loginModule, SettingsModule settingsModule) {
         super(ILoginView.class);
-        logger.debug("LoginPresenter() called with: loginModule = [{}]", loginModule);
+        this.settingsModule = settingsModule;
         this.loginModule = loginModule;
         credentials.setLogin(loginModule.getLogin());
     }
@@ -44,8 +48,8 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onCreate() {
         logger.debug("onCreate() ");
-        // If we are already logged, advance immediately.
-        if (loginModule.getLoginStatus() == LoginStatus.LOGGED) {
+        // If we are already logged, and we have saved user data, advance immediately
+        if (loginModule.getLoginStatus() == LoginStatus.LOGGED && settingsModule.getCurrentUserData() != null) {
             getView().advance();
         }
     }
@@ -111,6 +115,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
             logger.debug("onResult() called with: result = [{}]", result);
             loginRequest = null;
 
+            // TODO: move getting initial settings here
             Preconditions
                     .checkState(result.getResult() == LoginStatus.LOGGED, "Got unknown status: " + result.getResult());
             // Advance to next screen

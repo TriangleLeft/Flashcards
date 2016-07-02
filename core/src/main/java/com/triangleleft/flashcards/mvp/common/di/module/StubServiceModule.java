@@ -5,7 +5,7 @@ import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.cards.stub.StubFlashcardsModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.stub.StubLoginModule;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.stub.StubSettingsModule;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.stub.StubVocabularModule;
@@ -30,5 +30,5 @@ public abstract class StubServiceModule {
 
     @ApplicationScope
     @Binds
-    abstract ISettingsModule settingsModule(StubSettingsModule module);
+    abstract SettingsModule settingsModule(StubSettingsModule module);
 }

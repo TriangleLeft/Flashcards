@@ -34,8 +34,8 @@ public class UserDataModel {
                 list,
                 avatar,
                 username,
-                learningLanguage,
-                uiLanguage);
+                uiLanguage,
+                learningLanguage);
     }
 
 }

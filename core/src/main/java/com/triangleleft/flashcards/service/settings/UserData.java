@@ -20,9 +20,18 @@ public abstract class UserData {
 
     public abstract String getLearningLanguageId();
 
-    public static UserData create(List<Language> languages, String avatar, String username, String learningLanguage,
-                                  String uiLanguage) {
-        return new AutoValue_UserData(languages, avatar, username, learningLanguage, uiLanguage);
+    public static UserData create(
+            List<Language> languages,
+            String avatar,
+            String username,
+            String uiLanguage,
+            String learningLanguage) {
+        return new AutoValue_UserData(
+                languages,
+                avatar,
+                username,
+                uiLanguage,
+                learningLanguage);
     }
 
 }

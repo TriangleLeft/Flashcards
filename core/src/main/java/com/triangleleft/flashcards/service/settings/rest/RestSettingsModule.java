@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 import rx.Observable;
 
 @FunctionsAreNonnullByDefault
-public class RestSettingsModule implements ISettingsModule {
+public class RestSettingsModule implements SettingsModule {
 
     private final static String KEY_USERDATA = "RestSettingsModule::userData";
     private final AccountModule accountModule;

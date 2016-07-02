@@ -36,6 +36,7 @@ public abstract class VocabularWordDao implements VocabularWordModel {
                     } else {
                         // Key changed, roll-back
                         cursor.moveToPrevious();
+                        break;
                     }
                 }
                 result.add(VocabularWord.create(

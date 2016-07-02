@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
 import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
@@ -26,7 +26,7 @@ import rx.Scheduler;
 public class MainPresenter extends AbstractPresenter<IMainView> implements IVocabularNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
-    private final ISettingsModule settingsModule;
+    private final SettingsModule settingsModule;
     private final Scheduler scheduler;
     private final Comparator<Language> languageComparator =
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
@@ -34,7 +34,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private VocabularWord selectedWord;
 
     @Inject
-    public MainPresenter(ISettingsModule settingsModule, Scheduler scheduler) {
+    public MainPresenter(SettingsModule settingsModule, Scheduler scheduler) {
         super(IMainView.class);
         this.settingsModule = settingsModule;
         this.scheduler = scheduler;

@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
@@ -24,11 +24,11 @@ import static com.annimon.stream.Collectors.toList;
 @FunctionsAreNonnullByDefault
 public class StubVocabularModule implements IVocabularModule {
 
-    private final ISettingsModule settingsModule;
+    private final SettingsModule settingsModule;
     private final VocabularWordsCache provider;
 
     @Inject
-    public StubVocabularModule(ISettingsModule settingsModule, VocabularWordsCache provider) {
+    public StubVocabularModule(SettingsModule settingsModule, VocabularWordsCache provider) {
         this.settingsModule = settingsModule;
         this.provider = provider;
     }

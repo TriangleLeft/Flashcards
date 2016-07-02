@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.service.vocabular.rest;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.common.AbstractProvider;
-import com.triangleleft.flashcards.service.settings.ISettingsModule;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
@@ -30,11 +30,11 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
 
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
     private final IDuolingoRest service;
-    private final ISettingsModule settingsModule;
+    private final SettingsModule settingsModule;
     private final VocabularWordsCache provider;
 
     @Inject
-    public RestVocabularModule(IDuolingoRest service, ISettingsModule settingsModule, VocabularWordsCache provider) {
+    public RestVocabularModule(IDuolingoRest service, SettingsModule settingsModule, VocabularWordsCache provider) {
         this.service = service;
         this.settingsModule = settingsModule;
         this.provider = provider;
