@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,6 +65,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     private DrawerLanguagesAdapter adapter;
     private IMainActivityDelegate delegate;
+    private Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,6 +99,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
                 (viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position)));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        handler = new Handler();
     }
 
     @Override
@@ -142,14 +146,14 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
             toolbar.setTitle(R.string.app_name);
         }
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
-        adapter.setData(languages);
+        handler.post(() -> adapter.setData(languages));
         // FIXME: this one is called when we rotate activity
         delegate.reloadList();
     }
 
     @Override
     public void showDrawerProgress() {
-        //drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
+        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
     }
 
     @Override

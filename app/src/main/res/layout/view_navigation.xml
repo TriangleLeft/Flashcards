@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:orientation="vertical"
+    android:background="@color/drawer_background"
     tools:context=".main.MainActivity">
 
     <LinearLayout
@@ -17,7 +18,6 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        android:background="@color/white"
         tools:context=".main.MainActivity">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -25,7 +25,7 @@
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
             android:src="@color/colorPrimaryDark"
-            app:civ_border_width="2dp"
+            app:civ_border_width="0dp"
             app:civ_border_color="@color/colorPrimary" />
 
         <TextView
@@ -45,7 +45,6 @@
 
     <ViewFlipper
         android:id="@+id/drawer_content_flipper"
-        android:background="@color/drawer_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

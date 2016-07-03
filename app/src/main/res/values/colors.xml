@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="textColorPrimary">#FFFFFF</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <drawable name="colorPrimary">@color/colorPrimary</drawable>
+    <color name="textColorInverseDisabled">#616161</color>
+    <color name="textColorSecondary">#727272</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF5252</color>
+    <color name="divider">#B6B6B6</color>
 
     <color name="flashcard_bg_wrong">#FFD4CC</color>
     <color name="flashcard_bg_right">#DEF0A5</color>
     <color name="flashcard_text_wrong">#DD381D</color>
     <color name="flashcard_text_right">#7EB530</color>
     <color name="white">#ffffff</color>
-    <color name="divider">#1e000000</color>
     <color name="black">#000000</color>
-    <color name="drawer_background">#efebe9</color>
+    <color name="drawer_background">#f5f5f5</color>
 
+    <drawable name="colorPrimary">@color/colorPrimary</drawable>
 
 </resources>

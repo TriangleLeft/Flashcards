@@ -5,6 +5,7 @@ import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.common.OnItemClickListener;
 import com.triangleleft.flashcards.service.settings.Language;
 
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,7 +39,19 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
         nameView.setText(language.getName());
         descriptionView.setVisibility(View.GONE);
         badgeView.setText(itemView.getResources().getString(R.string.language_level, language.getLevel()));
-        itemView.setSelected(language.isCurrentLearning());
+
+        boolean isSelected = language.isCurrentLearning();
+        nameView.setSelected(isSelected);
+        badgeView.setSelected(isSelected);
+        if (isSelected) {
+            nameView.setTypeface(null, Typeface.BOLD);
+            badgeView.setTypeface(null, Typeface.BOLD);
+        } else {
+            nameView.setTypeface(null, Typeface.NORMAL);
+            badgeView.setTypeface(null, Typeface.NORMAL);
+        }
+
+
         itemView.invalidate();
     }
 }

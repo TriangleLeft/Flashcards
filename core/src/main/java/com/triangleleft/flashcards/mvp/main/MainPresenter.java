@@ -94,7 +94,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list
         List<Language> languages = Stream.of(userData.getLanguages())
-//                .filter(Language::isLearning)
+                .filter(Language::isLearning)
                 .sorted(languageComparator)
                 .collect(Collectors.toList());
 

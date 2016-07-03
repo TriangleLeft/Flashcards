@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/drawer_item_language_height"
     android:layout_gravity="start"
-    android:background="?attr/selectableItemBackground"
+    android:background="?android:selectableItemBackground"
     android:orientation="horizontal">
 
     <ImageView
@@ -27,23 +27,21 @@
             android:id="@+id/drawer_item_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical|start"
-            android:lines="1"
-            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="@drawable/selector_drawer_item_text"
             android:textSize="@dimen/drawer_item_language_text_size"
-            tools:text="Some drawer text" />
+            tools:text="@string/placeholder" />
 
         <TextView
             android:id="@+id/drawer_item_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:gravity="center_vertical|start"
-            android:lines="1"
-            android:singleLine="true"
+            android:maxLines="1"
+            android:textColor="@drawable/selector_drawer_item_text"
             android:textSize="@dimen/drawer_item_language_description_size"
-            tools:text="Some drawer text" />
+            tools:text="@string/placeholder" />
     </LinearLayout>
 
     <TextView
@@ -53,10 +51,9 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/drawer_item_language_badge_padding_right"
-        android:fontFamily="sans-serif"
         android:gravity="center"
-        android:lines="1"
-        android:singleLine="true"
+        android:maxLines="1"
+        android:textColor="@drawable/selector_drawer_item_text"
         android:textSize="@dimen/drawer_item_language_text_size"
         tools:text="99" />
 
