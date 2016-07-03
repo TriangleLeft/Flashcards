@@ -34,6 +34,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
     private VocabularWord selectedWord;
+    private Language currentLanguage;
 
     @Inject
     public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler) {
@@ -72,6 +73,9 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     }
 
     public void onLanguageSelected(Language language) {
+        if (language.equals(currentLanguage)) {
+            return;
+        }
         getView().showDrawerProgress();
         settingsModule.switchLanguage(language)
                 .observeOn(scheduler)
@@ -98,6 +102,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
                 .sorted(languageComparator)
                 .collect(Collectors.toList());
 
+        currentLanguage = languages.size() > 0 ? languages.get(0) : null;
 
         getView().showUserData(userData.getUsername(), userData.getAvatar(), languages);
     }
