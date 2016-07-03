@@ -22,6 +22,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import static com.annimon.stream.Collectors.joining;
 import static com.annimon.stream.Collectors.toList;
@@ -47,11 +48,13 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
         Observable<List<VocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
                 .map(VocabularResponseModel::toVocabularData)
                 .map(VocabularData::getWords)
-                .flatMapIterable(list -> list)
-                .buffer(10)
-                .map(this::translate)
-                .flatMapIterable(list -> list)
-                .toList()
+                .flatMapIterable(list -> list) // split list of item into stream of items
+                .buffer(10) // group them by 10
+                .flatMap(list -> Observable.just(list) // for each group translate it in parallel
+                        .subscribeOn(Schedulers.io())
+                        .map(this::translate))
+                .flatMapIterable(list -> list) // split all groups into one stream
+                .toList() // group them back to one list
                 .doOnNext(this::updateCache);
         // For fresh calls, try to return db cache
         if (!refresh) {
