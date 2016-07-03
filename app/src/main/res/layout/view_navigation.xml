@@ -5,14 +5,47 @@
     android:layout_width="@dimen/material_drawer_width"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="#ffffff"
     android:orientation="vertical"
     tools:context=".main.MainActivity">
 
-    <include layout="@layout/view_navigation_header" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/nav_header_height"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/white"
+        tools:context=".main.MainActivity">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/drawer_user_avatar"
+            android:layout_width="@dimen/avatar_size"
+            android:layout_height="@dimen/avatar_size"
+            android:src="@color/colorPrimaryDark"
+            app:civ_border_width="2dp"
+            app:civ_border_color="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/drawer_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:text="@string/placeholder"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
 
     <ViewFlipper
         android:id="@+id/drawer_content_flipper"
+        android:background="@color/drawer_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +60,6 @@
             android:id="@+id/drawer_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/drawer_top_padding"
             android:layout_gravity="left"
             android:scrollbars="vertical" />
 

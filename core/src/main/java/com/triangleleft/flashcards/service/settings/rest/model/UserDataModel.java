@@ -30,6 +30,8 @@ public class UserDataModel {
         List<Language> list = Stream.of(wrapList(languages))
                 .map(LanguageDataModel::toLanguage)
                 .collect(toList());
+        // Apply avatar fix
+        avatar = "https:" + avatar + "/large";
         return UserData.create(
                 list,
                 avatar,

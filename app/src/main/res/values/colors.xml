@@ -6,8 +6,6 @@
     <color name="colorAccent">#FF4081</color>
     <drawable name="colorPrimary">@color/colorPrimary</drawable>
 
-    <color name="flashcard_top">#ffffff</color>
-    <color name="flashcard_bottom">#ffffff</color>
     <color name="flashcard_bg_wrong">#FFD4CC</color>
     <color name="flashcard_bg_right">#DEF0A5</color>
     <color name="flashcard_text_wrong">#DD381D</color>
@@ -15,6 +13,7 @@
     <color name="white">#ffffff</color>
     <color name="divider">#1e000000</color>
     <color name="black">#000000</color>
+    <color name="drawer_background">#efebe9</color>
 
 
 </resources>

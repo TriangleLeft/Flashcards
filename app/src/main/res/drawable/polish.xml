@@ -5,12 +5,9 @@
     android:width="640dp"
     android:height="480dp">
     <path
-        android:pathData="M0 0l640 0 0 480 -640 0z"
+        android:pathData="M640 480L0 480 0 0 640 0Z"
         android:fillColor="#ffffff" />
     <path
-        android:pathData="M0 0l213.337 0 0 480L0 480Z"
-        android:fillColor="#00267f" />
-    <path
-        android:pathData="M426.662 0L640 0l0 480 -213.338 0z"
-        android:fillColor="#f31830" />
+        android:pathData="M640 480L0 480 0 240 640 240Z"
+        android:fillColor="#dc143c" />
 </vector>

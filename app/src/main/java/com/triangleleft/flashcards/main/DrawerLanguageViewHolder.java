@@ -37,12 +37,8 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
         iconView.setImageDrawable(flagImagesProvider.getFlag(language.getId()));
         nameView.setText(language.getName());
         descriptionView.setVisibility(View.GONE);
-        badgeView.setText(language.getLevel() + " lvl");
-        if (language.isCurrentLearning()) {
-            itemView.setAlpha(1f);
-        } else {
-            itemView.setAlpha(0.5f);
-        }
+        badgeView.setText(itemView.getResources().getString(R.string.language_level, language.getLevel()));
+        itemView.setSelected(language.isCurrentLearning());
         itemView.invalidate();
     }
 }

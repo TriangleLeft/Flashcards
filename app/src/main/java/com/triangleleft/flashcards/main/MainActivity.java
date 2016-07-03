@@ -5,6 +5,7 @@ import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
 import com.triangleleft.flashcards.common.BaseActivity;
 import com.triangleleft.flashcards.common.FlagImagesProvider;
+import com.triangleleft.flashcards.login.LoginActivity;
 import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.IMainView;
@@ -169,6 +170,18 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @OnClick(R.id.button_flashcards)
     public void onFlashcardsClick() {
         Intent intent = new Intent(this, FlashcardsActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.drawer_user_avatar)
+    public void onProfileClick() {
+        getPresenter().onLogoutClick();
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 

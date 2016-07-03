@@ -5,6 +5,7 @@ import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularNavigator;
+import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
@@ -26,6 +27,7 @@ import rx.Scheduler;
 public class MainPresenter extends AbstractPresenter<IMainView> implements IVocabularNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
+    private final AccountModule accountModule;
     private final SettingsModule settingsModule;
     private final Scheduler scheduler;
     private final Comparator<Language> languageComparator =
@@ -34,8 +36,9 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private VocabularWord selectedWord;
 
     @Inject
-    public MainPresenter(SettingsModule settingsModule, Scheduler scheduler) {
+    public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler) {
         super(IMainView.class);
+        this.accountModule = accountModule;
         this.settingsModule = settingsModule;
         this.scheduler = scheduler;
     }
@@ -91,7 +94,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list
         List<Language> languages = Stream.of(userData.getLanguages())
-                .filter(Language::isLearning)
+//                .filter(Language::isLearning)
                 .sorted(languageComparator)
                 .collect(Collectors.toList());
 
@@ -111,5 +114,10 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
             default:
                 throw new RuntimeException("Unknown page: " + currentPage);
         }
+    }
+
+    public void onLogoutClick() {
+        accountModule.setRememberUser(false);
+        getView().navigateToLogin();
     }
 }

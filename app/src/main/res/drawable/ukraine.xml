@@ -6,11 +6,8 @@
     android:height="480dp">
     <path
         android:pathData="M0 0l640 0 0 480 -640 0z"
-        android:fillColor="#ffffff" />
+        android:fillColor="#ffd500" />
     <path
-        android:pathData="M0 0l213.337 0 0 480L0 480Z"
-        android:fillColor="#00267f" />
-    <path
-        android:pathData="M426.662 0L640 0l0 480 -213.338 0z"
-        android:fillColor="#f31830" />
+        android:pathData="M0 0l640 0 0 240 -640 0z"
+        android:fillColor="#005bbb" />
 </vector>

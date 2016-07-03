@@ -19,39 +19,7 @@
         android:layout_below="@+id/toolbar"
         android:clipChildren="false">
 
-        <LinearLayout
-            android:id="@+id/drawer"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            tools:context=".main.MainActivity">
-
-            <include layout="@layout/view_navigation_header" />
-
-            <ViewFlipper
-                android:id="@+id/drawer_content_flipper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.pnikosis.materialishprogress.ProgressWheel
-                    android:layout_width="@dimen/progress_wheel_size"
-                    android:layout_height="@dimen/progress_wheel_size"
-                    android:layout_gravity="center"
-                    app:matProg_barColor="@color/colorPrimary"
-                    app:matProg_progressIndeterminate="true" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/drawer_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:paddingTop="@dimen/drawer_top_padding"
-                    android:scrollbars="vertical" />
-
-            </ViewFlipper>
-        </LinearLayout>
+        <include layout="@layout/view_navigation" />
 
         <LinearLayout
             android:layout_width="match_parent"
