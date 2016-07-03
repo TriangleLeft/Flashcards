@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.Nullable;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -61,7 +62,7 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
 
     private List<VocabularWord> translate(List<VocabularWord> words) {
         String query = Stream.of(words)
-                .map(VocabularWord::getNormalizedWord)
+                .map(VocabularWord::getWord)
                 .map(string -> '"' + string + '"')
                 .collect(joining(","));
         query = "[" + query + "]";
@@ -69,8 +70,16 @@ public class RestVocabularModule extends AbstractProvider implements IVocabularM
                 service.getTranslation(words.get(0).getLearningLanguage(), words.get(0).getUiLanguage(), query)
                         .toBlocking().first();
         return Stream.of(words)
-                .map(word -> word.withTranslations(model.get(word.getNormalizedWord())))
+                .map(word -> getTranslation(word, model))
                 .collect(toList());
+    }
+
+    private VocabularWord getTranslation(VocabularWord word, WordTranslationModel model) {
+        List<String> strings = model.get(word.getWord());
+        if (strings == null) {
+            strings = Collections.emptyList();
+        }
+        return word.withTranslations(strings);
     }
 
 

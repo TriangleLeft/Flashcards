@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class VocabularWordFragment
         extends BaseFragment<VocabularWordComponent, IVocabularWordView, VocabularWordPresenter>
@@ -30,8 +31,20 @@ public class VocabularWordFragment
     private static final Logger logger = LoggerFactory.getLogger(VocabularWordFragment.class);
     public static final String TAG = VocabularWordFragment.class.getSimpleName();
 
-    @Bind(R.id.fragment_vocabular_word_title)
+    @Bind(R.id.vocabular_word_title)
     TextView titleView;
+    @Bind(R.id.vocabular_word_translation_value)
+    TextView translationView;
+    @Bind(R.id.vocabular_word_strength_value)
+    TextView strengthValue;
+    @Bind(R.id.vocabular_word_gender_value)
+    TextView genderView;
+    @Bind(R.id.vocabular_word_pos_value)
+    TextView posView;
+    @Bind(R.id.vocabular_word_gender_entry)
+    View genderEntry;
+    @Bind(R.id.vocabular_word_pos_entry)
+    View posEntry;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,5 +85,25 @@ public class VocabularWordFragment
     @Override
     public void showWord(VocabularWord word) {
         titleView.setText(word.getWord());
+        String translation = word.getTranslations().size() > 0 ? word.getTranslations().get(0) : "";
+        translationView.setText(translation);
+        strengthValue.setText(String.valueOf(word.getStrength()));
+        String gender = word.getGender();
+        if (gender != null) {
+            genderView.setText(gender);
+        } else {
+            genderEntry.setVisibility(View.GONE);
+        }
+        String pos = word.getPos();
+        if (pos != null) {
+            posView.setText(pos);
+        } else {
+            posEntry.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.vocabular_word_voice)
+    public void onVoiceClick() {
+
     }
 }

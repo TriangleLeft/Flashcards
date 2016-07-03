@@ -16,10 +16,16 @@
 
     <string name="button_flashcard_wrong">I was wrong</string>
     <string name="button_flashcard_right">I was right</string>
-    <string name="placeholder">[Placeholder]</string>
     <string name="flashcard_error">Error</string>
     <string name="button_restart">Restart</string>
     <string name="flashcard_result">Result</string>
     <string name="login_checkbox">Remember me</string>
+    <string name="word_translation">TRANSLATION</string>
+    <string name="word_strength">STRENGTH</string>
+    <string name="word_gender">GENDER</string>
+    <string name="word_part_of_speech">PART OF SPEECH</string>
+
+    <string name="placeholder">[Placeholder]</string>
+    <string name="long_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
 
 </resources>

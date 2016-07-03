@@ -48,7 +48,7 @@ public interface IDuolingoRest {
     @GET("https://d2.duolingo.com/api/1/dictionary/hints/{from}/{to}")
     Observable<WordTranslationModel> getTranslation(@Path("from") String languageIdFrom,
                                                     @Path("to") String languageIdTo,
-                                                    @Query("tokens") String normalizedWords);
+                                                    @Query("tokens") String tokens);
 
     @GET("https://d7mj4aqfscim2.cloudfront.net/tts/{id}/token/{word}")
     Observable<Void> getAudio(@Path("id") String languageId, @Path("word") String normalizedWord);

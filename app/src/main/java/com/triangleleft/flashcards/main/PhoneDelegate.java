@@ -6,6 +6,7 @@ import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
 import android.animation.ValueAnimator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -25,6 +26,8 @@ import butterknife.ButterKnife;
     DrawerLayout drawerLayout;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.button_flashcards)
+    FloatingActionButton fab;
     private final MainActivity activity;
 
     private final DrawerArrowDrawable arrowDrawable;
@@ -68,6 +71,7 @@ import butterknife.ButterKnife;
     @Override
     public void showList() {
         hideFragment(vocabularWordFragment);
+        fab.show();
 
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularListFragment();
@@ -84,6 +88,7 @@ import butterknife.ButterKnife;
     @Override
     public void showWord(VocabularWord word) {
         hideFragment(vocabularListFragment);
+        fab.hide();
 
         if (vocabularWordFragment == null) {
             vocabularWordFragment = new VocabularWordFragment();
