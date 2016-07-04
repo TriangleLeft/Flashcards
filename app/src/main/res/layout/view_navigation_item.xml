@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|start"
             android:maxLines="1"
-            android:textColor="@drawable/selector_drawer_item_text"
             android:textSize="@dimen/drawer_item_language_text_size"
             tools:text="@string/placeholder" />
 
@@ -39,7 +38,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|start"
             android:maxLines="1"
-            android:textColor="@drawable/selector_drawer_item_text"
             android:textSize="@dimen/drawer_item_language_description_size"
             tools:text="@string/placeholder" />
     </LinearLayout>
@@ -53,7 +51,6 @@
         android:layout_marginRight="@dimen/drawer_item_language_badge_padding_right"
         android:gravity="center"
         android:maxLines="1"
-        android:textColor="@drawable/selector_drawer_item_text"
         android:textSize="@dimen/drawer_item_language_text_size"
         tools:text="99" />
 

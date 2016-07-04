@@ -13,10 +13,8 @@
         android:layout_height="match_parent">
 
         <TextView
+            style="@style/Flashcard"
             android:id="@+id/flashcard_word"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:text="@string/placeholder" />
 
 
@@ -26,9 +24,8 @@
             android:rotationY="180">
 
             <TextView
+                style="@style/Flashcard"
                 android:id="@+id/flashcard_translation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/placeholder" />
 

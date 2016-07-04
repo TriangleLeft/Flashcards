@@ -34,7 +34,7 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
     @Override
     public VocabularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.view_vocabular_word, parent, false);
+                .inflate(R.layout.item_vocabular_word, parent, false);
         return new VocabularViewHolder(view, itemClickListener);
     }
 

@@ -4,6 +4,7 @@ import com.google.auto.value.AutoValue;
 
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
+import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public abstract class VocabularWord {
     @Nullable
     public abstract String getGender();
 
+    @IntRange(from = 0, to = 4)
     public abstract int getStrength();
 
     public abstract List<String> getTranslations();

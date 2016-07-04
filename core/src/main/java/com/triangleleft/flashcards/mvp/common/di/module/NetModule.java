@@ -44,15 +44,22 @@ public class NetModule {
 
     @ApplicationScope
     @Provides
-    public OkHttpClient client(CookieJar cookieJar, NetworkDelayInterceptor delayInterceptor) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    public OkHttpClient client(CookieJar cookieJar, HttpLoggingInterceptor loggingInterceptor,
+                               NetworkDelayInterceptor delayInterceptor) {
         return new OkHttpClient.Builder()
                 .cookieJar(cookieJar)
-                .addInterceptor(interceptor)
+                .addInterceptor(loggingInterceptor)
                 .addInterceptor(delayInterceptor)
                 .addNetworkInterceptor(new StethoInterceptor())
                 .build();
+    }
+
+    @ApplicationScope
+    @Provides
+    public HttpLoggingInterceptor httpLoggingInterceptor() {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return interceptor;
     }
 
     @ApplicationScope

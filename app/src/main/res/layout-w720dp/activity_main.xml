@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:layout_marginTop="@dimen/toolbar_margin_top"
+        app:titleTextColor="@color/white"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <android.support.v4.widget.SlidingPaneLayout
@@ -30,9 +32,10 @@
             android:orientation="horizontal">
 
             <View
-                android:layout_width="@dimen/shadow_size"
+                android:layout_width="8dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
+                android:alpha="0.8"
                 android:background="@drawable/shadow_left" />
 
             <android.support.design.widget.CoordinatorLayout
@@ -62,8 +65,9 @@
             </android.support.design.widget.CoordinatorLayout>
 
             <View
-                android:layout_width="@dimen/shadow_size"
+                android:layout_width="5dp"
                 android:layout_height="match_parent"
+                android:alpha="0.8"
                 android:background="@drawable/shadow_right" />
 
             <FrameLayout

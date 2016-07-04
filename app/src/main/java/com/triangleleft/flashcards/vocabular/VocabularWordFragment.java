@@ -36,7 +36,7 @@ public class VocabularWordFragment
     @Bind(R.id.vocabular_word_translation_value)
     TextView translationView;
     @Bind(R.id.vocabular_word_strength_value)
-    TextView strengthValue;
+    VocabularStrengthView strengthValue;
     @Bind(R.id.vocabular_word_gender_value)
     TextView genderView;
     @Bind(R.id.vocabular_word_pos_value)
@@ -87,7 +87,7 @@ public class VocabularWordFragment
         titleView.setText(word.getWord());
         String translation = word.getTranslations().size() > 0 ? word.getTranslations().get(0) : "";
         translationView.setText(translation);
-        strengthValue.setText(String.valueOf(word.getStrength()));
+        strengthValue.setStrength(word.getStrength());
         String gender = word.getGender();
         if (gender != null) {
             genderView.setText(gender);

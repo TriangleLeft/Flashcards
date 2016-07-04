@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true">
+
+    <View
+        android:id="@+id/item_vocabular_selected_mark"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/selector_vocabular_select_mark" />
+
+    <TextView
+        android:id="@+id/item_vocabular_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_toLeftOf="@+id/item_vocabular_strength"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/long_placeholder" />
+
+    <com.triangleleft.flashcards.vocabular.VocabularStrengthView
+        android:id="@+id/item_vocabular_strength"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_signal_cellular_2_bar_black_24dp" />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider" />
+
+</RelativeLayout>

@@ -16,10 +16,12 @@ import butterknife.ButterKnife;
 @FunctionsAreNonnullByDefault
 public class VocabularViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.vocabular_selected_mark)
+    @Bind(R.id.item_vocabular_selected_mark)
     View selectedMark;
-    @Bind(R.id.vocabular_card_text)
+    @Bind(R.id.item_vocabular_text)
     TextView textView;
+    @Bind(R.id.item_vocabular_strength)
+    VocabularStrengthView strengthView;
 
     public VocabularViewHolder(View itemView, @Nullable OnItemClickListener<VocabularViewHolder> itemClickListener) {
         super(itemView);
@@ -33,5 +35,6 @@ public class VocabularViewHolder extends RecyclerView.ViewHolder {
     public void show(VocabularWord word, boolean isSelected) {
         textView.setText(word.getWord());
         selectedMark.setSelected(isSelected);
+        strengthView.setStrength(word.getStrength());
     }
 }
