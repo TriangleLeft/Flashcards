@@ -8,8 +8,12 @@ import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import butterknife.Bind;
@@ -21,6 +25,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     SlidingPaneLayout slidingPaneLayout;
     @Bind(R.id.navigation_view)
     NavigationView navigationView;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     private final MainActivity activity;
     private VocabularWordFragment vocabularWordFragment;
     private VocabularListFragment vocabularListFragment;
@@ -47,6 +53,17 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         });
 
         navigationView.setAnimationProgress(isDrawerOpen() ? 0f : 1f);
+
+        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(activity, R.drawable.ic_menu_black_24dp));
+        DrawableCompat.setTint(drawable, ContextCompat.getColor(activity, R.color.white));
+        toolbar.setNavigationIcon(drawable);
+        toolbar.setNavigationOnClickListener(v -> {
+            if (slidingPaneLayout.isOpen()) {
+                slidingPaneLayout.closePane();
+            } else {
+                slidingPaneLayout.openPane();
+            }
+        });
 
         initPages();
     }
