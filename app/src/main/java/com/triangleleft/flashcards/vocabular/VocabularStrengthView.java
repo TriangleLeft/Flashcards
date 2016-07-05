@@ -39,7 +39,7 @@ public class VocabularStrengthView extends ImageView {
                 setTintedDrawable(R.drawable.ic_signal_cellular_2_bar_black_24dp, R.color.orange);
                 break;
             case 3:
-                setTintedDrawable(R.drawable.ic_signal_cellular_3_bar_black_24dp, R.color.yellow);
+                setTintedDrawable(R.drawable.ic_signal_cellular_3_bar_black_24dp, R.color.lime);
                 break;
             case 4:
                 setTintedDrawable(R.drawable.ic_signal_cellular_4_bar_black_24dp, R.color.green);

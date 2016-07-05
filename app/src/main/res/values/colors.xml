@@ -17,7 +17,7 @@
 
     <color name="red">#F44336</color>
     <color name="orange">#FF9800</color>
-    <color name="yellow">#FFEB3B</color>
+    <color name="lime">#8BC34A</color>
     <color name="green">#4CAF50</color>
     <drawable name="colorPrimary">@color/colorPrimary</drawable>
 

@@ -25,8 +25,8 @@
             android:layout_width="@dimen/avatar_size"
             android:layout_height="@dimen/avatar_size"
             android:src="@color/colorPrimaryDark"
-            app:civ_border_width="0dp"
-            app:civ_border_color="@color/colorPrimary" />
+            app:civ_border_width="1dp"
+            app:civ_border_color="@color/divider" />
 
         <TextView
             android:id="@+id/drawer_user_name"
@@ -39,6 +39,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/drawer_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider" />

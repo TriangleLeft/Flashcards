@@ -8,11 +8,10 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_marginTop="@dimen/toolbar_margin_top"
-        app:titleTextColor="@color/white"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:layout_height="@dimen/toolbar_margin_top"
+        android:background="@color/colorPrimary"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@color/colorPrimary" />
 
     <android.support.v4.widget.SlidingPaneLayout
         android:id="@+id/sliding_pane_layout"
@@ -21,7 +20,10 @@
         android:layout_below="@+id/toolbar"
         android:clipChildren="false">
 
-        <include layout="@layout/view_navigation" />
+        <com.triangleleft.flashcards.common.NavigationView
+            android:id="@+id/navigation_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"

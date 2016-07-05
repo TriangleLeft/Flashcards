@@ -3,12 +3,14 @@ package com.triangleleft.flashcards.main;
 import com.google.common.base.Preconditions;
 
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.NavigationView;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,6 +19,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Bind(R.id.sliding_pane_layout)
     SlidingPaneLayout slidingPaneLayout;
+    @Bind(R.id.navigation_view)
+    NavigationView navigationView;
     private final MainActivity activity;
     private VocabularWordFragment vocabularWordFragment;
     private VocabularListFragment vocabularListFragment;
@@ -24,6 +28,25 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     public TabletWideDelegate(MainActivity activity) {
         this.activity = activity;
         ButterKnife.bind(this, activity);
+
+        slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                navigationView.setAnimationProgress(slideOffset);
+            }
+
+            @Override
+            public void onPanelOpened(View panel) {
+
+            }
+
+            @Override
+            public void onPanelClosed(View panel) {
+
+            }
+        });
+
+        navigationView.setAnimationProgress(isDrawerOpen() ? 0f : 1f);
 
         initPages();
     }
