@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.login.Credentials;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
@@ -31,7 +30,7 @@ public class RestLoginModuleTest {
 
 
     // We don't check for actual login/password here
-    private ILoginRequest request = new SimpleLoginRequest(new Credentials("login", "password"));
+    private ILoginRequest request = new SimpleLoginRequest("login", "password");
 
 
     @BeforeClass

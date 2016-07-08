@@ -1,12 +1,12 @@
 package com.triangleleft.flashcards.service.login.rest.model;
 
+import android.support.annotation.NonNull;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import android.support.annotation.NonNull;
 
 import static org.junit.Assert.fail;
 
@@ -37,7 +37,7 @@ public class LoginResponseModelTest {
     @NonNull
     public static LoginResponseModel buildLoginFailureModel() {
         LoginResponseModel model = new LoginResponseModel();
-        model.failure = LoginResponseModel.FAILURE_LOGIN;
+        model.failureReason = LoginResponseModel.FAILURE_LOGIN;
         model.message = "Failed login";
         return model;
     }
@@ -45,7 +45,7 @@ public class LoginResponseModelTest {
     @NonNull
     public static LoginResponseModel buildPasswordFailureModel() {
         LoginResponseModel model = new LoginResponseModel();
-        model.failure = LoginResponseModel.FAILURE_PASSWORD;
+        model.failureReason = LoginResponseModel.FAILURE_PASSWORD;
         model.message = "Failed login";
         return model;
     }
@@ -53,7 +53,7 @@ public class LoginResponseModelTest {
     @NonNull
     public static LoginResponseModel buildUnknownFailureModel() {
         LoginResponseModel model = new LoginResponseModel();
-        model.failure = "unknown";
+        model.failureReason = "unknown";
         model.message = "Failed login";
         return model;
     }

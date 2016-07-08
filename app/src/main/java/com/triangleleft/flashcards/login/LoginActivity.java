@@ -1,18 +1,5 @@
 package com.triangleleft.flashcards.login;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.common.BaseActivity;
-import com.triangleleft.flashcards.common.CustomEditText;
-import com.triangleleft.flashcards.login.di.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.login.di.LoginActivityComponent;
-import com.triangleleft.flashcards.main.MainActivity;
-import com.triangleleft.flashcards.mvp.login.ILoginView;
-import com.triangleleft.flashcards.mvp.login.LoginPresenter;
-import com.triangleleft.flashcards.mvp.login.LoginViewStatePage;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,6 +8,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseActivity;
+import com.triangleleft.flashcards.common.CustomEditText;
+import com.triangleleft.flashcards.main.MainActivity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,6 +28,8 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         implements ILoginView {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
+    private static final int CONTENT = 0;
+    private static final int PROGRESS = 1;
 
     @Bind(R.id.login_email)
     CustomEditText loginView;
@@ -77,21 +74,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void setState(@NonNull LoginViewStatePage state) {
-        logger.debug("setState() called with: state = [{}]", state);
-        switch (state) {
-            case ENTER_CREDENTIAL:
-                flipperView.setDisplayedChild(0);
-                break;
-            case PROGRESS:
-                flipperView.setDisplayedChild(1);
-                break;
-            default:
-                throw new IllegalStateException("Unknown state " + state.name());
-        }
-    }
-
-    @Override
     public void setLoginButtonEnabled(boolean enabled) {
         logger.debug("setLoginButtonEnabled() called with: enabled = [{}]", enabled);
         loginButton.setEnabled(enabled);
@@ -120,11 +102,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         passwordView.setError(error);
     }
 
-    @Override
-    public void setGenericError(@Nullable String error) {
-        logger.debug("setGenericError() called with: error = [{}]", error);
-        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
-    }
 
     @OnClick(R.id.login_checkbox)
     public void onCheckboxClick() {
@@ -149,6 +126,28 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     public void setRememberUser(boolean rememberUser) {
         checkBox.setChecked(rememberUser);
+    }
+
+    @Override
+    public void showProgress() {
+        flipperView.setDisplayedChild(PROGRESS);
+    }
+
+    @Override
+    public void showContent() {
+        flipperView.setDisplayedChild(CONTENT);
+    }
+
+    @Override
+    public void showGenericError() {
+        // TODO: use string resource
+        Toast.makeText(this, "Generic error", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showNetworkError() {
+        // TODO: use string resource
+        Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
     }
 }
 

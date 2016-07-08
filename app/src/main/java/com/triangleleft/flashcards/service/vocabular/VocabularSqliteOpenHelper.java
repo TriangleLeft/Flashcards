@@ -1,11 +1,11 @@
 package com.triangleleft.flashcards.service.vocabular;
 
-import com.triangleleft.service.vocabular.VocabularWordModel;
-import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.triangleleft.service.vocabular.VocabularWordModel;
+import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
 
 import javax.inject.Inject;
 

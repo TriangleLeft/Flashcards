@@ -1,8 +1,9 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
+import android.support.annotation.Nullable;
+
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
-import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
@@ -13,8 +14,6 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.support.annotation.Nullable;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +27,7 @@ import static com.annimon.stream.Collectors.joining;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
-public class RestVocabularModule extends AbstractProvider implements IVocabularModule {
+public class RestVocabularModule implements IVocabularModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
     private final IDuolingoRest service;

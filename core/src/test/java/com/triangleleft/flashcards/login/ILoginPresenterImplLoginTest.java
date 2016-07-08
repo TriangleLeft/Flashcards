@@ -1,5 +1,6 @@
-package com.triangleleft.flashcards.mvp.login;
+package com.triangleleft.flashcards.login;
 
+import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.ILoginResult;
@@ -13,7 +14,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(JUnit4.class)
 public class ILoginPresenterImplLoginTest {
@@ -22,17 +23,15 @@ public class ILoginPresenterImplLoginTest {
     private static final String PASSWORD = "password";
 
     @Mock
-    LoginModule module;
-
+    AccountModule accountModule;
+    @Mock
+    LoginModule loginModule;
     @Mock
     ILoginView view;
-
     @Mock
     ILoginResult loginResult;
-
     @Captor
     ArgumentCaptor<IListener<ILoginResult>> listenerCaptor;
-
     @Captor
     ArgumentCaptor<ILoginRequest> requestCaptor;
 
@@ -41,7 +40,7 @@ public class ILoginPresenterImplLoginTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new LoginPresenter(module);
+        presenter = new LoginPresenter(accountModule, loginModule);
         presenter.onRebind(view);
         // Set login and password
         presenter.onLoginChanged(LOGIN);
@@ -49,9 +48,9 @@ public class ILoginPresenterImplLoginTest {
         // Click login
         presenter.onLoginClick();
         // Verify that do request is called, and capture listener
-        verify(module).login(requestCaptor.capture(), listenerCaptor.capture());
+        verify(loginModule).login(requestCaptor.capture(), listenerCaptor.capture());
         // Verify progress is shown
-        verify(view).setState(LoginViewStatePage.PROGRESS);
+        verify(view).showProgress();
     }
 
 

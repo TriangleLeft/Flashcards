@@ -1,10 +1,8 @@
-package com.triangleleft.flashcards.login.di;
+package com.triangleleft.flashcards.login;
 
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.login.LoginActivity;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
-import com.triangleleft.flashcards.mvp.login.LoginPresenter;
 
 import dagger.Component;
 

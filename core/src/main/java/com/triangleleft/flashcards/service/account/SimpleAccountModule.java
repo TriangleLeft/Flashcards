@@ -1,8 +1,10 @@
 package com.triangleleft.flashcards.service.account;
 
-import com.triangleleft.flashcards.util.PersistentStorage;
-
 import android.support.annotation.Nullable;
+
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.util.PersistentStorage;
 
 import javax.inject.Inject;
 
@@ -27,10 +29,14 @@ public class SimpleAccountModule implements AccountModule {
         storage.put(KEY_USER_ID, userId);
     }
 
-    @Nullable
     @Override
-    public String getUserId() {
-        return userId;
+    public Optional<String> getUserId() {
+        return Optional.ofNullable(userId);
+    }
+
+    @Override
+    public Optional<UserData> getUserData() {
+        return Optional.empty();
     }
 
     @Override

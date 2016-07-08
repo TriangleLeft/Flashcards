@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.common;
 
+import android.app.Application;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
 import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.common.di.ApplicationModule;
 import com.triangleleft.flashcards.common.di.DaggerApplicationComponent;
-
-import android.app.Application;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
 
 import timber.log.Timber;
 
@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkState;
 public class FlashcardsApplication extends Application {
 
     private ApplicationComponent component;
-    private static FlashcardsApplication debugInstance;
+    protected static FlashcardsApplication debugInstance;
 
     @Override
     public void onCreate() {

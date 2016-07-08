@@ -1,5 +1,9 @@
 package com.triangleleft.flashcards.main;
 
+import android.annotation.SuppressLint;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
@@ -10,10 +14,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
-
-import android.annotation.SuppressLint;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
 import okhttp3.mockwebserver.MockWebServer;
 
@@ -45,11 +45,11 @@ public class MainActivityTest {
     @Test
     public void testStartsWithProgress() {
         onView(withId(R.id.vocabular_list_progress)).check(matches(isDisplayed()));
-        webServer.enqueue(MockServerResponse.make("vocabular_valid_response.json"));
+        webServer.enqueue(MockServerResponse.make("vocabulary/valid_response.json"));
     }
 
     @Test
-    @MockJsonResponse("vocabular_valid_response.json")
+    @MockJsonResponse("vocabulary/valid_response.json")
     public void testVocabularIsShown() {
         onView(withText("word1")).check(matches(isDisplayed()));
         onView(withText("word2")).check(matches(isDisplayed()));
@@ -61,12 +61,12 @@ public class MainActivityTest {
     public void testRetryWhenServerReturnedError() {
         onView(withText(R.string.vocabular_list_error_retry)).check(matches(isDisplayed()));
 
-        webServer.enqueue(MockServerResponse.make("vocabular_valid_response.json"));
+        webServer.enqueue(MockServerResponse.make("vocabulary/valid_response.json"));
         onView(withText(R.string.button_retry)).perform(click());
     }
 
     @Test
-    @MockJsonResponse("vocabular_valid_response.json")
+    @MockJsonResponse("vocabulary/valid_response.json")
     public void testClickingWordWouldShowInfo() {
         onView(withText("word1")).perform(click());
 
@@ -74,7 +74,7 @@ public class MainActivityTest {
     }
 
     @Test
-    @MockJsonResponse("vocabular_valid_response.json")
+    @MockJsonResponse("vocabulary/valid_response.json")
     public void testInfoCanBeClosedByBackPress() {
         onView(withText("word1")).perform(click());
 
@@ -85,7 +85,7 @@ public class MainActivityTest {
 
     @SuppressLint("PrivateResource")
     @Test
-    @MockJsonResponse("vocabular_valid_response.json")
+    @MockJsonResponse("vocabulary/valid_response.json")
     public void testInfoCanBeClosedByArrowClick() {
         onView(withText("word1")).perform(click());
         // Press arrow icon

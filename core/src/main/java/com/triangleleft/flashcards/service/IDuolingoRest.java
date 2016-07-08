@@ -10,7 +10,6 @@ import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel
 import com.triangleleft.flashcards.service.vocabular.rest.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -25,7 +24,7 @@ import rx.Observable;
 public interface IDuolingoRest {
     @FormUrlEncoded
     @POST("/login")
-    Call<LoginResponseModel> login(@Field("login") String login, @Field("password") String password);
+    Observable<LoginResponseModel> login(@Field("login") String login, @Field("password") String password);
 
     @GET("/vocabulary/overview")
     Observable<VocabularResponseModel> getVocabularList(@Query("_") long timestamp);

@@ -1,7 +1,6 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
 import com.google.common.base.Preconditions;
-
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
@@ -39,8 +38,8 @@ public class RestSettingsModule implements SettingsModule {
 
     @Override
     public Observable<UserData> getUserData() {
-        Preconditions.checkNotNull(accountModule.getUserId());
-        return service.getUserData(accountModule.getUserId())
+        Preconditions.checkState(accountModule.getUserId().isPresent());
+        return service.getUserData(accountModule.getUserId().get())
                 .map(UserDataModel::toUserData)
                 .doOnNext(this::cacheData);
     }

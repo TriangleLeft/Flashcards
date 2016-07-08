@@ -19,6 +19,16 @@ public class TextUtils {
     }
 
     /**
+     * Check whether provided string has text, that is any non-space symbols.
+     *
+     * @param string string to check
+     * @return true if string has text, false otherwise
+     */
+    public static boolean hasText(@Nullable String string) {
+        return !isEmpty(string) && !string.trim().isEmpty();
+    }
+
+    /**
      * Returns true if a and b are equal, including if they are both null.
      * <p><i>Note: In platform versions 1.1 and earlier, this method only worked well if
      * both the arguments were instances of String.</i></p>

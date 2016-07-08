@@ -4,7 +4,6 @@ import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
-import com.triangleleft.flashcards.service.common.AbstractProvider;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -16,7 +15,7 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 @FunctionsAreNonnullByDefault
-public class RestFlashcardsModule extends AbstractProvider implements IFlashcardsModule {
+public class RestFlashcardsModule implements IFlashcardsModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestFlashcardsModule.class);
 

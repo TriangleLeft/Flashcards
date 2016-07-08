@@ -1,9 +1,8 @@
-package com.triangleleft.flashcards.mvp.login;
-
-import com.triangleleft.flashcards.mvp.common.view.IView;
-import com.triangleleft.flashcards.mvp.common.view.Stateless;
+package com.triangleleft.flashcards.login;
 
 import android.support.annotation.Nullable;
+
+import com.triangleleft.flashcards.mvp.common.view.IView;
 
 /**
  * View interface for login screen.
@@ -30,14 +29,9 @@ public interface ILoginView extends IView {
      */
     void setPasswordError(@Nullable String error);
 
-    @Stateless
-    void setGenericError(@Nullable String error);
+    void showProgress();
 
-    /**
-     * Set view state.
-     * @param state new state
-     */
-    void setState(LoginViewStatePage state);
+    void showContent();
 
     /**
      * Advance to next screen.
@@ -45,4 +39,8 @@ public interface ILoginView extends IView {
     void advance();
 
     void setRememberUser(boolean rememberUser);
+
+    void showGenericError();
+
+    void showNetworkError();
 }

@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.mvp.login;
+package com.triangleleft.flashcards.login;
 
 
 /**
