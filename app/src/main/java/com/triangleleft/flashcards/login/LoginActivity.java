@@ -91,17 +91,22 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void setLoginError(@Nullable String error) {
-        logger.debug("setLoginError() called with: error = [{}]", error);
-        loginView.setError(error);
+    public void setLoginErrorVisible(boolean visible) {
+        if (visible) {
+            loginView.setError(getString(R.string.wrong_login));
+        } else {
+            loginView.setError(null);
+        }
     }
 
     @Override
-    public void setPasswordError(@Nullable String error) {
-        logger.debug("setPasswordError() called with: error = [{}]", error);
-        passwordView.setError(error);
+    public void setPasswordErrorVisible(boolean visible) {
+        if (visible) {
+            passwordView.setError(getString(R.string.wrong_password));
+        } else {
+            passwordView.setError(null);
+        }
     }
-
 
     @OnClick(R.id.login_checkbox)
     public void onCheckboxClick() {
@@ -136,18 +141,21 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     public void showContent() {
         flipperView.setDisplayedChild(CONTENT);
+        if (loginView.getError() != null) {
+            loginView.requestFocus();
+        } else if (passwordView.getError() != null) {
+            passwordView.requestFocus();
+        }
     }
 
     @Override
     public void showGenericError() {
-        // TODO: use string resource
-        Toast.makeText(this, "Generic error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.login_generic_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showNetworkError() {
-        // TODO: use string resource
-        Toast.makeText(this, "Network error", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.login_network_error, Toast.LENGTH_SHORT).show();
     }
 }
 

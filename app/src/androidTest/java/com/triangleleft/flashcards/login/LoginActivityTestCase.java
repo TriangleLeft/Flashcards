@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.triangleleft.flashcards.MockFlashcardsApplication;
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.test.MockJsonResponse;
 import com.triangleleft.flashcards.test.MockServerResponse;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
@@ -25,9 +26,14 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.RootMatchers.withDecorView;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.triangleleft.flashcards.test.EspressoUtils.checkHasView;
+import static com.triangleleft.flashcards.test.EspressoUtils.withError;
+import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
 public class LoginActivityTestCase {
@@ -36,11 +42,11 @@ public class LoginActivityTestCase {
 
     private MockWebServerRule webServerRule = new MockWebServerRule();
 
-    private ActivityTestRule<LoginActivity> activityTestRule = new ActivityTestRule<>(LoginActivity.class, true, false);
+    private ActivityTestRule<LoginActivity> activityRule = new ActivityTestRule<>(LoginActivity.class, true, false);
 
     @Rule
     public RuleChain ruleChain = RuleChain.outerRule(webServerRule)
-            .around(activityTestRule);
+            .around(activityRule);
 
     private MockWebServer webServer = webServerRule.getWebServer();
 
@@ -52,41 +58,62 @@ public class LoginActivityTestCase {
 
         PersistentStorage storage = MockFlashcardsApplication.getInstance().getComponent().persistentStorage();
         storage.put("SimpleAccountModule::rememberUser", false);
-        activityTestRule.launchActivity(new Intent(Intent.ACTION_MAIN));
+        activityRule.launchActivity(new Intent(Intent.ACTION_MAIN));
     }
 
     @Test
     public void progressIsShownWhileRequest() {
-        onView(withId(R.id.login_email)).perform(typeText("login"));
-        onView(withId(R.id.login_password)).perform(typeText("password")).perform(closeSoftKeyboard());
-        onView(withText(R.string.action_sign_in)).perform(click());
+        enterCredentials();
 
         // Verify progress is shown
         checkHasView(withId(R.id.login_progress));
 
-        webServer.enqueue(MockServerResponse.make("login/valid_response.json"));
+        webServer.enqueue(MockServerResponse.makeNetworkErrorResponse());
+    }
+
+    @Test
+    @MockJsonResponse("login/wrong_login_response.json")
+    public void loginErrorIsShown() {
+        enterCredentials();
+
+        checkHasView(withError(R.string.wrong_login));
+    }
+
+    @Test
+    @MockJsonResponse("login/wrong_password_response.json")
+    public void passwordErrorIsShown() throws InterruptedException {
+        enterCredentials();
+
+        checkHasView(withError(R.string.wrong_password));
     }
 
     @Test
     public void toastIsShownForNetworkError() throws InterruptedException {
-        logger.debug("toastIsShownForNetworkError() called");
-        String message = "fail";
-//        CommonError error = new CommonError(ErrorType.NETWORK, message);
-//        doAnswer(invocation -> {
-//            loginView.setState(LoginViewStatePage.ENTER_CREDENTIAL);
-//            loginView.setGenericError(message);
-//            return null;
-//        }).when(presenter).onLoginClick();
-//
-//        onView(withId(R.id.login)).perform(typeText("login"));
-//        onView(withId(R.id.password)).perform(typeText("password"));
-//        onView(withText(R.string.action_sign_in)).perform(click());
-//
-//        // Check that toast is shown
-//        onView(withText(message))
-//                .inRoot(withDecorView(not(activityRule.getActivity().getWindow().getDecorView())))
-//                .check(matches(isDisplayed()));
+        webServer.enqueue(MockServerResponse.makeNetworkErrorResponse());
+
+        enterCredentials();
+
+        // Check that toast is shown
+        onView(withText(R.string.login_network_error))
+                .inRoot(withDecorView(not(activityRule.getActivity().getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
     }
 
+    @Test
+    @MockJsonResponse(value = "internal_server_error.txt", httpCode = 500)
+    public void toastIsShownForGenericError() throws InterruptedException {
+        enterCredentials();
+
+        // Check that toast is shown
+        onView(withText(R.string.login_generic_error))
+                .inRoot(withDecorView(not(activityRule.getActivity().getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
+    }
+
+    private void enterCredentials() {
+        onView(withId(R.id.login_email)).perform(typeText("login"));
+        onView(withId(R.id.login_password)).perform(typeText("password")).perform(closeSoftKeyboard());
+        onView(withText(R.string.action_sign_in)).perform(click());
+    }
 
 }

@@ -15,7 +15,10 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.mockito.Matchers.isNull;
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -38,7 +41,7 @@ public class ILoginPresenterImplTest {
 
     @Before
     public void before() {
-        presenter = new LoginPresenter(accountModule, loginModule);
+        presenter = new LoginPresenter(accountModule, loginModule, Schedulers.immediate());
         // By default, we need to login
         when(accountModule.shouldRememberUser()).thenReturn(false);
     }
@@ -59,7 +62,7 @@ public class ILoginPresenterImplTest {
         initPresenter();
 
         presenter.onLoginChanged("value");
-        verify(view).setLoginError(isNull(String.class));
+        verify(view).setLoginErrorVisible(false);
     }
 
     @Test
@@ -67,12 +70,13 @@ public class ILoginPresenterImplTest {
         initPresenter();
 
         presenter.onPasswordChanged("value");
-        verify(view).setPasswordError(isNull(String.class));
+        verify(view).setPasswordErrorVisible(false);
     }
 
     @Test
     public void loginClick() {
         initPresenter();
+        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.empty());
 
         presenter.onLoginClick();
 

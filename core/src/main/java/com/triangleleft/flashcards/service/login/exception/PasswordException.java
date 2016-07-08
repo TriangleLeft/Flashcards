@@ -16,20 +16,5 @@
 
 package com.triangleleft.flashcards.service.login.exception;
 
-import android.support.annotation.NonNull;
-
-import com.annimon.stream.Objects;
-
 public class PasswordException extends RuntimeException {
-
-    public PasswordException(@NonNull String message) {
-        super(message);
-        Objects.requireNonNull(message);
-    }
-
-    @NonNull
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }

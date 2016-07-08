@@ -73,7 +73,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
         if (TextUtils.notEquals(login, newLogin)) {
             login = newLogin;
-            getView().setLoginError(null);
+            getView().setLoginErrorVisible(false);
         }
     }
 
@@ -81,7 +81,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
         if (TextUtils.notEquals(password, newPassword)) {
             password = newPassword;
-            getView().setPasswordError(null);
+            getView().setPasswordErrorVisible(false);
         }
     }
 
@@ -99,16 +99,16 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     }
 
     private void handleError(Throwable error) {
-        getView().showContent();
         if (error instanceof LoginException) {
-            getView().setLoginError(error.getMessage());
+            getView().setLoginErrorVisible(true);
         } else if (error instanceof PasswordException) {
-            getView().setPasswordError(error.getMessage());
+            getView().setPasswordErrorVisible(true);
         } else if (error instanceof NetworkException) {
             getView().showNetworkError();
         } else {
             getView().showGenericError();
         }
+        getView().showContent();
     }
 
 }

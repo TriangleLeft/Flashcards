@@ -50,6 +50,7 @@ public class RestLoginModule implements LoginModule {
     }
 
     private Observable<Void> processError(Throwable error) {
+        logger.debug("processError called with [{}]", error);
         if (error instanceof HttpException) {
             return Observable.error(new ServerException());
         } else if (error instanceof ConversionException) {

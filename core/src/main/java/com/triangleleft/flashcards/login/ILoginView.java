@@ -15,19 +15,9 @@ public interface ILoginView extends IView {
 
     void setPassword(@Nullable String password);
 
-    /**
-     * Set login field error.
-     *
-     * @param error error to show
-     */
-    void setLoginError(@Nullable String error);
+    void setLoginErrorVisible(boolean visible);
 
-    /**
-     * Set error field error.
-     *
-     * @param error error to show
-     */
-    void setPasswordError(@Nullable String error);
+    void setPasswordErrorVisible(boolean visible);
 
     void showProgress();
 

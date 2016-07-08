@@ -28,5 +28,9 @@
     <string name="placeholder">[Placeholder]</string>
     <string name="long_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
     <string name="language_level">%s lvl</string>
+    <string name="wrong_login">Wrong login</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="login_network_error">Network error</string>
+    <string name="login_generic_error">Generic errror</string>
 
 </resources>

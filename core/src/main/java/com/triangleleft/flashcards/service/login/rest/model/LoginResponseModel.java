@@ -36,9 +36,9 @@ public class LoginResponseModel {
             if (TextUtils.hasText(failureReason)) {
                 switch (failureReason) {
                     case FAILURE_LOGIN:
-                        return new LoginException(failureReason);
+                        return new LoginException();
                     case FAILURE_PASSWORD:
-                        return new PasswordException(failureReason);
+                        return new PasswordException();
                 }
             }
             return new ServerException();
