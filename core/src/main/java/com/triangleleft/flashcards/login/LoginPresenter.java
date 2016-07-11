@@ -34,6 +34,8 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private String login = "";
     private String password = "";
     private boolean rememberUser = false;
+    private boolean hasLoginError;
+    private boolean hasPasswordError;
 
     @Inject
     public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
@@ -60,7 +62,9 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         view.setLogin(login);
         view.setPassword(password);
         view.setRememberUser(rememberUser);
-        // TODO: Set error
+        view.setLoginErrorVisible(hasLoginError);
+        view.setPasswordErrorVisible(hasPasswordError);
+        updateLoginButton();
     }
 
     @Override
@@ -73,7 +77,9 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
         if (TextUtils.notEquals(login, newLogin)) {
             login = newLogin;
-            getView().setLoginErrorVisible(false);
+            hasLoginError = false;
+            getView().setLoginErrorVisible(hasLoginError);
+            updateLoginButton();
         }
     }
 
@@ -81,7 +87,17 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
         if (TextUtils.notEquals(password, newPassword)) {
             password = newPassword;
-            getView().setPasswordErrorVisible(false);
+            hasPasswordError = false;
+            getView().setPasswordErrorVisible(hasPasswordError);
+            updateLoginButton();
+        }
+    }
+
+    private void updateLoginButton() {
+        if (TextUtils.hasText(login) && TextUtils.hasText(password)) {
+            getView().setLoginButtonEnabled(true);
+        } else {
+            getView().setLoginButtonEnabled(false);
         }
     }
 
@@ -100,8 +116,10 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
     private void handleError(Throwable error) {
         if (error instanceof LoginException) {
+            hasLoginError = true;
             getView().setLoginErrorVisible(true);
         } else if (error instanceof PasswordException) {
+            hasPasswordError = true;
             getView().setPasswordErrorVisible(true);
         } else if (error instanceof NetworkException) {
             getView().showNetworkError();

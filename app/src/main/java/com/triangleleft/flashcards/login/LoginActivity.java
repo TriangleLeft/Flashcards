@@ -1,9 +1,14 @@
 package com.triangleleft.flashcards.login;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -41,6 +46,8 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     Button loginButton;
     @Bind(R.id.login_checkbox)
     CheckBox checkBox;
+    @Bind(R.id.login_container)
+    View container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,14 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
         loginView.setOnTextChangedListener(newText -> getPresenter().onLoginChanged(newText));
         passwordView.setOnTextChangedListener(newText -> getPresenter().onPasswordChanged(newText));
+
+        View.OnFocusChangeListener focusChangeListener = (view, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(view);
+            }
+        };
+        loginView.setOnFocusChangeListener(focusChangeListener);
+        passwordView.setOnFocusChangeListener(focusChangeListener);
     }
 
     @Override
@@ -63,7 +78,9 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     protected LoginActivityComponent buildComponent() {
         logger.debug("buildComponent() called");
-        return DaggerLoginActivityComponent.builder().applicationComponent(getApplicationComponent()).build();
+        return DaggerLoginActivityComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .build();
     }
 
     @NonNull
@@ -77,6 +94,11 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     public void setLoginButtonEnabled(boolean enabled) {
         logger.debug("setLoginButtonEnabled() called with: enabled = [{}]", enabled);
         loginButton.setEnabled(enabled);
+        if (enabled) {
+            loginButton.getBackground().setColorFilter(null);
+        } else {
+            loginButton.getBackground().setColorFilter(Color.GRAY, PorterDuff.Mode.SRC_ATOP);
+        }
     }
 
     @Override
@@ -157,5 +179,12 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     public void showNetworkError() {
         Toast.makeText(this, R.string.login_network_error, Toast.LENGTH_SHORT).show();
     }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }
 

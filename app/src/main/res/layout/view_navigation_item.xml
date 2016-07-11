@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/drawer_item_language_height"
-    android:layout_gravity="start"
-    android:background="?android:selectableItemBackground"
-    android:orientation="horizontal">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/drawer_item_language_height"
+                android:layout_gravity="start"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/drawer_item_icon"
         android:layout_width="@dimen/drawer_item_language_icon_size"
         android:layout_height="@dimen/drawer_item_language_icon_size"
+        android:src="@color/colorPrimaryDark"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:src="@drawable/germany" />
+        app:civ_border_color="@color/divider"
+        app:civ_border_width="1dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +33,7 @@
             android:gravity="center_vertical|start"
             android:maxLines="1"
             android:textSize="@dimen/drawer_item_language_text_size"
-            tools:text="@string/placeholder" />
+            tools:text="@string/placeholder"/>
 
         <TextView
             android:id="@+id/drawer_item_description"
@@ -39,7 +42,7 @@
             android:gravity="center_vertical|start"
             android:maxLines="1"
             android:textSize="@dimen/drawer_item_language_description_size"
-            tools:text="@string/placeholder" />
+            tools:text="@string/placeholder"/>
     </LinearLayout>
 
     <TextView
@@ -52,6 +55,6 @@
         android:gravity="center"
         android:maxLines="1"
         android:textSize="@dimen/drawer_item_language_text_size"
-        tools:text="99" />
+        tools:text="99"/>
 
 </RelativeLayout>
