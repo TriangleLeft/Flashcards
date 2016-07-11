@@ -1,6 +1,9 @@
 package com.triangleleft.flashcards.mvp.main;
 
+import android.support.annotation.NonNull;
+
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
@@ -13,8 +16,6 @@ import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.support.annotation.NonNull;
 
 import java.util.Comparator;
 import java.util.List;
@@ -52,7 +53,14 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     public void onBind(IMainView view) {
         super.onBind(view);
         showViewPage(currentPage);
-        showUserData(settingsModule.getCurrentUserData());
+        Optional<UserData> userData = settingsModule.getCurrentUserData();
+        // It's possible that local data was wiped
+        if (userData.isPresent()) {
+            showUserData(userData.get());
+        } else {
+            getView().navigateToLogin();
+        }
+
     }
 
     @Override

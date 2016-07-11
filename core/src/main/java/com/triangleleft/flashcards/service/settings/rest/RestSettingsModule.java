@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
+import com.annimon.stream.Optional;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -32,8 +33,8 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public UserData getCurrentUserData() {
-        return userData;
+    public Optional<UserData> getCurrentUserData() {
+        return Optional.ofNullable(userData);
     }
 
     @Override

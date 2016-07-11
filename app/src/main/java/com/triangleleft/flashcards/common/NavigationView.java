@@ -1,7 +1,5 @@
 package com.triangleleft.flashcards.common;
 
-import com.triangleleft.flashcards.R;
-
 import android.animation.FloatEvaluator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -13,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.triangleleft.flashcards.R;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class NavigationView extends FrameLayout {
 
+    private final FloatEvaluator evaluator;
     @Bind(R.id.drawer_list)
     RecyclerView recyclerView;
     @Bind(R.id.drawer_user_name)
@@ -28,7 +29,8 @@ public class NavigationView extends FrameLayout {
     ViewFlipper drawerContentFlipper;
     @Bind(R.id.drawer_divider)
     View divider;
-    private final FloatEvaluator evaluator;
+    @Bind(R.id.drawer_overlay)
+    View overlay;
 
     public NavigationView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -45,14 +47,28 @@ public class NavigationView extends FrameLayout {
         drawerUserAvatar.setScaleX(avatarScale);
         drawerUserAvatar.setScaleY(avatarScale);
 
+        Float avatarOffset = evaluator.evaluate(value, -12, 0);
+        drawerUserAvatar.setTranslationY(avatarOffset);
+
         Float alpha = evaluator.evaluate(value, -1f, 1f);
         drawerUserName.setAlpha(alpha);
         divider.setAlpha(alpha);
 
-        Float listOffset = evaluator.evaluate(value, -50, 0);
+        Float listOffset = evaluator.evaluate(value, -60 - 12, 0);
         drawerContentFlipper.setTranslationY(listOffset);
         drawerUserName.setTranslationY(listOffset);
         divider.setTranslationY(listOffset);
+
+
+        if (value == 1f) {
+            overlay.setVisibility(View.GONE);
+        } else {
+            overlay.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setOnOverlayClickListener(OnClickListener listener) {
+        overlay.setOnClickListener(listener);
     }
 
 }

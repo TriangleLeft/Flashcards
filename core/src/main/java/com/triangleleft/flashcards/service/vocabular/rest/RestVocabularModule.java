@@ -1,7 +1,6 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
-import android.support.annotation.Nullable;
-
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
@@ -56,8 +55,9 @@ public class RestVocabularModule implements IVocabularModule {
                 .toList() // group them back to one list
                 .doOnNext(this::updateCache);
         // For fresh calls, try to return db cache
-        if (!refresh) {
-            observable = observable.startWith(getCachedData());
+        Optional<UserData> userData = settingsModule.getCurrentUserData();
+        if (userData.isPresent() && !refresh) {
+            observable = observable.startWith(getCachedData(userData.get()));
         }
         return observable;
     }
@@ -89,10 +89,9 @@ public class RestVocabularModule implements IVocabularModule {
         provider.putWords(words);
     }
 
-    @Nullable
-    private List<VocabularWord> getCachedData() {
-        UserData userData = settingsModule.getCurrentUserData();
+    private List<VocabularWord> getCachedData(UserData userData) {
         return provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId());
+
     }
 
 }

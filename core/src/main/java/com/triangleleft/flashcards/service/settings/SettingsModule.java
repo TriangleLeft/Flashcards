@@ -1,16 +1,14 @@
 package com.triangleleft.flashcards.service.settings;
 
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import android.support.annotation.Nullable;
 
 import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public interface SettingsModule {
 
-    @Nullable
-    UserData getCurrentUserData();
+    Optional<UserData> getCurrentUserData();
 
     Observable<UserData> getUserData();
 

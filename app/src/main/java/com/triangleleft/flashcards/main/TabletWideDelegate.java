@@ -1,13 +1,5 @@
 package com.triangleleft.flashcards.main;
 
-import com.google.common.base.Preconditions;
-
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.common.NavigationView;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.vocabular.VocabularListFragment;
-import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
-
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -15,6 +7,13 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.google.common.base.Preconditions;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.NavigationView;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.vocabular.VocabularListFragment;
+import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,12 +42,12 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
             @Override
             public void onPanelOpened(View panel) {
-
+                navigationView.setOnOverlayClickListener(null);
             }
 
             @Override
             public void onPanelClosed(View panel) {
-
+                navigationView.setOnOverlayClickListener(view -> slidingPaneLayout.openPane());
             }
         });
 

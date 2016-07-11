@@ -35,7 +35,7 @@ public class StubVocabularModule implements IVocabularModule {
 
     @Override
     public Observable<List<VocabularWord>> getVocabularWords(boolean refresh) {
-        UserData userData = settingsModule.getCurrentUserData();
+        UserData userData = settingsModule.getCurrentUserData().get();
         Observable<List<VocabularWord>> observable =
                 Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                         .subscribeOn(Schedulers.io())

@@ -1,13 +1,12 @@
 package com.triangleleft.flashcards.service.settings.stub;
 
 import com.annimon.stream.Collectors;
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.Language;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import android.support.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,20 +39,20 @@ public class StubSettingsModule implements SettingsModule {
 
     }
 
-    @Nullable
     @Override
-    public UserData getCurrentUserData() {
-        return UserData.create(
+    public Optional<UserData> getCurrentUserData() {
+        return Optional.of(UserData.create(
                 Collections.unmodifiableList(languages),
                 avatarUrl,
                 userName,
                 uiLanguage,
-                learningLanguage);
+                learningLanguage));
     }
 
     @Override
     public Observable<UserData> getUserData() {
-        return Observable.just(getCurrentUserData()).delay(DELAY, TimeUnit.MILLISECONDS);
+        return Observable.just(getCurrentUserData().get())
+                .delay(DELAY, TimeUnit.MILLISECONDS);
     }
 
     @Override
