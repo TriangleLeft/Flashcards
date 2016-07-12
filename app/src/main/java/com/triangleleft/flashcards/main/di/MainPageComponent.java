@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.main.MainPageModule;
 import com.triangleleft.flashcards.mvp.main.MainPresenter;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularyNavigator;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularyNavigator;
 
 import dagger.Component;
 
@@ -16,7 +16,7 @@ public interface MainPageComponent extends ApplicationComponent, IComponent {
 
     MainPresenter mainPresenter();
 
-    IVocabularyNavigator vocabularNavigator();
+    VocabularyNavigator vocabularNavigator();
 
     void inject(MainActivity mainView);
 }

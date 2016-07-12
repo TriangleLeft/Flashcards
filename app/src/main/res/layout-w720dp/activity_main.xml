@@ -30,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="72dp"
-            android:background="@android:color/transparent"
             android:clipChildren="false"
             android:orientation="horizontal">
 
@@ -43,7 +42,7 @@
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/main_panel"
-                android:layout_width="350dp"
+                android:layout_width="@dimen/main_panel_width"
                 android:layout_height="match_parent"
                 tools:context=".main.MainActivity">
 

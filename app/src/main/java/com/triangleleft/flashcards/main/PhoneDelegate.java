@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
@@ -59,6 +61,8 @@ import butterknife.ButterKnife;
         toggle.syncState();
 
         arrowDrawable = (DrawerArrowDrawable) toolbar.getNavigationIcon();
+        Preconditions.checkNotNull(arrowDrawable);
+        arrowDrawable.setColor(ContextCompat.getColor(activity, R.color.white));
 
         toggle.setToolbarNavigationClickListener(v -> onBackPressed());
 

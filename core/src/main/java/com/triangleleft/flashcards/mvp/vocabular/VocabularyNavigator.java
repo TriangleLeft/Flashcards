@@ -4,6 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
-public interface IVocabularyNavigator {
+public interface VocabularyNavigator {
     void onWordSelected(@NonNull VocabularyWord word);
 }

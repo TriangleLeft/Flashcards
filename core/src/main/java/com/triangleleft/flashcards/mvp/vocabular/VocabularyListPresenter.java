@@ -25,14 +25,14 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private static final Logger logger = LoggerFactory.getLogger(VocabularyListPresenter.class);
 
     private final VocabularyModule vocabularyModule;
-    private final IVocabularyNavigator navigator;
+    private final VocabularyNavigator navigator;
     private final Scheduler mainThreadScheduler;
     private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
     private List<VocabularyWord> vocabularyList;
 
     @Inject
-    public VocabularyListPresenter(VocabularyModule vocabularyModule, IVocabularyNavigator navigator,
+    public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
                                    Scheduler mainThreadScheduler) {
         super(IVocabularyListView.class);
         this.vocabularyModule = vocabularyModule;
@@ -50,6 +50,8 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         super.onBind(view);
         if (vocabularyList != null) {
             getView().showWords(vocabularyList, selectedPosition);
+        } else {
+            getView().showProgress();
         }
     }
 
@@ -75,6 +77,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     }
 
     public void onRefreshList() {
+        // NOTE: we cancel request every time we swipe refresh, not sure it's a good idea
         subscription.unsubscribe();
         subscription = vocabularyModule.refreshVocabularyWords()
                 .observeOn(mainThreadScheduler)

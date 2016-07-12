@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.mvp.main;
 
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularyNavigator;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularyNavigator;
 
 import dagger.Module;
 import dagger.Provides;
@@ -11,7 +11,7 @@ public class MainPageModule {
 
     @ActivityScope
     @Provides
-    public IVocabularyNavigator vocabularNavigator(MainPresenter presenter) {
+    public VocabularyNavigator vocabularNavigator(MainPresenter presenter) {
         return presenter;
     }
 }

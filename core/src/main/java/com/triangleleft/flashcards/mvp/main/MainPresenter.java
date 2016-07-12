@@ -7,7 +7,7 @@ import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularyNavigator;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularyNavigator;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import rx.Scheduler;
 
 @ActivityScope
-public class MainPresenter extends AbstractPresenter<IMainView> implements IVocabularyNavigator {
+public class MainPresenter extends AbstractPresenter<IMainView> implements VocabularyNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
     private final AccountModule accountModule;
