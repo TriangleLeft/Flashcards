@@ -43,12 +43,17 @@ public class RestVocabularyModule implements VocabularyModule {
     @Override
     public Observable<List<VocabularyWord>> loadVocabularyWords() {
         logger.debug("loadVocabularyWords()");
-        Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
         Optional<UserData> userData = settingsModule.getCurrentUserData();
         if (userData.isPresent()) {
-            observable = observable.startWith(getCachedData(userData.get()));
+            Observable<List<VocabularyWord>> cache = Observable
+                    .defer(() -> Observable.just(getCachedData(userData.get())))
+                    .filter(list -> !list.isEmpty());
+
+            return Observable.concat(cache, refreshVocabularyWords());
+        } else {
+            return refreshVocabularyWords();
         }
-        return observable;
+
     }
 
     @Override

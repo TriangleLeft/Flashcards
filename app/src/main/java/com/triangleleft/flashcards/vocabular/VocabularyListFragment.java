@@ -74,6 +74,7 @@ public class VocabularyListFragment
         vocabList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         swipeRefresh.setOnRefreshListener(() -> getPresenter().onRefreshList());
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.green);
 
         return view;
     }
