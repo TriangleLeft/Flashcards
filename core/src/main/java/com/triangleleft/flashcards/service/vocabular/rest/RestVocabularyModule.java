@@ -7,8 +7,8 @@ import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -41,9 +41,9 @@ public class RestVocabularyModule implements IVocabularyModule {
     }
 
     @Override
-    public Observable<List<VocabularWord>> getVocabularWords(boolean refresh) {
+    public Observable<List<VocabularyWord>> getVocabularWords(boolean refresh) {
         logger.debug("getVocabularList() called");
-        Observable<List<VocabularWord>> observable = service.getVocabularList(System.currentTimeMillis())
+        Observable<List<VocabularyWord>> observable = service.getVocabularList(System.currentTimeMillis())
                 .map(VocabularResponseModel::toVocabularData)
                 .map(VocabularData::getWords)
                 .flatMapIterable(list -> list) // split list of item into stream of items
@@ -62,9 +62,9 @@ public class RestVocabularyModule implements IVocabularyModule {
         return observable;
     }
 
-    private List<VocabularWord> translate(List<VocabularWord> words) {
+    private List<VocabularyWord> translate(List<VocabularyWord> words) {
         String query = Stream.of(words)
-                .map(VocabularWord::getWord)
+                .map(VocabularyWord::getWord)
                 .map(string -> '"' + string + '"')
                 .collect(joining(","));
         query = "[" + query + "]";
@@ -76,7 +76,7 @@ public class RestVocabularyModule implements IVocabularyModule {
                 .collect(toList());
     }
 
-    private VocabularWord getTranslation(VocabularWord word, WordTranslationModel model) {
+    private VocabularyWord getTranslation(VocabularyWord word, WordTranslationModel model) {
         List<String> strings = model.get(word.getWord());
         if (strings == null) {
             strings = Collections.emptyList();
@@ -85,11 +85,11 @@ public class RestVocabularyModule implements IVocabularyModule {
     }
 
 
-    private void updateCache(List<VocabularWord> words) {
+    private void updateCache(List<VocabularyWord> words) {
         provider.putWords(words);
     }
 
-    private List<VocabularWord> getCachedData(UserData userData) {
+    private List<VocabularyWord> getCachedData(UserData userData) {
         return provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId());
 
     }

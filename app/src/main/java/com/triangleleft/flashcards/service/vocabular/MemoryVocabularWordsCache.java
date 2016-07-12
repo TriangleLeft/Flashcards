@@ -12,10 +12,10 @@ import static com.annimon.stream.Collectors.toList;
 @FunctionsAreNonnullByDefault
 public class MemoryVocabularWordsCache implements VocabularWordsCache {
 
-    Set<VocabularWord> cache = new HashSet<>();
+    Set<VocabularyWord> cache = new HashSet<>();
 
     @Override
-    public List<VocabularWord> getWords(String uiLanguageId, String learningLanguageId) {
+    public List<VocabularyWord> getWords(String uiLanguageId, String learningLanguageId) {
         return Stream.of(cache)
                 .filter(word -> word.getUiLanguage().equals(uiLanguageId))
                 .filter(word -> word.getLearningLanguage().equals(learningLanguageId))
@@ -23,7 +23,7 @@ public class MemoryVocabularWordsCache implements VocabularWordsCache {
     }
 
     @Override
-    public void putWords(List<VocabularWord> words) {
+    public void putWords(List<VocabularyWord> words) {
         cache.addAll(words);
     }
 }

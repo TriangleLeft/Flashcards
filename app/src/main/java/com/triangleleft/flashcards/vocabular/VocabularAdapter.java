@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.OnItemClickListener;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularyListPresenter;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.Collections;
@@ -18,7 +18,7 @@ import java.util.List;
 public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> {
 
     private final boolean selectable;
-    private List<VocabularWord> list = Collections.emptyList();
+    private List<VocabularyWord> list = Collections.emptyList();
     private OnItemClickListener<VocabularViewHolder> itemClickListener;
     private int selectedPosition = VocabularyListPresenter.NO_POSITION;
 
@@ -26,7 +26,7 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
         this.selectable = selectable;
     }
 
-    public void setData(List<VocabularWord> list) {
+    public void setData(List<VocabularyWord> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -40,11 +40,11 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
 
     @Override
     public void onBindViewHolder(VocabularViewHolder holder, int position) {
-        VocabularWord word = getItem(position);
+        VocabularyWord word = getItem(position);
         holder.show(word, selectable && position == selectedPosition);
     }
 
-    public VocabularWord getItem(int position) {
+    public VocabularyWord getItem(int position) {
         return list.get(position);
     }
 

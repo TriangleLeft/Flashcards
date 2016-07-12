@@ -1,17 +1,16 @@
 package com.triangleleft.flashcards.service.vocabular;
 
-import com.google.auto.value.AutoValue;
-
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import android.support.annotation.IntRange;
 import android.support.annotation.Nullable;
+
+import com.google.auto.value.AutoValue;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.List;
 
 @FunctionsAreNonnullByDefault
 @AutoValue
-public abstract class VocabularWord {
+public abstract class VocabularyWord {
 
     public abstract String getWord();
 
@@ -32,7 +31,7 @@ public abstract class VocabularWord {
 
     public abstract String getLearningLanguage();
 
-    public static VocabularWord create(
+    public static VocabularyWord create(
             String word,
             String normalizedWord,
             @Nullable String pos,
@@ -52,7 +51,7 @@ public abstract class VocabularWord {
                 learningLanguage);
     }
 
-    public abstract VocabularWord withWord(String word);
+    public abstract VocabularyWord withWord(String word);
 
-    public abstract VocabularWord withTranslations(List<String> strings);
+    public abstract VocabularyWord withTranslations(List<String> strings);
 }

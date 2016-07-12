@@ -1,10 +1,10 @@
 package com.triangleleft.flashcards.service.vocabular;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.service.vocabular.VocabularWordModel;
 import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
-
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 
@@ -21,17 +21,17 @@ public class DbVocabularWordsCache implements VocabularWordsCache {
     }
 
     @Override
-    public List<VocabularWord> getWords(String uiLanguageId, String learningLanguageId) {
+    public List<VocabularyWord> getWords(String uiLanguageId, String learningLanguageId) {
         return VocabularWordDao.allInfo(database, uiLanguageId, learningLanguageId);
     }
 
     @Override
-    public void putWords(List<VocabularWord> words) {
+    public void putWords(List<VocabularyWord> words) {
         database.beginTransaction();
         try {
             database.execSQL(VocabularWordModel.DELETE_ALL);
             database.execSQL(VocabularWordTranslationModel.DELETE_ALL);
-            for (VocabularWord word : words) {
+            for (VocabularyWord word : words) {
                 database.insert(VocabularWordModel.TABLE_NAME, null, VocabularWordDao.FACTORY.marshal()
                         .uiLanguage(word.getUiLanguage())
                         .learningLanguage(word.getLearningLanguage())

@@ -1,12 +1,11 @@
 package com.triangleleft.flashcards.service.vocabular;
 
-import com.google.auto.value.AutoValue;
-
-import com.squareup.sqldelight.RowMapper;
-import com.triangleleft.service.vocabular.VocabularWordModel;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.google.auto.value.AutoValue;
+import com.squareup.sqldelight.RowMapper;
+import com.triangleleft.service.vocabular.VocabularWordModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +19,8 @@ public abstract class VocabularWordDao implements VocabularWordModel {
             FACTORY.select_wordsMapper(AutoValue_VocabularWordDao_AllInfo::new);
 
 
-    public static List<VocabularWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
-        List<VocabularWord> result = new ArrayList<>();
+    public static List<VocabularyWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
+        List<VocabularyWord> result = new ArrayList<>();
         try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{uiLanguage, learningLanguage})) {
             List<String> translations = new ArrayList<>();
             while (cursor.moveToNext()) {
@@ -39,7 +38,7 @@ public abstract class VocabularWordDao implements VocabularWordModel {
                         break;
                     }
                 }
-                result.add(VocabularWord.create(
+                result.add(VocabularyWord.create(
                         word.word_string(),
                         word.normalized_string(),
                         word.pos(),

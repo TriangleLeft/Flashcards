@@ -6,8 +6,8 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.ArrayList;
@@ -34,9 +34,9 @@ public class StubVocabularyModule implements IVocabularyModule {
     }
 
     @Override
-    public Observable<List<VocabularWord>> getVocabularWords(boolean refresh) {
+    public Observable<List<VocabularyWord>> getVocabularWords(boolean refresh) {
         UserData userData = settingsModule.getCurrentUserData().get();
-        Observable<List<VocabularWord>> observable =
+        Observable<List<VocabularyWord>> observable =
                 Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                         .subscribeOn(Schedulers.io())
                         .doOnNext(this::updateCache)
@@ -49,16 +49,16 @@ public class StubVocabularyModule implements IVocabularyModule {
     }
 
     private void updateCache(VocabularData data) {
-        List<VocabularWord> words = Stream.of(data.getWords())
+        List<VocabularyWord> words = Stream.of(data.getWords())
                 .map(word -> word.withWord("cached_" + word.getWord()))
                 .collect(toList());
         provider.putWords(words);
     }
 
     private VocabularData buildVocabularData(String uiLanguage, String learningLanguage) {
-        List<VocabularWord> list = new ArrayList<>();
+        List<VocabularyWord> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
-            list.add(VocabularWord.create(
+            list.add(VocabularyWord.create(
                     learningLanguage + "_word_" + i,
                     learningLanguage + "_word_" + i,
                     "pos",

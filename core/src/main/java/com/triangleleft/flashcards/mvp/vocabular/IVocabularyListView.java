@@ -3,13 +3,13 @@ package com.triangleleft.flashcards.mvp.vocabular;
 import android.support.annotation.NonNull;
 
 import com.triangleleft.flashcards.mvp.common.view.IView;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import java.util.List;
 
 public interface IVocabularyListView extends IView {
 
-    void showWords(@NonNull List<VocabularWord> words, int selectedPosition);
+    void showWords(@NonNull List<VocabularyWord> words, int selectedPosition);
 
     void showProgress();
 

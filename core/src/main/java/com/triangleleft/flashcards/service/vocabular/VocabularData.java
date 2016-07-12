@@ -7,7 +7,7 @@ import java.util.List;
 @FunctionsAreNonnullByDefault
 public interface VocabularData {
 
-    List<VocabularWord> getWords();
+    List<VocabularyWord> getWords();
 
     String getLearningLanguageId();
 

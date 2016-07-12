@@ -11,7 +11,7 @@ import android.view.View;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.NavigationView;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 
@@ -73,7 +73,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     }
 
     @Override
-    public void showWord(VocabularWord word) {
+    public void showWord(VocabularyWord word) {
         Preconditions.checkNotNull(vocabularWordFragment, "Vocabular word fragment was not bound!");
         vocabularWordFragment.getPresenter().setWord(word);
     }

@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.mvp.main;
 
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +50,7 @@ public class MainPresenterTest {
 
     @Test
     public void onWordSelectedShouldShowWord() throws Exception {
-        VocabularWord word = mock(VocabularWord.class);
+        VocabularyWord word = mock(VocabularyWord.class);
         presenter.onBind(view);
 
         presenter.onWordSelected(word);
@@ -61,7 +61,7 @@ public class MainPresenterTest {
     @Test
     public void onBackPressedFromWordShouldReturnToList() {
         presenter.onBind(view);
-        VocabularWord word = mock(VocabularWord.class);
+        VocabularyWord word = mock(VocabularyWord.class);
         presenter.onWordSelected(word);
         reset(view);
 

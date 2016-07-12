@@ -1,24 +1,24 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.common.BaseFragment;
-import com.triangleleft.flashcards.main.MainActivity;
-import com.triangleleft.flashcards.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
-import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.vocabular.di.DaggerVocabularWordComponent;
-import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseFragment;
+import com.triangleleft.flashcards.main.MainActivity;
+import com.triangleleft.flashcards.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularWordComponent;
+import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,7 +83,7 @@ public class VocabularWordFragment
     }
 
     @Override
-    public void showWord(VocabularWord word) {
+    public void showWord(VocabularyWord word) {
         titleView.setText(word.getWord());
         String translation = word.getTranslations().size() > 0 ? word.getTranslations().get(0) : "";
         translationView.setText(translation);

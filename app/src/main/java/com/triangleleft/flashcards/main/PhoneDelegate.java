@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 
@@ -86,7 +86,7 @@ import butterknife.ButterKnife;
     }
 
     @Override
-    public void showWord(VocabularWord word) {
+    public void showWord(VocabularyWord word) {
         hideFragment(vocabularListFragment);
         fab.hide();
 

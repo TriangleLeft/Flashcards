@@ -7,7 +7,7 @@ import java.util.List;
 @FunctionsAreNonnullByDefault
 public interface VocabularWordsCache {
 
-    List<VocabularWord> getWords(String uiLanguageId, String learningLanguageId);
+    List<VocabularyWord> getWords(String uiLanguageId, String learningLanguageId);
 
-    void putWords(List<VocabularWord> words);
+    void putWords(List<VocabularyWord> words);
 }

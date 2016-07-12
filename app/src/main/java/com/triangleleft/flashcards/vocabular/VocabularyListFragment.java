@@ -19,7 +19,7 @@ import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularyListView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularyListPresenter;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
@@ -85,7 +85,7 @@ public class VocabularyListFragment
     }
 
     @Override
-    public void showWords(@NonNull List<VocabularWord> words, int selectedPosition) {
+    public void showWords(@NonNull List<VocabularyWord> words, int selectedPosition) {
         viewFlipper.setDisplayedChild(LIST);
         vocabularAdapter.setData(words);
         vocabularAdapter.setSelectedPosition(selectedPosition);

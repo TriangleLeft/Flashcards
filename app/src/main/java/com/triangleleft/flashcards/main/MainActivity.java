@@ -1,23 +1,5 @@
 package com.triangleleft.flashcards.main;
 
-import com.squareup.picasso.Picasso;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.common.BaseActivity;
-import com.triangleleft.flashcards.common.FlagImagesProvider;
-import com.triangleleft.flashcards.login.LoginActivity;
-import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
-import com.triangleleft.flashcards.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.main.IMainView;
-import com.triangleleft.flashcards.mvp.main.MainPageModule;
-import com.triangleleft.flashcards.mvp.main.MainPresenter;
-import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -30,6 +12,24 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.squareup.picasso.Picasso;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.cards.FlashcardsActivity;
+import com.triangleleft.flashcards.common.BaseActivity;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
+import com.triangleleft.flashcards.login.LoginActivity;
+import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
+import com.triangleleft.flashcards.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.main.IMainView;
+import com.triangleleft.flashcards.mvp.main.MainPageModule;
+import com.triangleleft.flashcards.mvp.main.MainPresenter;
+import com.triangleleft.flashcards.service.settings.Language;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showWord(@NonNull VocabularWord word) {
+    public void showWord(@NonNull VocabularyWord word) {
         logger.debug("showWord() called with: word = [{}]", word);
         delegate.showWord(word);
     }

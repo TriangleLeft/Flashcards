@@ -9,5 +9,5 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public interface IVocabularyModule {
 
-    Observable<List<VocabularWord>> getVocabularWords(boolean refresh);
+    Observable<List<VocabularyWord>> getVocabularWords(boolean refresh);
 }

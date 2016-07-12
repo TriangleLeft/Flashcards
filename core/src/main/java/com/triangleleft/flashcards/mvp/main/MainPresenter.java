@@ -12,7 +12,7 @@ import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     private final Comparator<Language> languageComparator =
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private IMainView.Page currentPage = IMainView.Page.LIST;
-    private VocabularWord selectedWord;
+    private VocabularyWord selectedWord;
     private Language currentLanguage;
 
     @Inject
@@ -64,7 +64,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements IVoca
     }
 
     @Override
-    public void onWordSelected(@NonNull VocabularWord word) {
+    public void onWordSelected(@NonNull VocabularyWord word) {
         logger.debug("onWordSelected() called with: word = [{}]", word);
         selectedWord = word;
         showViewPage(IMainView.Page.WORD);

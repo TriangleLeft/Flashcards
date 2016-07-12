@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +41,7 @@ public class VocabularyListPresenterTest {
 
 //    @Test
 //    public void onWordSelectedWouldDelegateToNavigator() {
-//        VocabularWord mockWord = mock(VocabularWord.class);
+//        VocabularyWord mockWord = mock(VocabularyWord.class);
 //
 //        presenter.onWordSelected(mockWord);
 //        verify(navigator).onWordSelected(mockWord);
@@ -59,7 +59,7 @@ public class VocabularyListPresenterTest {
     public void onDestroyWouldUnsubscribe() {
         AtomicBoolean unsubscribed = new AtomicBoolean(false);
         // Create empty observable to notify us when it's unsubscribed from
-        Observable<List<VocabularWord>> observable = Observable.empty();
+        Observable<List<VocabularyWord>> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
         when(module.getVocabularWords(anyBoolean())).thenReturn(observable);
 
@@ -82,7 +82,7 @@ public class VocabularyListPresenterTest {
 
     @Test
     public void whenHasListOnBindWouldShowList() {
-        List<VocabularWord> list = Collections.singletonList(mock(VocabularWord.class));
+        List<VocabularyWord> list = Collections.singletonList(mock(VocabularyWord.class));
         when(module.getVocabularWords(false)).thenReturn(Observable.just(list));
         presenter.onBind(view);
         presenter.onUnbind();
