@@ -7,7 +7,7 @@ import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.stub.StubLoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.stub.StubSettingsModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
+import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.stub.StubVocabularyModule;
 
 import dagger.Binds;
@@ -22,7 +22,7 @@ public abstract class StubServiceModule {
 
     @ApplicationScope
     @Binds
-    abstract IVocabularyModule vocabularModule(StubVocabularyModule module);
+    abstract VocabularyModule vocabularModule(StubVocabularyModule module);
 
     @ApplicationScope
     @Binds

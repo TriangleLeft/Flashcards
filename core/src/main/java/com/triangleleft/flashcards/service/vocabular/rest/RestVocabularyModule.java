@@ -5,9 +5,9 @@ import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
+import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -26,7 +26,7 @@ import static com.annimon.stream.Collectors.joining;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
-public class RestVocabularyModule implements IVocabularyModule {
+public class RestVocabularyModule implements VocabularyModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularyModule.class);
     private final IDuolingoRest service;
@@ -41,9 +41,20 @@ public class RestVocabularyModule implements IVocabularyModule {
     }
 
     @Override
-    public Observable<List<VocabularyWord>> getVocabularWords(boolean refresh) {
-        logger.debug("getVocabularList() called");
-        Observable<List<VocabularyWord>> observable = service.getVocabularList(System.currentTimeMillis())
+    public Observable<List<VocabularyWord>> loadVocabularyWords() {
+        logger.debug("loadVocabularyWords()");
+        Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
+        Optional<UserData> userData = settingsModule.getCurrentUserData();
+        if (userData.isPresent()) {
+            observable = observable.startWith(getCachedData(userData.get()));
+        }
+        return observable;
+    }
+
+    @Override
+    public Observable<List<VocabularyWord>> refreshVocabularyWords() {
+        logger.debug("refreshVocabularyWords()");
+        return service.getVocabularList(System.currentTimeMillis())
                 .map(VocabularResponseModel::toVocabularData)
                 .map(VocabularData::getWords)
                 .flatMapIterable(list -> list) // split list of item into stream of items
@@ -54,12 +65,6 @@ public class RestVocabularyModule implements IVocabularyModule {
                 .flatMapIterable(list -> list) // split all groups into one stream
                 .toList() // group them back to one list
                 .doOnNext(this::updateCache);
-        // For fresh calls, try to return db cache
-        Optional<UserData> userData = settingsModule.getCurrentUserData();
-        if (userData.isPresent() && !refresh) {
-            observable = observable.startWith(getCachedData(userData.get()));
-        }
-        return observable;
     }
 
     private List<VocabularyWord> translate(List<VocabularyWord> words) {

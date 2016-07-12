@@ -13,9 +13,9 @@ public interface IVocabularyListView extends IView {
 
     void showProgress();
 
-    void showError();
+    void showRefreshError();
 
-    void showErrorNoContent();
+    void showLoadError();
 
     void showEmpty();
 }

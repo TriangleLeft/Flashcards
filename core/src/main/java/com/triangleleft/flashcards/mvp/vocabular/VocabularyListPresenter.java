@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
-import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
+import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -24,7 +24,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     public static final int NO_POSITION = -1;
     private static final Logger logger = LoggerFactory.getLogger(VocabularyListPresenter.class);
 
-    private final IVocabularyModule vocabularyModule;
+    private final VocabularyModule vocabularyModule;
     private final IVocabularyNavigator navigator;
     private final Scheduler mainThreadScheduler;
     private Subscription subscription = Subscriptions.empty();
@@ -32,7 +32,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private List<VocabularyWord> vocabularyList;
 
     @Inject
-    public VocabularyListPresenter(IVocabularyModule vocabularyModule, IVocabularyNavigator navigator,
+    public VocabularyListPresenter(VocabularyModule vocabularyModule, IVocabularyNavigator navigator,
                                    Scheduler mainThreadScheduler) {
         super(IVocabularyListView.class);
         this.vocabularyModule = vocabularyModule;
@@ -53,6 +53,12 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         }
     }
 
+    @Override
+    public void onDestroy() {
+        logger.debug("onDestroy() called");
+        subscription.unsubscribe();
+    }
+
     public void onWordSelected(int position) {
         selectedPosition = position;
         VocabularyWord word = vocabularyList.get(position);
@@ -62,28 +68,20 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     public void onLoadList() {
         logger.debug("onLoadList() called");
         getView().showProgress();
-        loadList(false);
-    }
-
-    @Override
-    public void onDestroy() {
-        logger.debug("onDestroy() called");
         subscription.unsubscribe();
+        subscription = vocabularyModule.loadVocabularyWords()
+                .observeOn(mainThreadScheduler)
+                .subscribe(this::processData, this::processLoadError);
     }
 
     public void onRefreshList() {
-        loadList(true);
-    }
-
-    private void loadList(boolean refresh) {
         subscription.unsubscribe();
-        subscription = vocabularyModule.getVocabularWords(refresh)
+        subscription = vocabularyModule.refreshVocabularyWords()
                 .observeOn(mainThreadScheduler)
-                .subscribe(data -> processData(data, refresh), error -> processError(error, refresh));
+                .subscribe(this::processData, this::processRefreshError);
     }
 
-
-    private void processData(List<VocabularyWord> list, boolean refresh) {
+    private void processData(List<VocabularyWord> list) {
         vocabularyList = list;
         // First load
         if (vocabularyList.size() > 0 && selectedPosition == NO_POSITION) {
@@ -94,14 +92,15 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         getView().showWords(vocabularyList, selectedPosition);
     }
 
-    private void processError(Throwable error, boolean refresh) {
-        logger.error("processError() ", error);
-        logger.error("processError() called with: error = [{}], refresh = [{}]", error, refresh);
+    private void processRefreshError(Throwable throwable) {
+        logger.error("processRefreshError", throwable);
 
-        if (refresh) {
-            getView().showError();
-        } else {
-            getView().showErrorNoContent();
-        }
+        getView().showRefreshError();
+    }
+
+    private void processLoadError(Throwable error) {
+        logger.error("processError() ", error);
+
+        getView().showLoadError();
     }
 }

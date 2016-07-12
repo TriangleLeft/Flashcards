@@ -12,7 +12,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="vocabulary_list_error_retry">Retry</string>
-    <string name="vocabulary_list_no_words">You haven't learned any words yet</string>
+    <string name="vocabulary_list_no_words">You haven\'t learned any words yet</string>
     <string name="button_retry">Retry</string>
 
     <string name="button_flashcard_wrong">I was wrong</string>

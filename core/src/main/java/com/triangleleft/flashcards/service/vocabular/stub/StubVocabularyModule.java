@@ -3,10 +3,10 @@ package com.triangleleft.flashcards.service.vocabular.stub;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
+import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
-public class StubVocabularyModule implements IVocabularyModule {
+public class StubVocabularyModule implements VocabularyModule {
 
     private final SettingsModule settingsModule;
     private final VocabularWordsCache provider;
@@ -34,18 +34,23 @@ public class StubVocabularyModule implements IVocabularyModule {
     }
 
     @Override
-    public Observable<List<VocabularyWord>> getVocabularWords(boolean refresh) {
+    public Observable<List<VocabularyWord>> loadVocabularyWords() {
+        Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
+
         UserData userData = settingsModule.getCurrentUserData().get();
-        Observable<List<VocabularyWord>> observable =
-                Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
+        observable.startWith(provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId()));
+
+        return observable;
+    }
+
+    @Override
+    public Observable<List<VocabularyWord>> refreshVocabularyWords() {
+        UserData userData = settingsModule.getCurrentUserData().get();
+
+        return Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                         .subscribeOn(Schedulers.io())
                         .doOnNext(this::updateCache)
                         .map(VocabularData::getWords);
-
-        if (!refresh) {
-            observable.startWith(provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId()));
-        }
-        return observable;
     }
 
     private void updateCache(VocabularData data) {
@@ -71,5 +76,4 @@ public class StubVocabularyModule implements IVocabularyModule {
         }
         return SimpleVocabularData.create(list, uiLanguage, learningLanguage);
     }
-
 }

@@ -104,13 +104,13 @@ public class VocabularyListFragment
     }
 
     @Override
-    public void showError() {
+    public void showRefreshError() {
         logger.debug("showError() called");
         viewFlipper.setDisplayedChild(ERROR);
     }
 
     @Override
-    public void showErrorNoContent() {
+    public void showLoadError() {
         Snackbar.make(getView(), "No connection", Snackbar.LENGTH_INDEFINITE).setAction("Retry", view -> {
             getPresenter().onLoadList();
         });

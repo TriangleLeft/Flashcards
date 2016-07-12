@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
-import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
+import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.junit.Before;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class VocabularyListPresenterTest {
 
     @Mock
-    IVocabularyModule module;
+    VocabularyModule module;
     @Mock
     IVocabularyNavigator navigator;
     @Mock
@@ -49,10 +49,10 @@ public class VocabularyListPresenterTest {
 
     @Test
     public void onLoadListWouldStartLoadingList() {
-        when(module.getVocabularWords(false)).thenReturn(Observable.empty());
+        when(module.loadVocabularyWords(false)).thenReturn(Observable.empty());
 
         presenter.onLoadList();
-        verify(module).getVocabularWords(false);
+        verify(module).loadVocabularyWords(false);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class VocabularyListPresenterTest {
         // Create empty observable to notify us when it's unsubscribed from
         Observable<List<VocabularyWord>> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
-        when(module.getVocabularWords(anyBoolean())).thenReturn(observable);
+        when(module.loadVocabularyWords(anyBoolean())).thenReturn(observable);
 
         // Simulate list load
         presenter.onLoadList();
@@ -72,18 +72,18 @@ public class VocabularyListPresenterTest {
 
     @Test
     public void onBindWouldStartLoadingList() {
-        when(module.getVocabularWords(false)).thenReturn(Observable.empty());
+        when(module.loadVocabularyWords(false)).thenReturn(Observable.empty());
 
         presenter.onBind(view);
 
-        verify(module).getVocabularWords(false);
+        verify(module).loadVocabularyWords(false);
         verify(view).showProgress();
     }
 
     @Test
     public void whenHasListOnBindWouldShowList() {
         List<VocabularyWord> list = Collections.singletonList(mock(VocabularyWord.class));
-        when(module.getVocabularWords(false)).thenReturn(Observable.just(list));
+        when(module.loadVocabularyWords(false)).thenReturn(Observable.just(list));
         presenter.onBind(view);
         presenter.onUnbind();
         reset(view);
@@ -95,32 +95,32 @@ public class VocabularyListPresenterTest {
 
     @Test
     public void onRefreshListWouldStartLoadingList() {
-        when(module.getVocabularWords(true)).thenReturn(Observable.empty());
+        when(module.loadVocabularyWords(true)).thenReturn(Observable.empty());
 
         presenter.onRefreshList();
 
-        verify(module).getVocabularWords(true);
+        verify(module).loadVocabularyWords(true);
     }
 
     @Test
     public void onListLoadErrorWouldShowError() {
-        when(module.getVocabularWords(false)).thenReturn(Observable.error(new RuntimeException()));
+        when(module.loadVocabularyWords(false)).thenReturn(Observable.error(new RuntimeException()));
 
         presenter.onBind(view);
 
-        verify(view).showErrorNoContent();
+        verify(view).showLoadError();
     }
 
     @Test
     public void onListRefreshWouldShowError() {
-        when(module.getVocabularWords(false)).thenReturn(Observable.empty());
+        when(module.loadVocabularyWords(false)).thenReturn(Observable.empty());
         presenter.onBind(view);
         reset(view);
-        when(module.getVocabularWords(true)).thenReturn(Observable.error(new RuntimeException()));
+        when(module.loadVocabularyWords(true)).thenReturn(Observable.error(new RuntimeException()));
 
         presenter.onRefreshList();
 
-        verify(view).showError();
+        verify(view).showRefreshError();
     }
 
 

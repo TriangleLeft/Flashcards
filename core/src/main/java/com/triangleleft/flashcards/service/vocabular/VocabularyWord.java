@@ -40,7 +40,7 @@ public abstract class VocabularyWord {
             List<String> translations,
             String uiLanguage,
             String learningLanguage) {
-        return new AutoValue_VocabularWord(
+        return new AutoValue_VocabularyWord(
                 word,
                 normalizedWord,
                 pos,
