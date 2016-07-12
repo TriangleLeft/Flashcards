@@ -7,7 +7,7 @@ import java.util.List;
 import rx.Observable;
 
 @FunctionsAreNonnullByDefault
-public interface IVocabularModule {
+public interface IVocabularyModule {
 
     Observable<List<VocabularWord>> getVocabularWords(boolean refresh);
 }

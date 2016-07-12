@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
-import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 
 import org.junit.Before;
@@ -24,19 +24,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class VocabularListPresenterTest {
+public class VocabularyListPresenterTest {
 
     @Mock
-    IVocabularModule module;
+    IVocabularyModule module;
     @Mock
-    IVocabularNavigator navigator;
+    IVocabularyNavigator navigator;
     @Mock
-    IVocabularListView view;
-    private VocabularListPresenter presenter;
+    IVocabularyListView view;
+    private VocabularyListPresenter presenter;
 
     @Before
     public void before() {
-        presenter = new VocabularListPresenter(module, navigator, Schedulers.immediate());
+        presenter = new VocabularyListPresenter(module, navigator, Schedulers.immediate());
     }
 
 //    @Test

@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/vocabular_list_progress"
+        android:id="@+id/vocabulary_list_progress"
         android:layout_width="@dimen/progress_wheel_size"
         android:layout_height="@dimen/progress_wheel_size"
         android:layout_gravity="center"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vocabular_list_error_retry" />
+            android:text="@string/vocabulary_list_error_retry"/>
 
         <Button
             android:id="@+id/button_retry"
@@ -40,5 +40,12 @@
             android:layout_height="wrap_content"
             android:text="@string/button_retry" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="@string/vocabulary_list_no_words"/>
 
 </ViewFlipper>

@@ -12,8 +12,8 @@ import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.NavigationView;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.vocabular.VocabularListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
+import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +28,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     Toolbar toolbar;
     private final MainActivity activity;
     private VocabularWordFragment vocabularWordFragment;
-    private VocabularListFragment vocabularListFragment;
+    private VocabularyListFragment vocabularListFragment;
 
     public TabletWideDelegate(MainActivity activity) {
         this.activity = activity;
@@ -95,13 +95,13 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     private void initPages() {
         // Try to get re-created fragments
-        vocabularListFragment = (VocabularListFragment) getSupportFragmentManager()
-                .findFragmentByTag(VocabularListFragment.TAG);
+        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
+                .findFragmentByTag(VocabularyListFragment.TAG);
         if (vocabularListFragment == null) {
-            vocabularListFragment = new VocabularListFragment();
+            vocabularListFragment = new VocabularyListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
+                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
                     .commitNow();
         } else {
             getSupportFragmentManager()

@@ -5,7 +5,7 @@ import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
@@ -26,15 +26,15 @@ import static com.annimon.stream.Collectors.joining;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
-public class RestVocabularModule implements IVocabularModule {
+public class RestVocabularyModule implements IVocabularyModule {
 
-    private static final Logger logger = LoggerFactory.getLogger(RestVocabularModule.class);
+    private static final Logger logger = LoggerFactory.getLogger(RestVocabularyModule.class);
     private final IDuolingoRest service;
     private final SettingsModule settingsModule;
     private final VocabularWordsCache provider;
 
     @Inject
-    public RestVocabularModule(IDuolingoRest service, SettingsModule settingsModule, VocabularWordsCache provider) {
+    public RestVocabularyModule(IDuolingoRest service, SettingsModule settingsModule, VocabularWordsCache provider) {
         this.service = service;
         this.settingsModule = settingsModule;
         this.provider = provider;

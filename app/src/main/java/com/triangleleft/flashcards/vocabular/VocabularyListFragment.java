@@ -1,20 +1,5 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.common.BaseFragment;
-import com.triangleleft.flashcards.common.OnItemClickListener;
-import com.triangleleft.flashcards.main.MainActivity;
-import com.triangleleft.flashcards.main.di.MainPageComponent;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularListView;
-import com.triangleleft.flashcards.mvp.vocabular.VocabularListPresenter;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
-import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,22 +12,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewFlipper;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.BaseFragment;
+import com.triangleleft.flashcards.common.OnItemClickListener;
+import com.triangleleft.flashcards.main.MainActivity;
+import com.triangleleft.flashcards.main.di.MainPageComponent;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularyListView;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularyListPresenter;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
+import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 @FunctionsAreNonnullByDefault
-public class VocabularListFragment
-        extends BaseFragment<VocabularListComponent, IVocabularListView, VocabularListPresenter>
-        implements IVocabularListView {
+public class VocabularyListFragment
+        extends BaseFragment<VocabularListComponent, IVocabularyListView, VocabularyListPresenter>
+        implements IVocabularyListView {
 
-    private static final Logger logger = LoggerFactory.getLogger(VocabularListFragment.class);
+    private static final Logger logger = LoggerFactory.getLogger(VocabularyListFragment.class);
 
-    public static final String TAG = VocabularListFragment.class.getSimpleName();
+    public static final String TAG = VocabularyListFragment.class.getSimpleName();
     private static final int PROGRESS = 0;
     private static final int LIST = 1;
     private static final int ERROR = 2;
+    private static final int EMPTY = 3;
 
     @Bind(R.id.vocab_list)
     RecyclerView vocabList;
@@ -90,7 +91,7 @@ public class VocabularListFragment
         vocabularAdapter.setSelectedPosition(selectedPosition);
         // If we are in two pane view, it's first time we show data, and we want to select some valid position
         // simulate click, in order for second panel to display something
-        if (twoPane && !swipeRefresh.isRefreshing() && selectedPosition != VocabularListPresenter.NO_POSITION) {
+        if (twoPane && !swipeRefresh.isRefreshing() && selectedPosition != VocabularyListPresenter.NO_POSITION) {
             itemClickListener.onItemClick(null, selectedPosition);
         }
         swipeRefresh.setRefreshing(false);
@@ -115,17 +116,20 @@ public class VocabularListFragment
         });
     }
 
+    @Override
+    public void showEmpty() {
+        viewFlipper.setDisplayedChild(EMPTY);
+    }
+
 
     @Override
     protected void inject() {
-        logger.debug("inject() called");
         getComponent().inject(this);
     }
 
     @NonNull
     @Override
     protected VocabularListComponent buildComponent() {
-        logger.debug("buildComponent() called");
         return DaggerVocabularListComponent.builder().mainPageComponent(getMainPageComponent()).build();
     }
 
@@ -135,8 +139,7 @@ public class VocabularListFragment
 
     @NonNull
     @Override
-    protected IVocabularListView getMvpView() {
-        logger.debug("getMvpView() called");
+    protected IVocabularyListView getMvpView() {
         return this;
     }
 }

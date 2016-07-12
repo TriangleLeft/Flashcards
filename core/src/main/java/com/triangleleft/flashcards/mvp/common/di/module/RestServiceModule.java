@@ -7,8 +7,8 @@ import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.rest.RestLoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.rest.RestSettingsModule;
-import com.triangleleft.flashcards.service.vocabular.IVocabularModule;
-import com.triangleleft.flashcards.service.vocabular.rest.RestVocabularModule;
+import com.triangleleft.flashcards.service.vocabular.IVocabularyModule;
+import com.triangleleft.flashcards.service.vocabular.rest.RestVocabularyModule;
 
 import dagger.Binds;
 import dagger.Module;
@@ -22,7 +22,7 @@ public abstract class RestServiceModule {
 
     @ApplicationScope
     @Binds
-    abstract IVocabularModule vocabularModule(RestVocabularModule module);
+    abstract IVocabularyModule vocabularModule(RestVocabularyModule module);
 
     @ApplicationScope
     @Binds

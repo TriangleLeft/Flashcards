@@ -44,7 +44,7 @@ public class MainActivityTest {
 
     @Test
     public void testStartsWithProgress() {
-        onView(withId(R.id.vocabular_list_progress)).check(matches(isDisplayed()));
+        onView(withId(R.id.vocabulary_list_progress)).check(matches(isDisplayed()));
         webServer.enqueue(MockServerResponse.make("vocabulary/valid_response.json"));
     }
 
@@ -59,7 +59,7 @@ public class MainActivityTest {
     @Test
     @MockJsonResponse(value = "internal_server_error.txt", httpCode = 500)
     public void testRetryWhenServerReturnedError() {
-        onView(withText(R.string.vocabular_list_error_retry)).check(matches(isDisplayed()));
+        onView(withText(R.string.vocabulary_list_error_retry)).check(matches(isDisplayed()));
 
         webServer.enqueue(MockServerResponse.make("vocabulary/valid_response.json"));
         onView(withText(R.string.button_retry)).perform(click());

@@ -1,10 +1,5 @@
 package com.triangleleft.flashcards.main;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularWord;
-import com.triangleleft.flashcards.vocabular.VocabularListFragment;
-import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
-
 import android.animation.ValueAnimator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,6 +11,11 @@ import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.vocabular.VocabularWord;
+import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
+import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,7 +33,7 @@ import butterknife.ButterKnife;
     private final DrawerArrowDrawable arrowDrawable;
     private final ActionBarDrawerToggle toggle;
     private VocabularWordFragment vocabularWordFragment;
-    private VocabularListFragment vocabularListFragment;
+    private VocabularyListFragment vocabularListFragment;
 
     public PhoneDelegate(MainActivity activity) {
         this.activity = activity;
@@ -74,9 +74,9 @@ import butterknife.ButterKnife;
         fab.show();
 
         if (vocabularListFragment == null) {
-            vocabularListFragment = new VocabularListFragment();
+            vocabularListFragment = new VocabularyListFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularListFragment.TAG)
+                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
                     .commitNow();
         } else {
             showFragment(vocabularListFragment);
@@ -144,8 +144,8 @@ import butterknife.ButterKnife;
 
     private void initPages() {
         // Try to get re-created fragments
-        vocabularListFragment = (VocabularListFragment) getSupportFragmentManager()
-                .findFragmentByTag(VocabularListFragment.TAG);
+        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
+                .findFragmentByTag(VocabularyListFragment.TAG);
         vocabularWordFragment =
                 (VocabularWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularWordFragment.TAG);
     }
