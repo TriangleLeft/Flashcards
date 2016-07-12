@@ -22,6 +22,7 @@
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:text="@string/app_name"
+                android:textColor="@color/white"
                 android:textSize="50sp"/>
 
             <ViewFlipper
@@ -40,7 +41,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_email">
+                        android:hint="@string/prompt_email"
+                        android:textColorHint="@color/white">
 
                         <com.triangleleft.flashcards.common.CustomEditText
                             android:id="@+id/login_email"
@@ -48,13 +50,15 @@
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
                             android:maxLines="1"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:textColor="@color/white"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password">
+                        android:hint="@string/prompt_password"
+                        android:textColorHint="@color/white">
 
                         <com.triangleleft.flashcards.common.CustomEditText
                             android:id="@+id/login_password"
@@ -63,7 +67,8 @@
                             android:imeActionLabel="@string/action_sign_in"
                             android:inputType="textPassword"
                             android:maxLines="1"
-                            android:singleLine="true"/>
+                            android:singleLine="true"
+                            android:textColor="@color/white"/>
                     </android.support.design.widget.TextInputLayout>
 
                     <CheckBox
@@ -73,7 +78,8 @@
                         android:layout_marginTop="10dp"
                         android:checked="true"
                         android:gravity="center_vertical"
-                        android:text="@string/login_checkbox"/>
+                        android:text="@string/login_checkbox"
+                        android:textColor="@color/white"/>
 
                     <Button
                         android:id="@+id/login_button"
@@ -89,10 +95,10 @@
 
                 <com.pnikosis.materialishprogress.ProgressWheel
                     android:id="@+id/login_progress"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/progress_wheel_size"
+                    android:layout_height="@dimen/progress_wheel_size"
                     android:layout_gravity="center"
-                    app:matProg_barColor="@color/colorPrimary"
+                    app:matProg_barColor="@color/white"
                     app:matProg_progressIndeterminate="true"/>
 
             </ViewFlipper>
