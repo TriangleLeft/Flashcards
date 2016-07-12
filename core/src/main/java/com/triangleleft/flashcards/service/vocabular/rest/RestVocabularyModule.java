@@ -6,9 +6,9 @@ import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
-import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWordsCache;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -31,10 +31,10 @@ public class RestVocabularyModule implements VocabularyModule {
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularyModule.class);
     private final IDuolingoRest service;
     private final SettingsModule settingsModule;
-    private final VocabularWordsCache provider;
+    private final VocabularyWordsCache provider;
 
     @Inject
-    public RestVocabularyModule(IDuolingoRest service, SettingsModule settingsModule, VocabularWordsCache provider) {
+    public RestVocabularyModule(IDuolingoRest service, SettingsModule settingsModule, VocabularyWordsCache provider) {
         this.service = service;
         this.settingsModule = settingsModule;
         this.provider = provider;
@@ -45,11 +45,7 @@ public class RestVocabularyModule implements VocabularyModule {
         logger.debug("loadVocabularyWords()");
         Optional<UserData> userData = settingsModule.getCurrentUserData();
         if (userData.isPresent()) {
-            Observable<List<VocabularyWord>> cache = Observable
-                    .defer(() -> Observable.just(getCachedData(userData.get())))
-                    .filter(list -> !list.isEmpty());
-
-            return Observable.concat(cache, refreshVocabularyWords());
+            return Observable.concat(getCachedData(userData.get()), refreshVocabularyWords());
         } else {
             return refreshVocabularyWords();
         }
@@ -94,13 +90,16 @@ public class RestVocabularyModule implements VocabularyModule {
         return word.withTranslations(strings);
     }
 
-
     private void updateCache(List<VocabularyWord> words) {
         provider.putWords(words);
     }
 
-    private List<VocabularyWord> getCachedData(UserData userData) {
-        return provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId());
+    private Observable<List<VocabularyWord>> getCachedData(UserData userData) {
+        String uiLanguageId = userData.getUiLanguageId();
+        String learningLanguageId = userData.getLearningLanguageId();
+        return Observable
+                .defer(() -> Observable.just(provider.getWords(uiLanguageId, learningLanguageId)))
+                .filter(list -> !list.isEmpty());
 
     }
 

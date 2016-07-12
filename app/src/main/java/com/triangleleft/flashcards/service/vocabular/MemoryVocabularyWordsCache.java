@@ -10,7 +10,7 @@ import java.util.Set;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
-public class MemoryVocabularWordsCache implements VocabularWordsCache {
+public class MemoryVocabularyWordsCache implements VocabularyWordsCache {
 
     Set<VocabularyWord> cache = new HashSet<>();
 

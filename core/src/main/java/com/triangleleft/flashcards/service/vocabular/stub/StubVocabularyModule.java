@@ -5,9 +5,9 @@ import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
 import com.triangleleft.flashcards.service.vocabular.VocabularData;
-import com.triangleleft.flashcards.service.vocabular.VocabularWordsCache;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWordsCache;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.ArrayList;
@@ -25,10 +25,10 @@ import static com.annimon.stream.Collectors.toList;
 public class StubVocabularyModule implements VocabularyModule {
 
     private final SettingsModule settingsModule;
-    private final VocabularWordsCache provider;
+    private final VocabularyWordsCache provider;
 
     @Inject
-    public StubVocabularyModule(SettingsModule settingsModule, VocabularWordsCache provider) {
+    public StubVocabularyModule(SettingsModule settingsModule, VocabularyWordsCache provider) {
         this.settingsModule = settingsModule;
         this.provider = provider;
     }

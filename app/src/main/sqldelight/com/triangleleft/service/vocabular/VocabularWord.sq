@@ -9,13 +9,20 @@ CREATE TABLE vocabular_word (
   learningLanguage TEXT NOT NULL
 );
 
+create_index:
+CREATE INDEX languagePair ON vocabular_word(uiLanguage, learningLanguage);
+
 select_words:
 SELECT
     a.*,
     b.translation
 FROM vocabular_word a
-JOIN vocabular_word_translation b USING (normalized_string)
+JOIN vocabular_word_translation b ON a._id == b.word_id
 WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
+
+delete_words:
+DELETE FROM vocabular_word
+WHERE uiLanguage = ? AND learningLanguage = ?;
 
 delete_all:
 DELETE FROM vocabular_word;
