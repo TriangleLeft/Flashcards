@@ -42,11 +42,15 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     @Override
     public void onCreate() {
-        onLoadList();
+        // Start loading list if we haven't one
+        if (vocabularyList == null) {
+            onLoadList();
+        }
     }
 
     @Override
     public void onBind(IVocabularyListView view) {
+        logger.debug("onBind() hasList = {}", vocabularyList != null);
         super.onBind(view);
         if (vocabularyList != null) {
             getView().showWords(vocabularyList, selectedPosition);
@@ -77,6 +81,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     }
 
     public void onRefreshList() {
+        logger.debug("onRefreshList()");
         // NOTE: we cancel request every time we swipe refresh, not sure it's a good idea
         subscription.unsubscribe();
         subscription = vocabularyModule.refreshVocabularyWords()
@@ -86,10 +91,13 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     private void processData(List<VocabularyWord> list) {
         vocabularyList = list;
-        // First load
-        if (vocabularyList.size() > 0 && selectedPosition == NO_POSITION) {
-            // Have some words
-            // Select first one
+        if (list.isEmpty()) {
+            selectedPosition = NO_POSITION;
+        } else if (selectedPosition == NO_POSITION) {
+            // Select first one by default
+            selectedPosition = 0;
+        } else if (selectedPosition > list.size() - 1) {
+            // Selected position is outside of list bounds
             selectedPosition = 0;
         }
         getView().showWords(vocabularyList, selectedPosition);

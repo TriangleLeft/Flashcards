@@ -22,10 +22,10 @@ public abstract class VocabularWordDao implements VocabularWordModel {
     public static List<VocabularyWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
         List<VocabularyWord> result = new ArrayList<>();
         try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{uiLanguage, learningLanguage})) {
-            List<String> translations = new ArrayList<>();
             while (cursor.moveToNext()) {
                 AllInfo info = SELECT_WORDS_MAPPER.map(cursor);
                 VocabularWordDao word = info.a();
+                List<String> translations = new ArrayList<>();
                 translations.add(info.translation());
                 // Loop over cursor, add translation while we have matching key
                 while (cursor.moveToNext()) {

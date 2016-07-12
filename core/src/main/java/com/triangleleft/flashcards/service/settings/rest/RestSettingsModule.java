@@ -38,7 +38,7 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Observable<UserData> getUserData() {
+    public Observable<UserData> loadUserData() {
         Preconditions.checkState(accountModule.getUserId().isPresent());
         return service.getUserData(accountModule.getUserId().get())
                 .map(UserDataModel::toUserData)

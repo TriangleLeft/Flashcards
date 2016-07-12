@@ -52,7 +52,6 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     @Override
     public void onBind(IMainView view) {
         super.onBind(view);
-        showViewPage(currentPage);
         Optional<UserData> userData = settingsModule.getCurrentUserData();
         // It's possible that local data was wiped
         if (userData.isPresent()) {
@@ -60,6 +59,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         } else {
             getView().navigateToLogin();
         }
+        showViewPage(currentPage);
 
     }
 
@@ -87,17 +87,14 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         getView().showDrawerProgress();
         settingsModule.switchLanguage(language)
                 .observeOn(scheduler)
-                .subscribe(success -> loadUserData(),
+                .flatMap(nothing -> settingsModule.loadUserData()
+                        .observeOn(scheduler))
+                .subscribe(data -> {
+                            showUserData(data);
+                            getView().reloadList();
+                        },
                         error -> {
-
-                        });
-    }
-
-    private void loadUserData() {
-        settingsModule.getUserData()
-                .observeOn(scheduler)
-                .subscribe(this::showUserData,
-                        error -> {
+                            getView().showDrawerError();
                         }
                 );
     }

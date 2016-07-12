@@ -86,6 +86,7 @@ public class VocabularyListFragment
 
     @Override
     public void showWords(@NonNull List<VocabularyWord> words, int selectedPosition) {
+        logger.debug("showWords()");
         viewFlipper.setDisplayedChild(LIST);
         vocabularAdapter.setData(words);
         vocabularAdapter.setSelectedPosition(selectedPosition);

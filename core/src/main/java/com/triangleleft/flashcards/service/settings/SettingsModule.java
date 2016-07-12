@@ -10,7 +10,7 @@ public interface SettingsModule {
 
     Optional<UserData> getCurrentUserData();
 
-    Observable<UserData> getUserData();
+    Observable<UserData> loadUserData();
 
     Observable<Void> switchLanguage(Language language);
 }

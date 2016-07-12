@@ -16,11 +16,15 @@ public interface IMainView extends IView {
 
     void finish();
 
+    void reloadList();
+
     void showDrawerProgress();
 
     void showUserData(String username, String avatar, List<Language> languages);
 
     void navigateToLogin();
+
+    void showDrawerError();
 
     enum Page {
         LIST,

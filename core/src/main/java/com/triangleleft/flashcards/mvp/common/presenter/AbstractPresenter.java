@@ -80,6 +80,7 @@ public abstract class AbstractPresenter<View extends IView>
     for (Map.Entry<Method, Object[]> entry : viewCalls) {
       invokeMethod(view, entry.getKey(), entry.getValue());
     }
+    viewCalls.clear();
   }
 
   private void invokeMethod(View target, Method method, Object[] args) {

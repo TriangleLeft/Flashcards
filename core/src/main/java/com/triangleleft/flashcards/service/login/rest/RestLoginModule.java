@@ -65,7 +65,7 @@ public class RestLoginModule implements LoginModule {
     private Observable<Void> processModel(LoginResponseModel model) {
         if (model.isSuccess()) {
             setUserId(model.userId);
-            return settingsModule.getUserData()
+            return settingsModule.loadUserData()
                     .map(data -> null);
         } else {
             return Observable.error(model.buildError());

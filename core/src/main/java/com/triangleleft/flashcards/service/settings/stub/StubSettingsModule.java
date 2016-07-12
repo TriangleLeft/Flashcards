@@ -50,7 +50,7 @@ public class StubSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Observable<UserData> getUserData() {
+    public Observable<UserData> loadUserData() {
         return Observable.just(getCurrentUserData().get())
                 .delay(DELAY, TimeUnit.MILLISECONDS);
     }

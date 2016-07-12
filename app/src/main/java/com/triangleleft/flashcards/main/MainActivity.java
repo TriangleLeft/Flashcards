@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @Override
     public void showUserData(String username, String avatar, List<Language> languages) {
-        logger.debug("showUserData() called with: username = [{}], avatar = [{}]", username, avatar);
+        logger.debug("showUserData()");
         Picasso.with(this).load(avatar).into(drawerUserAvatar);
         drawerUserName.setText(username);
 
@@ -147,13 +147,22 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         }
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
         handler.post(() -> adapter.setData(languages));
-        // FIXME: this one is called when we rotate activity
+    }
+
+    @Override
+    public void reloadList() {
+        logger.debug("reloadList()");
         delegate.reloadList();
     }
 
     @Override
     public void showDrawerProgress() {
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
+    }
+
+    @Override
+    public void showDrawerError() {
+
     }
 
     @Override
@@ -188,6 +197,4 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
-
 }

@@ -135,11 +135,8 @@ import butterknife.ButterKnife;
 
     @Override
     public void reloadList() {
-        // No need to explicitly reload list if it's not added yet.
-        // When it's added it would load data for current language
-        if (vocabularListFragment != null) {
-            vocabularListFragment.getPresenter().onLoadList();
-        }
+        showList();
+        vocabularListFragment.getPresenter().onLoadList();
     }
 
     private void onBackPressed() {
