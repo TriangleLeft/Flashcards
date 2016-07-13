@@ -1,14 +1,13 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
 import com.google.gson.annotations.SerializedName;
-
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
+import com.triangleleft.flashcards.service.cards.FlashcardTestData;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
 
 import java.util.Collections;
 import java.util.List;
 
-public class FlashcardResponseModel implements IFlashcardTestData {
+public class FlashcardResponseModel implements FlashcardTestData {
 
     @SerializedName("ui_language")
     public String uiLanguage;
@@ -27,11 +26,11 @@ public class FlashcardResponseModel implements IFlashcardTestData {
         return learningLanguage;
     }
 
-    public List<IFlashcardWord> getWords() {
+    public List<FlashcardWord> getWords() {
         return Collections.unmodifiableList(flashcardData);
     }
 
-    public static class FlashcardModel implements IFlashcardWord {
+    public static class FlashcardModel implements FlashcardWord {
 
         @SerializedName("ui_word")
         public String translation;

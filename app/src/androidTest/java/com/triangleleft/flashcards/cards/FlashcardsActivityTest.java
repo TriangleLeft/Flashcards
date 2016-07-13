@@ -1,5 +1,9 @@
 package com.triangleleft.flashcards.cards;
 
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
+
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
@@ -11,10 +15,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.content.Intent;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
 
 import java.io.IOException;
 
@@ -73,7 +73,7 @@ public class FlashcardsActivityTest {
         // Click flashcard
         onView(withText("word1")).perform(click());
         // Click "I was right"
-        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(visible(withText(R.string.flashcard_button_right))).perform(click());
         // Check that next card is shown
         onView(withText("word2")).check(matches(isDisplayed()));
     }
@@ -95,11 +95,11 @@ public class FlashcardsActivityTest {
     public void testRestartAfterCardsDepleted() {
         // Click through all cards
         onView(withText("word1")).perform(click());
-        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(visible(withText(R.string.flashcard_button_right))).perform(click());
         onView(withText("word2")).perform(click());
-        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(visible(withText(R.string.flashcard_button_right))).perform(click());
         onView(withText("word3")).perform(click());
-        onView(visible(withText(R.string.button_flashcard_right))).perform(click());
+        onView(visible(withText(R.string.flashcard_button_right))).perform(click());
 
         webServer.enqueue(MockServerResponse.make("flashcards_valid_response2.json"));
         onView(withText(R.string.button_restart)).perform(click());

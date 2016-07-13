@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.mvp.cards;
 
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
+import com.triangleleft.flashcards.service.cards.FlashcardTestData;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.cards.stub.StubFlashcardTestData;
 
@@ -19,7 +19,10 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FlashcardsPresenterTest {
@@ -47,7 +50,7 @@ public class FlashcardsPresenterTest {
     public void onDestroyWouldUnsubscribe() {
         AtomicBoolean unsubscribed = new AtomicBoolean(false);
         // Create empty observable to notify us when it's unsubscribed from
-        Observable<IFlashcardTestData> observable = Observable.empty();
+        Observable<FlashcardTestData> observable = Observable.empty();
         observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
         when(module.getFlashcards()).thenReturn(observable);
 
@@ -70,8 +73,8 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void whenHasListOnBindWouldShowList() {
-        List<IFlashcardWord> list = Collections.singletonList(mock(IFlashcardWord.class));
-        IFlashcardTestData data = StubFlashcardTestData.create("en", "es", list);
+        List<FlashcardWord> list = Collections.singletonList(mock(FlashcardWord.class));
+        FlashcardTestData data = StubFlashcardTestData.create("en", "es", list);
         when(module.getFlashcards()).thenReturn(Observable.just(data));
         presenter.onBind(view);
         presenter.onUnbind();

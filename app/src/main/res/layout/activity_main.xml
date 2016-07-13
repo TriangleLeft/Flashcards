@@ -24,7 +24,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/toolbar_margin_top"
+                android:layout_marginTop="@dimen/status_bar_height"
                 android:background="?attr/colorPrimary"
                 app:titleTextColor="@color/white"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>

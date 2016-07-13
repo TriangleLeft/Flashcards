@@ -1,9 +1,8 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
-import com.google.gson.annotations.SerializedName;
-
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.google.gson.annotations.SerializedName;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 
@@ -35,7 +34,7 @@ public class FlashcardResultsController {
         int correct;
 
         private FlashcardResultModel(FlashcardWordResult result) {
-            id = result.getId();
+            id = result.getWord().getId();
             correct = result.isCorrect() ? 1 : 0;
         }
 

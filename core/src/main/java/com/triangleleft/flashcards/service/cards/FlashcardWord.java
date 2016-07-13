@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.service.cards;
 
-public interface IFlashcardWord {
+public interface FlashcardWord {
 
     String getWord();
 

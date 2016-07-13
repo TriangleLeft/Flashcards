@@ -1,11 +1,5 @@
 package com.triangleleft.flashcards.cards.view;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -16,6 +10,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -111,7 +111,7 @@ public class FlashcardView extends FrameLayout {
         viewFlipper.setDisplayedChild(TRANSLATION);
     }
 
-    public void showFlashcard(IFlashcardWord word) {
+    public void showFlashcard(FlashcardWord word) {
         showWord();
         wordView.setText(word.getWord());
         translationView.setText(word.getTranslation());

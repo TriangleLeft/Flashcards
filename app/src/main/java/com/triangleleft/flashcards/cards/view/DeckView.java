@@ -1,11 +1,5 @@
 package com.triangleleft.flashcards.cards.view;
 
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -13,6 +7,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class DeckView extends FrameLayout {
     private FlashcardView bottomCard;
     private int currentPosition;
     private DeckListener listener;
-    private List<IFlashcardWord> list;
+    private List<FlashcardWord> list;
 
 
     public DeckView(Context context, AttributeSet attrs) {
@@ -49,8 +48,8 @@ public class DeckView extends FrameLayout {
         addView(topCard, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    public void setTestData(IFlashcardTestData testData) {
-        this.list = testData.getWords();
+    public void setTestData(List<FlashcardWord> wordList) {
+        this.list = wordList;
         if (list.size() == 0) {
             throw new IllegalArgumentException("Non-empty list expected");
         }
@@ -85,9 +84,9 @@ public class DeckView extends FrameLayout {
     }
 
     public interface DeckListener {
-        void onRight(IFlashcardWord word);
+        void onRight(FlashcardWord word);
 
-        void onWrong(IFlashcardWord word);
+        void onWrong(FlashcardWord word);
 
         void onDepleted();
     }

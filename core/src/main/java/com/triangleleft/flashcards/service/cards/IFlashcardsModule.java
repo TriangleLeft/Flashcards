@@ -7,7 +7,7 @@ import rx.Observable;
 @FunctionsAreNonnullByDefault
 public interface IFlashcardsModule {
 
-    Observable<IFlashcardTestData> getFlashcards();
+    Observable<FlashcardTestData> getFlashcards();
 
     void postResult(FlashcardTestResult results);
 }

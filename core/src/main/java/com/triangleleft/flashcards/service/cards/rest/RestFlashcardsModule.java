@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
 import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 public class RestFlashcardsModule implements IFlashcardsModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestFlashcardsModule.class);
+    private static final int FLASHCARDS_COUNT = 15;
 
     private final IDuolingoRest service;
 
@@ -30,11 +31,11 @@ public class RestFlashcardsModule implements IFlashcardsModule {
     }
 
     @Override
-    public Observable<IFlashcardTestData> getFlashcards() {
+    public Observable<FlashcardTestData> getFlashcards() {
         logger.debug("getFlashcards() called");
-        return service.getFlashcardData(15, true, System.currentTimeMillis())
+        return service.getFlashcardData(FLASHCARDS_COUNT, true, System.currentTimeMillis())
                 .subscribeOn(Schedulers.io())
-                .cast(IFlashcardTestData.class);
+                .cast(FlashcardTestData.class);
     }
 
     @Override

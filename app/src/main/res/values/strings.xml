@@ -15,11 +15,13 @@
     <string name="vocabulary_list_no_words">You haven\'t learned any words yet</string>
     <string name="button_retry">Retry</string>
 
-    <string name="button_flashcard_wrong">I was wrong</string>
-    <string name="button_flashcard_right">I was right</string>
+    <string name="flashcard_result_no_errors">Great job!\nYou knew all the words</string>
+    <string name="flashcard_result_errors">Keep practising.\nHere is list of words you didn\'t know</string>
+    <string name="flashcard_button_wrong">I was wrong</string>
+    <string name="flashcard_button_right">I was right</string>
     <string name="flashcard_error">Error</string>
     <string name="button_restart">Restart</string>
-    <string name="flashcard_result">Result</string>
+
     <string name="login_checkbox">Remember me</string>
     <string name="word_translation">TRANSLATION</string>
     <string name="word_strength">STRENGTH</string>
@@ -32,6 +34,6 @@
     <string name="wrong_login">Wrong login</string>
     <string name="wrong_password">Wrong password</string>
     <string name="login_network_error">Network error</string>
-    <string name="login_generic_error">Generic errror</string>
+    <string name="login_generic_error">Generic error</string>
 
 </resources>

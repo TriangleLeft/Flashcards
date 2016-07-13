@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.service.cards.stub;
 
+import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -21,11 +21,11 @@ public class StubFlashcardsModule implements IFlashcardsModule {
 
     private static final Logger logger = LoggerFactory.getLogger(StubFlashcardsModule.class);
 
-    private final IFlashcardTestData testData;
+    private final FlashcardTestData testData;
 
     @Inject
     public StubFlashcardsModule() {
-        List<IFlashcardWord> words = new ArrayList<>();
+        List<FlashcardWord> words = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             words.add(StubFlashcardWord.create("word" + i, "translation" + i, "id" + i));
         }
@@ -33,7 +33,7 @@ public class StubFlashcardsModule implements IFlashcardsModule {
     }
 
     @Override
-    public Observable<IFlashcardTestData> getFlashcards() {
+    public Observable<FlashcardTestData> getFlashcards() {
         logger.debug("getFlashcards() called");
         return Observable.just(testData);
     }

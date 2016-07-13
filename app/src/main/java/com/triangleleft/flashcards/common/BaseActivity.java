@@ -1,5 +1,9 @@
 package com.triangleleft.flashcards.common;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
 import com.triangleleft.flashcards.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
@@ -8,10 +12,6 @@ import com.triangleleft.flashcards.mvp.common.view.IView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import javax.inject.Inject;
 
@@ -96,5 +96,4 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     }
 
     protected abstract View getMvpView();
-
 }

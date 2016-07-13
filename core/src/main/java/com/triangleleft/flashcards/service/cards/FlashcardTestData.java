@@ -2,11 +2,11 @@ package com.triangleleft.flashcards.service.cards;
 
 import java.util.List;
 
-public interface IFlashcardTestData {
+public interface FlashcardTestData {
 
     String getUiLanguage();
 
     String getLearningLanguage();
 
-    List<IFlashcardWord> getWords();
+    List<FlashcardWord> getWords();
 }
