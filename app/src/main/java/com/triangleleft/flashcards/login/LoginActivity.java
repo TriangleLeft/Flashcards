@@ -61,7 +61,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         passwordView.setOnTextChangedListener(newText -> getPresenter().onPasswordChanged(newText));
 
         View.OnFocusChangeListener focusChangeListener = (view, hasFocus) -> {
-            if (!hasFocus) {
+            if (!hasFocus && !loginView.isFocused() && !passwordView.isFocused()) {
                 hideKeyboard(view);
             }
         };
