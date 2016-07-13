@@ -86,7 +86,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     }
 
     @Override
-    public void showTestData(List<FlashcardWord> wordList) {
+    public void showWords(List<FlashcardWord> wordList) {
         deckView.setTestData(wordList);
         viewFlipper.setDisplayedChild(CARDS);
         buttonContainer.setVisibility(View.GONE);
@@ -99,7 +99,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     }
 
     @Override
-    public void showErrorNoContent() {
+    public void showError() {
         viewFlipper.setDisplayedChild(ERROR);
         buttonContainer.setVisibility(View.VISIBLE);
     }

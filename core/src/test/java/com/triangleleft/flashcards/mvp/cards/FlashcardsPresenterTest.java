@@ -82,7 +82,7 @@ public class FlashcardsPresenterTest {
 
         presenter.onBind(view);
 
-        verify(view).showTestData(data);
+        verify(view).showWords(data);
     }
 
     @Test
@@ -91,7 +91,7 @@ public class FlashcardsPresenterTest {
 
         presenter.onBind(view);
 
-        verify(view).showErrorNoContent();
+        verify(view).showError();
     }
 
     @Test

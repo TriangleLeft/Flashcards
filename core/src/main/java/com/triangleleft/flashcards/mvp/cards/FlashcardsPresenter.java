@@ -1,12 +1,14 @@
 package com.triangleleft.flashcards.mvp.cards;
 
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ import rx.subscriptions.Subscriptions;
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
+@ActivityScope
 public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
@@ -33,6 +36,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
     private Subscription subscription = Subscriptions.empty();
+    private State currentState = () -> getView().showProgress();
 
     @Inject
     public FlashcardsPresenter(IFlashcardsModule module, Scheduler mainThreadScheduler) {
@@ -42,24 +46,14 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     }
 
     @Override
-    public void onBind(IFlashcardsView view) {
-        super.onBind(view);
-        if (testData == null) {
-            onLoadFlashcards();
-        } else {
-            showFlashcards(testData);
-        }
+    public void onCreate() {
+        onLoadFlashcards();
     }
 
-    private void showFlashcards(FlashcardTestData data) {
-        testData = data;
-        results.clear();
-        if (testData.getWords().size() != 0) {
-            getView().showTestData(data.getWords());
-        } else {
-            // We expect to always have flashcards
-            getView().showErrorNoContent();
-        }
+    @Override
+    public void onBind(IFlashcardsView view) {
+        super.onBind(view);
+        currentState.apply();
     }
 
     @Override
@@ -69,16 +63,32 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     }
 
     public void onLoadFlashcards() {
-        getView().showProgress();
+        applyState(() -> getView().showProgress());
+        results.clear();
         subscription.unsubscribe();
         subscription = module.getFlashcards()
                 .observeOn(mainThreadScheduler)
                 .subscribe(
-                        this::showFlashcards,
-                        error -> {
-                            getView().showErrorNoContent();
-                        }
+                        data -> {
+                            if (data.getWords().size() != 0) {
+                                testData = data;
+                                applyState(() -> getView().showWords(data.getWords()));
+                            } else {
+                                // Treat this as error, we expect to always have flashcards
+                                processError(new ServerException("Got no flashcards in response"));
+                            }
+                        },
+                        this::processError
                 );
+    }
+
+    private void applyState(State state) {
+        currentState = state;
+        currentState.apply();
+    }
+
+    private void processError(Throwable throwable) {
+        applyState(() -> getView().showError());
     }
 
     public void onWordRight(FlashcardWord word) {
@@ -100,9 +110,13 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
                 .map(FlashcardWordResult::getWord)
                 .collect(toList());
         if (wrongWords.size() == 0) {
-            getView().showResultsNoErrors();
+            applyState(() -> getView().showResultsNoErrors());
         } else {
-            getView().showResultErrors(wrongWords);
+            applyState(() -> getView().showResultErrors(wrongWords));
         }
+    }
+
+    interface State {
+        void apply();
     }
 }

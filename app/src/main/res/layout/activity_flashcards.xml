@@ -40,6 +40,7 @@
         <!-- Result no errors -->
         <TextView
             style="@style/FlashcardResultText"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/flashcard_result_no_errors"/>
 

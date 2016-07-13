@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface IFlashcardsView extends IView {
 
-    void showTestData(List<FlashcardWord> wordList);
+    void showWords(List<FlashcardWord> wordList);
 
     void showProgress();
 
-    void showErrorNoContent();
+    void showError();
 
     void showResultsNoErrors();
 

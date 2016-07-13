@@ -120,7 +120,7 @@ public class FlashcardView extends FrameLayout {
         invalidate();
         // TODO: revisit
         setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        buildLayer();
+//        buildLayer();
     }
 
     @OnClick(R.id.button_right)
