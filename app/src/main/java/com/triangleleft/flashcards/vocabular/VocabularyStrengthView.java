@@ -1,7 +1,5 @@
 package com.triangleleft.flashcards.vocabular;
 
-import com.triangleleft.flashcards.R;
-
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
@@ -12,17 +10,19 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class VocabularStrengthView extends ImageView {
+import com.triangleleft.flashcards.R;
 
-    public VocabularStrengthView(Context context, AttributeSet attrs) {
+public class VocabularyStrengthView extends ImageView {
+
+    public VocabularyStrengthView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public VocabularStrengthView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public VocabularyStrengthView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public VocabularStrengthView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public VocabularyStrengthView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 

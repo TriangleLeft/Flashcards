@@ -15,14 +15,14 @@ import java.util.Collections;
 import java.util.List;
 
 @FunctionsAreNonnullByDefault
-public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> {
+public class VocabularyAdapter extends RecyclerView.Adapter<VocabularyViewHolder> {
 
     private final boolean selectable;
     private List<VocabularyWord> list = Collections.emptyList();
-    private OnItemClickListener<VocabularViewHolder> itemClickListener;
+    private OnItemClickListener<VocabularyViewHolder> itemClickListener;
     private int selectedPosition = VocabularyListPresenter.NO_POSITION;
 
-    public VocabularAdapter(boolean selectable) {
+    public VocabularyAdapter(boolean selectable) {
         this.selectable = selectable;
     }
 
@@ -32,14 +32,14 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
     }
 
     @Override
-    public VocabularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VocabularyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_vocabular_word, parent, false);
-        return new VocabularViewHolder(view, itemClickListener);
+        return new VocabularyViewHolder(view, itemClickListener);
     }
 
     @Override
-    public void onBindViewHolder(VocabularViewHolder holder, int position) {
+    public void onBindViewHolder(VocabularyViewHolder holder, int position) {
         VocabularyWord word = getItem(position);
         holder.show(word, selectable && position == selectedPosition);
     }
@@ -53,7 +53,7 @@ public class VocabularAdapter extends RecyclerView.Adapter<VocabularViewHolder> 
         return list.size();
     }
 
-    public void setItemClickListener(OnItemClickListener<VocabularViewHolder> itemClickListener) {
+    public void setItemClickListener(OnItemClickListener<VocabularyViewHolder> itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 

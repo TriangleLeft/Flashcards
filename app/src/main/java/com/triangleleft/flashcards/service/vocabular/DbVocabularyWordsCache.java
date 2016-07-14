@@ -3,8 +3,8 @@ package com.triangleleft.flashcards.service.vocabular;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.service.vocabular.VocabularWordModel;
-import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
+import com.triangleleft.service.vocabular.VocabularyWordModel;
+import com.triangleleft.service.vocabular.VocabularyWordTranslationModel;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class DbVocabularyWordsCache implements VocabularyWordsCache {
 
     @Override
     public List<VocabularyWord> getWords(String uiLanguageId, String learningLanguageId) {
-        return VocabularWordDao.allInfo(database, uiLanguageId, learningLanguageId);
+        return VocabularyWordDao.allInfo(database, uiLanguageId, learningLanguageId);
     }
 
     @Override
@@ -36,9 +36,9 @@ public class DbVocabularyWordsCache implements VocabularyWordsCache {
         String learningLanguageId = words.get(0).getLearningLanguage();
         database.beginTransaction();
         try {
-            database.execSQL(VocabularWordModel.DELETE_WORDS, new String[]{uiLanguageId, learningLanguageId});
+            database.execSQL(VocabularyWordModel.DELETE_WORDS, new String[]{uiLanguageId, learningLanguageId});
             for (VocabularyWord word : words) {
-                long id = database.insert(VocabularWordModel.TABLE_NAME, null, VocabularWordDao.FACTORY.marshal()
+                long id = database.insert(VocabularyWordModel.TABLE_NAME, null, VocabularyWordDao.FACTORY.marshal()
                         .uiLanguage(word.getUiLanguage())
                         .learningLanguage(word.getLearningLanguage())
                         .word_string(word.getWord())
@@ -48,7 +48,7 @@ public class DbVocabularyWordsCache implements VocabularyWordsCache {
                         .strength(word.getStrength())
                         .asContentValues());
                 for (String translation : word.getTranslations()) {
-                    database.insert(VocabularWordTranslationModel.TABLE_NAME, null,
+                    database.insert(VocabularyWordTranslationModel.TABLE_NAME, null,
                             VocabularWordTranslationDao.FACTORY.marshal()
                                     .word_id(id)
                                     .translation(translation)

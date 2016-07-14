@@ -21,8 +21,8 @@ import com.triangleleft.flashcards.mvp.vocabular.IVocabularyListView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularyListPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.vocabular.di.DaggerVocabularListComponent;
-import com.triangleleft.flashcards.vocabular.di.VocabularListComponent;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularyListComponent;
+import com.triangleleft.flashcards.vocabular.di.VocabularyListComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 @FunctionsAreNonnullByDefault
 public class VocabularyListFragment
-        extends BaseFragment<VocabularListComponent, IVocabularyListView, VocabularyListPresenter>
+        extends BaseFragment<VocabularyListComponent, IVocabularyListView, VocabularyListPresenter>
         implements IVocabularyListView {
 
     private static final Logger logger = LoggerFactory.getLogger(VocabularyListFragment.class);
@@ -51,8 +51,8 @@ public class VocabularyListFragment
     ViewFlipper viewFlipper;
     @Bind(R.id.swipeRefreshLayout)
     SwipeRefreshLayout swipeRefresh;
-    private VocabularAdapter vocabularAdapter;
-    private OnItemClickListener<VocabularViewHolder> itemClickListener;
+    private VocabularyAdapter vocabularyAdapter;
+    private OnItemClickListener<VocabularyViewHolder> itemClickListener;
     private boolean twoPane;
 
     @Override
@@ -64,13 +64,13 @@ public class VocabularyListFragment
         ButterKnife.bind(this, view);
 
         twoPane = getResources().getBoolean(R.bool.two_panes);
-        vocabularAdapter = new VocabularAdapter(twoPane);
+        vocabularyAdapter = new VocabularyAdapter(twoPane);
         itemClickListener = (viewHolder, position) -> {
             getPresenter().onWordSelected(position);
-            vocabularAdapter.setSelectedPosition(position);
+            vocabularyAdapter.setSelectedPosition(position);
         };
-        vocabularAdapter.setItemClickListener(itemClickListener);
-        vocabList.setAdapter(vocabularAdapter);
+        vocabularyAdapter.setItemClickListener(itemClickListener);
+        vocabList.setAdapter(vocabularyAdapter);
         vocabList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         swipeRefresh.setOnRefreshListener(() -> getPresenter().onRefreshList());
@@ -89,8 +89,8 @@ public class VocabularyListFragment
     public void showWords(@NonNull List<VocabularyWord> words, int selectedPosition) {
         logger.debug("showWords()");
         viewFlipper.setDisplayedChild(LIST);
-        vocabularAdapter.setData(words);
-        vocabularAdapter.setSelectedPosition(selectedPosition);
+        vocabularyAdapter.setData(words);
+        vocabularyAdapter.setSelectedPosition(selectedPosition);
         // If we are in two pane view, it's first time we show data, and we want to select some valid position
         // simulate click, in order for second panel to display something
         if (twoPane && !swipeRefresh.isRefreshing() && selectedPosition != VocabularyListPresenter.NO_POSITION) {
@@ -131,8 +131,8 @@ public class VocabularyListFragment
 
     @NonNull
     @Override
-    protected VocabularListComponent buildComponent() {
-        return DaggerVocabularListComponent.builder().mainPageComponent(getMainPageComponent()).build();
+    protected VocabularyListComponent buildComponent() {
+        return DaggerVocabularyListComponent.builder().mainPageComponent(getMainPageComponent()).build();
     }
 
     private MainPageComponent getMainPageComponent() {

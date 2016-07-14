@@ -42,7 +42,7 @@
             style="@style/VocabularWordDescription"
             android:text="@string/word_strength" />
 
-        <com.triangleleft.flashcards.vocabular.VocabularStrengthView
+        <com.triangleleft.flashcards.vocabular.VocabularyStrengthView
             android:id="@+id/vocabular_word_strength_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

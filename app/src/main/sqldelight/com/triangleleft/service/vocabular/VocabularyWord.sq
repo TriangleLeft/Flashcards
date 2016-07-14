@@ -1,4 +1,4 @@
-CREATE TABLE vocabular_word (
+CREATE TABLE vocabulary_word (
   _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   word_string TEXT NOT NULL,
   normalized_string TEXT NOT NULL,
@@ -10,19 +10,19 @@ CREATE TABLE vocabular_word (
 );
 
 create_index:
-CREATE INDEX languagePair ON vocabular_word(uiLanguage, learningLanguage);
+CREATE INDEX languagePair ON vocabulary_word(uiLanguage, learningLanguage);
 
 select_words:
 SELECT
     a.*,
     b.translation
-FROM vocabular_word a
-JOIN vocabular_word_translation b ON a._id == b.word_id
+FROM vocabulary_word a
+JOIN vocabulary_word_translation b ON a._id == b.word_id
 WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
 
 delete_words:
-DELETE FROM vocabular_word
+DELETE FROM vocabulary_word
 WHERE uiLanguage = ? AND learningLanguage = ?;
 
 delete_all:
-DELETE FROM vocabular_word;
+DELETE FROM vocabulary_word;

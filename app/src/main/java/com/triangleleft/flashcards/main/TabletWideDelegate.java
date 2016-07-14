@@ -12,8 +12,8 @@ import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.NavigationView;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
+import com.triangleleft.flashcards.vocabular.VocabularyWordFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +27,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private final MainActivity activity;
-    private VocabularWordFragment vocabularWordFragment;
+    private VocabularyWordFragment vocabularyWordFragment;
     private VocabularyListFragment vocabularListFragment;
 
     public TabletWideDelegate(MainActivity activity) {
@@ -74,8 +74,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Override
     public void showWord(VocabularyWord word) {
-        Preconditions.checkNotNull(vocabularWordFragment, "Vocabular word fragment was not bound!");
-        vocabularWordFragment.getPresenter().setWord(word);
+        Preconditions.checkNotNull(vocabularyWordFragment, "Vocabular word fragment was not bound!");
+        vocabularyWordFragment.getPresenter().setWord(word);
     }
 
     @Override
@@ -110,18 +110,18 @@ public class TabletWideDelegate implements IMainActivityDelegate {
                     .commitNow();
         }
 
-        vocabularWordFragment =
-                (VocabularWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularWordFragment.TAG);
-        if (vocabularWordFragment == null) {
-            vocabularWordFragment = new VocabularWordFragment();
+        vocabularyWordFragment =
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+        if (vocabularyWordFragment == null) {
+            vocabularyWordFragment = new VocabularyWordFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.secondary_container, vocabularWordFragment, VocabularWordFragment.TAG)
+                    .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
                     .commitNow();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .show(vocabularWordFragment)
+                    .show(vocabularyWordFragment)
                     .commitNow();
         }
     }

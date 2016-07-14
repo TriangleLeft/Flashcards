@@ -4,15 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.triangleleft.service.vocabular.VocabularWordModel;
-import com.triangleleft.service.vocabular.VocabularWordTranslationModel;
+import com.triangleleft.service.vocabular.VocabularyWordModel;
+import com.triangleleft.service.vocabular.VocabularyWordTranslationModel;
 
 import javax.inject.Inject;
 
 public class VocabularySQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static final String NAME = "vocabular.db";
+    private static final String NAME = "vocabulary.db";
 
     @Inject
     public VocabularySQLiteOpenHelper(Context context) {
@@ -33,10 +33,10 @@ public class VocabularySQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(VocabularWordModel.CREATE_TABLE);
-        db.execSQL(VocabularWordModel.CREATE_INDEX);
-        db.execSQL(VocabularWordTranslationModel.CREATE_TABLE);
-        db.execSQL(VocabularWordTranslationModel.CREATE_INDEX);
+        db.execSQL(VocabularyWordModel.CREATE_TABLE);
+        db.execSQL(VocabularyWordModel.CREATE_INDEX);
+        db.execSQL(VocabularyWordTranslationModel.CREATE_TABLE);
+        db.execSQL(VocabularyWordTranslationModel.CREATE_INDEX);
     }
 
     @Override

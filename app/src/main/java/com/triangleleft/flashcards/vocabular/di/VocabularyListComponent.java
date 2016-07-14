@@ -9,8 +9,8 @@ import dagger.Component;
 
 @FragmentScope
 @Component(dependencies = MainPageComponent.class)
-public interface VocabularListComponent extends MainPageComponent {
+public interface VocabularyListComponent extends MainPageComponent {
     VocabularyListPresenter vocabularListPresenter();
 
-    void inject(VocabularyListFragment vocabularListFragment);
+    void inject(VocabularyListFragment vocabularyListFragment);
 }

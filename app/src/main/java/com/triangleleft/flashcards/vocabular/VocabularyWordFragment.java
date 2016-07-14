@@ -15,8 +15,8 @@ import com.triangleleft.flashcards.main.MainActivity;
 import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.vocabular.di.DaggerVocabularWordComponent;
-import com.triangleleft.flashcards.vocabular.di.VocabularWordComponent;
+import com.triangleleft.flashcards.vocabular.di.DaggerVocabularyWordComponent;
+import com.triangleleft.flashcards.vocabular.di.VocabularyWordComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +27,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VocabularWordFragment
-        extends BaseFragment<VocabularWordComponent, IVocabularWordView, VocabularWordPresenter>
+public class VocabularyWordFragment
+        extends BaseFragment<VocabularyWordComponent, IVocabularWordView, VocabularWordPresenter>
         implements IVocabularWordView {
 
-    public static final String TAG = VocabularWordFragment.class.getSimpleName();
-    private static final Logger logger = LoggerFactory.getLogger(VocabularWordFragment.class);
+    public static final String TAG = VocabularyWordFragment.class.getSimpleName();
+    private static final Logger logger = LoggerFactory.getLogger(VocabularyWordFragment.class);
     @Bind(R.id.vocabular_word_title)
     TextView titleView;
     @Bind(R.id.vocabular_word_translation_value)
     TextView translationView;
     @Bind(R.id.vocabular_word_strength_value)
-    VocabularStrengthView strengthValue;
+    VocabularyStrengthView strengthValue;
     @Bind(R.id.vocabular_word_gender_value)
     TextView genderView;
     @Bind(R.id.vocabular_word_pos_value)
@@ -70,9 +70,9 @@ public class VocabularWordFragment
 
     @NonNull
     @Override
-    protected VocabularWordComponent buildComponent() {
+    protected VocabularyWordComponent buildComponent() {
         logger.debug("buildComponent() called");
-        return DaggerVocabularWordComponent.builder()
+        return DaggerVocabularyWordComponent.builder()
                 .mainPageComponent(((MainActivity) getActivity()).getComponent())
                 .build();
     }

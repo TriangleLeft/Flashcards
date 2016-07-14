@@ -16,8 +16,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.vocabular.VocabularWordFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
+import com.triangleleft.flashcards.vocabular.VocabularyWordFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
     private final DrawerArrowDrawable arrowDrawable;
     private final ActionBarDrawerToggle toggle;
-    private VocabularWordFragment vocabularWordFragment;
+    private VocabularyWordFragment vocabularyWordFragment;
     private VocabularyListFragment vocabularListFragment;
 
     public PhoneDelegate(MainActivity activity) {
@@ -74,7 +74,7 @@ import butterknife.ButterKnife;
 
     @Override
     public void showList() {
-        hideFragment(vocabularWordFragment);
+        hideFragment(vocabularyWordFragment);
         fab.show();
 
         if (vocabularListFragment == null) {
@@ -94,15 +94,15 @@ import butterknife.ButterKnife;
         hideFragment(vocabularListFragment);
         fab.hide();
 
-        if (vocabularWordFragment == null) {
-            vocabularWordFragment = new VocabularWordFragment();
+        if (vocabularyWordFragment == null) {
+            vocabularyWordFragment = new VocabularyWordFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, vocabularWordFragment, VocabularWordFragment.TAG)
+                    .add(R.id.main_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
                     .commitNow();
         } else {
-            showFragment(vocabularWordFragment);
+            showFragment(vocabularyWordFragment);
         }
-        vocabularWordFragment.getPresenter().setWord(word);
+        vocabularyWordFragment.getPresenter().setWord(word);
 
         setArrowIndicator(false);
     }
@@ -147,8 +147,8 @@ import butterknife.ButterKnife;
         // Try to get re-created fragments
         vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
                 .findFragmentByTag(VocabularyListFragment.TAG);
-        vocabularWordFragment =
-                (VocabularWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularWordFragment.TAG);
+        vocabularyWordFragment =
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
     }
 
     private void setArrowIndicator(boolean visible) {

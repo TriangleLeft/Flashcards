@@ -5,18 +5,18 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.google.auto.value.AutoValue;
 import com.squareup.sqldelight.RowMapper;
-import com.triangleleft.service.vocabular.VocabularWordModel;
+import com.triangleleft.service.vocabular.VocabularyWordModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AutoValue
-public abstract class VocabularWordDao implements VocabularWordModel {
+public abstract class VocabularyWordDao implements VocabularyWordModel {
 
-    public static final Factory<VocabularWordDao> FACTORY = new Factory<>(AutoValue_VocabularWordDao::new);
+    public static final Factory<VocabularyWordDao> FACTORY = new Factory<>(AutoValue_VocabularyWordDao::new);
 
     private static final RowMapper<AllInfo> SELECT_WORDS_MAPPER =
-            FACTORY.select_wordsMapper(AutoValue_VocabularWordDao_AllInfo::new);
+            FACTORY.select_wordsMapper(AutoValue_VocabularyWordDao_AllInfo::new);
 
 
     public static List<VocabularyWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
@@ -24,7 +24,7 @@ public abstract class VocabularWordDao implements VocabularWordModel {
         try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{uiLanguage, learningLanguage})) {
             while (cursor.moveToNext()) {
                 AllInfo info = SELECT_WORDS_MAPPER.map(cursor);
-                VocabularWordDao word = info.a();
+                VocabularyWordDao word = info.a();
                 List<String> translations = new ArrayList<>();
                 translations.add(info.translation());
                 // Loop over cursor, add translation while we have matching key
@@ -55,7 +55,7 @@ public abstract class VocabularWordDao implements VocabularWordModel {
     }
 
     @AutoValue
-    protected abstract static class AllInfo implements Select_wordsModel<VocabularWordDao> {
+    protected abstract static class AllInfo implements Select_wordsModel<VocabularyWordDao> {
 
     }
 

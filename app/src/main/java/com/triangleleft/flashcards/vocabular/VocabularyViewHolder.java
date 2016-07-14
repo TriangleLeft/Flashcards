@@ -14,21 +14,21 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 @FunctionsAreNonnullByDefault
-public class VocabularViewHolder extends RecyclerView.ViewHolder {
+public class VocabularyViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.item_vocabular_selected_mark)
     View selectedMark;
     @Bind(R.id.item_vocabular_text)
     TextView textView;
     @Bind(R.id.item_vocabular_strength)
-    VocabularStrengthView strengthView;
+    VocabularyStrengthView strengthView;
 
-    public VocabularViewHolder(View itemView, @Nullable OnItemClickListener<VocabularViewHolder> itemClickListener) {
+    public VocabularyViewHolder(View itemView, @Nullable OnItemClickListener<VocabularyViewHolder> itemClickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         if (itemClickListener != null) {
             itemView.setOnClickListener(
-                    view -> itemClickListener.onItemClick(VocabularViewHolder.this, getAdapterPosition()));
+                    view -> itemClickListener.onItemClick(VocabularyViewHolder.this, getAdapterPosition()));
         }
     }
 
