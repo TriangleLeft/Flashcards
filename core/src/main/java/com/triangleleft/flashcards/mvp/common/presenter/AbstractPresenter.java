@@ -25,6 +25,7 @@ public abstract class AbstractPresenter<View extends IView>
   private boolean destroyed = false;
 
   private final List<Map.Entry<Method, Object[]>> viewCalls = new ArrayList<>();
+  private State<View> currentState;
 
   public AbstractPresenter(Class<View> viewClass) {
     viewState = viewClass.cast(Proxy.newProxyInstance(viewClass.getClassLoader(),
@@ -66,6 +67,10 @@ public abstract class AbstractPresenter<View extends IView>
   public void onBind(View view) {
     logger.debug("onBind() called with: view = [{}]", view);
     this.view = view;
+    // TODO: all presenters should use state
+    if (currentState != null) {
+      currentState.apply(getView());
+    }
   }
 
   @CallSuper
@@ -109,6 +114,15 @@ public abstract class AbstractPresenter<View extends IView>
   @Override
   public View getView() {
     return viewState;
+  }
+
+  protected void applyState(State<View> state) {
+    currentState = state;
+    currentState.apply(getView());
+  }
+
+  protected interface State<View> {
+    void apply(View view);
   }
 
 }

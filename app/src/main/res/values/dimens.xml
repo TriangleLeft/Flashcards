@@ -51,4 +51,5 @@
     <dimen name="shadow_size">10dp</dimen>
     <dimen name="shadow_size_negative">-10dp</dimen>
     <dimen name="vocabular_word_padding">@dimen/activity_horizontal_margin</dimen>
+    <dimen name="retry_button_margin_top">16dp</dimen>
 </resources>

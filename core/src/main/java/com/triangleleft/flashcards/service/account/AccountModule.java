@@ -13,7 +13,10 @@ public interface AccountModule {
 
     Optional<UserData> getUserData();
 
+    void setUserData(UserData data);
+
     boolean shouldRememberUser();
 
     void setRememberUser(boolean rememberUser);
+
 }

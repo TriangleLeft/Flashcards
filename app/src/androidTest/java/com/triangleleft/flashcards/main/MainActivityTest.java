@@ -59,7 +59,7 @@ public class MainActivityTest {
     @Test
     @MockJsonResponse(value = "internal_server_error.txt", httpCode = 500)
     public void testRetryWhenServerReturnedError() {
-        onView(withText(R.string.vocabulary_list_error_retry)).check(matches(isDisplayed()));
+        onView(withText(R.string.vocabulary_list_error)).check(matches(isDisplayed()));
 
         webServer.enqueue(MockServerResponse.make("vocabulary/valid_response.json"));
         onView(withText(R.string.button_retry)).perform(click());

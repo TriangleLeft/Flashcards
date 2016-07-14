@@ -8,6 +8,7 @@ import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.annimon.stream.Optional;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.NavigationView;
@@ -73,9 +74,9 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     }
 
     @Override
-    public void showWord(VocabularyWord word) {
-        Preconditions.checkNotNull(vocabularyWordFragment, "Vocabular word fragment was not bound!");
-        vocabularyWordFragment.getPresenter().setWord(word);
+    public void showWord(Optional<VocabularyWord> word) {
+        Preconditions.checkNotNull(vocabularyWordFragment, "Vocabulary word fragment was not bound!");
+        vocabularyWordFragment.getPresenter().showWord(word);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
@@ -42,21 +43,8 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     @Override
     public void onCreate() {
-        // Start loading list if we haven't one
-        if (vocabularyList == null) {
-            onLoadList();
-        }
-    }
-
-    @Override
-    public void onBind(IVocabularyListView view) {
-        logger.debug("onBind() hasList = {}", vocabularyList != null);
-        super.onBind(view);
-        if (vocabularyList != null) {
-            getView().showWords(vocabularyList, selectedPosition);
-        } else {
-            getView().showProgress();
-        }
+        applyState(IVocabularyListView::showProgress);
+        onLoadList();
     }
 
     @Override
@@ -68,12 +56,12 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     public void onWordSelected(int position) {
         selectedPosition = position;
         VocabularyWord word = vocabularyList.get(position);
-        navigator.onWordSelected(word);
+        navigator.showWord(Optional.of(word));
     }
 
     public void onLoadList() {
         logger.debug("onLoadList() called");
-        getView().showProgress();
+        applyState(IVocabularyListView::showProgress);
         subscription.unsubscribe();
         subscription = vocabularyModule.loadVocabularyWords()
                 .observeOn(mainThreadScheduler)
@@ -93,25 +81,31 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         vocabularyList = list;
         if (list.isEmpty()) {
             selectedPosition = NO_POSITION;
-        } else if (selectedPosition == NO_POSITION) {
-            // Select first one by default
-            selectedPosition = 0;
-        } else if (selectedPosition > list.size() - 1) {
-            // Selected position is outside of list bounds
-            selectedPosition = 0;
+            applyState(view -> {
+                view.showEmpty();
+                navigator.showWord(Optional.empty());
+            });
+        } else {
+            if (selectedPosition == NO_POSITION) {
+                // Select first one by default
+                selectedPosition = 0;
+            } else if (selectedPosition > list.size() - 1) {
+                // Selected position is outside of list bounds
+                selectedPosition = 0;
+            }
+            applyState(view -> view.showWords(vocabularyList, selectedPosition));
         }
-        getView().showWords(vocabularyList, selectedPosition);
     }
 
     private void processRefreshError(Throwable throwable) {
         logger.error("processRefreshError", throwable);
 
-        getView().showRefreshError();
+        applyState(IVocabularyListView::showRefreshError);
     }
 
     private void processLoadError(Throwable error) {
         logger.error("processError() ", error);
 
-        getView().showLoadError();
+        applyState(IVocabularyListView::showLoadError);
     }
 }

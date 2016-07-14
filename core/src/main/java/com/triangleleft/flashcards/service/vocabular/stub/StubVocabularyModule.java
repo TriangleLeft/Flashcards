@@ -1,10 +1,10 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.service.settings.SettingsModule;
+import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.SimpleVocabularData;
-import com.triangleleft.flashcards.service.vocabular.VocabularData;
+import com.triangleleft.flashcards.service.vocabular.SimpleVocabularyData;
+import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsCache;
@@ -24,12 +24,12 @@ import static com.annimon.stream.Collectors.toList;
 @FunctionsAreNonnullByDefault
 public class StubVocabularyModule implements VocabularyModule {
 
-    private final SettingsModule settingsModule;
+    private final AccountModule accountModule;
     private final VocabularyWordsCache provider;
 
     @Inject
-    public StubVocabularyModule(SettingsModule settingsModule, VocabularyWordsCache provider) {
-        this.settingsModule = settingsModule;
+    public StubVocabularyModule(AccountModule accountModule, VocabularyWordsCache provider) {
+        this.accountModule = accountModule;
         this.provider = provider;
     }
 
@@ -37,7 +37,7 @@ public class StubVocabularyModule implements VocabularyModule {
     public Observable<List<VocabularyWord>> loadVocabularyWords() {
         Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
 
-        UserData userData = settingsModule.getCurrentUserData().get();
+        UserData userData = accountModule.getUserData().get();
         observable.startWith(provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId()));
 
         return observable;
@@ -45,22 +45,22 @@ public class StubVocabularyModule implements VocabularyModule {
 
     @Override
     public Observable<List<VocabularyWord>> refreshVocabularyWords() {
-        UserData userData = settingsModule.getCurrentUserData().get();
+        UserData userData = accountModule.getUserData().get();
 
         return Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                         .subscribeOn(Schedulers.io())
                         .doOnNext(this::updateCache)
-                        .map(VocabularData::getWords);
+                .map(VocabularyData::getWords);
     }
 
-    private void updateCache(VocabularData data) {
+    private void updateCache(VocabularyData data) {
         List<VocabularyWord> words = Stream.of(data.getWords())
                 .map(word -> word.withWord("cached_" + word.getWord()))
                 .collect(toList());
         provider.putWords(words);
     }
 
-    private VocabularData buildVocabularData(String uiLanguage, String learningLanguage) {
+    private VocabularyData buildVocabularData(String uiLanguage, String learningLanguage) {
         List<VocabularyWord> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add(VocabularyWord.create(
@@ -74,6 +74,6 @@ public class StubVocabularyModule implements VocabularyModule {
                     learningLanguage)
             );
         }
-        return SimpleVocabularData.create(list, uiLanguage, learningLanguage);
+        return SimpleVocabularyData.create(list, uiLanguage, learningLanguage);
     }
 }

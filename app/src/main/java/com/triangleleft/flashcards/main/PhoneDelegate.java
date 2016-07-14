@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.annimon.stream.Optional;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -90,7 +91,11 @@ import butterknife.ButterKnife;
     }
 
     @Override
-    public void showWord(VocabularyWord word) {
+    public void showWord(Optional<VocabularyWord> word) {
+        if (!word.isPresent()) {
+            // In phone view, just don't open this screen
+            return;
+        }
         hideFragment(vocabularListFragment);
         fab.hide();
 
@@ -102,7 +107,7 @@ import butterknife.ButterKnife;
         } else {
             showFragment(vocabularyWordFragment);
         }
-        vocabularyWordFragment.getPresenter().setWord(word);
+        vocabularyWordFragment.getPresenter().showWord(word);
 
         setArrowIndicator(false);
     }

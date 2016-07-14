@@ -41,7 +41,7 @@ public class VocabularyListFragment
 
     public static final String TAG = VocabularyListFragment.class.getSimpleName();
     private static final int PROGRESS = 0;
-    private static final int LIST = 1;
+    private static final int CONTENT = 1;
     private static final int ERROR = 2;
     private static final int EMPTY = 3;
 
@@ -88,7 +88,7 @@ public class VocabularyListFragment
     @Override
     public void showWords(@NonNull List<VocabularyWord> words, int selectedPosition) {
         logger.debug("showWords()");
-        viewFlipper.setDisplayedChild(LIST);
+        viewFlipper.setDisplayedChild(CONTENT);
         vocabularyAdapter.setData(words);
         vocabularyAdapter.setSelectedPosition(selectedPosition);
         // If we are in two pane view, it's first time we show data, and we want to select some valid position

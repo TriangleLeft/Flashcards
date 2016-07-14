@@ -38,6 +38,13 @@ android {
         exclude 'META-INF/maven/com.google.guava/guava/pom.xml'
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
+    sourceSets {
+        main {
+            res.srcDirs = [
+                    'src/main/res'
+            ]
+        }
+    }
 }
 
 

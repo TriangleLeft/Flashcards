@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.common.BaseFragment;
 import com.triangleleft.flashcards.main.MainActivity;
-import com.triangleleft.flashcards.mvp.vocabular.IVocabularWordView;
-import com.triangleleft.flashcards.mvp.vocabular.VocabularWordPresenter;
+import com.triangleleft.flashcards.mvp.vocabular.IVocabularyWordView;
+import com.triangleleft.flashcards.mvp.vocabular.VocabularyWordPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.di.DaggerVocabularyWordComponent;
 import com.triangleleft.flashcards.vocabular.di.VocabularyWordComponent;
@@ -28,25 +29,31 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class VocabularyWordFragment
-        extends BaseFragment<VocabularyWordComponent, IVocabularWordView, VocabularWordPresenter>
-        implements IVocabularWordView {
+        extends BaseFragment<VocabularyWordComponent, IVocabularyWordView, VocabularyWordPresenter>
+        implements IVocabularyWordView {
 
     public static final String TAG = VocabularyWordFragment.class.getSimpleName();
     private static final Logger logger = LoggerFactory.getLogger(VocabularyWordFragment.class);
-    @Bind(R.id.vocabular_word_title)
+    private static final int CONTENT = 0;
+    private static final int EMPTY = 1;
+
+    @Bind(R.id.vocabulary_word_title)
     TextView titleView;
-    @Bind(R.id.vocabular_word_translation_value)
+    @Bind(R.id.vocabulary_word_translation_value)
     TextView translationView;
-    @Bind(R.id.vocabular_word_strength_value)
+    @Bind(R.id.vocabulary_word_strength_value)
     VocabularyStrengthView strengthValue;
-    @Bind(R.id.vocabular_word_gender_value)
+    @Bind(R.id.vocabulary_word_gender_value)
     TextView genderView;
-    @Bind(R.id.vocabular_word_pos_value)
+    @Bind(R.id.vocabulary_word_pos_value)
     TextView posView;
-    @Bind(R.id.vocabular_word_gender_entry)
+    @Bind(R.id.vocabulary_word_gender_entry)
     View genderEntry;
-    @Bind(R.id.vocabular_word_pos_entry)
+    @Bind(R.id.vocabulary_word_pos_entry)
     View posEntry;
+    @Bind(R.id.vocabulary_word_flipper)
+    ViewFlipper flipper;
+
     private VoiceOverPlayer voiceOverPlayer = new VoiceOverPlayer();
     private VocabularyWord word;
 
@@ -91,13 +98,14 @@ public class VocabularyWordFragment
 
     @NonNull
     @Override
-    protected IVocabularWordView getMvpView() {
+    protected IVocabularyWordView getMvpView() {
         logger.debug("getMvpView() called");
         return this;
     }
 
     @Override
     public void showWord(VocabularyWord word) {
+        flipper.setDisplayedChild(CONTENT);
         this.word = word;
         titleView.setText(word.getWord());
         String translation = word.getTranslations().size() > 0 ? word.getTranslations().get(0) : "";
@@ -115,6 +123,11 @@ public class VocabularyWordFragment
         } else {
             posEntry.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void showEmpty() {
+        flipper.setDisplayedChild(EMPTY);
     }
 
     @OnClick(R.id.vocabular_word_voice)

@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- 0:Progress -->
     <com.pnikosis.materialishprogress.ProgressWheel
         android:id="@+id/vocabulary_list_progress"
         android:layout_width="@dimen/progress_wheel_size"
@@ -13,6 +14,7 @@
         app:matProg_barColor="@color/colorPrimary"
         app:matProg_progressIndeterminate="true" />
 
+    <!-- 1:Content -->
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
@@ -24,28 +26,34 @@
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
+    <!-- 2:Error -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/vocabulary_list_error_retry"/>
+            android:text="@string/vocabulary_list_error"/>
 
         <Button
             android:id="@+id/button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/retry_button_margin_top"
             android:text="@string/button_retry" />
     </LinearLayout>
 
+    <!-- 3:Empty-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:text="@string/vocabulary_list_no_words"/>
 
 </ViewFlipper>

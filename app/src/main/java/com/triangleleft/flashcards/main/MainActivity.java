@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.annimon.stream.Optional;
 import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
@@ -162,11 +163,11 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @Override
     public void showDrawerError() {
-
+        // TODO: show drawer error
     }
 
     @Override
-    public void showWord(@NonNull VocabularyWord word) {
+    public void showWord(@NonNull Optional<VocabularyWord> word) {
         logger.debug("showWord() called with: word = [{}]", word);
         delegate.showWord(word);
     }

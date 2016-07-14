@@ -13,6 +13,7 @@ import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,7 @@ import javax.inject.Inject;
 
 import rx.Scheduler;
 
+@FunctionsAreNonnullByDefault
 @ActivityScope
 public class MainPresenter extends AbstractPresenter<IMainView> implements VocabularyNavigator {
 
@@ -33,9 +35,9 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     private final Scheduler scheduler;
     private final Comparator<Language> languageComparator =
             (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
-    private IMainView.Page currentPage = IMainView.Page.LIST;
-    private VocabularyWord selectedWord;
+
     private Language currentLanguage;
+    private IMainView.Page currentPage;
 
     @Inject
     public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler) {
@@ -47,27 +49,32 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
 
     @Override
     public void onCreate() {
+        // Update user data here?
+        applyState(view -> {
+            currentPage = IMainView.Page.LIST;
+            view.showList();
+        });
     }
 
     @Override
     public void onBind(IMainView view) {
         super.onBind(view);
-        Optional<UserData> userData = settingsModule.getCurrentUserData();
+        Optional<UserData> userData = accountModule.getUserData();
         // It's possible that local data was wiped
         if (userData.isPresent()) {
             showUserData(userData.get());
         } else {
             getView().navigateToLogin();
         }
-        showViewPage(currentPage);
-
     }
 
     @Override
-    public void onWordSelected(@NonNull VocabularyWord word) {
-        logger.debug("onWordSelected() called with: word = [{}]", word);
-        selectedWord = word;
-        showViewPage(IMainView.Page.WORD);
+    public void showWord(@NonNull Optional<VocabularyWord> word) {
+        logger.debug("showWord() called with: word = [{}]", word);
+        applyState(view -> {
+            currentPage = IMainView.Page.WORD;
+            view.showWord(word);
+        });
     }
 
     public void onBackPressed() {
@@ -76,7 +83,10 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
             getView().finish();
         } else {
             // Go to top-level screen
-            showViewPage(IMainView.Page.LIST);
+            applyState(view -> {
+                currentPage = IMainView.Page.LIST;
+                view.showList();
+            });
         }
     }
 
@@ -84,17 +94,17 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         if (language.equals(currentLanguage)) {
             return;
         }
-        getView().showDrawerProgress();
+        applyState(IMainView::showDrawerProgress);
         settingsModule.switchLanguage(language)
+                .switchMap(nothing -> settingsModule.loadUserData())
                 .observeOn(scheduler)
-                .flatMap(nothing -> settingsModule.loadUserData()
-                        .observeOn(scheduler))
                 .subscribe(data -> {
                             showUserData(data);
                             getView().reloadList();
                         },
                         error -> {
-                            getView().showDrawerError();
+                            logger.error("switchLanguage()", error);
+                            applyState(IMainView::showDrawerError);
                         }
                 );
     }
@@ -110,20 +120,6 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         currentLanguage = languages.size() > 0 ? languages.get(0) : null;
 
         getView().showUserData(userData.getUsername(), userData.getAvatar(), languages);
-    }
-
-    private void showViewPage(IMainView.Page page) {
-        currentPage = page;
-        switch (currentPage) {
-            case LIST:
-                getView().showList();
-                break;
-            case WORD:
-                getView().showWord(selectedWord);
-                break;
-            default:
-                throw new RuntimeException("Unknown page: " + currentPage);
-        }
     }
 
     public void onLogoutClick() {

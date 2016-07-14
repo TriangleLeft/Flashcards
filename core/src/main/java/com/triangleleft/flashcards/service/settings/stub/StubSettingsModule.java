@@ -39,8 +39,7 @@ public class StubSettingsModule implements SettingsModule {
 
     }
 
-    @Override
-    public Optional<UserData> getCurrentUserData() {
+    private Optional<UserData> getCurrentUserData() {
         return Optional.of(UserData.create(
                 Collections.unmodifiableList(languages),
                 avatarUrl,
