@@ -49,6 +49,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onCreate() {
         logger.debug("onCreate()");
+        login = accountModule.getLogin().orElse("");
         rememberUser = accountModule.shouldRememberUser();
         // If we are already logged, and we have saved user data, advance immediately
         if (rememberUser && accountModule.getUserData().isPresent()) {

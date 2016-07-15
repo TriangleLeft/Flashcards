@@ -21,6 +21,7 @@ public class SimpleAccountModule implements AccountModule {
     public SimpleAccountModule(PersistentStorage storage) {
         this.storage = storage;
     }
+
     @Override
     public void setUserId(@Nullable String userId) {
         storage.put(KEY_USER_ID, userId);
@@ -28,6 +29,16 @@ public class SimpleAccountModule implements AccountModule {
 
     @Override
     public Optional<String> getUserId() {
+        return Optional.ofNullable(storage.get(KEY_USER_ID, String.class));
+    }
+
+    @Override
+    public void setLogin(@Nullable String login) {
+        storage.put(KEY_USER_ID, login);
+    }
+
+    @Override
+    public Optional<String> getLogin() {
         return Optional.ofNullable(storage.get(KEY_USER_ID, String.class));
     }
 

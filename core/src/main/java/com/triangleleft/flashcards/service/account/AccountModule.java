@@ -11,6 +11,10 @@ public interface AccountModule {
 
     Optional<String> getUserId();
 
+    void setLogin(@Nullable String login);
+
+    Optional<String> getLogin();
+
     Optional<UserData> getUserData();
 
     void setUserData(UserData data);
