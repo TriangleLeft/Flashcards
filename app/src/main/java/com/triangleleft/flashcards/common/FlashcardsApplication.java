@@ -52,6 +52,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
                 }
             }
         });
+        Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> logger.error("Uncaught exception", ex));
     }
 
     @NonNull
