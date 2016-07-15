@@ -4,9 +4,7 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.IDuolingoRest;
 import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
-
-import java.util.concurrent.TimeUnit;
-
+import com.triangleleft.flashcards.util.converter.CustomGsonConverterFactory;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.CookieJar;
@@ -15,8 +13,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.schedulers.Schedulers;
+
+import java.util.concurrent.TimeUnit;
 
 @Module
 public class NetModule {
@@ -39,7 +38,7 @@ public class NetModule {
                 .baseUrl(url)
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .addConverterFactory(GsonConverterFactory.create()).build();
+            .addConverterFactory(CustomGsonConverterFactory.create()).build();
     }
 
     @ApplicationScope

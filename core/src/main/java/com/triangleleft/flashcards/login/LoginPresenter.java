@@ -11,15 +11,13 @@ import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.TextUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-
 import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
+
+import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -52,7 +50,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         login = accountModule.getLogin().orElse("");
         rememberUser = accountModule.shouldRememberUser();
         // If we are already logged, and we have saved user data, advance immediately
-        if (rememberUser && accountModule.getUserData().isPresent()) {
+        if (rememberUser && accountModule.getUserData().isPresent() && accountModule.getUserId().isPresent()) {
             getView().advance();
         }
     }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularyNavigator;
@@ -14,16 +15,13 @@ import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Scheduler;
 
 import java.util.Comparator;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import rx.Scheduler;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -33,23 +31,25 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     private final AccountModule accountModule;
     private final SettingsModule settingsModule;
     private final Scheduler scheduler;
+    private final FlashcardsNavigator navigator;
     private final Comparator<Language> languageComparator =
-            (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
-
+        (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private Language currentLanguage;
     private IMainView.Page currentPage;
 
     @Inject
-    public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler) {
+    public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler,
+        FlashcardsNavigator navigator) {
         super(IMainView.class);
         this.accountModule = accountModule;
         this.settingsModule = settingsModule;
         this.scheduler = scheduler;
+        this.navigator = navigator;
     }
 
     @Override
     public void onCreate() {
-        // Update user data here?
+        // TODO: Update user data here?
         applyState(view -> {
             currentPage = IMainView.Page.LIST;
             view.showList();
@@ -65,7 +65,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
             showUserData(userData.get());
         } else {
             getView().navigateToLogin();
-        }
+    }
     }
 
     @Override
@@ -87,35 +87,34 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
                 currentPage = IMainView.Page.LIST;
                 view.showList();
             });
-        }
+    }
     }
 
     public void onLanguageSelected(Language language) {
         if (language.equals(currentLanguage)) {
             return;
-        }
+    }
         applyState(IMainView::showDrawerProgress);
         settingsModule.switchLanguage(language)
-                .switchMap(nothing -> settingsModule.loadUserData())
-                .observeOn(scheduler)
-                .subscribe(data -> {
-                            showUserData(data);
-                            getView().reloadList();
-                        },
-                        error -> {
-                            logger.error("switchLanguage()", error);
-                            applyState(IMainView::showDrawerError);
-                        }
-                );
+            .switchMap(nothing -> settingsModule.loadUserData())
+            .observeOn(scheduler)
+            .subscribe(data -> {
+                    showUserData(data);
+                    getView().reloadList();
+                },
+                error -> {
+                    applyState(IMainView::showDrawerError);
+                }
+            );
     }
 
     private void showUserData(UserData userData) {
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list
         List<Language> languages = Stream.of(userData.getLanguages())
-                .filter(Language::isLearning)
-                .sorted(languageComparator)
-                .collect(Collectors.toList());
+            .filter(Language::isLearning)
+            .sorted(languageComparator)
+            .collect(Collectors.toList());
 
         currentLanguage = languages.size() > 0 ? languages.get(0) : null;
 
@@ -124,6 +123,6 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
 
     public void onLogoutClick() {
         accountModule.setRememberUser(false);
-        getView().navigateToLogin();
+        navigator.navigateToLogin();
     }
 }

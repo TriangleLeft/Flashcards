@@ -34,12 +34,12 @@ public class SimpleAccountModule implements AccountModule {
 
     @Override
     public void setLogin(@Nullable String login) {
-        storage.put(KEY_USER_ID, login);
+        storage.put(KEY_LOGIN, login);
     }
 
     @Override
     public Optional<String> getLogin() {
-        return Optional.ofNullable(storage.get(KEY_USER_ID, String.class));
+        return Optional.ofNullable(storage.get(KEY_LOGIN, String.class));
     }
 
     @Override

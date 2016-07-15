@@ -1,22 +1,20 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
-import javax.inject.Inject;
-
 import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
+
+import java.util.List;
+import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope
@@ -28,17 +26,19 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private final VocabularyModule vocabularyModule;
     private final VocabularyNavigator navigator;
     private final Scheduler mainThreadScheduler;
+    private final FlashcardsNavigator flashcardsNavigator;
     private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
     private List<VocabularyWord> vocabularyList;
 
     @Inject
     public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
-                                   Scheduler mainThreadScheduler) {
+        Scheduler mainThreadScheduler, FlashcardsNavigator flashcardsNavigator) {
         super(IVocabularyListView.class);
         this.vocabularyModule = vocabularyModule;
         this.navigator = navigator;
         this.mainThreadScheduler = mainThreadScheduler;
+        this.flashcardsNavigator = flashcardsNavigator;
     }
 
     @Override
@@ -98,14 +98,10 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     }
 
     private void processRefreshError(Throwable throwable) {
-        logger.error("processRefreshError", throwable);
-
         applyState(IVocabularyListView::showRefreshError);
     }
 
     private void processLoadError(Throwable error) {
-        logger.error("processError() ", error);
-
         applyState(IVocabularyListView::showLoadError);
     }
 }

@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.common.di;
 
 import com.triangleleft.flashcards.common.FlagImagesProvider;
+import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.component.IComponent;
 import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
 import com.triangleleft.flashcards.mvp.common.di.module.RestServiceModule;
@@ -13,7 +14,6 @@ import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.util.PersistentStorage;
-
 import dagger.Component;
 import rx.Scheduler;
 
@@ -40,4 +40,6 @@ public interface ApplicationComponent extends IComponent {
     Scheduler mainThreadScheduler();
 
     FlagImagesProvider flagImagesProvider();
+
+    FlashcardsNavigator navigator();
 }

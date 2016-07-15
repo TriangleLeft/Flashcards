@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.common.di;
 
+import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
@@ -7,19 +8,17 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.triangleleft.flashcards.common.FlagImagesProvider;
 import com.triangleleft.flashcards.common.FlashcardsApplication;
 import com.triangleleft.flashcards.common.SharedPreferencesPersistentStorage;
+import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.util.PersistentStorage;
-
-import android.content.Context;
-
-import java.util.concurrent.TimeUnit;
-
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.CookieJar;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
+
+import java.util.concurrent.TimeUnit;
 
 @Module
 public class ApplicationModule {
@@ -32,6 +31,12 @@ public class ApplicationModule {
     @ApplicationScope
     @Provides
     public Context context() {
+        return application;
+    }
+
+    @ApplicationScope
+    @Provides
+    public FlashcardsNavigator navigator() {
         return application;
     }
 
