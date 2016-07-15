@@ -6,20 +6,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.ViewFlipper;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.annimon.stream.Optional;
-import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.cards.FlashcardsActivity;
 import com.triangleleft.flashcards.common.BaseActivity;
 import com.triangleleft.flashcards.common.FlagImagesProvider;
-import com.triangleleft.flashcards.login.LoginActivity;
+import com.triangleleft.flashcards.common.NavigationView;
 import com.triangleleft.flashcards.main.di.DaggerMainPageComponent;
 import com.triangleleft.flashcards.main.di.MainPageComponent;
 import com.triangleleft.flashcards.mvp.main.IMainView;
@@ -28,38 +25,22 @@ import com.triangleleft.flashcards.mvp.main.MainPresenter;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-
 import javax.inject.Inject;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 @FunctionsAreNonnullByDefault
 public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter> implements IMainView {
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
-
-
     private static final String FRAGMENTS_TAG = "android:support:fragments";
-    private static final int DRAWER_PAGE_PROGRESS = 0;
-    private static final int DRAWER_PAGE_CONTENT = 1;
 
-    @Bind(R.id.drawer_list)
-    RecyclerView recyclerView;
-    @Bind(R.id.drawer_user_name)
-    TextView drawerUserName;
-    @Bind(R.id.drawer_user_avatar)
-    ImageView drawerUserAvatar;
-    @Bind(R.id.drawer_content_flipper)
-    ViewFlipper drawerContentFlipper;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
+    @Bind(R.id.navigation_view)
+    NavigationView navigationView;
 
     @Inject
     FlagImagesProvider flagImagesProvider;
@@ -98,8 +79,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         adapter = new DrawerLanguagesAdapter(flagImagesProvider,
                 (viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position)));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
+        navigationView.setLanguagesAdapter(adapter);
 
         handler = new Handler();
     }
@@ -136,9 +116,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @Override
     public void showUserData(String username, String avatar, List<Language> languages) {
         logger.debug("showUserData()");
-        Picasso.with(this).load(avatar).into(drawerUserAvatar);
-        drawerUserName.setText(username);
-
         // We assume that first language in list is the one we are learning
         // Though it's possible that we don't learn any languages
         if (languages.size() > 0) {
@@ -146,7 +123,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         } else {
             toolbar.setTitle(R.string.app_name);
         }
-        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
+
+        navigationView.showUserData(username, avatar);
         handler.post(() -> adapter.setData(languages));
     }
 
@@ -158,7 +136,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @Override
     public void showDrawerProgress() {
-        drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
+        navigationView.showDrawerProgress();
     }
 
     @Override
@@ -190,12 +168,5 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @OnClick(R.id.drawer_user_avatar)
     public void onProfileClick() {
         getPresenter().onLogoutClick();
-    }
-
-    @Override
-    public void navigateToLogin() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

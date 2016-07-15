@@ -1,10 +1,5 @@
 package com.triangleleft.flashcards.main;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.common.FlagImagesProvider;
-import com.triangleleft.flashcards.common.OnItemClickListener;
-import com.triangleleft.flashcards.service.settings.Language;
-
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +9,10 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.FlagImagesProvider;
+import com.triangleleft.flashcards.common.OnItemClickListener;
+import com.triangleleft.flashcards.service.settings.Language;
 
 public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
 
@@ -58,4 +57,5 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
 
         itemView.invalidate();
     }
+
 }

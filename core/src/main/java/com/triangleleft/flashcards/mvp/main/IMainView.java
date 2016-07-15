@@ -23,8 +23,6 @@ public interface IMainView extends IView {
 
     void showUserData(String username, String avatar, List<Language> languages);
 
-    void navigateToLogin();
-
     void showDrawerError();
 
     enum Page {

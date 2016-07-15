@@ -64,7 +64,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         if (userData.isPresent()) {
             showUserData(userData.get());
         } else {
-            getView().navigateToLogin();
+            navigator.navigateToLogin();
     }
     }
 

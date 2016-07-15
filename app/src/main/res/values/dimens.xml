@@ -2,39 +2,12 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="nav_header_vertical_spacing">16dp</dimen>
-    <dimen name="nav_header_height">159dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="avatar_size">64dp</dimen>
 
-    <dimen name="flashcard_icon_size">40dp</dimen>
-    <dimen name="flashcard_icon_margin_right">16dp</dimen>
-
-    <!-- General drawer width https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266 -->
-    <dimen name="material_drawer_width">320dp</dimen>
-    <!-- Definition for the Drawer Slider margin right -->
-    <dimen name="material_drawer_margin">0dp</dimen>
-    <!-- General padding value -->
-    <dimen name="material_drawer_padding">8dp</dimen>
-    <!-- General vertical padding values / 24dp for tablets -->
-    <dimen name="material_drawer_vertical_padding">16dp</dimen>
-
-    <!-- Sticky footer elevation -->
-    <dimen name="material_drawer_sticky_footer_elevation">4dp</dimen>
-
-    <!-- General margins for the drawer account header -->
-    <dimen name="material_drawer_account_header_height">148dp</dimen>
-    <dimen name="material_drawer_account_header_height_compact">72dp</dimen>
-    <dimen name="material_drawer_account_header_horizontal_top">16dp</dimen>
-    <dimen name="material_drawer_account_header_horizontal_bottom">4dp</dimen>
-    <dimen name="material_drawer_account_header_selected">64dp</dimen>
-    <dimen name="material_drawer_account_header_secondary">40dp</dimen>
-    <dimen name="material_drawer_account_header_compact">56dp</dimen>
-    <dimen name="material_drawer_account_header_text">14sp</dimen>
-    <dimen name="material_drawer_account_header_dropdown">22dp</dimen>
-    <dimen name="material_drawer_account_header_dropdown_padding">5dp</dimen>
-    <dimen name="material_drawer_account_header_dropdown_margin_bottom">14dp</dimen>
+    <dimen name="drawer_width">320dp</dimen>
+    <dimen name="drawer_header_height">160dp</dimen>
+    <dimen name="drawer_header_avatar_margin_top">40dp</dimen>
+    <dimen name="drawer_list_slide_offset">65dp</dimen>
 
     <!-- General profileIcon margins for the drawer item -->
     <dimen name="drawer_top_padding">8dp</dimen>
@@ -52,4 +25,5 @@
     <dimen name="shadow_size_negative">-10dp</dimen>
     <dimen name="vocabular_word_padding">@dimen/activity_horizontal_margin</dimen>
     <dimen name="retry_button_margin_top">16dp</dimen>
+
 </resources>
