@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
@@ -60,12 +61,8 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     public void onBind(IMainView view) {
         super.onBind(view);
         Optional<UserData> userData = accountModule.getUserData();
-        // It's possible that local data was wiped
-        if (userData.isPresent()) {
-            showUserData(userData.get());
-        } else {
-            navigator.navigateToLogin();
-    }
+        Preconditions.checkState(userData.isPresent(), "Somehow got through login without userdata");
+        showUserData(userData.get());
     }
 
     @Override
