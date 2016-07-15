@@ -8,15 +8,18 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/drawer_item_icon"
         android:layout_width="@dimen/drawer_item_language_icon_size"
         android:layout_height="@dimen/drawer_item_language_icon_size"
         android:src="@color/colorPrimaryDark"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
-        app:civ_border_color="@color/divider"
-        app:civ_border_width="1dp"/>
+        android:scaleType="centerCrop"
+        app:riv_corner_radius="@dimen/drawer_item_language_icon_size"
+        app:riv_border_width="1dp"
+        app:riv_border_color="@color/divider"
+        app:riv_oval="false"/>
 
     <LinearLayout
         android:layout_width="match_parent"

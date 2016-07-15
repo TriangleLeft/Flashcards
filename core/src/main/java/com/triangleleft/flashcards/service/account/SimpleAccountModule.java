@@ -18,12 +18,17 @@ public class SimpleAccountModule implements AccountModule {
     private String userId;
     private String login;
     private UserData userData;
-    private boolean remeberUser;
+    private boolean rememberUser;
 
 
     @Inject
     public SimpleAccountModule(PersistentStorage storage) {
         this.storage = storage;
+        userId = storage.get(KEY_USER_ID, String.class);
+        userData = storage.get(KEY_USERDATA, UserData.class);
+        login = storage.get(KEY_LOGIN, String.class);
+        Boolean value = storage.get(KEY_REMEMBER_USER, Boolean.class);
+        rememberUser = value != null ? value : false;
     }
 
     @Override
@@ -61,12 +66,12 @@ public class SimpleAccountModule implements AccountModule {
 
     @Override
     public void setRememberUser(boolean rememberUser) {
-        this.remeberUser = rememberUser;
+        this.rememberUser = rememberUser;
         storage.put(KEY_REMEMBER_USER, rememberUser);
     }
 
     @Override
     public boolean shouldRememberUser() {
-        return remeberUser;
+        return rememberUser;
     }
 }
