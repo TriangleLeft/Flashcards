@@ -2,32 +2,30 @@ package com.triangleleft.flashcards.main;
 
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.annimon.stream.Optional;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.DrawableUtils;
 import com.triangleleft.flashcards.common.NavigationView;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyWordFragment;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class TabletWideDelegate implements IMainActivityDelegate {
 
+    private final MainActivity activity;
     @Bind(R.id.sliding_pane_layout)
     SlidingPaneLayout slidingPaneLayout;
     @Bind(R.id.navigation_view)
     NavigationView navigationView;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    private final MainActivity activity;
     private VocabularyWordFragment vocabularyWordFragment;
     private VocabularyListFragment vocabularListFragment;
 
@@ -54,8 +52,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
         navigationView.setAnimationProgress(isDrawerOpen() ? 0f : 1f);
 
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(activity, R.drawable.ic_menu_black_24dp));
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(activity, R.color.white));
+        Drawable drawable = DrawableUtils
+            .getTintedDrawable(activity, R.drawable.ic_menu_black_24dp, R.color.textColorPrimary);
         toolbar.setNavigationIcon(drawable);
         toolbar.setNavigationOnClickListener(v -> {
             if (slidingPaneLayout.isOpen()) {
@@ -97,33 +95,33 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     private void initPages() {
         // Try to get re-created fragments
         vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
-                .findFragmentByTag(VocabularyListFragment.TAG);
+            .findFragmentByTag(VocabularyListFragment.TAG);
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularyListFragment();
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
-                    .commitNow();
+                .beginTransaction()
+                .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
+                .commitNow();
         } else {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .show(vocabularListFragment)
-                    .commitNow();
+                .beginTransaction()
+                .show(vocabularListFragment)
+                .commitNow();
         }
 
         vocabularyWordFragment =
-                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+            (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
         if (vocabularyWordFragment == null) {
             vocabularyWordFragment = new VocabularyWordFragment();
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
-                    .commitNow();
+                .beginTransaction()
+                .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
+                .commitNow();
         } else {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .show(vocabularyWordFragment)
-                    .commitNow();
+                .beginTransaction()
+                .show(vocabularyWordFragment)
+                .commitNow();
         }
     }
 

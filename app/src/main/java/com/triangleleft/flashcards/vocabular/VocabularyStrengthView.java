@@ -5,12 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntRange;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.common.DrawableUtils;
 
 public class VocabularyStrengthView extends ImageView {
 
@@ -48,8 +47,7 @@ public class VocabularyStrengthView extends ImageView {
     }
 
     private void setTintedDrawable(@DrawableRes int drawableId, @ColorRes int colorId) {
-        Drawable drawable = DrawableCompat.wrap(ContextCompat.getDrawable(getContext(), drawableId));
-        DrawableCompat.setTint(drawable, ContextCompat.getColor(getContext(), colorId));
+        Drawable drawable = DrawableUtils.getTintedDrawable(getContext(), drawableId, colorId);
         setImageDrawable(drawable);
     }
 }

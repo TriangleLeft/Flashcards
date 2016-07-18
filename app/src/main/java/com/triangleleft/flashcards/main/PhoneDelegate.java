@@ -13,15 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.annimon.stream.Optional;
 import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.vocabular.VocabularyListFragment;
 import com.triangleleft.flashcards.vocabular.VocabularyWordFragment;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /*package*/ class PhoneDelegate implements IMainActivityDelegate {
 
@@ -63,7 +62,7 @@ import butterknife.ButterKnife;
 
         arrowDrawable = (DrawerArrowDrawable) toolbar.getNavigationIcon();
         Preconditions.checkNotNull(arrowDrawable);
-        arrowDrawable.setColor(ContextCompat.getColor(activity, R.color.white));
+        arrowDrawable.setColor(ContextCompat.getColor(activity, R.color.textColorPrimary));
 
         toggle.setToolbarNavigationClickListener(v -> onBackPressed());
 

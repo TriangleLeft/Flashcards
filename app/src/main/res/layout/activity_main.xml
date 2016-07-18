@@ -26,7 +26,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="@dimen/status_bar_height"
                 android:background="?attr/colorPrimary"
-                app:titleTextColor="@color/white"
+                app:titleTextColor="@color/textColorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
         </android.support.design.widget.AppBarLayout>

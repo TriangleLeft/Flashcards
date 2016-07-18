@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/status_bar_height"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/textColorPrimary"/>
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SlidingPaneLayout
