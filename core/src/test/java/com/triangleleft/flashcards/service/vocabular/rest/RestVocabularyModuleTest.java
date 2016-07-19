@@ -39,6 +39,7 @@ import rx.observers.TestSubscriber;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestVocabularyModuleTest {
@@ -77,7 +78,7 @@ public class RestVocabularyModuleTest {
         module.loadVocabularyWords()
             .subscribe(subscriber);
 
-        subscriber.awaitTerminalEvent();
+        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         List<VocabularyWord> cache = subscriber.getOnNextEvents().get(0);
         assertThat(cache, hasItems(cachedWord));
         List<VocabularyWord> live = subscriber.getOnNextEvents().get(1);
@@ -93,7 +94,7 @@ public class RestVocabularyModuleTest {
         module.refreshVocabularyWords()
             .subscribe(subscriber);
 
-        subscriber.awaitTerminalEvent();
+        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         List<VocabularyWord> result = subscriber.getOnNextEvents().get(0);
         VocabularyWord word = result.get(0);
         assertThat(word.getWord(), equalTo(WORD));

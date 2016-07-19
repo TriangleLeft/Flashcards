@@ -77,7 +77,7 @@ public class RestVocabularyModule implements VocabularyModule {
     }
 
     private VocabularyWord getTranslation(VocabularyWord word, WordTranslationModel model) {
-        List<String> strings = model.getOrDefault(word.getWord(), Collections.emptyList());
+        List<String> strings = model.get(word.getWord());
         if (strings == null) {
             strings = Collections.emptyList();
         }
