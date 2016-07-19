@@ -21,6 +21,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            testCoverageEnabled true
         }
         debug {
             testCoverageEnabled true
@@ -100,5 +101,4 @@ dependencies {
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    compile 'com.android.support:support-v4:23.4.0'
 }

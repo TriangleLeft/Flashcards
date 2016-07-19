@@ -1,5 +1,11 @@
 package com.triangleleft.flashcards.cards;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.*;
+import static com.triangleleft.flashcards.test.EspressoUtils.visible;
+
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -8,7 +14,7 @@ import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
 import com.triangleleft.flashcards.test.MockServerResponse;
-
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,16 +23,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-
-import okhttp3.mockwebserver.MockWebServer;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static com.triangleleft.flashcards.test.EspressoUtils.visible;
 
 @RunWith(AndroidJUnit4.class)
 public class FlashcardsActivityTest {
@@ -102,7 +98,7 @@ public class FlashcardsActivityTest {
         onView(visible(withText(R.string.flashcard_button_right))).perform(click());
 
         webServer.enqueue(MockServerResponse.make("flashcards_valid_response2.json"));
-        onView(withText(R.string.button_restart)).perform(click());
+        onView(withId(R.id.button_retry)).perform(click());
         // Check new response is shown
         onView(withText("word4")).check(matches(isDisplayed()));
     }

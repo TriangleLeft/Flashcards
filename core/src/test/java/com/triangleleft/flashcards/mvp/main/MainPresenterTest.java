@@ -1,20 +1,18 @@
 package com.triangleleft.flashcards.mvp.main;
 
+import static org.mockito.Mockito.*;
+
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
+import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
 import rx.schedulers.Schedulers;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MainPresenterTest {
@@ -25,16 +23,20 @@ public class MainPresenterTest {
     SettingsModule settingsModule;
     @Mock
     IMainView view;
+    @Mock
+    UserData userData;
 
     private MainPresenter presenter;
 
     @Before
     public void before() {
         presenter = new MainPresenter(accountModule, settingsModule, Schedulers.immediate());
+        when(accountModule.getUserData()).thenReturn(Optional.of(userData));
     }
 
     @Test
     public void firstOnBindWouldOpenList() throws Exception {
+        presenter.onCreate();
         presenter.onBind(view);
 
         verify(view).showList();
@@ -42,6 +44,7 @@ public class MainPresenterTest {
 
     @Test
     public void onBackPressedFromListShouldFinish() throws Exception {
+        presenter.onCreate();
         presenter.onBind(view);
         presenter.onBackPressed();
 
@@ -50,19 +53,21 @@ public class MainPresenterTest {
 
     @Test
     public void onWordSelectedShouldShowWord() throws Exception {
-        VocabularyWord word = mock(VocabularyWord.class);
+        Optional<VocabularyWord> word = Optional.of(mock(VocabularyWord.class));
+        presenter.onCreate();
         presenter.onBind(view);
 
-        presenter.onWordSelected(word);
+        presenter.showWord(word);
 
         verify(view).showWord(word);
     }
 
     @Test
     public void onBackPressedFromWordShouldReturnToList() {
+        Optional<VocabularyWord> word = Optional.of(mock(VocabularyWord.class));
+        presenter.onCreate();
         presenter.onBind(view);
-        VocabularyWord word = mock(VocabularyWord.class);
-        presenter.onWordSelected(word);
+        presenter.showWord(word);
         reset(view);
 
         presenter.onBackPressed();

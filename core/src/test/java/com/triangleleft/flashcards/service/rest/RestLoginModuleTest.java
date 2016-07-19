@@ -3,20 +3,15 @@ package com.triangleleft.flashcards.service.rest;
 import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
 import java.io.IOException;
-
 import javax.inject.Inject;
 
 
-@RunWith(JUnit4.class)
 public class RestLoginModuleTest {
 
 //    @Rule

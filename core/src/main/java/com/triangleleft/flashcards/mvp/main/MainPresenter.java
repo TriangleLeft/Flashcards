@@ -6,7 +6,6 @@ import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.google.common.base.Preconditions;
-import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.mvp.vocabular.VocabularyNavigator;
@@ -32,20 +31,17 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     private final AccountModule accountModule;
     private final SettingsModule settingsModule;
     private final Scheduler scheduler;
-    private final FlashcardsNavigator navigator;
     private final Comparator<Language> languageComparator =
         (l1, l2) -> Boolean.valueOf(l2.isCurrentLearning()).compareTo(l1.isCurrentLearning());
     private Language currentLanguage;
     private IMainView.Page currentPage;
 
     @Inject
-    public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler,
-        FlashcardsNavigator navigator) {
+    public MainPresenter(AccountModule accountModule, SettingsModule settingsModule, Scheduler scheduler) {
         super(IMainView.class);
         this.accountModule = accountModule;
         this.settingsModule = settingsModule;
         this.scheduler = scheduler;
-        this.navigator = navigator;
     }
 
     @Override
@@ -116,10 +112,5 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         currentLanguage = languages.size() > 0 ? languages.get(0) : null;
 
         getView().showUserData(userData.getUsername(), userData.getAvatar(), languages);
-    }
-
-    public void onLogoutClick() {
-        accountModule.setRememberUser(false);
-        navigator.navigateToLogin();
     }
 }

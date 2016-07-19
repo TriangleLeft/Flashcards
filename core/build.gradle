@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: "net.ltgt.apt"
+apply plugin: 'jacoco'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -13,6 +14,19 @@ repositories {
 retrolambda {
     oldJdk System.getenv("JAVA7_HOME")
 }
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 apply from: '../dependencies.gradle'
 

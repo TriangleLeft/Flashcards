@@ -1,7 +1,6 @@
 package com.triangleleft.flashcards.mvp.vocabular;
 
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.mvp.FlashcardsNavigator;
 import com.triangleleft.flashcards.mvp.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.mvp.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
@@ -26,19 +25,17 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private final VocabularyModule vocabularyModule;
     private final VocabularyNavigator navigator;
     private final Scheduler mainThreadScheduler;
-    private final FlashcardsNavigator flashcardsNavigator;
     private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
     private List<VocabularyWord> vocabularyList;
 
     @Inject
     public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
-        Scheduler mainThreadScheduler, FlashcardsNavigator flashcardsNavigator) {
+        Scheduler mainThreadScheduler) {
         super(IVocabularyListView.class);
         this.vocabularyModule = vocabularyModule;
         this.navigator = navigator;
         this.mainThreadScheduler = mainThreadScheduler;
-        this.flashcardsNavigator = flashcardsNavigator;
     }
 
     @Override
