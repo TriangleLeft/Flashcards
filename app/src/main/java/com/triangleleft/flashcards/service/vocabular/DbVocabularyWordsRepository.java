@@ -7,16 +7,15 @@ import com.triangleleft.service.vocabular.VocabularyWordModel;
 import com.triangleleft.service.vocabular.VocabularyWordTranslationModel;
 
 import java.util.List;
-
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
-public class DbVocabularyWordsCache implements VocabularyWordsCache {
+public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
 
     private final SQLiteDatabase database;
 
     @Inject
-    public DbVocabularyWordsCache(VocabularySQLiteOpenHelper helper) {
+    public DbVocabularyWordsRepository(VocabularySQLiteOpenHelper helper) {
         database = helper.getWritableDatabase();
     }
 

@@ -15,6 +15,7 @@ import android.widget.ViewFlipper;
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
+import com.annimon.stream.Optional;
 import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.main.DrawerLanguagesAdapter;
@@ -96,9 +97,9 @@ public class NavigationView extends FrameLayout {
         recyclerView.setAdapter(adapter);
     }
 
-    public void showUserData(String username, String avatar) {
-        Picasso.with(getContext()).load(avatar).into(drawerUserAvatar);
-        drawerUserName.setText(username);
+    public void showUserData(Optional<String> username, Optional<String> avatar) {
+        avatar.ifPresent(url -> Picasso.with(getContext()).load(url).into(drawerUserAvatar));
+        username.ifPresent(name -> drawerUserName.setText(name));
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
     }
 

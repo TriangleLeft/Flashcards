@@ -1,15 +1,15 @@
 package com.triangleleft.flashcards.service.settings.rest.model;
 
-import com.google.gson.annotations.SerializedName;
+import static com.annimon.stream.Collectors.toList;
+import static com.triangleleft.flashcards.util.ListUtils.wrapList;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.google.gson.annotations.SerializedName;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 
 import java.util.List;
-
-import static com.annimon.stream.Collectors.toList;
-import static com.triangleleft.flashcards.util.ListUtils.wrapList;
 
 public class UserDataModel {
 
@@ -30,12 +30,12 @@ public class UserDataModel {
         List<Language> list = Stream.of(wrapList(languages))
                 .map(LanguageDataModel::toLanguage)
                 .collect(toList());
-        // Apply avatar fix
-        avatar = "https:" + avatar + "/large";
+        // Try to Apply avatar fix
+        avatar = avatar == null ? null : "https:" + avatar + "/large";
         return UserData.create(
                 list,
-                avatar,
-                username,
+            Optional.ofNullable(avatar),
+            Optional.ofNullable(username),
                 uiLanguage,
                 learningLanguage);
     }

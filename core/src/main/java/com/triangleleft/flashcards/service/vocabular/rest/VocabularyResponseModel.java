@@ -1,17 +1,16 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
+import static com.annimon.stream.Collectors.toList;
+
 import com.annimon.stream.Stream;
 import com.google.gson.annotations.SerializedName;
-import com.triangleleft.flashcards.service.vocabular.SimpleVocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.annimon.stream.Collectors.toList;
-
-public class VocabularResponseModel {
+public class VocabularyResponseModel {
 
     @SerializedName("learning_language")
     public String learningLanguage;
@@ -24,7 +23,7 @@ public class VocabularResponseModel {
         List<VocabularyWord> list = Stream.of(wordList)
                 .map(word -> word.toVocabularWord(fromLanguage, learningLanguage))
                 .collect(toList());
-        return SimpleVocabularyData.create(list, fromLanguage, learningLanguage);
+        return VocabularyData.create(list, fromLanguage, learningLanguage);
     }
 
     private static class VocabularWordModel {

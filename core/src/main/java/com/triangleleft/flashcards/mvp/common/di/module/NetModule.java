@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.mvp.common.di.module;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
-import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.util.converter.CustomGsonConverterFactory;
 import dagger.Module;
@@ -69,8 +69,8 @@ public class NetModule {
 
     @ApplicationScope
     @Provides
-    public IDuolingoRest duolingoRest(Retrofit retrofit) {
-        return retrofit.create(IDuolingoRest.class);
+    public RestService duolingoRest(Retrofit retrofit) {
+        return retrofit.create(RestService.class);
     }
 
 }

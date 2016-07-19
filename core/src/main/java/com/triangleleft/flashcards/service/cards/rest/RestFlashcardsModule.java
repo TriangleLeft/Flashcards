@@ -1,18 +1,16 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
-import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.inject.Inject;
-
 import rx.Observable;
 import rx.schedulers.Schedulers;
+
+import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 public class RestFlashcardsModule implements IFlashcardsModule {
@@ -20,13 +18,13 @@ public class RestFlashcardsModule implements IFlashcardsModule {
     private static final Logger logger = LoggerFactory.getLogger(RestFlashcardsModule.class);
     private static final int FLASHCARDS_COUNT = 15;
 
-    private final IDuolingoRest service;
+    private final RestService service;
 
     /**
      * Create new RestFlashcardsModule.
      */
     @Inject
-    public RestFlashcardsModule(IDuolingoRest service) {
+    public RestFlashcardsModule(RestService service) {
         this.service = service;
     }
 

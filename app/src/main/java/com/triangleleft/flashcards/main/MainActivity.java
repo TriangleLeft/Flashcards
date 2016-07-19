@@ -144,7 +144,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showUserData(String username, String avatar, List<Language> languages) {
+    public void showUserData(Optional<String> username, Optional<String> avatar, List<Language> languages) {
         logger.debug("showUserData()");
         // We assume that first language in list is the one we are learning
         // Though it's possible that we don't learn any languages

@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.service.vocabular;
 
+import static com.annimon.stream.Collectors.toList;
+
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -7,10 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.annimon.stream.Collectors.toList;
-
 @FunctionsAreNonnullByDefault
-public class MemoryVocabularyWordsCache implements VocabularyWordsCache {
+public class MemoryVocabularyWordsRepository implements VocabularyWordsRepository {
 
     Set<VocabularyWord> cache = new HashSet<>();
 

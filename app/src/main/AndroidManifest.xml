@@ -3,8 +3,6 @@
           package="com.triangleleft.flashcards">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- TODO: remove before release -->
-    <uses-permission android:name="android.permission.SET_ANIMATION_SCALE"/>
 
     <!-- TODO: remove vmSafeMode before release -->
     <application

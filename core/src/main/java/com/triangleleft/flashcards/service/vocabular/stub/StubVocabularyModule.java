@@ -1,34 +1,31 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
+import static com.annimon.stream.Collectors.toList;
+
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.SimpleVocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWordsCache;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.schedulers.Schedulers;
-
-import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 public class StubVocabularyModule implements VocabularyModule {
 
     private final AccountModule accountModule;
-    private final VocabularyWordsCache provider;
+    private final VocabularyWordsRepository provider;
 
     @Inject
-    public StubVocabularyModule(AccountModule accountModule, VocabularyWordsCache provider) {
+    public StubVocabularyModule(AccountModule accountModule, VocabularyWordsRepository provider) {
         this.accountModule = accountModule;
         this.provider = provider;
     }
@@ -50,7 +47,7 @@ public class StubVocabularyModule implements VocabularyModule {
         return Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                         .subscribeOn(Schedulers.io())
                         .doOnNext(this::updateCache)
-                .map(VocabularyData::getWords);
+            .map(com.triangleleft.flashcards.service.vocabular.VocabularyData::getWords);
     }
 
     private void updateCache(VocabularyData data) {
@@ -74,6 +71,6 @@ public class StubVocabularyModule implements VocabularyModule {
                     learningLanguage)
             );
         }
-        return SimpleVocabularyData.create(list, uiLanguage, learningLanguage);
+        return VocabularyData.create(list, uiLanguage, learningLanguage);
     }
 }

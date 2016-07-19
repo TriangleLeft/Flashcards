@@ -21,7 +21,7 @@ public interface IMainView extends IView {
 
     void showDrawerProgress();
 
-    void showUserData(String username, String avatar, List<Language> languages);
+    void showUserData(Optional<String> username, Optional<String> avatar, List<Language> languages);
 
     void showDrawerError();
 

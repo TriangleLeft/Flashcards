@@ -5,7 +5,7 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import java.util.List;
 
 @FunctionsAreNonnullByDefault
-public interface VocabularyWordsCache {
+public interface VocabularyWordsRepository {
 
     List<VocabularyWord> getWords(String uiLanguageId, String learningLanguageId);
 

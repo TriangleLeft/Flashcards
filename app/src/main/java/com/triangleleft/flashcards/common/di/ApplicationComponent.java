@@ -7,7 +7,7 @@ import com.triangleleft.flashcards.mvp.common.di.module.NetModule;
 import com.triangleleft.flashcards.mvp.common.di.module.RestServiceModule;
 import com.triangleleft.flashcards.mvp.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.mvp.common.presenter.ComponentManager;
-import com.triangleleft.flashcards.service.IDuolingoRest;
+import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
@@ -35,7 +35,7 @@ public interface ApplicationComponent extends IComponent {
 
     PersistentStorage persistentStorage();
 
-    IDuolingoRest duolingoRest();
+    RestService duolingoRest();
 
     Scheduler mainThreadScheduler();
 

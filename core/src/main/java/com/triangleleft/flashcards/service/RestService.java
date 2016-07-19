@@ -6,10 +6,9 @@ import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsResponseMode
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.rest.model.LanguageDataModel;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
-import com.triangleleft.flashcards.service.vocabular.rest.VocabularResponseModel;
+import com.triangleleft.flashcards.service.vocabular.rest.VocabularyResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -21,13 +20,13 @@ import rx.Observable;
 
 
 @FunctionsAreNonnullByDefault
-public interface IDuolingoRest {
+public interface RestService {
     @FormUrlEncoded
     @POST("/login")
     Observable<LoginResponseModel> login(@Field("login") String login, @Field("password") String password);
 
     @GET("/vocabulary/overview")
-    Observable<VocabularResponseModel> getVocabularList(@Query("_") long timestamp);
+    Observable<VocabularyResponseModel> getVocabularList(@Query("_") long timestamp);
 
     @GET("/api/1/flashcards")
     Observable<FlashcardResponseModel> getFlashcardData(@Query("n") int count,

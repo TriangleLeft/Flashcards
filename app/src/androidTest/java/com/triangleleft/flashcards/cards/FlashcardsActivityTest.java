@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.triangleleft.flashcards.DisableAnimationsRule;
 import com.triangleleft.flashcards.MockWebServerRule;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.test.MockJsonResponse;
 import com.triangleleft.flashcards.test.MockServerResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,15 +30,13 @@ import java.io.IOException;
 public class FlashcardsActivityTest {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsActivityTest.class);
-    //    @ClassRule
-//    public static DisableAnimationsRule animationsRule = new DisableAnimationsRule();
-
+    @ClassRule
+    public static DisableAnimationsRule animationsRule = new DisableAnimationsRule();
     @Rule
     public MockWebServerRule webServerRule = new MockWebServerRule();
-
     @Rule
-    public ActivityTestRule<FlashcardsActivity> activityRule =
-            new ActivityTestRule<>(FlashcardsActivity.class, true, false);
+    public ActivityTestRule<FlashcardsActivity> activityRule = new ActivityTestRule<>(FlashcardsActivity.class, true,
+        false);
 
     private MockWebServer webServer;
 
@@ -98,7 +98,7 @@ public class FlashcardsActivityTest {
         onView(visible(withText(R.string.flashcard_button_right))).perform(click());
 
         webServer.enqueue(MockServerResponse.make("flashcards_valid_response2.json"));
-        onView(withId(R.id.button_retry)).perform(click());
+        onView(withId(R.id.flashcard_button_restart)).perform(click());
         // Check new response is shown
         onView(withText("word4")).check(matches(isDisplayed()));
     }
