@@ -6,10 +6,8 @@ import static org.mockito.Mockito.*;
 
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.account.AccountModule;
-import com.triangleleft.flashcards.service.common.IListener;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
-import com.triangleleft.flashcards.service.login.ILoginResult;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
@@ -17,8 +15,6 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
@@ -35,10 +31,6 @@ public class LoginPresenterTest {
     LoginModule loginModule;
     @Mock
     ILoginView view;
-    @Mock
-    ILoginResult loginResult;
-    @Captor
-    ArgumentCaptor<IListener<ILoginResult>> listenerCaptor;
 
     private LoginPresenter presenter;
 

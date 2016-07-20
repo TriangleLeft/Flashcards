@@ -7,7 +7,7 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
@@ -28,7 +28,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 
-    private final IFlashcardsModule module;
+    private final FlashcardsModule module;
     private final Scheduler mainThreadScheduler;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
@@ -36,7 +36,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private State currentState = () -> getView().showProgress();
 
     @Inject
-    public FlashcardsPresenter(IFlashcardsModule module, Scheduler mainThreadScheduler) {
+    public FlashcardsPresenter(FlashcardsModule module, Scheduler mainThreadScheduler) {
         super(IFlashcardsView.class);
         this.module = module;
         this.mainThreadScheduler = mainThreadScheduler;

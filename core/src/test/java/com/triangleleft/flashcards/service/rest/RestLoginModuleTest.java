@@ -1,8 +1,6 @@
 package com.triangleleft.flashcards.service.rest;
 
-import com.triangleleft.flashcards.service.login.ILoginRequest;
 import com.triangleleft.flashcards.service.login.LoginModule;
-import com.triangleleft.flashcards.service.login.SimpleLoginRequest;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -23,9 +21,6 @@ public class RestLoginModuleTest {
     @Inject
     static LoginModule loginModule;
 
-
-    // We don't check for actual login/password here
-    private ILoginRequest request = new SimpleLoginRequest("login", "password");
 
 
     @BeforeClass

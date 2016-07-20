@@ -10,7 +10,7 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class FlashcardsPresenterTest {
 
     @Mock
-    IFlashcardsModule module;
+    FlashcardsModule module;
     @Mock
     IFlashcardsView view;
     private FlashcardsPresenter presenter;

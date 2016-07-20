@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.common.di.module;
 
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.cards.stub.StubFlashcardsModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.stub.StubLoginModule;
@@ -25,7 +25,7 @@ public abstract class StubServiceModule {
 
     @ApplicationScope
     @Binds
-    abstract IFlashcardsModule flashcardsModule(StubFlashcardsModule module);
+    abstract FlashcardsModule flashcardsModule(StubFlashcardsModule module);
 
     @ApplicationScope
     @Binds

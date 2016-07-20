@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.common.di.module;
 
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.cards.rest.RestFlashcardsModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.rest.RestLoginModule;
@@ -25,7 +25,7 @@ public abstract class RestServiceModule {
 
     @ApplicationScope
     @Binds
-    abstract IFlashcardsModule flashcardsModule(RestFlashcardsModule module);
+    abstract FlashcardsModule flashcardsModule(RestFlashcardsModule module);
 
     @ApplicationScope
     @Binds

@@ -3,7 +3,7 @@ package com.triangleleft.flashcards.service.cards.stub;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
-public class StubFlashcardsModule implements IFlashcardsModule {
+public class StubFlashcardsModule implements FlashcardsModule {
 
     private static final Logger logger = LoggerFactory.getLogger(StubFlashcardsModule.class);
 

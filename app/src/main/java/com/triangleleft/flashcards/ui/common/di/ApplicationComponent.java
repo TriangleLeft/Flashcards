@@ -2,7 +2,7 @@ package com.triangleleft.flashcards.ui.common.di;
 
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
-import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
+import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
@@ -25,7 +25,7 @@ public interface ApplicationComponent extends IComponent {
 
     VocabularyModule vocabularModule();
 
-    IFlashcardsModule flashcardsModule();
+    FlashcardsModule flashcardsModule();
 
     SettingsModule settingsModule();
 
