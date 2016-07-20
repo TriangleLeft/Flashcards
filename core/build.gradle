@@ -24,15 +24,22 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: [
+                    '**/*AutoValue*.class', // AutoValue generated classes
+                    '**/*Lambda*',  // Generated lambdas
+                    '**/*_Factory*', // Dagger2 generated factories
+                    '**/*Module_*Factory*' // Dagger2 generated factories
+            ])
+        })
+    }
 }
-
-check.dependsOn jacocoTestReport
 
 apply from: '../dependencies.gradle'
 
 dependencies {
 
-    //  compile 'org.jetbrains:annotations:15.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
