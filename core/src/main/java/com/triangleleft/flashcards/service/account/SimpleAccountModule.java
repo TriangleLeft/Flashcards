@@ -13,22 +13,25 @@ public class SimpleAccountModule implements AccountModule {
     private static final String KEY_USER_ID = "SimpleAccountModule::userId";
     private static final String KEY_LOGIN = "SimpleAccountModule::login";
     private static final String KEY_REMEMBER_USER = "SimpleAccountModule::rememberUser";
-    private final static String KEY_USERDATA = "SimpleAccountModule::userData";
+    private static final String KEY_USERDATA = "SimpleAccountModule::userData";
+    private static final boolean DEFAULT_REMEMBER_USER = false;
     private final PersistentStorage storage;
     private String userId;
     private String login;
     private UserData userData;
-    private boolean rememberUser;
-
+    private Boolean rememberUser;
 
     @Inject
     public SimpleAccountModule(PersistentStorage storage) {
         this.storage = storage;
-        userId = storage.get(KEY_USER_ID, String.class);
-        userData = storage.get(KEY_USERDATA, UserData.class);
-        login = storage.get(KEY_LOGIN, String.class);
-        Boolean value = storage.get(KEY_REMEMBER_USER, Boolean.class);
-        rememberUser = value != null ? value : false;
+    }
+
+    @Override
+    public Optional<String> getUserId() {
+        if (userId == null) {
+            userId = storage.get(KEY_USER_ID, String.class);
+        }
+        return Optional.ofNullable(userId);
     }
 
     @Override
@@ -38,8 +41,11 @@ public class SimpleAccountModule implements AccountModule {
     }
 
     @Override
-    public Optional<String> getUserId() {
-        return Optional.ofNullable(userId);
+    public Optional<String> getLogin() {
+        if (login == null) {
+            login = storage.get(KEY_LOGIN, String.class);
+        }
+        return Optional.ofNullable(login);
     }
 
     @Override
@@ -49,19 +55,17 @@ public class SimpleAccountModule implements AccountModule {
     }
 
     @Override
-    public Optional<String> getLogin() {
-        return Optional.ofNullable(login);
+    public Optional<UserData> getUserData() {
+        if (userData == null) {
+            userData = storage.get(KEY_USERDATA, UserData.class);
+        }
+        return Optional.ofNullable(userData);
     }
 
     @Override
     public void setUserData(@Nullable UserData userData) {
         this.userData = userData;
         storage.put(KEY_USERDATA, userData);
-    }
-
-    @Override
-    public Optional<UserData> getUserData() {
-        return Optional.ofNullable(userData);
     }
 
     @Override
@@ -72,6 +76,9 @@ public class SimpleAccountModule implements AccountModule {
 
     @Override
     public boolean shouldRememberUser() {
-        return rememberUser;
+        if (rememberUser == null) {
+            rememberUser = storage.get(KEY_REMEMBER_USER, Boolean.class);
+        }
+        return rememberUser == null ? DEFAULT_REMEMBER_USER : rememberUser;
     }
 }
