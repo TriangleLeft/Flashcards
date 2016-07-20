@@ -17,21 +17,25 @@ public class LoginResponseModel {
     /*package*/ final static String FAILURE_PASSWORD = "password";
 
     @SerializedName("response")
-    public String response;
+    String response;
     @SerializedName("username")
-    public String userName;
+    String userName;
     @SerializedName("user_id")
-    public String userId;
+    String userId;
     @SerializedName("failure")
-    public String failureReason;
+    String failureReason;
     @SerializedName("message")
-    public String message;
+    String message;
 
     public boolean isSuccess() {
         return RESPONSE_OK.equals(response) && !TextUtils.isEmpty(userId);
     }
 
-    public Exception buildError() {
+    public String getUserId() {
+        return userId;
+    }
+
+    public Exception getError() {
         if (!isSuccess()) {
             if (TextUtils.hasText(failureReason)) {
                 switch (failureReason) {

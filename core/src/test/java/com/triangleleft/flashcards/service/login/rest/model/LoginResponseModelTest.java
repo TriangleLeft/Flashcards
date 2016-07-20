@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.service.login.rest.model;
 
+import static org.junit.Assert.fail;
+
 import android.support.annotation.NonNull;
 
 import org.junit.Rule;
@@ -7,8 +9,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import static org.junit.Assert.fail;
 
 @RunWith(JUnit4.class)
 public class LoginResponseModelTest {
@@ -21,7 +21,7 @@ public class LoginResponseModelTest {
         LoginResponseModel model = buildSuccessModel("123");
 
         exception.expect(IllegalStateException.class);
-        model.buildError();
+        model.getError();
         fail();
     }
 
