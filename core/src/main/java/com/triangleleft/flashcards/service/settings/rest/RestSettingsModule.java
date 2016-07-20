@@ -8,7 +8,6 @@ import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.PersistentStorage;
 import rx.Observable;
 
 import javax.inject.Inject;
@@ -18,13 +17,11 @@ public class RestSettingsModule implements SettingsModule {
 
     private final AccountModule accountModule;
     private final RestService service;
-    private final PersistentStorage storage;
 
     @Inject
-    public RestSettingsModule(AccountModule accountModule, RestService service, PersistentStorage storage) {
-        this.accountModule = accountModule;
+    public RestSettingsModule(RestService service, AccountModule accountModule) {
         this.service = service;
-        this.storage = storage;
+        this.accountModule = accountModule;
     }
 
     @Override
@@ -37,7 +34,7 @@ public class RestSettingsModule implements SettingsModule {
 
     @Override
     public Observable<Void> switchLanguage(Language language) {
-        // We don't care about return result
+        // We don't care about actual return result
         return service.switchLanguage(language.getId()).map(data -> null);
     }
 }

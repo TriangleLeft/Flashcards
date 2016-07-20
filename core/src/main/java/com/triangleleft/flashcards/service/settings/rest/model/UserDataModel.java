@@ -13,31 +13,31 @@ import java.util.List;
 
 public class UserDataModel {
 
-    @SerializedName("languages")
-    private List<LanguageDataModel> languages;
     @SerializedName("learning_language")
     public String learningLanguage;
     @SerializedName("ui_language")
     public String uiLanguage;
+    @SerializedName("email")
+    public String email;
+    @SerializedName("languages")
+    private List<LanguageDataModel> languages;
     @SerializedName("avatar")
     private String avatar;
     @SerializedName("username")
     private String username;
-    @SerializedName("email")
-    public String email;
 
     public UserData toUserData() {
         List<Language> list = Stream.of(wrapList(languages))
-                .map(LanguageDataModel::toLanguage)
-                .collect(toList());
+            .map(LanguageDataModel::toLanguage)
+            .collect(toList());
         // Try to Apply avatar fix
         avatar = avatar == null ? null : "https:" + avatar + "/large";
         return UserData.create(
-                list,
+            list,
             Optional.ofNullable(avatar),
             Optional.ofNullable(username),
-                uiLanguage,
-                learningLanguage);
+            uiLanguage,
+            learningLanguage);
     }
 
 }
