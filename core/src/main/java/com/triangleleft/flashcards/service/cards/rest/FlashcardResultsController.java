@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
-import com.annimon.stream.Collectors;
+import static com.annimon.stream.Collectors.toList;
+
 import com.annimon.stream.Stream;
 import com.google.gson.annotations.SerializedName;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -20,11 +21,12 @@ public class FlashcardResultsController {
     public FlashcardResultsController(FlashcardTestResult result) {
         learningLanguage = result.getLearningLanguage();
         uiLanguage = result.getUiLanguage();
-        flashcardResults = Stream.of(result.getWordResults()).map(FlashcardResultModel::new)
-                .collect(Collectors.toList());
+        flashcardResults = Stream.of(result.getWordResults())
+            .map(FlashcardResultModel::new)
+            .collect(toList());
     }
 
-    private static class FlashcardResultModel {
+    static class FlashcardResultModel {
 
         @SerializedName("id")
         String id;
@@ -33,7 +35,7 @@ public class FlashcardResultsController {
         @SerializedName("correct")
         int correct;
 
-        private FlashcardResultModel(FlashcardWordResult result) {
+        public FlashcardResultModel(FlashcardWordResult result) {
             id = result.getWord().getId();
             correct = result.isCorrect() ? 1 : 0;
         }

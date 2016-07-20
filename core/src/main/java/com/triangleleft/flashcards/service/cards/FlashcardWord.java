@@ -1,10 +1,19 @@
 package com.triangleleft.flashcards.service.cards;
 
-public interface FlashcardWord {
+import com.google.auto.value.AutoValue;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-    String getWord();
+@AutoValue
+@FunctionsAreNonnullByDefault
+public abstract class FlashcardWord {
 
-    String getTranslation();
+    public static FlashcardWord create(String word, String translation, String id) {
+        return new AutoValue_FlashcardWord(word, translation, id);
+    }
 
-    String getId();
+    public abstract String getWord();
+
+    public abstract String getTranslation();
+
+    public abstract String getId();
 }

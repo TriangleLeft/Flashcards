@@ -26,7 +26,7 @@ public interface RestService {
     Observable<LoginResponseModel> login(@Field("login") String login, @Field("password") String password);
 
     @GET("/vocabulary/overview")
-    Observable<VocabularyResponseModel> getVocabularList(@Query("_") long timestamp);
+    Observable<VocabularyResponseModel> getVocabularyList(@Query("_") long timestamp);
 
     @GET("/api/1/flashcards")
     Observable<FlashcardResponseModel> getFlashcardData(@Query("n") int count,

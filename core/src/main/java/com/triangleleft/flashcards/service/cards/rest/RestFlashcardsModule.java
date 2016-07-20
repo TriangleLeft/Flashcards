@@ -8,7 +8,6 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import javax.inject.Inject;
 
@@ -20,9 +19,6 @@ public class RestFlashcardsModule implements IFlashcardsModule {
 
     private final RestService service;
 
-    /**
-     * Create new RestFlashcardsModule.
-     */
     @Inject
     public RestFlashcardsModule(RestService service) {
         this.service = service;
@@ -31,16 +27,16 @@ public class RestFlashcardsModule implements IFlashcardsModule {
     @Override
     public Observable<FlashcardTestData> getFlashcards() {
         logger.debug("getFlashcards() called");
+        // TODO: consider moving flashcard count this to settings
         return service.getFlashcardData(FLASHCARDS_COUNT, true, System.currentTimeMillis())
-                .subscribeOn(Schedulers.io())
-                .cast(FlashcardTestData.class);
+            .map(FlashcardResponseModel::toTestData);
     }
 
     @Override
     public void postResult(FlashcardTestResult result) {
         logger.debug("postResult() called with: result = [{}]", result);
+        // NOTE: We don't care about whether we were able to send results
         service.postFlashcardResults(new FlashcardResultsController(result))
-                .subscribeOn(Schedulers.io())
                 .subscribe(
                         response -> logger.debug("response = [{}]", response),
                         error -> logger.debug("error = [{}]", error)

@@ -11,7 +11,6 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
-import com.triangleleft.flashcards.service.cards.stub.StubFlashcardTestData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,7 +76,7 @@ public class FlashcardsPresenterTest {
     @Test
     public void whenHasListOnBindWouldShowList() {
         List<FlashcardWord> list = Collections.singletonList(mock(FlashcardWord.class));
-        FlashcardTestData data = StubFlashcardTestData.create("en", "es", list);
+        FlashcardTestData data = FlashcardTestData.create("en", "es", list);
         when(module.getFlashcards()).thenReturn(Observable.just(data));
         presenter.onCreate();
         presenter.onBind(view);

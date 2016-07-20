@@ -49,7 +49,7 @@ public class RestVocabularyModule implements VocabularyModule {
     @Override
     public Observable<List<VocabularyWord>> refreshVocabularyWords() {
         logger.debug("refreshVocabularyWords()");
-        return service.getVocabularList(System.currentTimeMillis())
+        return service.getVocabularyList(System.currentTimeMillis())
             .map(VocabularyResponseModel::toVocabularData)
                 .map(VocabularyData::getWords)
                 .flatMapIterable(list -> list) // split list of item into stream of items

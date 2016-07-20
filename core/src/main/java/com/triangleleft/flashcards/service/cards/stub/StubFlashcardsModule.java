@@ -5,16 +5,13 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.IFlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.inject.Inject;
-
-import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public class StubFlashcardsModule implements IFlashcardsModule {
@@ -27,9 +24,9 @@ public class StubFlashcardsModule implements IFlashcardsModule {
     public StubFlashcardsModule() {
         List<FlashcardWord> words = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            words.add(StubFlashcardWord.create("word" + i, "translation" + i, "id" + i));
+            words.add(FlashcardWord.create("word" + i, "translation" + i, "id" + i));
         }
-        testData = StubFlashcardTestData.create("en", "es", words);
+        testData = FlashcardTestData.create("en", "es", words);
     }
 
     @Override

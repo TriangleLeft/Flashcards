@@ -16,9 +16,9 @@
 
 package com.triangleleft.flashcards.service.vocabular.rest;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsCollectionContaining.hasItems;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -119,6 +119,6 @@ public class RestVocabularyModuleTest {
         VocabularyData data = VocabularyData.create(words, UI_LANG, LEARN_LANG);
         VocabularyResponseModel model = mock(VocabularyResponseModel.class);
         when(model.toVocabularData()).thenReturn(data);
-        when(service.getVocabularList(anyLong())).thenReturn(Observable.just(model));
+        when(service.getVocabularyList(anyLong())).thenReturn(Observable.just(model));
     }
 }

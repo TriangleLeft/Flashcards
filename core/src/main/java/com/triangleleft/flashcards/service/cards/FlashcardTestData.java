@@ -1,12 +1,21 @@
 package com.triangleleft.flashcards.service.cards;
 
+import com.google.auto.value.AutoValue;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import java.util.List;
 
-public interface FlashcardTestData {
+@AutoValue
+@FunctionsAreNonnullByDefault
+public abstract class FlashcardTestData {
 
-    String getUiLanguage();
+    public static FlashcardTestData create(String uiLanguage, String learningLanguage, List<FlashcardWord> wordList) {
+        return new AutoValue_FlashcardTestData(uiLanguage, learningLanguage, wordList);
+    }
 
-    String getLearningLanguage();
+    public abstract String getUiLanguage();
 
-    List<FlashcardWord> getWords();
+    public abstract String getLearningLanguage();
+
+    public abstract List<FlashcardWord> getWords();
 }
