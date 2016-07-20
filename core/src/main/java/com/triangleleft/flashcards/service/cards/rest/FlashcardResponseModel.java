@@ -12,11 +12,11 @@ import java.util.List;
 public class FlashcardResponseModel {
 
     @SerializedName("ui_language")
-    private String uiLanguage;
+    String uiLanguage;
     @SerializedName("learning_language")
-    private String learningLanguage;
+    String learningLanguage;
     @SerializedName("flashcard_data")
-    private List<FlashcardModel> flashcardData;
+    List<FlashcardModel> flashcardData;
 
     public FlashcardTestData toTestData() {
         List<FlashcardWord> words = Stream.of(flashcardData)
@@ -28,11 +28,11 @@ public class FlashcardResponseModel {
     public static class FlashcardModel {
 
         @SerializedName("ui_word")
-        private String translation;
+        String translation;
         @SerializedName("id")
-        private String id;
+        String id;
         @SerializedName("learning_word")
-        private String word;
+        String word;
 
         public FlashcardWord toWord() {
             return FlashcardWord.create(word, translation, id);

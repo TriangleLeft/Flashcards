@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.service;
 
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResponseModel;
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResultsController;
-import com.triangleleft.flashcards.service.cards.rest.PostFlashcardsResponseModel;
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.rest.model.LanguageDataModel;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
@@ -34,7 +33,7 @@ public interface RestService {
                                                         @Query("_") long timestamp);
 
     @POST("/api/1/flashcards")
-    Observable<PostFlashcardsResponseModel> postFlashcardResults(@Body FlashcardResultsController model);
+    Observable<Void> postFlashcardResults(@Body FlashcardResultsController model);
 
     @FormUrlEncoded
     @POST("/switch_language")
@@ -47,9 +46,4 @@ public interface RestService {
     Observable<WordTranslationModel> getTranslation(@Path("from") String languageIdFrom,
                                                     @Path("to") String languageIdTo,
                                                     @Query("tokens") String tokens);
-
-    @GET("https://d7mj4aqfscim2.cloudfront.net/tts/{id}/token/{word}")
-    Observable<Void> getAudio(@Path("id") String languageId, @Path("word") String normalizedWord);
-
-
 }

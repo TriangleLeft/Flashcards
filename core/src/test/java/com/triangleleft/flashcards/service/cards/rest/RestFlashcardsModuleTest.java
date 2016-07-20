@@ -38,7 +38,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -69,21 +71,29 @@ public class RestFlashcardsModuleTest {
 
     @Test
     public void postResults() {
-        FlashcardWord word = FlashcardWord.create("word", "translation", "id");
-        FlashcardWordResult wordResult = FlashcardWordResult.create(word, true);
-        FlashcardTestResult result = FlashcardTestResult.create("ui", "learn", Collections.singletonList(wordResult));
+        List<FlashcardWordResult> results = Arrays.asList(
+            FlashcardWordResult.create(FlashcardWord.create("word", "translation", "id"), true),
+            FlashcardWordResult.create(FlashcardWord.create("word2", "translation2", "id2"), false)
+        );
+        FlashcardTestResult result = FlashcardTestResult.create("ui", "learn", results);
         when(service.postFlashcardResults(any())).thenReturn(Observable.empty());
 
         module.postResult(result);
 
         ArgumentCaptor<FlashcardResultsController> captor = ArgumentCaptor
             .forClass(FlashcardResultsController.class);
+        // Check that post is called
         verify(service).postFlashcardResults(captor.capture());
         FlashcardResultsController controller = captor.getValue();
+        // Check that we path language pair
         assertThat(controller.uiLanguage, equalTo("ui"));
         assertThat(controller.learningLanguage, equalTo("learn"));
+        // Check that we pass results
         FlashcardResultsController.FlashcardResultModel flashcardResultModel = controller.flashcardResults.get(0);
         assertThat(flashcardResultModel.id, equalTo("id"));
         assertThat(flashcardResultModel.correct, equalTo(1));
+        flashcardResultModel = controller.flashcardResults.get(1);
+        assertThat(flashcardResultModel.id, equalTo("id2"));
+        assertThat(flashcardResultModel.correct, equalTo(0));
     }
 }

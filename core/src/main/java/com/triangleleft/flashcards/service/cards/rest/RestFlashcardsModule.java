@@ -36,11 +36,7 @@ public class RestFlashcardsModule implements FlashcardsModule {
     public void postResult(FlashcardTestResult result) {
         logger.debug("postResult() called with: result = [{}]", result);
         // NOTE: We don't care about whether we were able to send results
-        service.postFlashcardResults(new FlashcardResultsController(result))
-                .subscribe(
-                        response -> logger.debug("response = [{}]", response),
-                        error -> logger.debug("error = [{}]", error)
-                );
+        service.postFlashcardResults(new FlashcardResultsController(result)).subscribe();
     }
 
 }
