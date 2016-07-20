@@ -29,7 +29,7 @@
         android:layout_below="@+id/appbar"
         android:clipChildren="false">
 
-        <com.triangleleft.flashcards.common.NavigationView
+        <com.triangleleft.flashcards.ui.common.NavigationView
             android:id="@+id/navigation_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
@@ -52,14 +52,14 @@
                 android:id="@+id/main_panel"
                 android:layout_width="@dimen/main_panel_width"
                 android:layout_height="match_parent"
-                tools:context=".main.MainActivity">
+                tools:context=".ui.main.MainActivity">
 
                 <FrameLayout
                     android:id="@+id/main_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:context=".main.MainActivity"/>
+                    tools:context=".ui.main.MainActivity"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/button_flashcards"
@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".main.MainActivity"/>
+                tools:context=".ui.main.MainActivity"/>
 
         </LinearLayout>
 

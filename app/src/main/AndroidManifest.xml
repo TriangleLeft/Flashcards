@@ -6,7 +6,7 @@
 
     <!-- TODO: remove vmSafeMode before release -->
     <application
-        android:name=".common.FlashcardsApplication"
+        android:name=".ui.common.FlashcardsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         android:vmSafeMode="true">
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
@@ -23,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".main.MainActivity"/>
-        <activity android:name=".cards.FlashcardsActivity"/>
+        <activity android:name=".ui.main.MainActivity"/>
+        <activity android:name=".ui.cards.FlashcardsActivity"/>
         <activity
-            android:name=".main.SettingsActivity"
+            android:name=".ui.main.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".main.MainActivity">
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.triangleleft.flashcards.main.MainActivity"/>
+                android:value=".ui.main.MainActivity"/>
         </activity>
     </application>
 

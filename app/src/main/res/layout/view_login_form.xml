@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="32dp"
-                tools:context=".login.LoginActivity">
+                tools:context=".ui.login.LoginActivity">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -44,7 +44,7 @@
                         android:hint="@string/prompt_email"
                         android:textColorHint="@color/white">
 
-                        <com.triangleleft.flashcards.common.CustomEditText
+                        <com.triangleleft.flashcards.ui.common.CustomEditText
                             android:id="@+id/login_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                         android:hint="@string/prompt_password"
                         android:textColorHint="@color/white">
 
-                        <com.triangleleft.flashcards.common.CustomEditText
+                        <com.triangleleft.flashcards.ui.common.CustomEditText
                             android:id="@+id/login_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
