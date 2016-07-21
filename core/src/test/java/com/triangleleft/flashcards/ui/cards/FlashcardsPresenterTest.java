@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
@@ -28,10 +29,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @RunWith(MockitoJUnitRunner.class)
 public class FlashcardsPresenterTest {
 
+    private static final String UI_LANG = "ui";
+    private static final String LEARN_LANG = "learn";
+
     @Mock
     FlashcardsModule module;
     @Mock
     IFlashcardsView view;
+    @Captor
+    ArgumentCaptor<List<FlashcardWord>> listCaptor;
+
     private FlashcardsPresenter presenter;
 
     @Before
@@ -76,8 +83,7 @@ public class FlashcardsPresenterTest {
     @Test
     public void whenHasListOnBindWouldShowList() {
         List<FlashcardWord> list = Collections.singletonList(mock(FlashcardWord.class));
-        FlashcardTestData data = FlashcardTestData.create("en", "es", list);
-        when(module.getFlashcards()).thenReturn(Observable.just(data));
+        prepareTestData(list);
         presenter.onCreate();
         presenter.onBind(view);
         presenter.onUnbind();
@@ -99,10 +105,8 @@ public class FlashcardsPresenterTest {
     }
 
     @Test
-    public void emptyWordsListWouldIsTreatedAsError() {
-        FlashcardTestData data = mock(FlashcardTestData.class);
-        when(data.getWords()).thenReturn(Collections.emptyList());
-        when(module.getFlashcards()).thenReturn(Observable.just(data));
+    public void emptyWordsListIsTreatedAsError() {
+        prepareTestData(Collections.emptyList());
 
         presenter.onCreate();
         presenter.onBind(view);
@@ -110,19 +114,11 @@ public class FlashcardsPresenterTest {
         verify(view).showError();
     }
 
-
     @Test
     public void resultsArePosted() {
         FlashcardWord rightWord = mock(FlashcardWord.class);
         FlashcardWord wrongWord = mock(FlashcardWord.class);
-        String uiLang = "uiLang";
-        String learningLang = "learningLang";
-
-        FlashcardTestData mock = mock(FlashcardTestData.class);
-        when(mock.getUiLanguage()).thenReturn(uiLang);
-        when(mock.getLearningLanguage()).thenReturn(learningLang);
-        when(mock.getWords()).thenReturn(Arrays.asList(rightWord, wrongWord));
-        when(module.getFlashcards()).thenReturn(Observable.just(mock));
+        prepareTestData(Arrays.asList(rightWord, wrongWord));
 
         presenter.onCreate();
         presenter.onBind(view);
@@ -133,11 +129,45 @@ public class FlashcardsPresenterTest {
         ArgumentCaptor<FlashcardTestResult> resultCaptor = ArgumentCaptor.forClass(FlashcardTestResult.class);
         verify(module).postResult(resultCaptor.capture());
         FlashcardTestResult result = resultCaptor.getValue();
-        assertThat(result.getLearningLanguage(), equalTo(learningLang));
-        assertThat(result.getUiLanguage(), equalTo(uiLang));
+        assertThat(result.getLearningLanguage(), equalTo(LEARN_LANG));
+        assertThat(result.getUiLanguage(), equalTo(UI_LANG));
 
         FlashcardWordResult rightResult = FlashcardWordResult.create(rightWord, true);
         FlashcardWordResult wrongResult = FlashcardWordResult.create(wrongWord, false);
-        assertThat(result.getWordResults(), hasItems(rightResult, wrongResult));
+        assertThat(result.getWordResults(), containsInAnyOrder(rightResult, wrongResult));
+    }
+
+    @Test
+    public void resultWithErrors() {
+        FlashcardWord wrongWord = mock(FlashcardWord.class);
+        prepareTestData(Collections.singletonList(wrongWord));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+        presenter.onWordWrong(wrongWord);
+        presenter.onCardsDepleted();
+
+        verify(view).showResultErrors(listCaptor.capture());
+        List<FlashcardWord> list = listCaptor.getValue();
+        assertThat(list, containsInAnyOrder(wrongWord));
+    }
+
+    @Test
+    public void resultWithNoErrors() {
+        prepareTestData(Collections.singletonList(mock(FlashcardWord.class)));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+        presenter.onCardsDepleted();
+
+        verify(view).showResultsNoErrors();
+    }
+
+    private void prepareTestData(List<FlashcardWord> words) {
+        FlashcardTestData data = mock(FlashcardTestData.class);
+        when(data.getUiLanguage()).thenReturn(UI_LANG);
+        when(data.getLearningLanguage()).thenReturn(LEARN_LANG);
+        when(data.getWords()).thenReturn(words);
+        when(module.getFlashcards()).thenReturn(Observable.just(data));
     }
 }

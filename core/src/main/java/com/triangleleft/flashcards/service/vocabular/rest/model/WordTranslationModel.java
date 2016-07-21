@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service.vocabular.rest;
+package com.triangleleft.flashcards.service.vocabular.rest.model;
 
 import java.util.HashMap;
 import java.util.List;

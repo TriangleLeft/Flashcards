@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.service.settings;
 
-import com.annimon.stream.Optional;
 import com.google.auto.value.AutoValue;
 import com.triangleleft.flashcards.util.AutoGson;
 
@@ -12,8 +11,8 @@ public abstract class UserData {
 
     public static UserData create(
         List<Language> languages,
-        Optional<String> avatar,
-        Optional<String> username,
+        String avatar,
+        String username,
         String uiLanguage,
         String learningLanguage) {
         return new AutoValue_UserData(
@@ -26,9 +25,9 @@ public abstract class UserData {
 
     public abstract List<Language> getLanguages();
 
-    public abstract Optional<String> getAvatar();
+    public abstract String getAvatar();
 
-    public abstract Optional<String> getUsername();
+    public abstract String getUsername();
 
     public abstract String getUiLanguageId();
 

@@ -7,9 +7,6 @@ import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.TextUtils;
 
-/**
- * Model object for server response to /login request
- */
 @FunctionsAreNonnullByDefault
 public class LoginResponseModel {
     /*package*/ final static String RESPONSE_OK = "OK";
@@ -28,7 +25,7 @@ public class LoginResponseModel {
     String message;
 
     public boolean isSuccess() {
-        return RESPONSE_OK.equals(response) && !TextUtils.isEmpty(userId);
+        return RESPONSE_OK.equals(response) && TextUtils.hasText(userId);
     }
 
     public String getUserId() {
@@ -43,9 +40,12 @@ public class LoginResponseModel {
                         return new LoginException();
                     case FAILURE_PASSWORD:
                         return new PasswordException();
+                default:
+                    return new ServerException();
                 }
+            } else {
+                return new ServerException();
             }
-            return new ServerException();
         } else {
             throw new IllegalStateException("Can't build error for successful result");
         }

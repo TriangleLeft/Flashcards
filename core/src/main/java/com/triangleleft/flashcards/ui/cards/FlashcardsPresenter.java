@@ -33,7 +33,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
     private Subscription subscription = Subscriptions.empty();
-    private State currentState = () -> getView().showProgress();
+    private State currentState;
 
     @Inject
     public FlashcardsPresenter(FlashcardsModule module, Scheduler mainThreadScheduler) {

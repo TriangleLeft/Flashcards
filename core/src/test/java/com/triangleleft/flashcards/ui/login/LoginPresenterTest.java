@@ -74,13 +74,23 @@ public class LoginPresenterTest {
     }
 
     @Test
-    public void loginClick() {
+    public void loginClickWouldShowProgress() {
         initPresenter();
         when(loginModule.login(anyString(), anyString())).thenReturn(Observable.empty());
 
         presenter.onLoginClick();
 
         verify(view).showProgress();
+    }
+
+    @Test
+    public void loginClickWouldAdvanceOnSuccess() {
+        initPresenter();
+        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.just(null));
+
+        presenter.onLoginClick();
+
+        verify(view).advance();
     }
 
     @Test
@@ -98,8 +108,8 @@ public class LoginPresenterTest {
         initPresenter();
         // Start disabled
         verify(view).setLoginButtonEnabled(false);
-        presenter.onLoginChanged("login");
 
+        presenter.onLoginChanged("login");
         verify(view, never()).setLoginButtonEnabled(true);
 
         presenter.onLoginChanged("");

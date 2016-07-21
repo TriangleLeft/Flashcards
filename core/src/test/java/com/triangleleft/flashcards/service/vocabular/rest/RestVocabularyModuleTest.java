@@ -17,7 +17,7 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsCollectionContaining.hasItems;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -29,6 +29,8 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
+import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
+import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,52 +62,77 @@ public class RestVocabularyModuleTest {
     public void before() {
         module = new RestVocabularyModule(service, accountModule, cache);
         when(accountModule.getUserData()).thenReturn(Optional
-            .of(UserData.create(Collections.emptyList(), Optional.empty(), Optional.empty(), UI_LANG, LEARN_LANG)));
+            .of(UserData.create(Collections.emptyList(), "", "", UI_LANG, LEARN_LANG)));
     }
 
     @Test
     public void loadVocabularyWords() {
         VocabularyWord cachedWord = makeWord("cachedWord", TRANSLATION);
-        when(cache.getWords(UI_LANG, LEARN_LANG))
-            .thenReturn(Collections.singletonList(cachedWord));
+        when(cache.getWords(UI_LANG, LEARN_LANG)).thenReturn(Collections.singletonList(cachedWord));
         VocabularyWord liveWord = makeWord(WORD, TRANSLATION);
         addVocabularyData(liveWord);
-        addTranslation(WORD, TRANSLATION);
+        addTranslation(WORD, Collections.singletonList(TRANSLATION));
 
-        module.loadVocabularyWords();
+        TestSubscriber<List<VocabularyWord>> subscriber = loadWords();
 
-        TestSubscriber<List<VocabularyWord>> subscriber = TestSubscriber.create();
-        module.loadVocabularyWords()
-            .subscribe(subscriber);
-
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
         List<VocabularyWord> cache = subscriber.getOnNextEvents().get(0);
-        assertThat(cache, hasItems(cachedWord));
+        assertThat(cache, containsInAnyOrder(cachedWord));
         List<VocabularyWord> live = subscriber.getOnNextEvents().get(1);
-        assertThat(live, hasItems(liveWord));
+        assertThat(live, containsInAnyOrder(liveWord));
+    }
+
+    @Test
+    public void loadVocabularyWordsNoTranslations() {
+        addVocabularyData(makeWord(WORD, TRANSLATION));
+        addTranslation(WORD, null);
+
+        TestSubscriber<List<VocabularyWord>> subscriber = loadWords();
+
+        VocabularyWord word = subscriber.getOnNextEvents().get(0).get(0);
+        assertThat(word.getTranslations(), equalTo(Collections.emptyList()));
+    }
+
+    @Test
+    public void loadVocabularyWordsNoCache() {
+        when(cache.getWords(UI_LANG, LEARN_LANG)).thenReturn(Collections.emptyList());
+        VocabularyWord liveWord = makeWord(WORD, TRANSLATION);
+        addVocabularyData(liveWord);
+        addTranslation(WORD, Collections.singletonList(TRANSLATION));
+
+        TestSubscriber<List<VocabularyWord>> subscriber = loadWords();
+
+        subscriber.assertValueCount(1);
+        List<VocabularyWord> live = subscriber.getOnNextEvents().get(0);
+        assertThat(live, containsInAnyOrder(liveWord));
     }
 
     @Test
     public void refreshVocabularyWords() {
         addVocabularyData(makeWord(WORD, TRANSLATION));
-        addTranslation(WORD, TRANSLATION);
+        addTranslation(WORD, Collections.singletonList(TRANSLATION));
 
         TestSubscriber<List<VocabularyWord>> subscriber = TestSubscriber.create();
-        module.refreshVocabularyWords()
-            .subscribe(subscriber);
-
+        module.refreshVocabularyWords().subscribe(subscriber);
         subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+
         List<VocabularyWord> result = subscriber.getOnNextEvents().get(0);
         VocabularyWord word = result.get(0);
         assertThat(word.getWord(), equalTo(WORD));
-        assertThat(word.getTranslations(), hasItems(TRANSLATION));
+        assertThat(word.getTranslations(), containsInAnyOrder(TRANSLATION));
 
         verify(cache).putWords(result);
     }
 
-    private void addTranslation(String word, String translation) {
+    private TestSubscriber<List<VocabularyWord>> loadWords() {
+        TestSubscriber<List<VocabularyWord>> subscriber = TestSubscriber.create();
+        module.loadVocabularyWords().subscribe(subscriber);
+        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+        return subscriber;
+    }
+
+    private void addTranslation(String word, List<String> translations) {
         WordTranslationModel model = new WordTranslationModel();
-        model.put(word, Collections.singletonList(translation));
+        model.put(word, translations);
         when(service.getTranslation(LEARN_LANG, UI_LANG, "[\"" + word + "\"]")).thenReturn(Observable.just(model));
     }
 
@@ -118,7 +145,7 @@ public class RestVocabularyModuleTest {
         List<VocabularyWord> words = Collections.singletonList(word);
         VocabularyData data = VocabularyData.create(words, UI_LANG, LEARN_LANG);
         VocabularyResponseModel model = mock(VocabularyResponseModel.class);
-        when(model.toVocabularData()).thenReturn(data);
+        when(model.toVocabularyData()).thenReturn(data);
         when(service.getVocabularyList(anyLong())).thenReturn(Observable.just(model));
     }
 }

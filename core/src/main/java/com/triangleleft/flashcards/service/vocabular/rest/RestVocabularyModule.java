@@ -13,6 +13,8 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
+import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
+import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +52,7 @@ public class RestVocabularyModule implements VocabularyModule {
     public Observable<List<VocabularyWord>> refreshVocabularyWords() {
         logger.debug("refreshVocabularyWords()");
         return service.getVocabularyList(System.currentTimeMillis())
-            .map(VocabularyResponseModel::toVocabularData)
+            .map(VocabularyResponseModel::toVocabularyData)
                 .map(VocabularyData::getWords)
                 .flatMapIterable(list -> list) // split list of item into stream of items
                 .buffer(10) // group them by 10

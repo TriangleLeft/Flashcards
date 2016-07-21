@@ -40,8 +40,8 @@ public class StubSettingsModule implements SettingsModule {
     private Optional<UserData> getCurrentUserData() {
         return Optional.of(UserData.create(
             Collections.unmodifiableList(languages),
-            Optional.of(avatarUrl),
-            Optional.of(userName),
+            avatarUrl,
+            userName,
             uiLanguage,
             learningLanguage));
     }

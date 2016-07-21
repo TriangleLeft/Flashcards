@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service.vocabular.rest;
+package com.triangleleft.flashcards.service.vocabular.rest.model;
 
 import static com.annimon.stream.Collectors.toList;
 
@@ -13,34 +13,34 @@ import java.util.List;
 public class VocabularyResponseModel {
 
     @SerializedName("learning_language")
-    public String learningLanguage;
+    String learningLanguage;
     @SerializedName("from_language")
-    public String fromLanguage;
+    String fromLanguage;
     @SerializedName("vocab_overview")
-    public List<VocabularWordModel> wordList;
+    List<VocabularyResponseWordModel> wordList;
 
-    public VocabularyData toVocabularData() {
+    public VocabularyData toVocabularyData() {
         List<VocabularyWord> list = Stream.of(wordList)
-                .map(word -> word.toVocabularWord(fromLanguage, learningLanguage))
+            .map(word -> word.toVocabularyWord(fromLanguage, learningLanguage))
                 .collect(toList());
         return VocabularyData.create(list, fromLanguage, learningLanguage);
     }
 
-    private static class VocabularWordModel {
+    static class VocabularyResponseWordModel {
         @SerializedName("normalized_string")
-        public String normalizedString;
+        String normalizedString;
         @SerializedName("strength_bars")
-        public int strengthBars;
+        int strengthBars;
         @SerializedName("word_string")
-        public String wordString;
+        String wordString;
         @SerializedName("id")
-        public String id;
+        String id;
         @SerializedName("pos")
-        public String pos;
+        String pos;
         @SerializedName("gender")
-        public String gender;
+        String gender;
 
-        public VocabularyWord toVocabularWord(String uiLanguage, String learningLanguage) {
+        public VocabularyWord toVocabularyWord(String uiLanguage, String learningLanguage) {
             return VocabularyWord.create(
                             wordString,
                             normalizedString,

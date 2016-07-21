@@ -72,8 +72,7 @@ public class RestSettingsModuleTest {
 
     @Test
     public void switchLanguage() {
-        Language language = mock(Language.class);
-        when(language.getId()).thenReturn("id");
+        Language language = Language.create("id", "lang", 0, true, true);
         when(service.switchLanguage("id")).thenReturn(Observable.just(null));
 
         TestSubscriber<Void> subscriber = TestSubscriber.create();

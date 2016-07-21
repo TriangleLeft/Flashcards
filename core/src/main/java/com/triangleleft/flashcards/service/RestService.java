@@ -5,8 +5,8 @@ import com.triangleleft.flashcards.service.cards.rest.FlashcardResultsController
 import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.rest.model.LanguageDataModel;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
-import com.triangleleft.flashcards.service.vocabular.rest.VocabularyResponseModel;
-import com.triangleleft.flashcards.service.vocabular.rest.WordTranslationModel;
+import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
+import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
