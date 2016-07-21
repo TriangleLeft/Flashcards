@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.ui.common.di.component.IComponent;
-import com.triangleleft.flashcards.ui.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
 import org.slf4j.Logger;
@@ -19,8 +19,6 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
 
     private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
 
-    ComponentManager componentManager;
-
     private Component component;
 
     @Inject
@@ -31,18 +29,11 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
 
-        componentManager = getApplicationComponent().componentManager();
-
-        boolean newComponent = true;
-        this.component = getApplicationComponent().componentManager().restoreComponent(getClass());
-        if (this.component == null) {
-            this.component = buildComponent();
-        } else {
-            newComponent = false;
-        }
+        Optional<Component> optional = getApplicationComponent().componentManager().restoreComponent(getClass());
+        this.component = optional.orElse(buildComponent());
 
         inject();
-        if (newComponent) {
+        if (!optional.isPresent()) {
             getPresenter().onCreate();
         }
     }

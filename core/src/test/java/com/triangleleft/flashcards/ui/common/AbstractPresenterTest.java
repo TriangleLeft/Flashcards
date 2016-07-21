@@ -5,7 +5,9 @@ import static org.mockito.Mockito.*;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -16,6 +18,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class AbstractPresenterTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
     @Mock
     ITestView view;
     @Captor
@@ -60,6 +64,17 @@ public class AbstractPresenterTest {
         InOrder inOrder = inOrder(view);
         inOrder.verify(view).testMethod();
         inOrder.verify(view).anotherTestMethod();
+    }
+
+    @Test
+    public void disallowTouchViewAfterDestroy() {
+        presenter.onCreate();
+        presenter.onBind(view);
+        presenter.onUnbind();
+        presenter.onDestroy();
+
+        expectedException.expect(Exception.class);
+        presenter.testMethod();
     }
 
     public interface ITestView extends IView {

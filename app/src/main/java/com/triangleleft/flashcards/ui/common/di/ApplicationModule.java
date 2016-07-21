@@ -18,8 +18,6 @@ import okhttp3.CookieJar;
 import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 
-import java.util.concurrent.TimeUnit;
-
 @Module
 public class ApplicationModule {
     private final FlashcardsApplication application;
@@ -49,7 +47,7 @@ public class ApplicationModule {
     @ApplicationScope
     @Provides
     public ComponentManager componentManager() {
-        return new ComponentManager(10, 1, TimeUnit.MINUTES);
+        return ComponentManager.buildDefault();
     }
 
     @ApplicationScope

@@ -40,7 +40,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     @Override
     public void onCreate() {
-        applyState(IVocabularyListView::showProgress);
+        setInitalState(IVocabularyListView::showProgress);
         onLoadList();
     }
 

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
@@ -47,18 +46,11 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     @Override
     public void onCreate() {
         // TODO: Update user data here?
-        applyState(view -> {
+        setInitalState(view -> {
             currentPage = IMainView.Page.LIST;
             view.showList();
+            showUserData(accountModule.getUserData().get());
         });
-    }
-
-    @Override
-    public void onBind(IMainView view) {
-        super.onBind(view);
-        Optional<UserData> userData = accountModule.getUserData();
-        Preconditions.checkState(userData.isPresent(), "Somehow got through login without userdata");
-        showUserData(userData.get());
     }
 
     @Override
@@ -96,6 +88,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
                     getView().reloadList();
                 },
                 error -> {
+                    // NOTE: we don't discriminated between userdata error and switch language. Should we?
                     applyState(IMainView::showDrawerError);
                 }
             );
