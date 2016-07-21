@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.ui.vocabular;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -14,6 +15,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -67,7 +70,6 @@ public class VocabularyListPresenterTest {
         verify(view).showProgress();
     }
 
-
     @Test
     public void onRefreshListWouldStartLoadingList() {
         when(module.refreshVocabularyWords()).thenReturn(Observable.empty());
@@ -98,4 +100,79 @@ public class VocabularyListPresenterTest {
 
         verify(view).showRefreshError();
     }
+
+    @Test
+    public void onLoadEmptyList() {
+        when(module.loadVocabularyWords()).thenReturn(Observable.just(Collections.emptyList()));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+
+        verify(view).showEmpty();
+        // TODO: Due to the fact that we are executing everything synchronously, loadList from onCreate is ready
+        // before onBind. That is, we load list, apply state, then bind list and apply state again.
+        // That's way there are two actual invocations.
+        verify(navigator, times(2)).showWord(Optional.empty());
+    }
+
+    @Test
+    public void onLoadList() {
+        List<VocabularyWord> list = Collections.singletonList(mock(VocabularyWord.class));
+        when(module.loadVocabularyWords()).thenReturn(Observable.just(list));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+
+        verify(view).showWords(list, 0);
+    }
+
+    @Test
+    public void onRefreshListPositionWithinBounds() {
+        List<VocabularyWord> list = Arrays.asList(
+            mock(VocabularyWord.class),
+            mock(VocabularyWord.class)
+        );
+        when(module.loadVocabularyWords()).thenReturn(Observable.just(list));
+        when(module.refreshVocabularyWords()).thenReturn(Observable.just(list));
+        presenter.onCreate();
+        presenter.onBind(view);
+        presenter.onWordSelected(1);
+
+        presenter.onRefreshList();
+
+        verify(view).showWords(list, 1);
+    }
+
+    @Test
+    public void onRefreshListPositionOutsideOfBounds() {
+        when(module.loadVocabularyWords()).thenReturn(Observable.just(Arrays.asList(
+            mock(VocabularyWord.class),
+            mock(VocabularyWord.class))
+        ));
+        List<VocabularyWord> list = Collections.singletonList(mock(VocabularyWord.class));
+        when(module.refreshVocabularyWords()).thenReturn(Observable.just(list));
+        presenter.onCreate();
+        presenter.onBind(view);
+        presenter.onWordSelected(1);
+
+        presenter.onRefreshList();
+
+        verify(view).showWords(list, 0);
+    }
+
+    @Test
+    public void onWordSelectedWouldDelegateToNavigator() {
+        VocabularyWord secondWord = mock(VocabularyWord.class);
+        when(module.loadVocabularyWords()).thenReturn(Observable.just(Arrays.asList(
+            mock(VocabularyWord.class),
+            secondWord
+        )));
+        presenter.onCreate();
+        presenter.onBind(view);
+
+        presenter.onWordSelected(1);
+
+        verify(navigator).showWord(Optional.of(secondWord));
+    }
+
 }

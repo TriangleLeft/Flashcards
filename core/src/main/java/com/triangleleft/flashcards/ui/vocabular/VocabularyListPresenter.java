@@ -59,6 +59,8 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     public void onLoadList() {
         logger.debug("onLoadList() called");
         applyState(IVocabularyListView::showProgress);
+        // Reset position
+        selectedPosition = NO_POSITION;
         subscription.unsubscribe();
         subscription = vocabularyModule.loadVocabularyWords()
                 .observeOn(mainThreadScheduler)
