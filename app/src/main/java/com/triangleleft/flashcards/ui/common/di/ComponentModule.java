@@ -18,4 +18,5 @@ public abstract class ComponentModule {
     @ApplicationScope
     @Binds
     public abstract AccountModule accountModule(SimpleAccountModule simpleAccountModule);
+
 }

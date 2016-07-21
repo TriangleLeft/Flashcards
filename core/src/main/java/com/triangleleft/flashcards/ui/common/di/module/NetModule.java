@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.ui.common.di.module;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.google.gson.Gson;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.ui.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
@@ -33,12 +34,12 @@ public class NetModule {
 
     @ApplicationScope
     @Provides
-    public Retrofit retrofit(HttpUrl url, OkHttpClient client) {
+    public Retrofit retrofit(HttpUrl url, OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
-            .addConverterFactory(CustomGsonConverterFactory.create()).build();
+            .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
     }
 
     @ApplicationScope
@@ -73,4 +74,8 @@ public class NetModule {
         return retrofit.create(RestService.class);
     }
 
+    @Provides
+    public Gson gson() {
+        return new Gson();
+    }
 }
