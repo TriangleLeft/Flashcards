@@ -4,6 +4,10 @@ import android.support.annotation.Nullable;
 
 public class TextUtils {
 
+    private TextUtils() {
+        // Static use only
+    }
+
     /**
      * Returns true if the string is null or 0-length.
      *

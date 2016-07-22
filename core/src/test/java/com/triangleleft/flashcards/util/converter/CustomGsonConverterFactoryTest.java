@@ -40,6 +40,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -126,6 +127,12 @@ public class CustomGsonConverterFactoryTest {
 
         expectedException.expect(ConversionException.class);
         service.anImplementation(new AnImplementation("value")).execute();
+    }
+
+    @Test
+    public void failWithoutGson() {
+        expectedException.expect(NullPointerException.class);
+        GsonConverterFactory factory = GsonConverterFactory.create(null);
     }
 
     interface AnInterface {

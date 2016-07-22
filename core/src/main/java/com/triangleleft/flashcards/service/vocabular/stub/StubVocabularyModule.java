@@ -44,31 +44,31 @@ public class StubVocabularyModule implements VocabularyModule {
     public Observable<List<VocabularyWord>> refreshVocabularyWords() {
         UserData userData = accountModule.getUserData().get();
 
-        return Observable.just(buildVocabularData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
-                        .subscribeOn(Schedulers.io())
-                        .doOnNext(this::updateCache)
-            .map(com.triangleleft.flashcards.service.vocabular.VocabularyData::getWords);
+        return Observable.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
+            .subscribeOn(Schedulers.io())
+            .doOnNext(this::updateCache)
+            .map(VocabularyData::getWords);
     }
 
     private void updateCache(VocabularyData data) {
         List<VocabularyWord> words = Stream.of(data.getWords())
-                .map(word -> word.withWord("cached_" + word.getWord()))
-                .collect(toList());
+            .map(word -> word.withWord("cached_" + word.getWord()))
+            .collect(toList());
         provider.putWords(words);
     }
 
-    private VocabularyData buildVocabularData(String uiLanguage, String learningLanguage) {
+    private VocabularyData buildVocabularyData(String uiLanguage, String learningLanguage) {
         List<VocabularyWord> list = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             list.add(VocabularyWord.create(
-                    learningLanguage + "_word_" + i,
-                    learningLanguage + "_word_" + i,
-                    "pos",
-                    "gender",
-                    (int) (Math.random() * 4),
-                    Collections.singletonList(uiLanguage + "_translation_" + i),
-                    uiLanguage,
-                    learningLanguage)
+                learningLanguage + "_word_" + i,
+                learningLanguage + "_word_" + i,
+                "pos",
+                "gender",
+                (int) (Math.random() * 4),
+                Collections.singletonList(uiLanguage + "_translation_" + i),
+                uiLanguage,
+                learningLanguage)
             );
         }
         return VocabularyData.create(list, uiLanguage, learningLanguage);

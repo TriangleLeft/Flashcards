@@ -18,7 +18,7 @@ import javax.inject.Inject;
 @FunctionsAreNonnullByDefault
 public class StubSettingsModule implements SettingsModule {
 
-    private final static int DELAY = 300;
+    private final static int DELAY = 0;
     private List<Language> languages = Arrays.asList(
         Language.create("en", "English", 4, false, false),
         Language.create("es", "Spanish", 3, true, false),

@@ -27,31 +27,31 @@ public class NetModule {
     @Provides
     public HttpUrl endpoint() {
         return new HttpUrl.Builder()
-                .host(BASE_URL)
-                .scheme(BASE_SCHEME)
-                .build();
+            .host(BASE_URL)
+            .scheme(BASE_SCHEME)
+            .build();
     }
 
     @ApplicationScope
     @Provides
     public Retrofit retrofit(HttpUrl url, OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
-                .baseUrl(url)
-                .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .baseUrl(url)
+            .client(client)
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
     }
 
     @ApplicationScope
     @Provides
     public OkHttpClient client(CookieJar cookieJar, HttpLoggingInterceptor loggingInterceptor,
-                               NetworkDelayInterceptor delayInterceptor) {
+        NetworkDelayInterceptor delayInterceptor) {
         return new OkHttpClient.Builder()
-                .cookieJar(cookieJar)
-                .addInterceptor(loggingInterceptor)
-                .addInterceptor(delayInterceptor)
-                .addNetworkInterceptor(new StethoInterceptor())
-                .build();
+            .cookieJar(cookieJar)
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(delayInterceptor)
+            .addNetworkInterceptor(new StethoInterceptor())
+            .build();
     }
 
     @ApplicationScope
