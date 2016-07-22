@@ -36,6 +36,8 @@ jacocoTestReport {
     }
 }
 
+check.dependsOn jacocoTestReport
+
 apply from: '../dependencies.gradle'
 
 dependencies {

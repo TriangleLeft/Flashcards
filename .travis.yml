@@ -17,3 +17,5 @@ before_install:
     - echo "sdk.dir=$ANDROID_HOME" > local.properties
 script:
   - ./gradlew build jacocoTestReport
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
