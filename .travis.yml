@@ -14,4 +14,4 @@ before_install:
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
     - export JAVA_HOME=$JAVA8_HOME
 script:
-  - ./gradle build jacocoTestReport
+  - gradle build jacocoTestReport
