@@ -1,6 +1,5 @@
 language: android
 jdk:
-  - oraclejdk7
   - oraclejdk8
 android:
     components:
@@ -15,4 +14,4 @@ before_install:
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
     - export JAVA_HOME=$JAVA8_HOME
 script:
-  - ./gradlew build jacocoTestReport
+  - ./gradle build jacocoTestReport
