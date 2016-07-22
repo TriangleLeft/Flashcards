@@ -46,7 +46,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     @Override
     public void onCreate() {
         // TODO: Update user data here?
-        setInitalState(view -> {
+        applyState(view -> {
             currentPage = IMainView.Page.LIST;
             view.showList();
             showUserData(accountModule.getUserData().get());

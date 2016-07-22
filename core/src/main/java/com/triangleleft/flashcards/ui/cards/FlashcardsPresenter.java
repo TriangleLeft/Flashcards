@@ -33,7 +33,6 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
     private Subscription subscription = Subscriptions.empty();
-    private State currentState;
 
     @Inject
     public FlashcardsPresenter(FlashcardsModule module, Scheduler mainThreadScheduler) {
@@ -48,19 +47,13 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     }
 
     @Override
-    public void onBind(IFlashcardsView view) {
-        super.onBind(view);
-        currentState.apply();
-    }
-
-    @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
         subscription.unsubscribe();
     }
 
     public void onLoadFlashcards() {
-        applyState(() -> getView().showProgress());
+        applyState(IFlashcardsView::showProgress);
         results.clear();
         subscription.unsubscribe();
         subscription = module.getFlashcards()
@@ -69,7 +62,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
                         data -> {
                             if (data.getWords().size() != 0) {
                                 testData = data;
-                                applyState(() -> getView().showWords(data.getWords()));
+                                applyState(view -> view.showWords(data.getWords()));
                             } else {
                                 // Treat this as error, we expect to always have flashcards
                                 processError(new ServerException("Got no flashcards in response"));
@@ -79,13 +72,8 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
                 );
     }
 
-    private void applyState(State state) {
-        currentState = state;
-        currentState.apply();
-    }
-
     private void processError(Throwable throwable) {
-        applyState(() -> getView().showError());
+        applyState(IFlashcardsView::showError);
     }
 
     public void onWordRight(FlashcardWord word) {
@@ -107,9 +95,9 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
                 .map(FlashcardWordResult::getWord)
                 .collect(toList());
         if (wrongWords.size() == 0) {
-            applyState(() -> getView().showResultsNoErrors());
+            applyState(IFlashcardsView::showResultsNoErrors);
         } else {
-            applyState(() -> getView().showResultErrors(wrongWords));
+            applyState(view -> view.showResultErrors(wrongWords));
         }
     }
 

@@ -33,25 +33,17 @@ public abstract class AbstractPresenter<View extends IView>
                 }
                 Preconditions.checkState(method.getReturnType().equals(Void.TYPE),
                     "Trying to invoke non-void view method: " + method);
-                View localView = null;
-                // Check whether we have view attached
-                // Do it while holding lock so we don't miss bind/unbind
-                synchronized (AbstractPresenter.this) {
-                    if (view != null) {
-                        localView = view;
-                    } else if (!destroyed) {
-                        // No view is bound, but we are not destroyed yet, remember this call
-                        // Save call to be invoked when view is bound again
-                        viewCalls.add(new AbstractMap.SimpleEntry<>(method, args));
-                    } else {
-                        throw new RuntimeException(
-                            "Wanted to invoke " + method + " when presenter was already destroyed");
-                    }
-                }
-                // We had view attached, invoke call immediately
+                View localView = view;
                 // TODO: we do it on the caller thread and we probably don't want to do that on android, right?
                 if (localView != null) {
                     invokeMethod(localView, method, args);
+                } else if (!destroyed) {
+                    // No view is bound, but we are not destroyed yet, remember this call
+                    // Save call to be invoked when view is bound again
+                    viewCalls.add(new AbstractMap.SimpleEntry<>(method, args));
+                } else {
+                    throw new RuntimeException(
+                        "Wanted to invoke " + method + " when presenter was already destroyed");
                 }
                 return null;
             }));
@@ -68,7 +60,7 @@ public abstract class AbstractPresenter<View extends IView>
         this.view = view;
         // TODO: all presenters should use state
         if (currentState != null) {
-            currentState.apply(getView());
+            currentState.apply(view);
         }
     }
 
@@ -114,13 +106,14 @@ public abstract class AbstractPresenter<View extends IView>
         return viewState;
     }
 
-    protected void setInitalState(State<View> state) {
-        currentState = state;
-    }
-
     protected void applyState(State<View> state) {
         currentState = state;
-        currentState.apply(getView());
+        View localView = view;
+        // Apply state only if we have view bound
+        // Otherwise it would get called when view is bound
+        if (localView != null) {
+            currentState.apply(view);
+        }
     }
 
     protected interface State<View> {

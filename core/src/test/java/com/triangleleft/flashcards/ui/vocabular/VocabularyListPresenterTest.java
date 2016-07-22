@@ -109,10 +109,7 @@ public class VocabularyListPresenterTest {
         presenter.onBind(view);
 
         verify(view).showEmpty();
-        // TODO: Due to the fact that we are executing everything synchronously, loadList from onCreate is ready
-        // before onBind. That is, we load list, apply state, then bind list and apply state again.
-        // That's way there are two actual invocations.
-        verify(navigator, times(2)).showWord(Optional.empty());
+        verify(navigator).showWord(Optional.empty());
     }
 
     @Test
