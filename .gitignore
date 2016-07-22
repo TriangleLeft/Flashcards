@@ -11,6 +11,5 @@ Thumbs.db
 build/
 
 # gradle wrapper
-gradle
 gradlew
 gradlew.bat
