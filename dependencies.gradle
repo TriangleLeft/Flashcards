@@ -1,6 +1,9 @@
-final SUPPORT_VERSION = '24.0.0'
-final PCJ_VERSION = '1c351f68d3'
-final DAGGER_VERSION = '2.4'
+def SUPPORT_VERSION = '24.0.0'
+def PCJ_VERSION = '1c351f68d3'
+def DAGGER_VERSION = '2.4'
+def JUNIT_VERSION = '4.12'
+def HAMCREST_VERSION = '1.3'
+
 ext.dep = [
         DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
                              "com.github.crittercism.dexmaker:dexmaker-dx:f8e7c23e41",
@@ -15,5 +18,7 @@ ext.dep = [
         SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION",
         PCJ               : "com.github.franmontiel:PersistentCookieJar:$PCJ_VERSION",
         DAGGER            : "com.google.dagger:dagger:${DAGGER_VERSION}",
-        DAGGER_COMPILER   : "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+        DAGGER_COMPILER   : "com.google.dagger:dagger-compiler:${DAGGER_VERSION}",
+        JUNIT             : "junit:junit:$JUNIT_VERSION",
+        HAMCREST          : "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
 ]
