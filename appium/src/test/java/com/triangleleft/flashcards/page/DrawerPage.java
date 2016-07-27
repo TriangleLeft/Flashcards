@@ -17,14 +17,19 @@
 package com.triangleleft.flashcards.page;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.support.PageFactory;
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.openqa.selenium.WebElement;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-public class BasePage {
+public class DrawerPage extends BasePage {
 
-    public BasePage(AppiumDriver driver) {
-        PageFactory.initElements(new AppiumFieldDecorator(driver, 60, TimeUnit.SECONDS), this);
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/drawer_user_name")
+    public WebElement userName;
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/drawer_item_name")
+    public List<WebElement> languages;
+
+    public DrawerPage(AppiumDriver driver) {
+        super(driver);
     }
 }

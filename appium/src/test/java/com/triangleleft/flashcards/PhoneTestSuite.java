@@ -22,7 +22,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     LoginTest.class,
-    PhoneMainTest.class
+    //PhoneMainTest.class
+    DrawerTest.class
 })
 public class PhoneTestSuite {
 }

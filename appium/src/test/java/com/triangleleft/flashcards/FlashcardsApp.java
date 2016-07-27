@@ -14,6 +14,8 @@ package com.triangleleft.flashcards;/*
  *
  */
 
+import com.triangleleft.flashcards.page.DrawerPage;
+import com.triangleleft.flashcards.page.FlashcardPage;
 import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.page.VocabularyListPage;
@@ -39,4 +41,11 @@ public class FlashcardsApp {
         return new VocabularyListPage(driver);
     }
 
+    public DrawerPage drawerPage() {
+        return new DrawerPage(driver);
+    }
+
+    public FlashcardPage flashcardPage() {
+        return new FlashcardPage(driver);
+    }
 }

@@ -16,7 +16,13 @@
 
 package com.triangleleft.flashcards;
 
+import static com.triangleleft.flashcards.TestUtils.isEmpty;
+import static junit.framework.TestCase.assertNotNull;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 import com.triangleleft.flashcards.page.LoginPage;
+import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
 import org.junit.Rule;
@@ -33,14 +39,22 @@ public class LoginTest {
     public AppiumRule appium = new AppiumAndroidRule(true);
 
     @Test
-    public void validLogin() throws InterruptedException {
+    public void login() throws InterruptedException {
         LoginPage loginPage = appium.getApp().loginPage();
+        // Should start empty
+        assertThat(loginPage.email, isEmpty());
+        assertThat(loginPage.password, isEmpty());
+        assertThat(loginPage.checkbox.isSelected(), is(false));
+        // Enter data
         loginPage.email.sendKeys(LOGIN);
         loginPage.password.sendKeys(PASSWORD);
         loginPage.checkbox.click();
+        // Login
         loginPage.buttonSignIn.click();
 
-        Thread.sleep(10000);
+        // Wait till we can get main page
+        MainPage page = appium.getApp().mainPage();
+        assertNotNull(page.title.isDisplayed());
     }
 
 }
