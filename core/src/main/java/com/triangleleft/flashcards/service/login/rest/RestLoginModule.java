@@ -52,6 +52,7 @@ public class RestLoginModule implements LoginModule {
     }
 
     private Observable<Void> processModel(LoginResponseModel model) {
+        logger.debug("processModel called with [{}]", model);
         if (model.isSuccess()) {
             accountModule.setUserId(model.getUserId());
             return settingsModule.loadUserData()

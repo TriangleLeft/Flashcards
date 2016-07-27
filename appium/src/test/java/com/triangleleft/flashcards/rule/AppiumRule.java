@@ -14,18 +14,16 @@
  *
  */
 
+package com.triangleleft.flashcards.rule;
+
+import com.triangleleft.flashcards.FlashcardsApp;
 import io.appium.java_client.AppiumDriver;
+import org.junit.rules.TestRule;
+import org.openqa.selenium.WebElement;
 
-public class FlashcardsApp {
+public interface AppiumRule extends TestRule {
 
-    private final AppiumDriver driver;
+    AppiumDriver<WebElement> getDriver();
 
-    public FlashcardsApp(AppiumDriver driver) {
-        this.driver = driver;
-    }
-
-    public LoginPage loginPage() {
-        return new LoginPage(driver);
-    }
-
+    FlashcardsApp getApp();
 }
