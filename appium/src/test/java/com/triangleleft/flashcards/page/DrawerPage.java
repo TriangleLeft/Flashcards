@@ -16,8 +16,8 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class DrawerPage extends BasePage {
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/drawer_item_name")
     public List<WebElement> languages;
 
-    public DrawerPage(AppiumDriver driver) {
+    public DrawerPage(AppiumFieldDecorator driver) {
         super(driver);
     }
 }

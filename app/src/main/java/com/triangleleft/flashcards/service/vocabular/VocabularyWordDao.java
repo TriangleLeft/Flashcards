@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.service.vocabular;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.annimon.stream.Optional;
 import com.google.auto.value.AutoValue;
 import com.squareup.sqldelight.RowMapper;
 import com.triangleleft.service.vocabular.VocabularyWordModel;
@@ -16,12 +17,11 @@ public abstract class VocabularyWordDao implements VocabularyWordModel {
     public static final Factory<VocabularyWordDao> FACTORY = new Factory<>(AutoValue_VocabularyWordDao::new);
 
     private static final RowMapper<AllInfo> SELECT_WORDS_MAPPER =
-            FACTORY.select_wordsMapper(AutoValue_VocabularyWordDao_AllInfo::new);
-
+        FACTORY.select_wordsMapper(AutoValue_VocabularyWordDao_AllInfo::new);
 
     public static List<VocabularyWord> allInfo(SQLiteDatabase db, String uiLanguage, String learningLanguage) {
         List<VocabularyWord> result = new ArrayList<>();
-        try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[]{uiLanguage, learningLanguage})) {
+        try (Cursor cursor = db.rawQuery(SELECT_WORDS, new String[] { uiLanguage, learningLanguage })) {
             while (cursor.moveToNext()) {
                 AllInfo info = SELECT_WORDS_MAPPER.map(cursor);
                 VocabularyWordDao word = info.a();
@@ -39,14 +39,14 @@ public abstract class VocabularyWordDao implements VocabularyWordModel {
                     }
                 }
                 result.add(VocabularyWord.create(
-                        word.word_string(),
-                        word.normalized_string(),
-                        word.pos(),
-                        word.gender(),
-                        (int) word.strength(),
-                        translations,
-                        word.uiLanguage(),
-                        word.learningLanguage())
+                    word.word_string(),
+                    word.normalized_string(),
+                    Optional.ofNullable(word.pos()),
+                    Optional.ofNullable(word.gender()),
+                    (int) word.strength(),
+                    translations,
+                    word.uiLanguage(),
+                    word.learningLanguage())
                 );
             }
         }

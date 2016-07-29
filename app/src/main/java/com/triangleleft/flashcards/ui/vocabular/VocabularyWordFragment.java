@@ -35,18 +35,20 @@ public class VocabularyWordFragment
 
     @Bind(R.id.vocabulary_word_title)
     TextView titleView;
+    @Bind(R.id.vocabulary_word_translation_entry)
+    View translationEntry;
     @Bind(R.id.vocabulary_word_translation_value)
     TextView translationView;
     @Bind(R.id.vocabulary_word_strength_value)
     VocabularyStrengthView strengthValue;
-    @Bind(R.id.vocabulary_word_gender_value)
-    TextView genderView;
-    @Bind(R.id.vocabulary_word_pos_value)
-    TextView posView;
     @Bind(R.id.vocabulary_word_gender_entry)
     View genderEntry;
+    @Bind(R.id.vocabulary_word_gender_value)
+    TextView genderView;
     @Bind(R.id.vocabulary_word_pos_entry)
     View posEntry;
+    @Bind(R.id.vocabulary_word_pos_value)
+    TextView posView;
     @Bind(R.id.vocabulary_word_flipper)
     ViewFlipper flipper;
 
@@ -104,18 +106,22 @@ public class VocabularyWordFragment
         flipper.setDisplayedChild(CONTENT);
         this.word = word;
         titleView.setText(word.getWord());
-        String translation = word.getTranslations().size() > 0 ? word.getTranslations().get(0) : "";
-        translationView.setText(translation);
+        if (word.getTranslations().isEmpty()) {
+            translationView.setVisibility(View.GONE);
+        } else {
+            translationView.setVisibility(View.VISIBLE);
+            translationView.setText(word.getTranslations().get(0));
+        }
         strengthValue.setStrength(word.getStrength());
-        String gender = word.getGender();
-        if (gender != null) {
-            genderView.setText(gender);
+        if (word.getGender().isPresent()) {
+            genderEntry.setVisibility(View.VISIBLE);
+            genderView.setText(word.getGender().get());
         } else {
             genderEntry.setVisibility(View.GONE);
         }
-        String pos = word.getPos();
-        if (pos != null) {
-            posView.setText(pos);
+        if (word.getPos().isPresent()) {
+            posEntry.setVisibility(View.VISIBLE);
+            posView.setText(word.getPos().get());
         } else {
             posEntry.setVisibility(View.GONE);
         }

@@ -16,15 +16,13 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.concurrent.TimeUnit;
-
 public class BasePage {
 
-    public BasePage(AppiumDriver driver) {
-        PageFactory.initElements(new AppiumFieldDecorator(driver, 60, TimeUnit.SECONDS), this);
+    public BasePage(AppiumFieldDecorator decorator) {
+        PageFactory.initElements(decorator, this);
     }
 }
+

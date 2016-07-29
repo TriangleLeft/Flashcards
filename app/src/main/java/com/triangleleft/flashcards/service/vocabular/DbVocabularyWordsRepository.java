@@ -42,8 +42,8 @@ public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
                         .learningLanguage(word.getLearningLanguage())
                         .word_string(word.getWord())
                         .normalized_string(word.getNormalizedWord())
-                        .gender(word.getGender())
-                        .pos(word.getPos())
+                    .gender(word.getGender().orElse(null))
+                    .pos(word.getPos().orElse(null))
                         .strength(word.getStrength())
                         .asContentValues());
                 for (String translation : word.getTranslations()) {

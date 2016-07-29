@@ -19,6 +19,9 @@ package com.triangleleft.flashcards.rule;
 import com.triangleleft.flashcards.FlashcardsApp;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.TimeOutDuration;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import io.appium.java_client.remote.MobilePlatform;
 import org.junit.runner.Description;
@@ -30,10 +33,13 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class AppiumAndroidRule implements AppiumRule {
 
     private final boolean fullReset;
+    private final TimeOutDuration timeOutDuration = new TimeOutDuration(60, TimeUnit.SECONDS);
+    private AppiumFieldDecorator decorator;
 
     public AppiumAndroidRule() {
         fullReset = false;
@@ -67,6 +73,16 @@ public class AppiumAndroidRule implements AppiumRule {
     }
 
     @Override
+    public AppiumFieldDecorator getDecorator() {
+        return decorator;
+    }
+
+    @Override
+    public TimeOutDuration getTimeOutDuration() {
+        return timeOutDuration;
+    }
+
+    @Override
     public FlashcardsApp getApp() {
         return app;
     }
@@ -76,20 +92,21 @@ public class AppiumAndroidRule implements AppiumRule {
         File appDir = new File(classpathRoot, "../app/build/outputs/apk/");
         File appFile = new File(appDir, "app-debug.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5554");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5556");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
         if (fullReset) {
-            capabilities.setCapability("app", appFile.getAbsolutePath());
+            capabilities.setCapability(MobileCapabilityType.APP, appFile.getAbsolutePath());
             //capabilities.setCapability("fullReset", true);
-            capabilities.setCapability("noReset", false);
+            capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
         } else {
-            capabilities.setCapability("noReset", true);
+            capabilities.setCapability(MobileCapabilityType.NO_RESET, true);
         }
-        capabilities.setCapability(MobileCapabilityType.APP_PACKAGE, "com.triangleleft.flashcards");
-        capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY, ".ui.login.LoginActivity");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.triangleleft.flashcards");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, ".ui.login.LoginActivity");
         driver = new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.rotate(ScreenOrientation.PORTRAIT);
-        app = new FlashcardsApp(driver);
+        decorator = new AppiumFieldDecorator(driver, timeOutDuration);
+        app = new FlashcardsApp(decorator);
     }
 
     private void after() {

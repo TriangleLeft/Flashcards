@@ -2,7 +2,9 @@ apply plugin: 'java'
 apply from: '../dependencies.gradle'
 
 dependencies {
-    compile 'io.appium:java-client:3.3.0'
+    compile project(":core")
+
+    compile 'io.appium:java-client:4.0.0'
     compile dep.JUNIT
     compile dep.HAMCREST
 }

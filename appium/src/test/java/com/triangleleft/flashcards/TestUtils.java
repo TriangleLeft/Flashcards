@@ -43,8 +43,6 @@ public class TestUtils {
     public static <T extends WebElement> Matcher<T> hasText(final String text) {
         return new TypeSafeMatcher<T>() {
 
-            private WebElement element;
-
             @Override
             public void describeTo(Description description) {
                 description.appendText("a element ")
@@ -63,4 +61,5 @@ public class TestUtils {
             }
         };
     }
+
 }

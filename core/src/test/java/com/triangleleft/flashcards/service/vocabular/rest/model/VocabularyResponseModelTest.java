@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import org.junit.Before;
@@ -59,7 +60,15 @@ public class VocabularyResponseModelTest {
         assertThat(data.getLearningLanguageId(), equalTo("learn"));
         assertThat(data.getUiLanguageId(), equalTo("from"));
         VocabularyWord word = VocabularyWord
-            .create("word", "norm", "pos", "gender", 3, Collections.emptyList(), "from", "learn");
+            .create(
+                "word",
+                "norm",
+                Optional.of("pos"),
+                Optional.of("gender"),
+                3,
+                Collections.emptyList(),
+                "from",
+                "learn");
         assertThat(data.getWords(), containsInAnyOrder(word));
     }
 }

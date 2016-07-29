@@ -19,33 +19,38 @@ import com.triangleleft.flashcards.page.FlashcardPage;
 import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.page.VocabularyListPage;
-import io.appium.java_client.AppiumDriver;
+import com.triangleleft.flashcards.page.VocabularyWordPage;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class FlashcardsApp {
 
-    private final AppiumDriver driver;
+    private final AppiumFieldDecorator decorator;
 
-    public FlashcardsApp(AppiumDriver driver) {
-        this.driver = driver;
+    public FlashcardsApp(AppiumFieldDecorator decorator) {
+        this.decorator = decorator;
     }
 
     public LoginPage loginPage() {
-        return new LoginPage(driver);
+        return new LoginPage(decorator);
     }
 
     public MainPage mainPage() {
-        return new MainPage(driver);
+        return new MainPage(decorator);
     }
 
     public VocabularyListPage vocabularyListPage() {
-        return new VocabularyListPage(driver);
+        return new VocabularyListPage(decorator);
+    }
+
+    public VocabularyWordPage vocabularyWordPage() {
+        return new VocabularyWordPage(decorator);
     }
 
     public DrawerPage drawerPage() {
-        return new DrawerPage(driver);
+        return new DrawerPage(decorator);
     }
 
     public FlashcardPage flashcardPage() {
-        return new FlashcardPage(driver);
+        return new FlashcardPage(decorator);
     }
 }

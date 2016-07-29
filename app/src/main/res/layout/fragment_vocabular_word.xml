@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:padding="@dimen/vocabular_word_padding">
 
-
+        <!-- Title -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -43,6 +43,7 @@
                 app:fabSize="mini"/>
         </LinearLayout>
 
+        <!-- Strength -->
         <LinearLayout style="@style/VocabularWordEntry">
 
             <TextView
@@ -57,7 +58,10 @@
                 android:text="@string/placeholder"/>
         </LinearLayout>
 
-        <LinearLayout style="@style/VocabularWordEntry">
+        <!-- Translation -->
+        <LinearLayout
+            android:id="@+id/vocabulary_word_translation_entry"
+            style="@style/VocabularWordEntry">
 
             <TextView
                 style="@style/VocabularWordDescription"
@@ -69,6 +73,7 @@
                 android:text="@string/long_placeholder"/>
         </LinearLayout>
 
+        <!-- Gender -->
         <LinearLayout
             android:id="@+id/vocabulary_word_gender_entry"
             style="@style/VocabularWordEntry">
@@ -83,6 +88,7 @@
                 android:text="@string/placeholder"/>
         </LinearLayout>
 
+        <!-- Pos -->
         <LinearLayout
             android:id="@+id/vocabulary_word_pos_entry"
             style="@style/VocabularWordEntry">
@@ -99,6 +105,7 @@
 
     </LinearLayout>
 
+    <!-- Empty -->
     <!-- TODO: add text? -->
     <FrameLayout
         android:layout_width="match_parent"

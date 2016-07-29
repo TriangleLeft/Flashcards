@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.service.vocabular.rest.model;
 
 import static com.annimon.stream.Collectors.toList;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.google.gson.annotations.SerializedName;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
@@ -22,7 +23,7 @@ public class VocabularyResponseModel {
     public VocabularyData toVocabularyData() {
         List<VocabularyWord> list = Stream.of(wordList)
             .map(word -> word.toVocabularyWord(fromLanguage, learningLanguage))
-                .collect(toList());
+            .collect(toList());
         return VocabularyData.create(list, fromLanguage, learningLanguage);
     }
 
@@ -42,18 +43,17 @@ public class VocabularyResponseModel {
 
         public VocabularyWord toVocabularyWord(String uiLanguage, String learningLanguage) {
             return VocabularyWord.create(
-                            wordString,
-                            normalizedString,
-                            pos,
-                            gender,
-                            strengthBars,
-                            Collections.emptyList(),
-                            uiLanguage,
-                            learningLanguage
+                wordString,
+                normalizedString,
+                Optional.ofNullable(pos),
+                Optional.ofNullable(gender),
+                strengthBars,
+                Collections.emptyList(),
+                uiLanguage,
+                learningLanguage
             );
         }
 
     }
-
 
 }

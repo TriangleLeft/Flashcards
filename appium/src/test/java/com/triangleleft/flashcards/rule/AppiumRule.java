@@ -18,12 +18,18 @@ package com.triangleleft.flashcards.rule;
 
 import com.triangleleft.flashcards.FlashcardsApp;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.TimeOutDuration;
 import org.junit.rules.TestRule;
 import org.openqa.selenium.WebElement;
 
 public interface AppiumRule extends TestRule {
 
     AppiumDriver<WebElement> getDriver();
+
+    AppiumFieldDecorator getDecorator();
+
+    TimeOutDuration getTimeOutDuration();
 
     FlashcardsApp getApp();
 }

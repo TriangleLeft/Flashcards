@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.service.vocabular.stub;
 
 import static com.annimon.stream.Collectors.toList;
 
+import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
@@ -63,8 +64,8 @@ public class StubVocabularyModule implements VocabularyModule {
             list.add(VocabularyWord.create(
                 learningLanguage + "_word_" + i,
                 learningLanguage + "_word_" + i,
-                "pos",
-                "gender",
+                Optional.of("pos"),
+                Optional.of("gender"),
                 (int) (Math.random() * 4),
                 Collections.singletonList(uiLanguage + "_translation_" + i),
                 uiLanguage,

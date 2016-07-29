@@ -16,8 +16,8 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 public class MainPage extends BasePage {
@@ -31,7 +31,7 @@ public class MainPage extends BasePage {
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@resource-id='com.triangleleft.flashcards:id/toolbar']/android.widget.ImageButton[1]")
     public WebElement drawerButton;
 
-    public MainPage(AppiumDriver driver) {
+    public MainPage(AppiumFieldDecorator driver) {
         super(driver);
     }
 }

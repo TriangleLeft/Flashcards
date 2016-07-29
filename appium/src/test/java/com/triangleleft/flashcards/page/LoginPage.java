@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
@@ -15,7 +15,7 @@ public class LoginPage extends BasePage {
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_button")
     public WebElement buttonSignIn;
 
-    public LoginPage(AppiumDriver driver) {
+    public LoginPage(AppiumFieldDecorator driver) {
         super(driver);
     }
 }

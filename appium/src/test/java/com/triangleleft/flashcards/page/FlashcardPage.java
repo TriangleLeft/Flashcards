@@ -16,8 +16,8 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class FlashcardPage extends BasePage {
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/flashcard_result_success_text")
     public WebElement resultSuccessText;
 
-    public FlashcardPage(AppiumDriver driver) {
+    public FlashcardPage(AppiumFieldDecorator driver) {
         super(driver);
     }
 }
