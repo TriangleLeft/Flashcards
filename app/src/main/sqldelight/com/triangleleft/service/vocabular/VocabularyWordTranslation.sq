@@ -1,0 +1,11 @@
+CREATE TABLE vocabulary_word_translation (
+  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  word_id INTEGER NOT NULL REFERENCES vocabulary_word(_id) ON DELETE CASCADE,
+  translation TEXT NOT NULL
+);
+
+create_index:
+CREATE INDEX word_id_index ON vocabulary_word_translation(word_id);
+
+delete_all:
+DELETE FROM vocabulary_word_translation;

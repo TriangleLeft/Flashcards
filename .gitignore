@@ -9,8 +9,3 @@ Thumbs.db
 .idea
 .gradle
 build/
-
-# gradle wrapper
-gradle
-gradlew
-gradlew.bat

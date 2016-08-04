@@ -1,93 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ViewFlipper
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vocabulary_word_flipper"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/vocabular_word_padding">
+    android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/vocabular_word_padding">
 
-        <TextView
-            android:id="@+id/vocabular_word_title"
-            style="?android:textAppearanceLarge"
+        <!-- Title -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="50dp"
             android:gravity="center_vertical"
-            android:layout_marginLeft="8dp"
-            android:text="@string/placeholder" />
+            android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/vocabular_word_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:src="@drawable/ic_volume_up_black_24dp"
-            android:tint="@color/textColorPrimary"
-            app:backgroundTint="@color/colorPrimary"
-            app:elevation="0dp"
-            app:fabSize="mini" />
+            <TextView
+                android:id="@+id/vocabulary_word_title"
+                style="?android:textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/placeholder"/>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/vocabular_word_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_volume_up_black_24dp"
+                android:tint="@color/textColorPrimary"
+                app:backgroundTint="@color/colorPrimary"
+                app:elevation="0dp"
+                app:fabSize="mini"/>
+        </LinearLayout>
+
+        <!-- Strength -->
+        <LinearLayout style="@style/VocabularWordEntry">
+
+            <TextView
+                style="@style/VocabularWordDescription"
+                android:text="@string/word_strength"/>
+
+            <com.triangleleft.flashcards.ui.vocabular.VocabularyStrengthView
+                android:id="@+id/vocabulary_word_strength_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_signal_cellular_2_bar_black_24dp"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <!-- Translation -->
+        <LinearLayout
+            android:id="@+id/vocabulary_word_translation_entry"
+            style="@style/VocabularWordEntry">
+
+            <TextView
+                style="@style/VocabularWordDescription"
+                android:text="@string/word_translation"/>
+
+            <TextView
+                android:id="@+id/vocabulary_word_translation_value"
+                style="@style/VocabularWordValue"
+                android:text="@string/long_placeholder"/>
+        </LinearLayout>
+
+        <!-- Gender -->
+        <LinearLayout
+            android:id="@+id/vocabulary_word_gender_entry"
+            style="@style/VocabularWordEntry">
+
+            <TextView
+                style="@style/VocabularWordDescription"
+                android:text="@string/word_gender"/>
+
+            <TextView
+                android:id="@+id/vocabulary_word_gender_value"
+                style="@style/VocabularWordValue"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <!-- Pos -->
+        <LinearLayout
+            android:id="@+id/vocabulary_word_pos_entry"
+            style="@style/VocabularWordEntry">
+
+            <TextView
+                style="@style/VocabularWordDescription"
+                android:text="@string/word_part_of_speech"/>
+
+            <TextView
+                android:id="@+id/vocabulary_word_pos_value"
+                style="@style/VocabularWordValue"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
     </LinearLayout>
 
-    <LinearLayout style="@style/VocabularWordEntry">
+    <!-- Empty -->
+    <!-- TODO: add text? -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-        <TextView
-            style="@style/VocabularWordDescription"
-            android:text="@string/word_strength" />
-
-        <com.triangleleft.flashcards.vocabular.VocabularStrengthView
-            android:id="@+id/vocabular_word_strength_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_signal_cellular_2_bar_black_24dp"
-            android:text="@string/placeholder" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/VocabularWordEntry">
-
-        <TextView
-            style="@style/VocabularWordDescription"
-            android:text="@string/word_translation" />
-
-        <TextView
-            android:id="@+id/vocabular_word_translation_value"
-            style="@style/VocabularWordValue"
-            android:text="@string/long_placeholder" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/vocabular_word_gender_entry"
-        style="@style/VocabularWordEntry">
-
-        <TextView
-            style="@style/VocabularWordDescription"
-            android:text="@string/word_gender" />
-
-        <TextView
-            android:id="@+id/vocabular_word_gender_value"
-            style="@style/VocabularWordValue"
-            android:text="@string/placeholder" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/vocabular_word_pos_entry"
-        style="@style/VocabularWordEntry">
-
-        <TextView
-            style="@style/VocabularWordDescription"
-            android:text="@string/word_part_of_speech" />
-
-        <TextView
-            android:id="@+id/vocabular_word_pos_value"
-            style="@style/VocabularWordValue"
-            android:text="@string/placeholder" />
-    </LinearLayout>
-
-</LinearLayout>
+</ViewFlipper>

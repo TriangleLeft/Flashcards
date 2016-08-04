@@ -7,6 +7,10 @@ import java.util.List;
 
 public class ListUtils {
 
+    private ListUtils() {
+        // Static use only
+    }
+
     public static <T> List<T> wrapList(@Nullable List<T> list) {
         if (list == null) {
             return Collections.emptyList();

@@ -1,0 +1,10 @@
+apply plugin: 'java'
+apply from: '../dependencies.gradle'
+
+dependencies {
+    compile project(":core")
+
+    compile 'io.appium:java-client:4.0.0'
+    compile dep.JUNIT
+    compile dep.HAMCREST
+}

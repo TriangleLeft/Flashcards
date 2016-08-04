@@ -1,8 +1,0 @@
-CREATE TABLE vocabular_word_translation (
-  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  normalized_string TEXT NOT NULL,
-  translation TEXT NOT NULL
-);
-
-delete_all:
-DELETE FROM vocabular_word_translation;

@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_marginTop="@dimen/toolbar_margin_top"
-        app:titleTextColor="@color/white"
-        app:popupTheme="@style/AppTheme.PopupOverlay" />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/status_bar_height"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:titleTextColor="@color/textColorPrimary"/>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SlidingPaneLayout
         android:id="@+id/sliding_pane_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/appbar"
         android:clipChildren="false">
 
-        <com.triangleleft.flashcards.common.NavigationView
+        <com.triangleleft.flashcards.ui.common.NavigationView
             android:id="@+id/navigation_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="72dp"
-            android:background="@android:color/transparent"
             android:clipChildren="false"
             android:orientation="horizontal">
 
@@ -39,31 +46,31 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
                 android:alpha="0.8"
-                android:background="@drawable/shadow_left" />
+                android:background="@drawable/shadow_left"/>
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/main_panel"
-                android:layout_width="350dp"
+                android:layout_width="@dimen/main_panel_width"
                 android:layout_height="match_parent"
-                tools:context=".main.MainActivity">
+                tools:context=".ui.main.MainActivity">
 
                 <FrameLayout
                     android:id="@+id/main_container"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:context=".main.MainActivity" />
+                    tools:context=".ui.main.MainActivity"/>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/button_flashcards"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_margin="@dimen/activity_vertical_margin"
                     android:src="@drawable/ic_flashcards"
                     android:tint="@color/textColorPrimary"
                     app:fabSize="normal"
                     app:layout_anchor="@id/main_container"
-                    app:layout_anchorGravity="bottom|right|end" />
+                    app:layout_anchorGravity="bottom|right|end"/>
 
             </android.support.design.widget.CoordinatorLayout>
 
@@ -71,7 +78,7 @@
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:alpha="0.8"
-                android:background="@drawable/shadow_right" />
+                android:background="@drawable/shadow_right"/>
 
             <FrameLayout
                 android:id="@+id/secondary_container"
@@ -79,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".main.MainActivity" />
+                tools:context=".ui.main.MainActivity"/>
 
         </LinearLayout>
 
@@ -89,6 +96,6 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
 </RelativeLayout>

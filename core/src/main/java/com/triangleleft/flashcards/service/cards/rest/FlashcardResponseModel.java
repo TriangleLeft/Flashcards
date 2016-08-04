@@ -1,58 +1,41 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
+import static com.annimon.stream.Collectors.toList;
+
+import com.annimon.stream.Stream;
 import com.google.gson.annotations.SerializedName;
+import com.triangleleft.flashcards.service.cards.FlashcardTestData;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
 
-import com.triangleleft.flashcards.service.cards.IFlashcardTestData;
-import com.triangleleft.flashcards.service.cards.IFlashcardWord;
-
-import java.util.Collections;
 import java.util.List;
 
-public class FlashcardResponseModel implements IFlashcardTestData {
+public class FlashcardResponseModel {
 
     @SerializedName("ui_language")
-    public String uiLanguage;
+    String uiLanguage;
     @SerializedName("learning_language")
-    public String learningLanguage;
+    String learningLanguage;
     @SerializedName("flashcard_data")
-    public List<FlashcardModel> flashcardData;
+    List<FlashcardModel> flashcardData;
 
-    @Override
-    public String getUiLanguage() {
-        return uiLanguage;
+    public FlashcardTestData toTestData() {
+        List<FlashcardWord> words = Stream.of(flashcardData)
+            .map(FlashcardModel::toWord)
+            .collect(toList());
+        return FlashcardTestData.create(uiLanguage, learningLanguage, words);
     }
 
-    @Override
-    public String getLearningLanguage() {
-        return learningLanguage;
-    }
-
-    public List<IFlashcardWord> getWords() {
-        return Collections.unmodifiableList(flashcardData);
-    }
-
-    public static class FlashcardModel implements IFlashcardWord {
+    public static class FlashcardModel {
 
         @SerializedName("ui_word")
-        public String translation;
+        String translation;
         @SerializedName("id")
-        public String id;
+        String id;
         @SerializedName("learning_word")
-        public String word;
+        String word;
 
-        @Override
-        public String getWord() {
-            return word;
-        }
-
-        @Override
-        public String getTranslation() {
-            return translation;
-        }
-
-        @Override
-        public String getId() {
-            return id;
+        public FlashcardWord toWord() {
+            return FlashcardWord.create(word, translation, id);
         }
     }
 

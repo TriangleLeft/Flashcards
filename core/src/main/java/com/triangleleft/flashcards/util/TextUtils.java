@@ -4,6 +4,10 @@ import android.support.annotation.Nullable;
 
 public class TextUtils {
 
+    private TextUtils() {
+        // Static use only
+    }
+
     /**
      * Returns true if the string is null or 0-length.
      *
@@ -16,6 +20,16 @@ public class TextUtils {
 
     public static boolean notEquals(@Nullable String a, @Nullable String b) {
         return !TextUtils.equals(a, b);
+    }
+
+    /**
+     * Check whether provided string has text, that is any non-space symbols.
+     *
+     * @param string string to check
+     * @return true if string has text, false otherwise
+     */
+    public static boolean hasText(@Nullable String string) {
+        return !isEmpty(string) && !string.trim().isEmpty();
     }
 
     /**

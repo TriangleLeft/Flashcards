@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface IVocabularWordProvider {
 
-    List<VocabularWord> get();
+    List<VocabularyWord> get();
 }

@@ -2,6 +2,8 @@ apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'net.ltgt.apt'
 apply plugin: 'com.github.j2objccontrib.j2objcgradle'
+apply plugin: 'jacoco'
+apply from: '../dependencies.gradle'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -15,11 +17,31 @@ retrolambda {
     oldJdk System.getenv("JAVA7_HOME")
 }
 
-apply from: '../dependencies.gradle'
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, excludes: [
+                    '**/*AutoValue*.class', // AutoValue generated classes
+                    '**/*Lambda*',  // Generated lambdas
+                    '**/*_Factory*', // Dagger2 generated factories
+                    '**/*Module_*Factory*' // Dagger2 generated factories
+            ])
+        })
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 dependencies {
 
-    //  compile 'org.jetbrains:annotations:15.0'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
@@ -48,7 +70,8 @@ dependencies {
     apt dep.DAGGER_COMPILER
 
     testCompile 'org.mockito:mockito-core:1.10.19'
-    testCompile 'junit:junit:4.12'
+    testCompile dep.HAMCREST
+    testCompile dep.JUNIT
     testCompile 'org.slf4j:slf4j-simple:1.7.21'
-
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
 }
