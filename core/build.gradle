@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: "net.ltgt.apt"
+apply plugin: 'net.ltgt.apt'
+apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
