@@ -16,6 +16,7 @@ ext.dep = [
                              "com.android.support:recyclerview-v7:$SUPPORT_VERSION",
                              "com.android.support:preference-v14:23.4.0"],
         SUPPORT_ANNOTATION: "com.android.support:support-annotations:$SUPPORT_VERSION",
+        SUPPORT_ANNOTATION_SRC: "com.android.support:support-annotations:$SUPPORT_VERSION:sources",
         PCJ               : "com.github.franmontiel:PersistentCookieJar:$PCJ_VERSION",
         DAGGER            : "com.google.dagger:dagger:${DAGGER_VERSION}",
         DAGGER_COMPILER   : "com.google.dagger:dagger-compiler:${DAGGER_VERSION}",
