@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        maven {
+            url uri(System.getenv("INTEL_MULTI_OS_ENGINE_HOME") + "/gradle")
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.intel.gradle:moeGradlePlugin:1.1.+'
+    }
+}
+
+/*******************/
+/** Project Setup **/
+/*******************/
+
+// Apply plugins
+apply plugin: 'moe'
+
+// Set source and target to Java 8
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+// Set maven repository
+repositories {
+    maven {
+        url uri(System.getenv("INTEL_MULTI_OS_ENGINE_HOME") + "/gradle")
+    }
+    mavenCentral()
+}
+
+// Exclude all files from Gradle's test runner
+test { exclude '**' }
+
+// Setup MOE
+moe {
+    xcode.mainTarget = 'Flashcards'
+    xcode.testTarget = 'Flashcards-Test'
+    xcode.packageName = 'com.triangleleft.flashcards'
+    xcode.launchScreenFilePath = 'src/main/resources/LaunchScreen.xib'
+    xcode.bundleID = 'com.triangleleft.Flashcards'
+
+}
+
+// Set dependencies
+dependencies {
+    // Compile with 'jar' files in the project's 'lib' directory
+    compile fileTree(dir: 'lib', include: '*.jar')
+    compile project(":core")
+
+}
+
+
+

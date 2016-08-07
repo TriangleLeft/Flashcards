@@ -6,7 +6,7 @@ apply plugin: 'com.squareup.sqldelight'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.triangleleft.flashcards"
