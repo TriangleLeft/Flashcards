@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		8FEEAD5F1D58B34500D585A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD5E1D58B34500D585A4 /* AppDelegate.swift */; };
-		8FEEAD611D58B34500D585A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD601D58B34500D585A4 /* ViewController.swift */; };
 		8FEEAD641D58B34500D585A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FEEAD621D58B34500D585A4 /* Main.storyboard */; };
 		8FEEAD671D58B34600D585A4 /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD651D58B34600D585A4 /* Flashcards.xcdatamodeld */; };
 		8FEEAD691D58B34600D585A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FEEAD681D58B34600D585A4 /* Assets.xcassets */; };
 		8FEEAD6C1D58B34600D585A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FEEAD6A1D58B34600D585A4 /* LaunchScreen.storyboard */; };
 		8FEEAD771D58B34600D585A4 /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD761D58B34600D585A4 /* FlashcardsTests.swift */; };
 		8FEEAD821D58B34600D585A4 /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD811D58B34600D585A4 /* FlashcardsUITests.swift */; };
+		8FEEAD941D58B61100D585A4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD931D58B61100D585A4 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		8FEEAD5B1D58B34500D585A4 /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FEEAD5E1D58B34500D585A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8FEEAD601D58B34500D585A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8FEEAD631D58B34500D585A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8FEEAD661D58B34600D585A4 /* Flashcards.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Flashcards.xcdatamodel; sourceTree = "<group>"; };
 		8FEEAD681D58B34600D585A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		8FEEAD7D1D58B34600D585A4 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FEEAD811D58B34600D585A4 /* FlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsUITests.swift; sourceTree = "<group>"; };
 		8FEEAD831D58B34600D585A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FEEAD931D58B61100D585A4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +99,8 @@
 		8FEEAD5D1D58B34500D585A4 /* Flashcards */ = {
 			isa = PBXGroup;
 			children = (
+				8FEEAD911D58B5E400D585A4 /* UI */,
 				8FEEAD5E1D58B34500D585A4 /* AppDelegate.swift */,
-				8FEEAD601D58B34500D585A4 /* ViewController.swift */,
 				8FEEAD621D58B34500D585A4 /* Main.storyboard */,
 				8FEEAD681D58B34600D585A4 /* Assets.xcassets */,
 				8FEEAD6A1D58B34600D585A4 /* LaunchScreen.storyboard */,
@@ -126,6 +126,22 @@
 				8FEEAD831D58B34600D585A4 /* Info.plist */,
 			);
 			path = FlashcardsUITests;
+			sourceTree = "<group>";
+		};
+		8FEEAD911D58B5E400D585A4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8FEEAD921D58B5F200D585A4 /* Login */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		8FEEAD921D58B5F200D585A4 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8FEEAD931D58B61100D585A4 /* LoginViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FEEAD611D58B34500D585A4 /* ViewController.swift in Sources */,
+				8FEEAD941D58B61100D585A4 /* LoginViewController.swift in Sources */,
 				8FEEAD671D58B34600D585A4 /* Flashcards.xcdatamodeld in Sources */,
 				8FEEAD5F1D58B34500D585A4 /* AppDelegate.swift in Sources */,
 			);
@@ -488,6 +504,7 @@
 				8FEEAD881D58B34600D585A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FEEAD891D58B34600D585A4 /* Build configuration list for PBXNativeTarget "FlashcardsTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +513,7 @@
 				8FEEAD8B1D58B34600D585A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FEEAD8C1D58B34600D585A4 /* Build configuration list for PBXNativeTarget "FlashcardsUITests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +522,7 @@
 				8FEEAD8E1D58B34600D585A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

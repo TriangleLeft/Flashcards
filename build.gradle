@@ -2,15 +2,14 @@ buildscript {
     repositories {
         maven { url "http://jcenter.bintray.com" }
         maven { url "https://plugins.gradle.org/m2/" }
-        flatDir dirs: '../j2objc-gradle/build/libs'
+      //  flatDir dirs: '../j2objc-gradle/build/libs'
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.1.2'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
         classpath 'com.squareup.sqldelight:gradle-plugin:0.4.3'
-        classpath 'com.github.j2objccontrib.j2objcgradle:0.6.1-hack'
         classpath files('../j2objc-gradle/build/libs/j2objc-gradle-0.6.1-hack.jar')
     }
 }

@@ -9,3 +9,6 @@ Thumbs.db
 .idea
 .gradle
 build/
+
+# OS X
+*.DS_Store
