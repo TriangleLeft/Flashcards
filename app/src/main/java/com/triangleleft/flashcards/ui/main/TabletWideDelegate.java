@@ -1,5 +1,13 @@
 package com.triangleleft.flashcards.ui.main;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.common.DrawableUtils;
+import com.triangleleft.flashcards.ui.common.NavigationView;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
+
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -8,14 +16,6 @@ import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.annimon.stream.Optional;
-import com.google.common.base.Preconditions;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.common.DrawableUtils;
-import com.triangleleft.flashcards.ui.common.NavigationView;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
 
 public class TabletWideDelegate implements IMainActivityDelegate {
 
@@ -73,7 +73,6 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Override
     public void showWord(Optional<VocabularyWord> word) {
-        Preconditions.checkNotNull(vocabularyWordFragment, "Vocabulary word fragment was not bound!");
         vocabularyWordFragment.getPresenter().showWord(word);
     }
 

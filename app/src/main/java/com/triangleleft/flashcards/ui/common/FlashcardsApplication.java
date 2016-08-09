@@ -1,12 +1,5 @@
 package com.triangleleft.flashcards.ui.common;
 
-import static com.google.common.base.Preconditions.checkState;
-
-import android.app.Application;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
-
 import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
@@ -15,8 +8,16 @@ import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
 import com.triangleleft.flashcards.ui.common.di.ApplicationModule;
 import com.triangleleft.flashcards.ui.common.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
+import com.triangleleft.flashcards.util.Utils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import android.app.Application;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import timber.log.Timber;
@@ -64,7 +65,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
 
     @NonNull
     public ApplicationComponent getComponent() {
-        checkState(component != null, "Calling getComponent() before application was created!");
+        Utils.checkState(component != null, "Calling getComponent() before application was created!");
         return component;
     }
 
