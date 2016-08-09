@@ -1,7 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'net.ltgt.apt'
-apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 apply plugin: 'jacoco'
 apply from: '../dependencies.gradle'
 
