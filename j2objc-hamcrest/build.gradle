@@ -1,0 +1,14 @@
+apply plugin: 'com.github.j2objccontrib.j2objcgradle'
+apply from: '../dependencies.gradle'
+
+dependencies {
+    compile dep.HAMCREST
+    j2objcTestTranslation 'org.hamcrest:hamcrest-all:1.3:sources'
+}
+
+j2objcConfig {
+    j2objcVersion "1.1"
+
+    testMinExpectedTests 0
+    finalConfigure()
+}

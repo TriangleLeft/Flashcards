@@ -1,0 +1,10 @@
+-injars ../build/libs/core.jar
+
+-dontoptimize
+-dontobfuscate
+-dontpreverify
+-printusage
+-dontnote
+
+-keep class com.triangleleft.flashcards.*
+

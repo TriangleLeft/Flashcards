@@ -19,7 +19,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             testCoverageEnabled true
         }
@@ -67,7 +67,10 @@ dependencies {
 
     compile dep.DAGGER
     apt dep.DAGGER_COMPILER
-    //   provided 'javax.annotation:jsr250-api:1.0'
+    // Needed for annotations
+    provided "com.google.auto.value:auto-value:1.2"
+    apt "com.google.auto.value:auto-value:1.2"
+
 
     androidTestCompile('com.arcao:slf4j-timber:2.1') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
@@ -75,7 +78,7 @@ dependencies {
     }
     androidTestCompile 'com.jakewharton.timber:timber:4.1.2'
     androidTestCompile dep.SUPPORT_ANNOTATION
-    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile dep.DEXMAKER
     androidTestCompile 'junit:junit:4.12'

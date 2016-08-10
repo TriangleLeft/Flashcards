@@ -12,8 +12,6 @@
 		8FEEAD671D58B34600D585A4 /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD651D58B34600D585A4 /* Flashcards.xcdatamodeld */; };
 		8FEEAD691D58B34600D585A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8FEEAD681D58B34600D585A4 /* Assets.xcassets */; };
 		8FEEAD6C1D58B34600D585A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FEEAD6A1D58B34600D585A4 /* LaunchScreen.storyboard */; };
-		8FEEAD771D58B34600D585A4 /* FlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD761D58B34600D585A4 /* FlashcardsTests.swift */; };
-		8FEEAD821D58B34600D585A4 /* FlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD811D58B34600D585A4 /* FlashcardsUITests.swift */; };
 		8FEEAD941D58B61100D585A4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEEAD931D58B61100D585A4 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,11 +41,7 @@
 		8FEEAD6B1D58B34600D585A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8FEEAD6D1D58B34600D585A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FEEAD721D58B34600D585A4 /* FlashcardsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlashcardsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FEEAD761D58B34600D585A4 /* FlashcardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsTests.swift; sourceTree = "<group>"; };
-		8FEEAD781D58B34600D585A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FEEAD7D1D58B34600D585A4 /* FlashcardsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		8FEEAD811D58B34600D585A4 /* FlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardsUITests.swift; sourceTree = "<group>"; };
-		8FEEAD831D58B34600D585A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FEEAD931D58B61100D585A4 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				8FEEAD5D1D58B34500D585A4 /* Flashcards */,
-				8FEEAD751D58B34600D585A4 /* FlashcardsTests */,
-				8FEEAD801D58B34600D585A4 /* FlashcardsUITests */,
 				8FEEAD5C1D58B34500D585A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,24 +100,6 @@
 				8FEEAD651D58B34600D585A4 /* Flashcards.xcdatamodeld */,
 			);
 			path = Flashcards;
-			sourceTree = "<group>";
-		};
-		8FEEAD751D58B34600D585A4 /* FlashcardsTests */ = {
-			isa = PBXGroup;
-			children = (
-				8FEEAD761D58B34600D585A4 /* FlashcardsTests.swift */,
-				8FEEAD781D58B34600D585A4 /* Info.plist */,
-			);
-			path = FlashcardsTests;
-			sourceTree = "<group>";
-		};
-		8FEEAD801D58B34600D585A4 /* FlashcardsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				8FEEAD811D58B34600D585A4 /* FlashcardsUITests.swift */,
-				8FEEAD831D58B34600D585A4 /* Info.plist */,
-			);
-			path = FlashcardsUITests;
 			sourceTree = "<group>";
 		};
 		8FEEAD911D58B5E400D585A4 /* UI */ = {
@@ -285,7 +259,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FEEAD771D58B34600D585A4 /* FlashcardsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,7 +266,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FEEAD821D58B34600D585A4 /* FlashcardsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
