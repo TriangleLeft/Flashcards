@@ -1,11 +1,7 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
-import static com.annimon.stream.Collectors.joining;
-import static com.annimon.stream.Collectors.toList;
-
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
@@ -16,14 +12,20 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import java.util.Collections;
 import java.util.List;
+
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import static com.annimon.stream.Collectors.joining;
+import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 public class RestVocabularyModule implements VocabularyModule {
@@ -44,7 +46,6 @@ public class RestVocabularyModule implements VocabularyModule {
     public Observable<List<VocabularyWord>> loadVocabularyWords() {
         logger.debug("loadVocabularyWords()");
         Optional<UserData> userData = accountModule.getUserData();
-        Preconditions.checkState(userData.isPresent());
         return Observable.concat(getCachedData(userData.get()), refreshVocabularyWords());
     }
 

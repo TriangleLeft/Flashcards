@@ -13,7 +13,6 @@ repositories {
     maven { url "$sdkDir/extras/android/m2repository" }
 }
 
-
 retrolambda {
     oldJdk System.getenv("JAVA7_HOME")
 }
@@ -72,7 +71,6 @@ dependencies {
     compile "com.google.auto.value:auto-value:1.2"
     apt "com.google.auto.value:auto-value:1.2"
     apt 'com.gabrielittner.auto.value:auto-value-with:1.0.0-rc1'
-    compileOnly 'com.google.guava:guava:19.0'
 
     compile dep.DAGGER
     apt dep.DAGGER_COMPILER

@@ -16,12 +16,6 @@
 
 package com.triangleleft.flashcards.service.vocabular.rest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.*;
-
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -31,17 +25,25 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import rx.Observable;
+import rx.observers.TestSubscriber;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestVocabularyModuleTest {
@@ -138,7 +140,7 @@ public class RestVocabularyModuleTest {
 
     private VocabularyWord makeWord(String word, String translation) {
         return VocabularyWord
-            .create(word, word, null, null, 0, Collections.singletonList(translation), UI_LANG, LEARN_LANG);
+            .create(word, word, Optional.empty(), Optional.empty(), 0, Collections.singletonList(translation), UI_LANG, LEARN_LANG);
     }
 
     private void addVocabularyData(VocabularyWord word) {

@@ -16,14 +16,13 @@
 
 package com.triangleleft.flashcards.service.settings.rest;
 
-import static org.mockito.Mockito.*;
-
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,10 +30,13 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
-import java.util.concurrent.TimeUnit;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestSettingsModuleTest {
@@ -81,13 +83,5 @@ public class RestSettingsModuleTest {
 
         subscriber.assertNoErrors();
         subscriber.assertValue(null);
-    }
-
-    @Test
-    public void failWithUserId() {
-        when(accountModule.getUserId()).thenReturn(Optional.empty());
-        expectedException.expect(IllegalStateException.class);
-
-        module.loadUserData();
     }
 }

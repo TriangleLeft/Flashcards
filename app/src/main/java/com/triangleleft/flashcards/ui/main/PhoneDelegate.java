@@ -1,5 +1,11 @@
 package com.triangleleft.flashcards.ui.main;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
+
 import android.animation.ValueAnimator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,12 +21,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.annimon.stream.Optional;
-import com.google.common.base.Preconditions;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
 
 /*package*/ class PhoneDelegate implements IMainActivityDelegate {
 
@@ -61,7 +61,6 @@ import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
         toggle.syncState();
 
         arrowDrawable = (DrawerArrowDrawable) toolbar.getNavigationIcon();
-        Preconditions.checkNotNull(arrowDrawable);
         arrowDrawable.setColor(ContextCompat.getColor(activity, R.color.textColorPrimary));
 
         toggle.setToolbarNavigationClickListener(v -> onBackPressed());

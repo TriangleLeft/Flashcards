@@ -1,11 +1,12 @@
 package com.triangleleft.flashcards.ui.common.presenter;
 
-import android.support.annotation.CallSuper;
-
-import com.google.common.base.Preconditions;
 import com.triangleleft.flashcards.ui.common.view.IView;
+import com.triangleleft.flashcards.util.Utils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import android.support.annotation.CallSuper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,7 +32,7 @@ public abstract class AbstractPresenter<View extends IView>
                 if (method.getName().equals("toString") && (args == null || args.length == 0)) {
                     return "ProxyView view = [" + view + "]";
                 }
-                Preconditions.checkState(method.getReturnType().equals(Void.TYPE),
+                Utils.checkState(method.getReturnType().equals(Void.TYPE),
                     "Trying to invoke non-void view method: " + method);
                 View localView = view;
                 // TODO: we do it on the caller thread and we probably don't want to do that on android, right?
