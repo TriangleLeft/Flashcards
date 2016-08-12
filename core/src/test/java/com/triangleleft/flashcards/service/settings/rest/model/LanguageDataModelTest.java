@@ -23,9 +23,10 @@ import com.triangleleft.flashcards.service.settings.Language;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class LanguageDataModelTest {
 
     private LanguageDataModel model;

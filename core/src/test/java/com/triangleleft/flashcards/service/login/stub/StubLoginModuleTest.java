@@ -21,12 +21,13 @@ import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.observers.TestSubscriber;
 
 import java.util.concurrent.TimeUnit;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class StubLoginModuleTest {
 
     private StubLoginModule module;

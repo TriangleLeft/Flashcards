@@ -15,7 +15,9 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -24,7 +26,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class MainPresenterTest {
 
     @Mock
@@ -40,6 +42,7 @@ public class MainPresenterTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new MainPresenter(accountModule, settingsModule, Schedulers.immediate());
         when(accountModule.getUserData()).thenReturn(Optional.of(userData));
     }

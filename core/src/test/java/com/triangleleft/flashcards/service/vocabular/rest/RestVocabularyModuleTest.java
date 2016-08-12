@@ -29,7 +29,9 @@ import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationM
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
@@ -45,13 +47,14 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class RestVocabularyModuleTest {
 
     private static final String UI_LANG = "uiLang";
     private static final String LEARN_LANG = "learnLang";
     private static final String WORD = "word";
     private static final String TRANSLATION = "translation";
+
     @Mock
     RestService service;
     @Mock
@@ -62,6 +65,7 @@ public class RestVocabularyModuleTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         module = new RestVocabularyModule(service, accountModule, cache);
         when(accountModule.getUserData()).thenReturn(Optional
             .of(UserData.create(Collections.emptyList(), "", "", UI_LANG, LEARN_LANG)));

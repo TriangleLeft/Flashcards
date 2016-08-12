@@ -26,11 +26,12 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class VocabularyResponseModelTest {
 
     private VocabularyResponseModel model;
@@ -38,7 +39,6 @@ public class VocabularyResponseModelTest {
     @Before
     public void before() {
         model = new VocabularyResponseModel();
-
     }
 
     @Test

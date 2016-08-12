@@ -9,13 +9,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class AbstractPresenterTest {
 
     @Rule
@@ -31,6 +33,7 @@ public class AbstractPresenterTest {
      */
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new TestPresenter();
         presenter.onCreate();
         presenter.onBind(view);

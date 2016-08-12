@@ -13,7 +13,9 @@ import com.triangleleft.flashcards.service.settings.SettingsModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
@@ -23,7 +25,7 @@ import rx.observers.TestSubscriber;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class RestLoginModuleTest {
 
     private static final String LOGIN = "login";
@@ -39,6 +41,7 @@ public class RestLoginModuleTest {
 
     @Before
     public void before() throws IOException {
+        MockitoAnnotations.initMocks(this);
         module = new RestLoginModule(service, settingsModule, accountModule);
     }
 

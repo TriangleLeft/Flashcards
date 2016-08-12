@@ -27,11 +27,12 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class UserDataModelTest {
 
     private UserDataModel model;
@@ -49,7 +50,7 @@ public class UserDataModelTest {
         model.uiLanguage = "ui";
         model.avatar = "//url";
         LanguageDataModel langModel = mock(LanguageDataModel.class);
-        Language language = mock(Language.class);
+        Language language = Language.create("", "", 1, false, false);
         when(langModel.toLanguage()).thenReturn(language);
         model.languages = Collections.singletonList(langModel);
 

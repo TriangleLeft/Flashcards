@@ -28,9 +28,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
@@ -38,7 +41,7 @@ import rx.observers.TestSubscriber;
 
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class RestSettingsModuleTest {
 
     private RestSettingsModule module;
@@ -53,6 +56,7 @@ public class RestSettingsModuleTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         module = new RestSettingsModule(service, accountModule);
     }
 
@@ -60,7 +64,7 @@ public class RestSettingsModuleTest {
     public void loadUserData() {
         when(accountModule.getUserId()).thenReturn(Optional.of("id"));
         UserDataModel model = mock(UserDataModel.class);
-        UserData userData = mock(UserData.class);
+        UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
         when(model.toUserData()).thenReturn(userData);
         when(service.getUserData("id")).thenReturn(Observable.just(model));
 

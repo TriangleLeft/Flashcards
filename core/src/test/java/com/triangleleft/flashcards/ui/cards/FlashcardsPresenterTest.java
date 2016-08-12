@@ -14,9 +14,11 @@ import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -26,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class FlashcardsPresenterTest {
 
     private static final String UI_LANG = "ui";
@@ -43,6 +45,7 @@ public class FlashcardsPresenterTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new FlashcardsPresenter(module, Schedulers.immediate());
     }
 

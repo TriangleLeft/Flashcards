@@ -25,10 +25,12 @@ import com.triangleleft.flashcards.util.PersistentStorage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class SimpleAccountModuleTest {
 
     private SimpleAccountModule module;
@@ -42,6 +44,7 @@ public class SimpleAccountModuleTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         module = new SimpleAccountModule(storage);
     }
 

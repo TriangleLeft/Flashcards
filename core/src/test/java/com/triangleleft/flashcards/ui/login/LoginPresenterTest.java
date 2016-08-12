@@ -15,14 +15,16 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class LoginPresenterTest {
 
     @Mock
@@ -36,6 +38,7 @@ public class LoginPresenterTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new LoginPresenter(accountModule, loginModule, Schedulers.immediate());
         // By default, we need to login
         when(accountModule.shouldRememberUser()).thenReturn(false);

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FlashcardsCore
 
 class LoginViewController: UIViewController {
     
@@ -27,6 +28,8 @@ class LoginViewController: UIViewController {
         loginField.text = "login"
         passwordView.text = "password"
         rememberView.setOn(!rememberView.on, animated: true)
+        
+        
     }
     
     

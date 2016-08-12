@@ -26,7 +26,9 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.observers.TestSubscriber;
 
@@ -34,7 +36,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class StubVocabularyModuleTest {
 
     private StubVocabularyModule module;
@@ -46,6 +48,7 @@ public class StubVocabularyModuleTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         module = new StubVocabularyModule(accountModule, repository);
     }
 

@@ -24,10 +24,12 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class VocabularyWordPresenterTest {
 
     @Mock
@@ -36,6 +38,7 @@ public class VocabularyWordPresenterTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new VocabularyWordPresenter();
     }
 

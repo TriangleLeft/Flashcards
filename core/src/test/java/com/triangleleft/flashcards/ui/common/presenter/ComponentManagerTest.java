@@ -26,12 +26,13 @@ import com.triangleleft.flashcards.ui.common.di.component.IComponent;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * Tests for {@link ComponentManager}.
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class ComponentManagerTest {
 
     private ComponentManager manager;

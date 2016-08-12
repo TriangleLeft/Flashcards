@@ -10,7 +10,9 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -20,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(JUnit4.class)
 public class VocabularyListPresenterTest {
 
     @Mock
@@ -33,6 +35,7 @@ public class VocabularyListPresenterTest {
 
     @Before
     public void before() {
+        MockitoAnnotations.initMocks(this);
         presenter = new VocabularyListPresenter(module, navigator, Schedulers.immediate());
     }
 
