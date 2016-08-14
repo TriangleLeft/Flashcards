@@ -1,11 +1,15 @@
-package com.triangleleft.flashcards.ui.common.di.module;
+package com.triangleleft.flashcards.di;
+
+import com.google.gson.Gson;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.gson.Gson;
+import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.RestService;
-import com.triangleleft.flashcards.ui.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.util.converter.CustomGsonConverterFactory;
+
+import java.util.concurrent.TimeUnit;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.CookieJar;
@@ -15,8 +19,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.schedulers.Schedulers;
-
-import java.util.concurrent.TimeUnit;
 
 @Module
 public class NetModule {

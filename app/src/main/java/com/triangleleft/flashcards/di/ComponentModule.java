@@ -1,10 +1,11 @@
-package com.triangleleft.flashcards.ui.common.di;
+package com.triangleleft.flashcards.di;
 
+import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.account.SimpleAccountModule;
 import com.triangleleft.flashcards.service.vocabular.DbVocabularyWordsRepository;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
-import com.triangleleft.flashcards.ui.common.di.scope.ApplicationScope;
+
 import dagger.Binds;
 import dagger.Module;
 

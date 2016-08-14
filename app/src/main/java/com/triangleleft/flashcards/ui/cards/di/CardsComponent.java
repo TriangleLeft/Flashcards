@@ -1,9 +1,10 @@
 package com.triangleleft.flashcards.ui.cards.di;
 
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.IComponent;
+import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.component.IComponent;
-import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
+
 import dagger.Component;
 
 @ActivityScope

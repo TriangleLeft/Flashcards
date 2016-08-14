@@ -1,19 +1,22 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.di.scope.FragmentScope;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.common.di.scope.FragmentScope;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
 import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
-
-import java.util.List;
-import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope

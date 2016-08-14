@@ -1,17 +1,18 @@
-package com.triangleleft.flashcards.ui.common.di;
-
-import android.content.Context;
+package com.triangleleft.flashcards.di;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
 import com.triangleleft.flashcards.ui.common.SharedPreferencesPersistentStorage;
-import com.triangleleft.flashcards.ui.common.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.ui.common.presenter.ComponentManager;
 import com.triangleleft.flashcards.util.PersistentStorage;
+
+import android.content.Context;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.CookieJar;

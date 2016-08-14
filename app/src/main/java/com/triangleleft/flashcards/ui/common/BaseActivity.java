@@ -1,16 +1,17 @@
 package com.triangleleft.flashcards.ui.common;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.IComponent;
+import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
+import com.triangleleft.flashcards.ui.common.view.IView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.component.IComponent;
-import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
-import com.triangleleft.flashcards.ui.common.view.IView;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 

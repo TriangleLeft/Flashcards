@@ -1,23 +1,25 @@
 package com.triangleleft.flashcards.ui.login;
 
-import android.support.annotation.NonNull;
-
+import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
-import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.TextUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
+
 import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
-
-import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope

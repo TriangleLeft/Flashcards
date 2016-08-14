@@ -1,15 +1,17 @@
 package com.triangleleft.flashcards;
 
-import android.support.annotation.NonNull;
-
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationModule;
+import com.triangleleft.flashcards.di.DaggerApplicationComponent;
+import com.triangleleft.flashcards.di.NetModule;
 import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.ApplicationModule;
-import com.triangleleft.flashcards.ui.common.di.DaggerApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.module.NetModule;
-import okhttp3.HttpUrl;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import android.support.annotation.NonNull;
+
+import okhttp3.HttpUrl;
 
 public class MockFlashcardsApplication extends FlashcardsApplication {
 

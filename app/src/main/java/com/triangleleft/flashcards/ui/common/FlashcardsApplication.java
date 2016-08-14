@@ -2,11 +2,11 @@ package com.triangleleft.flashcards.ui.common;
 
 import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationModule;
+import com.triangleleft.flashcards.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.ApplicationModule;
-import com.triangleleft.flashcards.ui.common.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
 

@@ -1,26 +1,29 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import static com.annimon.stream.Collectors.toList;
-
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
-import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import rx.Scheduler;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.inject.Inject;
+import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope

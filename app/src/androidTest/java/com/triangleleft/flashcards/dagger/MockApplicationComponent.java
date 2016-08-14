@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.dagger;
 
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.ui.login.LoginActivityTestCase;
 
 //@ApplicationScope
