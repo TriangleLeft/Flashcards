@@ -1,5 +1,15 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyWordComponent;
+import com.triangleleft.flashcards.di.vocabular.VocabularyWordComponent;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.common.BaseFragment;
+import com.triangleleft.flashcards.ui.main.MainActivity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -10,19 +20,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.common.BaseFragment;
-import com.triangleleft.flashcards.ui.main.MainActivity;
-import com.triangleleft.flashcards.ui.vocabular.di.DaggerVocabularyWordComponent;
-import com.triangleleft.flashcards.ui.vocabular.di.VocabularyWordComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class VocabularyWordFragment
         extends BaseFragment<VocabularyWordComponent, IVocabularyWordView, VocabularyWordPresenter>

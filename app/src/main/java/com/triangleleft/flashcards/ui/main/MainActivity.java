@@ -1,5 +1,20 @@
 package com.triangleleft.flashcards.ui.main;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.main.DaggerMainPageComponent;
+import com.triangleleft.flashcards.di.main.MainPageComponent;
+import com.triangleleft.flashcards.service.settings.Language;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
+import com.triangleleft.flashcards.ui.common.NavigationView;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
@@ -13,26 +28,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
-import com.triangleleft.flashcards.ui.common.NavigationView;
-import com.triangleleft.flashcards.ui.main.di.DaggerMainPageComponent;
-import com.triangleleft.flashcards.ui.main.di.MainPageComponent;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-import java.util.List;
-import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter> implements IMainView {
@@ -119,8 +122,10 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @NonNull
     @Override
     protected MainPageComponent buildComponent() {
-        return DaggerMainPageComponent.builder().applicationComponent(getApplicationComponent())
-            .mainPageModule(new MainPageModule()).build();
+        return DaggerMainPageComponent.builder()
+                .androidApplicationComponent(getApplicationComponent())
+                .mainPageModule(new MainPageModule())
+                .build();
     }
 
     @NonNull

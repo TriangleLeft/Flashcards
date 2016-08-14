@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards;
 
+import com.triangleleft.flashcards.di.AndroidApplicationModule;
 import com.triangleleft.flashcards.di.ApplicationComponent;
-import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.di.NetModule;
 import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
@@ -22,7 +22,7 @@ public class MockFlashcardsApplication extends FlashcardsApplication {
     protected ApplicationComponent buildComponent() {
         logger.debug("buildComponent() called");
         return DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
+                .applicationModule(new AndroidApplicationModule(this))
                 .netModule(new NetModule() {
                     @Override
                     public HttpUrl endpoint() {
