@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.util;
+package com.triangleleft.flashcards.service;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;

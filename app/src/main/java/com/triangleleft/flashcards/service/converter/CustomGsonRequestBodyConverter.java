@@ -14,7 +14,7 @@
  *
  */
 
-package com.triangleleft.flashcards.util.converter;
+package com.triangleleft.flashcards.service.converter;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;

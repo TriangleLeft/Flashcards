@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.di;
 
+import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.util.PersistentStorage;
@@ -10,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import okhttp3.CookieJar;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -25,24 +24,24 @@ public class DaggerTest {
     @Mock
     PersistentStorage storage;
     @Mock
-    CookieJar cookieJar;
-    @Mock
     VocabularyWordsRepository repository;
+    @Mock
+    RestService service;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Test
     public void buildComponent() {
         ApplicationComponent component = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(navigator))
-                .persistenceModule(new PersistenceModule(storage, cookieJar, repository))
+                .applicationModule(new ApplicationModule())
+                .platformModule(new PlatformModule(navigator, storage, repository, service))
                 .build();
 
         assertThat(component.navigator(), is(equalTo(navigator)));
         assertThat(component.persistentStorage(), is(equalTo(storage)));
+        assertThat(component.duolingoRest(), is(equalTo(service)));
     }
 }
