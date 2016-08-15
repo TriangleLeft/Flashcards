@@ -101,11 +101,12 @@ j2objcConfig {
     }
     j2objcVersion "1.1"
     autoConfigureDeps true
+    supportedArchs = ['ios_x86_64']
 
     generatedSourceDirs "build/generated/source/apt/main"
     translateArgs "-source", "1.8", "--doc-comments"//, "--swift-friendly"
   //  translateArgs "--dead-code-report", "usage.txt"
-    xcodeProjectDir '../ios'  //  suggested directory name
+    xcodeProjectDir '../ios/Flashcards'  //  suggested directory name
     xcodeTargetsIos 'Flashcards' //, 'FlashcardsTests'  // replace with your iOS targets
 
     finalConfigure()
@@ -124,5 +125,12 @@ j2objcPodspec.doLast {
   spec.homepage = 'homepage'
   spec.source = { :git => 'https://github.com/TriangleLeft/Flashcards.git' }''')
         podspec.write(text)
+    }
+}
+
+task makeFramework {
+    println 'hello'
+    doLast {
+        println 'last'
     }
 }
