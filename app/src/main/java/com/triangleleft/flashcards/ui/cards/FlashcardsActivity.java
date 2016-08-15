@@ -1,5 +1,13 @@
 package com.triangleleft.flashcards.ui.cards;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.cards.CardsComponent;
+import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+import com.triangleleft.flashcards.ui.cards.view.DeckView;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,18 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ViewFlipper;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.ui.cards.di.CardsComponent;
-import com.triangleleft.flashcards.ui.cards.di.DaggerCardsComponent;
-import com.triangleleft.flashcards.ui.cards.view.DeckView;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import java.util.List;
 
 @FunctionsAreNonnullByDefault
 public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, FlashcardsPresenter> implements
@@ -73,7 +74,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     @NonNull
     @Override
     protected CardsComponent buildComponent() {
-        return DaggerCardsComponent.builder().applicationComponent(getApplicationComponent()).build();
+        return DaggerCardsComponent.builder().androidApplicationComponent(getApplicationComponent()).build();
     }
 
     @NonNull

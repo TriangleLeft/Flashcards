@@ -1,5 +1,15 @@
 package com.triangleleft.flashcards.ui.login;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.di.login.LoginActivityComponent;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.ui.common.CustomEditText;
+import com.triangleleft.flashcards.ui.main.MainActivity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,12 +27,6 @@ import android.widget.ViewFlipper;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.common.CustomEditText;
-import com.triangleleft.flashcards.ui.main.MainActivity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A login screen that offers login via email/password.
@@ -77,7 +81,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     protected LoginActivityComponent buildComponent() {
         logger.debug("buildComponent() called");
         return DaggerLoginActivityComponent.builder()
-                .applicationComponent(getApplicationComponent())
+                .androidApplicationComponent(getApplicationComponent())
                 .build();
     }
 

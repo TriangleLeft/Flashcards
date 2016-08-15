@@ -1,26 +1,29 @@
 package com.triangleleft.flashcards.ui.main;
 
-import android.support.annotation.NonNull;
-
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Scheduler;
+
+import android.support.annotation.NonNull;
 
 import java.util.Comparator;
 import java.util.List;
+
 import javax.inject.Inject;
+
+import rx.Scheduler;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope

@@ -1,12 +1,23 @@
 package com.triangleleft.flashcards.ui.common;
 
 import com.facebook.stetho.Stetho;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.CookieCache;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.CookiePersistor;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.triangleleft.assertdialog.AssertDialog;
+import com.triangleleft.flashcards.di.AndroidApplicationComponent;
+import com.triangleleft.flashcards.di.AndroidApplicationModule;
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationModule;
+import com.triangleleft.flashcards.di.DaggerAndroidApplicationComponent;
+import com.triangleleft.flashcards.di.DaggerApplicationComponent;
+import com.triangleleft.flashcards.di.PersistenceModule;
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
+import com.triangleleft.flashcards.service.vocabular.DbVocabularyWordsRepository;
+import com.triangleleft.flashcards.service.vocabular.VocabularySQLiteOpenHelper;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
-import com.triangleleft.flashcards.ui.common.di.ApplicationModule;
-import com.triangleleft.flashcards.ui.common.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
 
@@ -18,6 +29,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
+import okhttp3.CookieJar;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import timber.log.Timber;
@@ -27,7 +39,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsApplication.class);
 
     protected static FlashcardsApplication debugInstance;
-    private ApplicationComponent component;
+    private AndroidApplicationComponent component;
 
     public static void showDebugToast(String text) {
         Toast.makeText(debugInstance, text, Toast.LENGTH_LONG).show();
@@ -46,7 +58,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
             public void handleError(Throwable e) {
                 logger.error("RxError", e);
                 // ConversionException would usually mean that we've got dead cookies
-                // (Duolingo would send html page with 200 code
+                // (Duolingo would send html page with 200 code)
                 // So let's try to send user to login
                 if (e instanceof ConversionException) {
                     navigateToLogin();
@@ -57,14 +69,23 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
     }
 
     @NonNull
-    protected ApplicationComponent buildComponent() {
-        return DaggerApplicationComponent.builder()
-            .applicationModule(new ApplicationModule(this))
-            .build();
+    protected AndroidApplicationComponent buildComponent() {
+        CookieCache cache = new SetCookieCache();
+        CookiePersistor persistor = new SharedPrefsCookiePersistor(this);
+        CookieJar jar = new PersistentCookieJar(cache, persistor);
+        ApplicationComponent component = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .persistenceModule(new PersistenceModule(new SharedPreferencesPersistentStorage(this), jar,
+                        new DbVocabularyWordsRepository(new VocabularySQLiteOpenHelper(this))))
+                .build();
+        return DaggerAndroidApplicationComponent.builder()
+                .androidApplicationModule(new AndroidApplicationModule(this))
+                .applicationComponent(component)
+                .build();
     }
 
     @NonNull
-    public ApplicationComponent getComponent() {
+    public AndroidApplicationComponent getComponent() {
         Utils.checkState(component != null, "Calling getComponent() before application was created!");
         return component;
     }

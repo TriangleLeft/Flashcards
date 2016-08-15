@@ -16,18 +16,19 @@
 
 package com.triangleleft.flashcards.ui.common.presenter;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.sameInstance;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.mock;
-
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.ui.common.di.component.IComponent;
+import com.triangleleft.flashcards.di.IComponent;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.sameInstance;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link ComponentManager}.

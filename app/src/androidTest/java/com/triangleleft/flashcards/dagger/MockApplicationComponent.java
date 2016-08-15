@@ -1,10 +1,10 @@
 package com.triangleleft.flashcards.dagger;
 
-import com.triangleleft.flashcards.ui.common.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.ui.login.LoginActivityTestCase;
 
 //@ApplicationScope
-//@Component(modules = {ApplicationModule.class, RestServiceModule.class, NetModule.class})
+//@Component(modules = {AndroidApplicationModule.class, RestServiceModule.class, NetModule.class})
 public interface MockApplicationComponent extends ApplicationComponent {
     void inject(LoginActivityTestCase loginActivityTestCase);
 

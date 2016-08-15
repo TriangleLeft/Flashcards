@@ -1,7 +1,8 @@
 package com.triangleleft.flashcards.ui.main;
 
-import com.triangleleft.flashcards.ui.common.di.scope.ActivityScope;
+import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;
+
 import dagger.Module;
 import dagger.Provides;
 

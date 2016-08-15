@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.common.presenter;
 
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.ui.common.di.component.IComponent;
+import com.triangleleft.flashcards.di.IComponent;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;

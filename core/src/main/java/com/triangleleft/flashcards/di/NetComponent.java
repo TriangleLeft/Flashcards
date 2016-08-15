@@ -1,8 +1,8 @@
-package com.triangleleft.flashcards.ui.common.di.component;
+package com.triangleleft.flashcards.di;
 
+import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.RestService;
-import com.triangleleft.flashcards.ui.common.di.module.NetModule;
-import com.triangleleft.flashcards.ui.common.di.scope.ApplicationScope;
+
 import dagger.Subcomponent;
 import okhttp3.HttpUrl;
 import retrofit2.Retrofit;
