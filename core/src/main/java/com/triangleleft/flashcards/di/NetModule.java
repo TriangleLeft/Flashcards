@@ -52,6 +52,7 @@ public class NetModule {
             .addInterceptor(loggingInterceptor)
             .addInterceptor(delayInterceptor)
    //         .addNetworkInterceptor(new StethoInterceptor())
+                .sslSocketFactory()
             .build();
     }
 

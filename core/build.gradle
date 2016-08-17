@@ -104,10 +104,10 @@ j2objcConfig {
     supportedArchs = ['ios_x86_64']
 
     generatedSourceDirs "build/generated/source/apt/main"
-    translateArgs "-source", "1.8", "--doc-comments"//, "--swift-friendly"
+    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
   //  translateArgs "--dead-code-report", "usage.txt"
-    xcodeProjectDir '../ios/Flashcards'  //  suggested directory name
-    xcodeTargetsIos 'Flashcards' //, 'FlashcardsTests'  // replace with your iOS targets
+    //xcodeProjectDir '../ios/Flashcards'  //  suggested directory name
+    //xcodeTargetsIos 'Flashcards' //, 'FlashcardsTests'  // replace with your iOS targets
 
     finalConfigure()
 }
