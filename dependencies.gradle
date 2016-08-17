@@ -4,7 +4,7 @@ def DAGGER_VERSION = '2.4'
 def JUNIT_VERSION = '4.12'
 def HAMCREST_VERSION = '1.3'
 def RETROFIT_VERSION = '2.0.2'
-def OKHTTP_VERSION = '3.2.0'
+def OKHTTP_VERSION = '3.4.1'
 
 ext.dep = [
         DEXMAKER          : ["com.github.crittercism.dexmaker:dexmaker:f8e7c23e41",
@@ -30,4 +30,3 @@ ext.dep = [
         JUNIT             : "junit:junit:$JUNIT_VERSION",
         HAMCREST          : "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
 ]
-1
