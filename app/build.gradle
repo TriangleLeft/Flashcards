@@ -63,7 +63,7 @@ dependencies {
     }
 
     compile dep.PCJ
-    compile dep.RETROFIT
+    compile dep.RETROFIT_MISC
     compile dep.OKHTTP
     compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
 
