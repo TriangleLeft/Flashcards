@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.service.login.rest.model;
+package com.triangleleft.flashcards.service.login.rest;
 
 import com.google.gson.annotations.SerializedName;
 import com.triangleleft.flashcards.service.common.exception.ServerException;

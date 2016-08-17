@@ -1,27 +1,31 @@
 package com.triangleleft.flashcards.service.rest;
 
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
+import com.triangleleft.flashcards.service.login.rest.LoginResponseModel;
 import com.triangleleft.flashcards.service.login.rest.RestLoginModule;
-import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
 import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RestLoginModuleTest {

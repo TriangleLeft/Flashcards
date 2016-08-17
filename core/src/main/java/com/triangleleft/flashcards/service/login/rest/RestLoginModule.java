@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.service.login.rest;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
-import com.triangleleft.flashcards.service.login.rest.model.LoginResponseModel;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -33,7 +32,7 @@ public class RestLoginModule implements LoginModule {
     @Override
     public Observable<Void> login(String login, String password) {
         accountModule.setLogin(login);
-        return service.login(login, password)
+        return service.login(new LoginRequestController(login, password))
                 .flatMap(this::processModel);
     }
 
