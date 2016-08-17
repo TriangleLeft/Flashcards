@@ -14,11 +14,12 @@
  *
  */
 
-package com.triangleleft.flashcards.util.converter;
+package com.triangleleft.flashcards.service.converter;
 
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
+
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
 
 import okhttp3.ResponseBody;

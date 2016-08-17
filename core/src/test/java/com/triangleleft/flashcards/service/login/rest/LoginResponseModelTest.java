@@ -1,12 +1,9 @@
-package com.triangleleft.flashcards.service.login.rest.model;
-
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+package com.triangleleft.flashcards.service.login.rest;
 
 import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,21 +11,25 @@ import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 @RunWith(JUnit4.class)
 public class LoginResponseModelTest {
 
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-    private LoginResponseModel model;
+    private com.triangleleft.flashcards.service.login.rest.LoginResponseModel model;
 
     @Before
     public void before() {
-        model = new LoginResponseModel();
+        model = new com.triangleleft.flashcards.service.login.rest.LoginResponseModel();
     }
 
     @Test
     public void success() {
-        model.response = LoginResponseModel.RESPONSE_OK;
+        model.response = com.triangleleft.flashcards.service.login.rest.LoginResponseModel.RESPONSE_OK;
         model.userId = "id";
         assertThat(model.isSuccess(), is(true));
     }
@@ -42,7 +43,7 @@ public class LoginResponseModelTest {
 
     @Test
     public void noUserId() {
-        model.response = LoginResponseModel.RESPONSE_OK;
+        model.response = com.triangleleft.flashcards.service.login.rest.LoginResponseModel.RESPONSE_OK;
         model.userId = "";
         assertThat(model.isSuccess(), is(false));
     }
@@ -55,7 +56,7 @@ public class LoginResponseModelTest {
 
     @Test
     public void getErrorFailForSuccess() {
-        model.response = LoginResponseModel.RESPONSE_OK;
+        model.response = com.triangleleft.flashcards.service.login.rest.LoginResponseModel.RESPONSE_OK;
         model.userId = "id";
 
         exception.expect(IllegalStateException.class);
@@ -71,13 +72,13 @@ public class LoginResponseModelTest {
 
     @Test
     public void failureLogin() {
-        model.failureReason = LoginResponseModel.FAILURE_LOGIN;
+        model.failureReason = com.triangleleft.flashcards.service.login.rest.LoginResponseModel.FAILURE_LOGIN;
         assertThat(model.getError(), instanceOf(LoginException.class));
     }
 
     @Test
     public void failurePassword() {
-        model.failureReason = LoginResponseModel.FAILURE_PASSWORD;
+        model.failureReason = com.triangleleft.flashcards.service.login.rest.LoginResponseModel.FAILURE_PASSWORD;
         assertThat(model.getError(), instanceOf(PasswordException.class));
     }
 

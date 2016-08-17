@@ -14,7 +14,7 @@ import com.triangleleft.flashcards.util.PersistentStorage;
 import dagger.Component;
 
 @ApplicationScope
-@Component(modules = {ApplicationModule.class, PersistenceModule.class, RestServiceModule.class, NetModule.class})
+@Component(modules = {ApplicationModule.class, PlatformModule.class, RestServiceModule.class})
 public interface ApplicationComponent extends IComponent {
 
     LoginModule loginModule();

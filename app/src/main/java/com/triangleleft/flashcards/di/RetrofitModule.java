@@ -1,11 +1,16 @@
 package com.triangleleft.flashcards.di;
 
-import com.google.gson.Gson;
+import android.content.Context;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.gson.Gson;
 import com.triangleleft.flashcards.di.scope.ApplicationScope;
+import com.triangleleft.flashcards.service.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.service.RestService;
-import com.triangleleft.flashcards.util.NetworkDelayInterceptor;
-import com.triangleleft.flashcards.util.converter.CustomGsonConverterFactory;
+import com.triangleleft.flashcards.service.converter.CustomGsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,16 +25,15 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.schedulers.Schedulers;
 
 @Module
-public class NetModule {
-    private final static String BASE_SCHEME = "https";
-    private final static String BASE_URL = "www.duolingo.com";
+public class RetrofitModule {
+
 
     @ApplicationScope
     @Provides
     public HttpUrl endpoint() {
         return new HttpUrl.Builder()
-            .host(BASE_URL)
-            .scheme(BASE_SCHEME)
+                .host(RestService.BASE_URL)
+                .scheme(RestService.BASE_SCHEME)
             .build();
     }
 
@@ -76,8 +80,10 @@ public class NetModule {
         return retrofit.create(RestService.class);
     }
 
+    @ApplicationScope
     @Provides
-    public Gson gson() {
-        return new Gson();
+    public CookieJar cookieJar(Context context) {
+        return new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
     }
+
 }

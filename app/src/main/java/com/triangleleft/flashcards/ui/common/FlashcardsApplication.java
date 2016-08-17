@@ -1,22 +1,11 @@
 package com.triangleleft.flashcards.ui.common;
 
 import com.facebook.stetho.Stetho;
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.CookieCache;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.CookiePersistor;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.di.AndroidApplicationComponent;
 import com.triangleleft.flashcards.di.AndroidApplicationModule;
-import com.triangleleft.flashcards.di.ApplicationComponent;
-import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerAndroidApplicationComponent;
-import com.triangleleft.flashcards.di.DaggerApplicationComponent;
-import com.triangleleft.flashcards.di.PersistenceModule;
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
-import com.triangleleft.flashcards.service.vocabular.DbVocabularyWordsRepository;
-import com.triangleleft.flashcards.service.vocabular.VocabularySQLiteOpenHelper;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
@@ -29,7 +18,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import okhttp3.CookieJar;
 import rx.plugins.RxJavaErrorHandler;
 import rx.plugins.RxJavaPlugins;
 import timber.log.Timber;
@@ -70,17 +58,8 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
 
     @NonNull
     protected AndroidApplicationComponent buildComponent() {
-        CookieCache cache = new SetCookieCache();
-        CookiePersistor persistor = new SharedPrefsCookiePersistor(this);
-        CookieJar jar = new PersistentCookieJar(cache, persistor);
-        ApplicationComponent component = DaggerApplicationComponent.builder()
-                .applicationModule(new ApplicationModule(this))
-                .persistenceModule(new PersistenceModule(new SharedPreferencesPersistentStorage(this), jar,
-                        new DbVocabularyWordsRepository(new VocabularySQLiteOpenHelper(this))))
-                .build();
         return DaggerAndroidApplicationComponent.builder()
                 .androidApplicationModule(new AndroidApplicationModule(this))
-                .applicationComponent(component)
                 .build();
     }
 
