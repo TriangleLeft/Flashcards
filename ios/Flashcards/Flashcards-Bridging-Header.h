@@ -3,4 +3,7 @@
 //
 
 #import <JreEmulation.h>
-#import "javax/net/ssl/TrustManagerFactory.h"
+#include "java/util/concurrent/ThreadPoolExecutor.h"
+#include "java/util/concurrent/Executor.h"
+#include "java/util/concurrent/ExecutorService.h"
+#include "java/util/concurrent/ScheduledExecutorService.h"

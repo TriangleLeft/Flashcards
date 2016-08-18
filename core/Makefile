@@ -28,12 +28,12 @@
 #
 # Author: Tom Ball
 
-BUILD_DIR = ../core/build/j2objcOutputs
+BUILD_DIR = build/j2objcOutputs
 STATIC_LIBRARY_NAME = core-j2objc
 # Framework name
 STATIC_FRAMEWORK_NAME = FlashcardsCore
 # Destination dir
-DIST_FRAMEWORK_DIR = .
+DIST_FRAMEWORK_DIR = build/
 
 STATIC_FRAMEWORK_DIR = $(DIST_FRAMEWORK_DIR)/$(STATIC_FRAMEWORK_NAME).framework
 STATIC_LIBRARY = $(BUILD_DIR)/lib/iosDebug/lib$(STATIC_LIBRARY_NAME).a
@@ -44,12 +44,6 @@ STATIC_FRAMEWORK_HEADERS := $(STATIC_FRAMEWORK_HEADERS:$(STATIC_HEADERS_DIR)/%=%
 
 FRAMEWORK_HEADER = $(BUILD_DIR)/src/main/objc/$(STATIC_FRAMEWORK_NAME).h
 MODULE_MAP = $(BUILD_DIR)/module.modulemap
-
-#test:
-#	@echo $(STATIC_FRAMEWORK_HEADERS)
-#	tar cf - -C $(STATIC_HEADERS_DIR) $(STATIC_FRAMEWORK_HEADERS) \
-			| tar xfp - -C $(STATIC_FRAMEWORK_DIR)/Versions/A/Headers
-
 
 # These are warnings that are suppressed for J2ObjC headers and generated code.
 #
@@ -120,3 +114,7 @@ $(MODULE_MAP):
 	@echo "  export *" >> $(MODULE_MAP)
 	@echo "  module * { export * }" >> $(MODULE_MAP)
 	@echo "}" >> $(MODULE_MAP)
+
+clean:
+	@echo cleaning $(STATIC_FRAMEWORK_NAME) framework
+	@rm -rf $(STATIC_FRAMEWORK_DIR)

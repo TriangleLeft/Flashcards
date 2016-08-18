@@ -11,24 +11,44 @@ import FlashcardsCore
 
 class ViewController: UIViewController, ComTriangleleftFlashcardsUiFlashcardsNavigator {
 
+    @objc
     override func viewDidLoad() {
         super.viewDidLoad()
-        let component = ComTriangleleftFlashcardsDiDaggerApplicationComponent.builder()
-            .applicationModuleWithComTriangleleftFlashcardsDiApplicationModule(ComTriangleleftFlashcardsDiApplicationModule())
-            .netModuleWithComTriangleleftFlashcardsDiNetModule(ComTriangleleftFlashcardsDiNetModule())
-            .persistenceModuleWithComTriangleleftFlashcardsDiPersistenceModule(ComTriangleleftFlashcardsDiPersistenceModule(comTriangleleftFlashcardsUtilPersistentStorage: PersistentStorage(), withOkhttp3CookieJar: CookieJar(), withComTriangleleftFlashcardsServiceVocabularVocabularyWordsRepository: VocabularyWordsRepository()))
-            .build();
+        JavaUtilConcurrentExecutor_class_();
+        JavaUtilConcurrentThreadPoolExecutor_class_();
+        JavaUtilConcurrentExecutorService_class_();
+        JavaUtilConcurrentScheduledExecutorService_class_();
+        let storage = PersistentStorage();
+        let restService = RestService();
+        let accountModule = ComTriangleleftFlashcardsServiceAccountSimpleAccountModule(comTriangleleftFlashcardsUtilPersistentStorage: storage);
         
-        ComTriangleleftFlashcardsServiceRestService
+        let settingsModule = ComTriangleleftFlashcardsServiceSettingsRestRestSettingsModule(comTriangleleftFlashcardsServiceRestService: restService, withComTriangleleftFlashcardsServiceAccountAccountModule: accountModule);
         
+        let loginModule = ComTriangleleftFlashcardsServiceLoginRestRestLoginModule(comTriangleleftFlashcardsServiceRestService: restService, withComTriangleleftFlashcardsServiceSettingsSettingsModule: settingsModule, withComTriangleleftFlashcardsServiceAccountAccountModule: accountModule);
         
-        let algorithm = JavaxNetSslTrustManagerFactory_getDefaultAlgorithm();
-        let factory = JavaxNetSslTrustManagerFactory_getInstanceWithNSString_(algorithm);
+        let presenter = ComTriangleleftFlashcardsUiLoginLoginPresenter(comTriangleleftFlashcardsServiceAccountAccountModule: accountModule, withComTriangleleftFlashcardsServiceLoginLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
         
-        component.loginModule().loginWithNSString("login", withNSString: "password").subscribeWithRxFunctionsAction1(Callback(), withRxFunctionsAction1: Callback());
-        
+        presenter.onLoginChangedWithNSString("login");
+        presenter.onPasswordChangedWithNSString("password");
+
+        loginModule.loginWithNSString("login", withNSString: "password").subscribeWithRxObserver(MyObserver());
         print("whoa");
+    }
+    class MyObserver : NSObject, RxObserver {
+
+        func onCompleted() {
+            print("Compl");
+        }
         
+
+        func onErrorWithNSException(e: NSException!) {
+            print("Ex!", e);
+        }
+        
+
+        func onNextWithId(t: AnyObject!) {
+            print("Next!", t);
+        }
     }
 
     override func didReceiveMemoryWarning() {

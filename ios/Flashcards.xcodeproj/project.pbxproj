@@ -7,30 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8F29280D1D61E826007B1CCF /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F29280C1D61E826007B1CCF /* FlashcardsCore.framework */; };
 		8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
 		8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
-		8F2928291D6204FA007B1CCF /* CookieJar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2928281D6204FA007B1CCF /* CookieJar.swift */; };
 		8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */; };
-		8F2928311D620CBF007B1CCF /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928301D620CBF007B1CCF /* libjre_emul.a */; };
 		8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
+		8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F488B841D653E1B00A1B99B /* libjre_emul.a */; };
+		8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
 		8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
 		8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */; };
 		8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD61D61D0E00038DFAB /* Main.storyboard */; };
 		8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD91D61D0E00038DFAB /* Flashcards.xcdatamodeld */; };
 		8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
 		8F8A0CE01D61D0E00038DFAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
+		8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
+		8FE589BA1D64BB8D00A04C33 /* RestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE589B91D64BB8D00A04C33 /* RestService.swift */; };
+		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8F29280C1D61E826007B1CCF /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FlashcardsCore.framework; sourceTree = "<group>"; };
+		1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
+		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
 		8F2928241D6203BD007B1CCF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		8F2928281D6204FA007B1CCF /* CookieJar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieJar.swift; sourceTree = "<group>"; };
 		8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyWordsRepository.swift; sourceTree = "<group>"; };
 		8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flashcards-Bridging-Header.h"; sourceTree = "<group>"; };
-		8F2928301D620CBF007B1CCF /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = "../../../Library/j2objc-1.1/lib/libjre_emul.a"; sourceTree = "<group>"; };
 		8F2928321D620CDB007B1CCF /* libjavax_inject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjavax_inject.a; path = "../../../Library/j2objc-1.1/lib/libjavax_inject.a"; sourceTree = "<group>"; };
+		8F488B741D65361000A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = ../../j2objc/jre_emul/build_result/libjre_emul.a; sourceTree = "<group>"; };
+		8F488B841D653E1B00A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = "../../j2objc/jre_emul/build/Debug-iphoneos/libjre_emul.a"; sourceTree = "<group>"; };
+		8F7E3D451D6661A0004B2D7D /* libjsr305.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsr305.a; path = ../../j2objc/jsr305/build_result/libjsr305.a; sourceTree = "<group>"; };
 		8F8A0CCF1D61D0DF0038DFAB /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +43,9 @@
 		8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F8A0CDF1D61D0E00038DFAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F8A0CE11D61D0E00038DFAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F9714C01D66516200C388AA /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlashcardsCore.framework; path = ../core/build/FlashcardsCore.framework; sourceTree = "<group>"; };
+		8FE589B91D64BB8D00A04C33 /* RestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = "<group>"; };
+		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,10 +53,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */,
 				8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */,
+				8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */,
 				8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */,
-				8F2928311D620CBF007B1CCF /* libjre_emul.a in Frameworks */,
-				8F29280D1D61E826007B1CCF /* FlashcardsCore.framework in Frameworks */,
+				8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */,
+				BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +86,7 @@
 			children = (
 				8F29282A1D62060F007B1CCF /* Vocabulary */,
 				8F2928271D6204E0007B1CCF /* Common */,
+				8FE589B91D64BB8D00A04C33 /* RestService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -84,7 +94,6 @@
 		8F2928271D6204E0007B1CCF /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8F2928281D6204FA007B1CCF /* CookieJar.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -100,12 +109,15 @@
 		8F8A0CC61D61D0DF0038DFAB = {
 			isa = PBXGroup;
 			children = (
+				8F9714C01D66516200C388AA /* FlashcardsCore.framework */,
 				8F2928241D6203BD007B1CCF /* libz.tbd */,
+				8F488B741D65361000A1B99B /* libjre_emul.a */,
+				8F7E3D451D6661A0004B2D7D /* libjsr305.a */,
 				8F2928321D620CDB007B1CCF /* libjavax_inject.a */,
-				8F2928301D620CBF007B1CCF /* libjre_emul.a */,
-				8F29280C1D61E826007B1CCF /* FlashcardsCore.framework */,
 				8F8A0CD11D61D0DF0038DFAB /* Flashcards */,
 				8F8A0CD01D61D0DF0038DFAB /* Products */,
+				B13338B283C3A5B893AEF959 /* Pods */,
+				BFD909537CED0AC6073FED4F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -134,6 +146,24 @@
 			path = Flashcards;
 			sourceTree = "<group>";
 		};
+		B13338B283C3A5B893AEF959 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */,
+				1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		BFD909537CED0AC6073FED4F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8F488B841D653E1B00A1B99B /* libjre_emul.a */,
+				1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -141,9 +171,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F8A0CE41D61D0E00038DFAB /* Build configuration list for PBXNativeTarget "Flashcards" */;
 			buildPhases = (
+				1D4482C30D57B762D779B13C /* [CP] Check Pods Manifest.lock */,
 				8F8A0CCB1D61D0DF0038DFAB /* Sources */,
 				8F8A0CCC1D61D0DF0038DFAB /* Frameworks */,
 				8F8A0CCD1D61D0DF0038DFAB /* Resources */,
+				D19D487F229791067E3A97A6 /* [CP] Embed Pods Frameworks */,
+				8ECED3BD4E3708B9E3E8C661 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -200,6 +233,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1D4482C30D57B762D779B13C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8ECED3BD4E3708B9E3E8C661 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D19D487F229791067E3A97A6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8F8A0CCB1D61D0DF0038DFAB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -209,8 +290,8 @@
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */,
 				8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */,
-				8F2928291D6204FA007B1CCF /* CookieJar.swift in Sources */,
 				8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */,
+				8FE589BA1D64BB8D00A04C33 /* RestService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,53 +404,62 @@
 		};
 		8F8A0CE51D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlashcardsCore.framework/Headers/",
 					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/j2objc-1.1/lib",
+					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.triangleleft.Flashcards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		8F8A0CE61D61D0E00038DFAB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FlashcardsCore.framework/Headers/",
 					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(USER_LIBRARY_DIR)/j2objc-1.1/lib",
+					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.triangleleft.Flashcards;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";

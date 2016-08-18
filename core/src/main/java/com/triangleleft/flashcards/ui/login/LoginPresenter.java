@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.ui.login;
 
+import android.support.annotation.NonNull;
+
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -13,11 +15,11 @@ import com.triangleleft.flashcards.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.support.annotation.NonNull;
-
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Scheduler;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.subscriptions.Subscriptions;
 
@@ -82,6 +84,12 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
             getView().setLoginErrorVisible(hasLoginError);
             updateLoginButton();
         }
+        Observable.create(new Observable.OnSubscribe<Void>() {
+            @Override
+            public void call(Subscriber<? super Void> subscriber) {
+
+            }
+        });
     }
 
     public void onPasswordChanged(@NonNull String newPassword) {
