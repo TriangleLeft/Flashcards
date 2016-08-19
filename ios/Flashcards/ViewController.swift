@@ -19,7 +19,8 @@ class ViewController: UIViewController, ComTriangleleftFlashcardsUiFlashcardsNav
         JavaUtilConcurrentExecutorService_class_();
         JavaUtilConcurrentScheduledExecutorService_class_();
         let storage = PersistentStorage();
-        let restService = RestService();
+        let gson = ComGoogleGsonGson();
+        let restService = ObjRestService(gson: gson);
         let accountModule = ComTriangleleftFlashcardsServiceAccountSimpleAccountModule(comTriangleleftFlashcardsUtilPersistentStorage: storage);
         
         let settingsModule = ComTriangleleftFlashcardsServiceSettingsRestRestSettingsModule(comTriangleleftFlashcardsServiceRestService: restService, withComTriangleleftFlashcardsServiceAccountAccountModule: accountModule);
@@ -28,11 +29,11 @@ class ViewController: UIViewController, ComTriangleleftFlashcardsUiFlashcardsNav
         
         let presenter = ComTriangleleftFlashcardsUiLoginLoginPresenter(comTriangleleftFlashcardsServiceAccountAccountModule: accountModule, withComTriangleleftFlashcardsServiceLoginLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
         
-        presenter.onLoginChangedWithNSString("login");
-        presenter.onPasswordChangedWithNSString("password");
+        presenter.onLoginChangedWithNSString("lekz112");
+        presenter.onPasswordChangedWithNSString("samsung112");
+        presenter.onLoginClick();
 
-        loginModule.loginWithNSString("login", withNSString: "password").subscribeWithRxObserver(MyObserver());
-        print("whoa");
+        //loginModule.loginWithNSString("lekz112", withNSString: "samsung112").subscribeWithRxObserver(MyObserver());
     }
     class MyObserver : NSObject, RxObserver {
 

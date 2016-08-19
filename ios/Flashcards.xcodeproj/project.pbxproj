@@ -19,7 +19,9 @@
 		8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD91D61D0E00038DFAB /* Flashcards.xcdatamodeld */; };
 		8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
 		8F8A0CE01D61D0E00038DFAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
+		8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
 		8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
+		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
 		8FE589BA1D64BB8D00A04C33 /* RestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE589B91D64BB8D00A04C33 /* RestService.swift */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
@@ -43,7 +45,11 @@
 		8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F8A0CDF1D61D0E00038DFAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F8A0CE11D61D0E00038DFAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F9142FE1D673A3D00DB815F /* GsonResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GsonResponseSerializer.h; sourceTree = "<group>"; };
+		8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsonResponseSerializer.m; sourceTree = "<group>"; };
 		8F9714C01D66516200C388AA /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlashcardsCore.framework; path = ../core/build/FlashcardsCore.framework; sourceTree = "<group>"; };
+		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
+		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
 		8FE589B91D64BB8D00A04C33 /* RestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -87,6 +93,10 @@
 				8F29282A1D62060F007B1CCF /* Vocabulary */,
 				8F2928271D6204E0007B1CCF /* Common */,
 				8FE589B91D64BB8D00A04C33 /* RestService.swift */,
+				8FD8E9641D670E6800EB3F76 /* ObjRestService.h */,
+				8FD8E9651D670E6800EB3F76 /* ObjRestService.m */,
+				8F9142FE1D673A3D00DB815F /* GsonResponseSerializer.h */,
+				8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -287,7 +297,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */,
+				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
+				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
 				8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */,
 				8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */,
 				8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */,

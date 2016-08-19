@@ -7,3 +7,4 @@
 #include "java/util/concurrent/Executor.h"
 #include "java/util/concurrent/ExecutorService.h"
 #include "java/util/concurrent/ScheduledExecutorService.h"
+#import "ObjRestService.h"
