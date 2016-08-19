@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.di;
 
 import android.content.Context;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
@@ -56,7 +55,6 @@ public class RetrofitModule {
             .addInterceptor(loggingInterceptor)
             .addInterceptor(delayInterceptor)
    //         .addNetworkInterceptor(new StethoInterceptor())
-                .sslSocketFactory()
             .build();
     }
 

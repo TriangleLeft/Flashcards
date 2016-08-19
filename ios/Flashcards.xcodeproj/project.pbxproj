@@ -22,6 +22,7 @@
 		8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
 		8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
 		8FB1EA0C1D67AF9900545EB7 /* prefixes.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA091D67AED400545EB7 /* prefixes.properties */; };
+		8FB1EA0E1D67C35000545EB7 /* simplelogger.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */; };
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
@@ -33,6 +34,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				8FB1EA0E1D67C35000545EB7 /* simplelogger.properties in CopyFiles */,
 				8FB1EA0C1D67AF9900545EB7 /* prefixes.properties in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +64,7 @@
 		8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsonResponseSerializer.m; sourceTree = "<group>"; };
 		8F9714C01D66516200C388AA /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlashcardsCore.framework; path = ../core/build/FlashcardsCore.framework; sourceTree = "<group>"; };
 		8FB1EA091D67AED400545EB7 /* prefixes.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = prefixes.properties; path = ../core/src/main/resources/prefixes.properties; sourceTree = "<group>"; };
+		8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = simplelogger.properties; path = ../core/src/main/resources/simplelogger.properties; sourceTree = "<group>"; };
 		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		8F8A0CC61D61D0DF0038DFAB = {
 			isa = PBXGroup;
 			children = (
+				8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */,
 				8FB1EA091D67AED400545EB7 /* prefixes.properties */,
 				8F9714C01D66516200C388AA /* FlashcardsCore.framework */,
 				8F2928241D6203BD007B1CCF /* libz.tbd */,

@@ -49,7 +49,8 @@ dependencies {
     j2objcTranslation files('libs/rxjava-1.1.8-sources.jar')
     compile 'com.annimon:stream:1.0.9'
     compile dep.SUPPORT_ANNOTATION
-   // compile 'org.slf4j:slf4j-api:1.7.21'
+    compile files('libs/slf4j-simple-1.7.21.jar')
+    j2objcTranslation files('libs/slf4j-simple-1.7.21-sources.jar')
 
     // Only annotations are used
     compile dep.RETROFIT
@@ -66,7 +67,7 @@ dependencies {
 //    testCompile project(":j2objc-hamcrest")
     compile dep.HAMCREST
     testCompile dep.JUNIT
-   // compile 'org.slf4j:slf4j-simple:1.7.21'
+
 //    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
 //    j2objcTestTranslation 'com.squareup.okhttp3:mockwebserver:3.4.1:sources'
 //    j2objcTestTranslation 'com.squareup.okhttp3:okhttp-ws:3.4.1:sources'

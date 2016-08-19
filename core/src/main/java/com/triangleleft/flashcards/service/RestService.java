@@ -33,7 +33,6 @@ public interface RestService {
     String GET_USERDATA = "/api/1/users/show";
     String GET_TRANSLATION = "https://d2.duolingo.com/api/1/dictionary/hints";
 
-    @FormUrlEncoded
     @POST(POST_LOGIN)
     Observable<LoginResponseModel> login(@Body LoginRequestController model);
 
