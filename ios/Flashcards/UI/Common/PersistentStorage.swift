@@ -9,7 +9,7 @@
 import Foundation
 import FlashcardsCore
 
-class PersistentStorage : NSObject, ComTriangleleftFlashcardsUtilPersistentStorage {
+class IOSPersistentStorage : NSObject,PersistentStorage {
     
     func putWithNSString(key: String!, withId value: AnyObject?) {
         

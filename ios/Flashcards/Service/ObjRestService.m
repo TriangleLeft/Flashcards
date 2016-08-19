@@ -11,6 +11,7 @@
 #import "GsonResponseSerializer.h"
 #import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
 #import <AFNetworkActivityLogger/AFNetworkActivityConsoleLogger.h>
+#import "IOSClass.h"
 
 typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
@@ -40,6 +41,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
 -(instancetype)initWithGson:(ComGoogleGsonGson *)gson {
     _gson = gson;
+
     AFNetworkActivityConsoleLogger *consoleLogger = [AFNetworkActivityConsoleLogger new];
     [consoleLogger setLevel:AFLoggerLevelDebug];
     [[AFNetworkActivityLogger sharedLogger] removeLogger:[[[AFNetworkActivityLogger sharedLogger] loggers] anyObject]];
@@ -49,18 +51,18 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     return self;
 }
 
-- (RxObservable *)loginWithComTriangleleftFlashcardsServiceLoginRestLoginRequestController:(ComTriangleleftFlashcardsServiceLoginRestLoginRequestController *)model {
+- (RxObservable *)loginWithLoginRequestController:(LoginRequestController *)model {
     RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[MyClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
-        NSURL *baseUrl = [[NSURL alloc] initWithString:[ComTriangleleftFlashcardsServiceRestService BASE_URL]];
+        NSURL *baseUrl = [[NSURL alloc] initWithString:[RestService BASE_URL]];
         AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseUrl];
-        manager.responseSerializer = [[GsonResponseSerializer alloc] initWithModel:ComTriangleleftFlashcardsServiceLoginRestLoginResponseModel_class_() gson:_gson];
+        manager.responseSerializer = [[GsonResponseSerializer alloc] initWithModel:LoginResponseModel_class_() gson:_gson];
         
         NSString * jsonString = [_gson toJsonWithId:model];
     
         NSURLComponents *components = [[NSURLComponents alloc] init];
-        components.scheme = [ComTriangleleftFlashcardsServiceRestService BASE_SCHEME];
-        components.host = [ComTriangleleftFlashcardsServiceRestService BASE_URL];
-        components.path = [ComTriangleleftFlashcardsServiceRestService POST_LOGIN];
+        components.scheme = [RestService BASE_SCHEME];
+        components.host = [RestService BASE_URL];
+        components.path = [RestService POST_LOGIN];
         
         NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:components.URL cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
         [req setHTTPMethod:@"POST"];
@@ -94,7 +96,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     return NULL;
 }
 
-- (RxObservable *)postFlashcardResultsWithComTriangleleftFlashcardsServiceCardsRestFlashcardResultsController:(ComTriangleleftFlashcardsServiceCardsRestFlashcardResultsController *)model {
+- (RxObservable *)postFlashcardResultsWithFlashcardResultsController:(FlashcardResultsController *)model {
     return NULL;
 }
 

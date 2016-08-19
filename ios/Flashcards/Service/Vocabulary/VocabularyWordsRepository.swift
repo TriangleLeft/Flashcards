@@ -9,7 +9,7 @@
 import Foundation
 import FlashcardsCore
 
-class VocabularyWordsRepository: NSObject, ComTriangleleftFlashcardsServiceVocabularVocabularyWordsRepository {
+class IOSVocabularyWordsRepository: NSObject, VocabularyWordsRepository {
     
     func getWordsWithNSString(uiLanguageId: String!, withNSString learningLanguageId: String!) -> JavaUtilList! {
         return nil;

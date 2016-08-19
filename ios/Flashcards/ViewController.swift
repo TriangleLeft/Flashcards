@@ -9,7 +9,7 @@
 import UIKit
 import FlashcardsCore
 
-class ViewController: UIViewController, ComTriangleleftFlashcardsUiFlashcardsNavigator {
+class ViewController: UIViewController, FlashcardsNavigator {
 
     @objc
     override func viewDidLoad() {
@@ -18,16 +18,16 @@ class ViewController: UIViewController, ComTriangleleftFlashcardsUiFlashcardsNav
         JavaUtilConcurrentThreadPoolExecutor_class_();
         JavaUtilConcurrentExecutorService_class_();
         JavaUtilConcurrentScheduledExecutorService_class_();
-        let storage = PersistentStorage();
+        let storage = IOSPersistentStorage();
         let gson = ComGoogleGsonGson();
         let restService = ObjRestService(gson: gson);
-        let accountModule = ComTriangleleftFlashcardsServiceAccountSimpleAccountModule(comTriangleleftFlashcardsUtilPersistentStorage: storage);
+        let accountModule = SimpleAccountModule(persistentStorage: storage);
         
-        let settingsModule = ComTriangleleftFlashcardsServiceSettingsRestRestSettingsModule(comTriangleleftFlashcardsServiceRestService: restService, withComTriangleleftFlashcardsServiceAccountAccountModule: accountModule);
+        let settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule);
         
-        let loginModule = ComTriangleleftFlashcardsServiceLoginRestRestLoginModule(comTriangleleftFlashcardsServiceRestService: restService, withComTriangleleftFlashcardsServiceSettingsSettingsModule: settingsModule, withComTriangleleftFlashcardsServiceAccountAccountModule: accountModule);
+        let loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule);
         
-        let presenter = ComTriangleleftFlashcardsUiLoginLoginPresenter(comTriangleleftFlashcardsServiceAccountAccountModule: accountModule, withComTriangleleftFlashcardsServiceLoginLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
         
         presenter.onLoginChangedWithNSString("lekz112");
         presenter.onPasswordChangedWithNSString("samsung112");
