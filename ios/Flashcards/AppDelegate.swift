@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger;
-        consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelDebug;
+        consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo;
         AFNetworkActivityLogger.sharedLogger().startLogging();
         return true
     }

@@ -25,7 +25,6 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (void)callWithId:(id)t {
-    NSLog(@"Called with %@", t);
     RxSubscriber* subsriber = (RxSubscriber*)t;
     _handler(subsriber);
 }
@@ -34,7 +33,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
 @interface ObjRestService()
 
-- (NSURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path body:(id)body;
+- (NSURLRequest *)requestWithMethod:(NSString *)method url:(NSURL *)url body:(id)body;
 
 @property (strong, nonatomic) ComGoogleGsonGson* gson;
 
@@ -49,7 +48,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)loginWithLoginRequestController:(LoginRequestController *)model {
-    NSURLRequest *req = [self requestWithMethod:@"POST" path:[RestService POST_LOGIN] body:model];
+    NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:[RestService PATH_LOGIN]] body:model];
     return [self observableWithRequest:req responseModelClass:LoginResponseModel_class_()];
 }
 
@@ -66,16 +65,18 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)postFlashcardResultsWithFlashcardResultsController:(FlashcardResultsController *)model {
-    NSURLRequest *req = [self requestWithMethod:@"POST" path:[RestService POST_FLASHCARDS] body:model];
+    //NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:] body:model];
     return NULL;
 }
 
-- (RxObservable *)switchLanguageWithNSString:(NSString *)languageId {
+- (RxObservable *)switchLanguageWithSwitchLanguageController:(SwitchLanguageController *)controller {
     return NULL;
 }
 
 - (RxObservable *)getUserDataWithNSString:(NSString *)userId {
-    return NULL;
+    NSArray<NSURLQueryItem *> *params = @[[[NSURLQueryItem alloc] initWithName:[RestService QUERY_USERID] value:userId]];
+    NSURLRequest *req = [self requestWithMethod:@"GET" url:[self urlWithPath:[RestService PATH_USERDATA] queryParams:params]];
+    return [self observableWithRequest:req responseModelClass:UserDataModel_class_()];
 }
 
 - (RxObservable *)getTranslationWithNSString:(NSString *)languageIdFrom
@@ -104,17 +105,33 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     return observable;
 }
 
-- (NSURLRequest *)requestWithMethod:(NSString *)method path:(NSString*)path body:(id)body {
+- (NSURL *)urlWithPath:(NSString *)path {
+    return [self urlWithPath:path queryParams:nil];
+}
+
+- (NSURL *)urlWithPath:(NSString *)path queryParams:(NSArray<NSURLQueryItem *> *)queryParams {
     NSURLComponents *components = [[NSURLComponents alloc] init];
     components.scheme = [RestService BASE_SCHEME];
     components.host = [RestService BASE_URL];
     components.path = path;
-    
-    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:components.URL cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
+    if (queryParams) {
+        components.queryItems = queryParams;
+    }
+    return components.URL;
+}
+
+- (NSURLRequest *)requestWithMethod:(NSString *)method url:(NSURL*)url {
+    return [self requestWithMethod:method url:url body:nil];
+}
+
+- (NSURLRequest *)requestWithMethod:(NSString *)method url:(NSURL*)url body:(id)body {
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
     [req setHTTPMethod:method];
-    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    [req setHTTPBody:[[[self gson] toJsonWithId:body] dataUsingEncoding:NSUTF8StringEncoding]];
+    if (body) {
+        [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [req setHTTPBody:[[[self gson] toJsonWithId:body] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     return req;
 }
 

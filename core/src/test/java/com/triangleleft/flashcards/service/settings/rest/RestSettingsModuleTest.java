@@ -21,6 +21,7 @@ import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.service.settings.rest.model.SwitchLanguageController;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 
 import org.junit.Before;
@@ -31,7 +32,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +39,10 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class RestSettingsModuleTest {
@@ -79,7 +82,8 @@ public class RestSettingsModuleTest {
     @Test
     public void switchLanguage() {
         Language language = Language.create("id", "lang", 0, true, true);
-        when(service.switchLanguage("id")).thenReturn(Observable.just(null));
+        when(service.switchLanguage(any(SwitchLanguageController.class)))
+                .thenReturn(Observable.just(null));
 
         TestSubscriber<Void> subscriber = TestSubscriber.create();
         module.switchLanguage(language).subscribe(subscriber);

@@ -37,22 +37,6 @@ class ViewController: UIViewController, FlashcardsNavigator {
         
         //loginModule.loginWithNSString("lekz112", withNSString: "samsung112").subscribeWithRxObserver(MyObserver());
     }
-    class MyObserver : NSObject, RxObserver {
-        
-        func onCompleted() {
-            print("Compl");
-        }
-        
-        
-        func onErrorWithNSException(e: NSException!) {
-            print("Ex!", e);
-        }
-        
-        
-        func onNextWithId(t: AnyObject!) {
-            print("Next!", t);
-        }
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,13 +46,6 @@ class ViewController: UIViewController, FlashcardsNavigator {
     func navigateToLogin() {
         
     }
-    
-    class Callback : NSObject, RxFunctionsAction1 {
-        func callWithId(t: AnyObject!) {
-            print(t);
-        }
-    }
-    
     
 }
 
