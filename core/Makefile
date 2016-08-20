@@ -118,3 +118,4 @@ $(MODULE_MAP):
 clean:
 	@echo cleaning $(STATIC_FRAMEWORK_NAME) framework
 	@rm -rf $(STATIC_FRAMEWORK_DIR)
+	@rm $(FRAMEWORK_HEADER)
