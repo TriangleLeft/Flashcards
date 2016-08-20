@@ -9,8 +9,6 @@
 #import "ObjRestService.h"
 #import <AFNetworking/AFNetworking.h>
 #import "GsonResponseSerializer.h"
-#import <AFNetworkActivityLogger/AFNetworkActivityLogger.h>
-#import <AFNetworkActivityLogger/AFNetworkActivityConsoleLogger.h>
 #import "IOSClass.h"
 
 typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
@@ -30,63 +28,34 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     NSLog(@"Called with %@", t);
     RxSubscriber* subsriber = (RxSubscriber*)t;
     _handler(subsriber);
-    }
+}
 
 @end
 
+@interface ObjRestService()
 
-@implementation ObjRestService {
-    ComGoogleGsonGson *_gson;
-}
+- (NSURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path body:(id)body;
+
+@property (strong, nonatomic) ComGoogleGsonGson* gson;
+
+@end
+
+@implementation ObjRestService
 
 -(instancetype)initWithGson:(ComGoogleGsonGson *)gson {
     _gson = gson;
-
-    AFNetworkActivityConsoleLogger *consoleLogger = [AFNetworkActivityConsoleLogger new];
-    [consoleLogger setLevel:AFLoggerLevelDebug];
-    [[AFNetworkActivityLogger sharedLogger] removeLogger:[[[AFNetworkActivityLogger sharedLogger] loggers] anyObject]];
-    [[AFNetworkActivityLogger sharedLogger] addLogger:consoleLogger];
-    [[AFNetworkActivityLogger sharedLogger] startLogging];
     
     return self;
 }
 
 - (RxObservable *)loginWithLoginRequestController:(LoginRequestController *)model {
-    RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[MyClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
-        NSURL *baseUrl = [[NSURL alloc] initWithString:[RestService BASE_URL]];
-        AFHTTPSessionManager *manager = [[AFHTTPSessionManager alloc] initWithBaseURL:baseUrl];
-        manager.responseSerializer = [[GsonResponseSerializer alloc] initWithModel:LoginResponseModel_class_() gson:_gson];
-        
-        NSString * jsonString = [_gson toJsonWithId:model];
-    
-        NSURLComponents *components = [[NSURLComponents alloc] init];
-        components.scheme = [RestService BASE_SCHEME];
-        components.host = [RestService BASE_URL];
-        components.path = [RestService POST_LOGIN];
-        
-        NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:components.URL cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
-        [req setHTTPMethod:@"POST"];
-        [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [req setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
-        
-        
-        [[manager dataTaskWithRequest:req completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-            
-            if (!error) {
-                NSLog(@"Reply JSON: %@", responseObject);
-                
-                [subscriber onNextWithId:responseObject];
-            } else {
-                NSLog(@"Error: %@, %@, %@", error, response, responseObject);
-            }
-        }] resume];
-
-    }]];
-    return observable;
+    NSURLRequest *req = [self requestWithMethod:@"POST" path:[RestService POST_LOGIN] body:model];
+    return [self observableWithRequest:req responseModelClass:LoginResponseModel_class_()];
 }
 
 - (RxObservable *)getVocabularyListWithLong:(jlong)timestamp {
+    // GET
+    // class
     return NULL;
 }
 
@@ -97,6 +66,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)postFlashcardResultsWithFlashcardResultsController:(FlashcardResultsController *)model {
+    NSURLRequest *req = [self requestWithMethod:@"POST" path:[RestService POST_FLASHCARDS] body:model];
     return NULL;
 }
 
@@ -112,6 +82,40 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
                                 withNSString:(NSString *)languageIdTo
                                 withNSString:(NSString *)tokens {
     return NULL;
+}
+
+- (RxObservable *)observableWithRequest:(NSURLRequest *)request responseModelClass:(IOSClass *)clazz {
+    RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[MyClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager new];
+        manager.responseSerializer = [[GsonResponseSerializer alloc] initWithClass:clazz gson:_gson];
+        
+        [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+            
+            if (!error) {
+                NSLog(@"Reply JSON: %@", responseObject);
+                
+                [subscriber onNextWithId:responseObject];
+            } else {
+                NSLog(@"Error: %@, %@, %@", error, response, responseObject);
+            }
+        }] resume];
+        
+    }]];
+    return observable;
+}
+
+- (NSURLRequest *)requestWithMethod:(NSString *)method path:(NSString*)path body:(id)body {
+    NSURLComponents *components = [[NSURLComponents alloc] init];
+    components.scheme = [RestService BASE_SCHEME];
+    components.host = [RestService BASE_URL];
+    components.path = path;
+    
+    NSMutableURLRequest *req = [NSMutableURLRequest requestWithURL:components.URL cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:60];
+    [req setHTTPMethod:method];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [req setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [req setHTTPBody:[[[self gson] toJsonWithId:body] dataUsingEncoding:NSUTF8StringEncoding]];
+    return req;
 }
 
 @end

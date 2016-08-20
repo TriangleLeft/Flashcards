@@ -14,7 +14,7 @@
     IOSClass *_class;
 }
 
--(instancetype)initWithModel:(IOSClass *)class gson:(ComGoogleGsonGson *)gson {
+-(instancetype)initWithClass:(IOSClass *)class gson:(ComGoogleGsonGson *)gson {
     _class = class;
     _gson = gson;
     return self;

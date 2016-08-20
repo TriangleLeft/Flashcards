@@ -14,6 +14,6 @@
 
 @interface GsonResponseSerializer : AFHTTPResponseSerializer
 
--(instancetype)initWithModel:(IOSClass *)class gson:(ComGoogleGsonGson *)gson;
+-(instancetype)initWithClass:(IOSClass *)class gson:(ComGoogleGsonGson *)gson;
 
 @end

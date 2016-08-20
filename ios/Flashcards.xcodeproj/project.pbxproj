@@ -44,7 +44,7 @@
 /* Begin PBXFileReference section */
 		1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentStorage.swift; sourceTree = "<group>"; };
+		8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentStorage.swift; path = ../../UI/Common/PersistentStorage.swift; sourceTree = "<group>"; };
 		8F2928241D6203BD007B1CCF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyWordsRepository.swift; sourceTree = "<group>"; };
 		8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flashcards-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -98,7 +98,6 @@
 		8F29281B1D61FDC1007B1CCF /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -119,6 +118,7 @@
 		8F2928271D6204E0007B1CCF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";

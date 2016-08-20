@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AFNetworkActivityLogger
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger;
+        consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelDebug;
+        AFNetworkActivityLogger.sharedLogger().startLogging();
         return true
     }
 
