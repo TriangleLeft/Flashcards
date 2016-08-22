@@ -24,6 +24,8 @@
 		8FB1EA0C1D67AF9900545EB7 /* prefixes.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA091D67AED400545EB7 /* prefixes.properties */; };
 		8FB1EA0E1D67C35000545EB7 /* simplelogger.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */; };
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
+		8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
+		8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,8 @@
 		8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = simplelogger.properties; path = ../core/src/main/resources/simplelogger.properties; sourceTree = "<group>"; };
 		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
+		8FE6B54A1D6B1BBC00532B3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LoginView.xib; sourceTree = "<group>"; };
+		8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +94,7 @@
 		8F29281A1D61FBB1007B1CCF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8FE6B5461D6B19E300532B3C /* Login */,
 				8F29281B1D61FDC1007B1CCF /* Common */,
 			);
 			path = UI;
@@ -171,6 +176,15 @@
 				8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */,
 			);
 			path = Flashcards;
+			sourceTree = "<group>";
+		};
+		8FE6B5461D6B19E300532B3C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */,
+				8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		B13338B283C3A5B893AEF959 /* Pods */ = {
@@ -255,6 +269,7 @@
 			files = (
 				8F8A0CE01D61D0E00038DFAB /* LaunchScreen.storyboard in Resources */,
 				8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */,
+				8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */,
 				8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +333,7 @@
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
+				8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */,
 				8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */,
 				8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */,
 				8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */,
@@ -341,6 +357,14 @@
 				8F8A0CDF1D61D0E00038DFAB /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8FE6B54A1D6B1BBC00532B3C /* en */,
+			);
+			name = LoginView.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

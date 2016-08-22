@@ -20,6 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger;
         consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo;
         AFNetworkActivityLogger.sharedLogger().startLogging();
+        
+        let gson = ComGoogleGsonGson();
+        let storage = IOSPersistentStorage(gson);
+        
+        let restService = ObjRestService(gson: gson);
+        
+        let accountModule = SimpleAccountModule(persistentStorage: storage);
+        
+        let settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule);
+        
+        let loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule);
+        
+        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        
+        
+        let rootView: LoginViewController = LoginViewController()
+        rootView.presenter = presenter;
+        
+        if let window = self.window{
+            window.rootViewController = rootView
+        }
+        
         return true
     }
 

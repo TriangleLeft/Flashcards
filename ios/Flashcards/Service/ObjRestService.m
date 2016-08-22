@@ -93,8 +93,6 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
         [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             
             if (!error) {
-                NSLog(@"Reply JSON: %@", responseObject);
-                
                 [subscriber onNextWithId:responseObject];
             } else {
                 NSLog(@"Error: %@, %@, %@", error, response, responseObject);
