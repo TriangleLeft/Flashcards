@@ -100,14 +100,36 @@ extension LoginViewController: ILoginView {
     
     func advance() {
         let controller = MainViewController();
+        let toolbar = ToolbarController(rootViewController: controller);
+        toolbar.toolbar.title = "Main controller"
+        toolbar.toolbar.backgroundColor = MaterialColor.lightBlue.base
+        toolbar.toolbar.titleLabel.textColor = MaterialColor.white
+        toolbar.toolbar.titleLabel.textAlignment = .Center
+        toolbar.statusBarStyle = .LightContent
+        
+        let img2: UIImage? = MaterialIcon.menu;
+        let btn2: IconButton = IconButton()
+        btn2.pulseColor = MaterialColor.white
+        btn2.tintColor = MaterialColor.white
+        btn2.setImage(img2, forState: .Normal)
+        btn2.setImage(img2, forState: .Highlighted)
+        
+        let imgSettings: UIImage? = MaterialIcon.settings;
+        let btnSettings: IconButton = IconButton()
+        btnSettings.pulseColor = MaterialColor.white
+        btnSettings.tintColor = MaterialColor.white
+        btnSettings.setImage(imgSettings, forState: .Normal)
+        btnSettings.setImage(imgSettings, forState: .Highlighted)
+        
+        toolbar.toolbar.leftControls = [btn2]
+        toolbar.toolbar.rightControls = [btnSettings];
+        
         let mainVC = VocabularyListTableViewController();
         let secondaryVC = VocabularyWordViewController();
         mainVC.delegate = secondaryVC;
-        let mainNavContoller = UINavigationController(rootViewController: mainVC);
-        let secondaryNavController = UINavigationController(rootViewController: secondaryVC);
-        controller.viewControllers = [mainNavContoller, secondaryNavController];
+        controller.viewControllers = [mainVC, secondaryVC];
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.window!.rootViewController = controller;
+        appDelegate.window!.rootViewController = toolbar;
         //presentViewController(controller, animated: true, completion: nil);
         
         
