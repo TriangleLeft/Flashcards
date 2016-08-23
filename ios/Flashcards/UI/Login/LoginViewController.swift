@@ -8,6 +8,7 @@
 
 import UIKit
 import FlashcardsCore
+import Material
 
 class LoginViewController: UIViewController  {
     
@@ -15,11 +16,11 @@ class LoginViewController: UIViewController  {
 
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
-    @IBOutlet weak var loginTextField: UITextField!
+    @IBOutlet weak var loginTextField: ErrorTextField!
     
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordTextField: ErrorTextField!
     
-    @IBOutlet weak var rememberMeSwich: UISwitch!
+    @IBOutlet weak var rememberMeSwich: MaterialSwitch!
     
     @IBOutlet weak var loginButton: UIButton!
     
@@ -31,6 +32,8 @@ class LoginViewController: UIViewController  {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
         view.addGestureRecognizer(tapGesture)
+        
+        activityIndicatorView.hidesWhenStopped = true;
     }
     
     func tap(gesture: UITapGestureRecognizer) {
@@ -71,19 +74,23 @@ extension LoginViewController: ILoginView {
     }
     
     func setLoginErrorVisibleWithBoolean(visible: jboolean) {
-        
+        loginTextField.revealError = visible;
+        loginTextField.detail = "Wrong login";
     }
     
     func setPasswordErrorVisibleWithBoolean(visible: jboolean) {
-        
+        passwordTextField.revealError = visible;
+        passwordTextField.detail = "Wrong password";
     }
     
     func showProgress() {
-        
+        activityIndicatorView.startAnimating();
+        contentView.hidden = true;
     }
     
     func showContent() {
-        
+        contentView.hidden = false;
+        activityIndicatorView.stopAnimating();
     }
     
     func advance() {

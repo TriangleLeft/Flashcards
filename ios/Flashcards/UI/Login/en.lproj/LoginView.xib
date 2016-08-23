@@ -12,7 +12,7 @@
                 <outlet property="loginButton" destination="dfc-ah-4rS" id="QgH-oD-iol"/>
                 <outlet property="loginTextField" destination="iKh-qJ-UnR" id="l48-9X-huw"/>
                 <outlet property="passwordTextField" destination="RWf-Me-TEJ" id="wmF-a7-ug3"/>
-                <outlet property="rememberMeSwich" destination="F9f-IM-g4d" id="gWh-pS-Suc"/>
+                <outlet property="rememberMeSwich" destination="4vR-aX-MOk" id="0Mn-YF-iub"/>
                 <outlet property="view" destination="iN0-l3-epB" id="hv0-z6-xG6"/>
             </connections>
         </placeholder>
@@ -26,7 +26,7 @@
                     <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                 </activityIndicatorView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="thj-Tl-IYL">
-                    <rect key="frame" x="150" y="157" width="300" height="287"/>
+                    <rect key="frame" x="150" y="130" width="300" height="340"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flashcards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hi0-DE-fE7">
                             <rect key="frame" x="0.0" y="0.0" width="300" height="66"/>
@@ -40,44 +40,68 @@
                                 <constraint firstAttribute="height" constant="40" id="Z1i-eV-7fb"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iKh-qJ-UnR">
-                            <rect key="frame" x="0.0" y="106" width="300" height="30"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iKh-qJ-UnR" customClass="ErrorTextField" customModule="Material">
+                            <rect key="frame" x="0.0" y="106" width="300" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Login"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="onLoginChanged:" destination="-1" eventType="editingDidEnd" id="zE9-Gj-XNJ"/>
+                                <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="6gz-z5-OC3"/>
                             </connections>
                         </textField>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RWf-Me-TEJ">
-                            <rect key="frame" x="0.0" y="136" width="300" height="30"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6pV-RQ-JDy">
+                            <rect key="frame" x="0.0" y="138" width="300" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="dz0-uW-UFL"/>
+                            </constraints>
+                        </view>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RWf-Me-TEJ" customClass="ErrorTextField" customModule="Material">
+                            <rect key="frame" x="0.0" y="188" width="300" height="32"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="placeholder" value="Password"/>
+                                <userDefinedRuntimeAttribute type="string" keyPath="detail" value="test"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="onPasswordChanged:" destination="-1" eventType="editingDidEnd" id="kbh-8G-hNv"/>
+                                <action selector="onPasswordChanged:" destination="-1" eventType="editingChanged" id="a74-SC-oa9"/>
                             </connections>
                         </textField>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5he-No-P2D">
+                            <rect key="frame" x="0.0" y="220" width="300" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="RvO-Yf-MYI"/>
+                            </constraints>
+                        </view>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F1b-hQ-1mI">
-                            <rect key="frame" x="0.0" y="166" width="300" height="31"/>
+                            <rect key="frame" x="0.0" y="270" width="300" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIQ-ix-pTw">
-                                    <rect key="frame" x="0.0" y="0.0" width="251" height="31"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9f-IM-g4d">
-                                    <rect key="frame" x="251" y="0.0" width="51" height="31"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4vR-aX-MOk" customClass="MaterialSwitch">
+                                    <rect key="frame" x="260" y="0.0" width="40" height="30"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="40" id="eoz-PZ-Sib"/>
+                                        <constraint firstAttribute="height" constant="30" id="nOf-c3-5BE"/>
+                                    </constraints>
                                     <connections>
-                                        <action selector="onRememberMeChanged:" destination="-1" eventType="valueChanged" id="YDE-Vr-VZl"/>
+                                        <action selector="onRememberMeChanged:" destination="-1" eventType="valueChanged" id="jn9-cw-QpO"/>
                                     </connections>
-                                </switch>
+                                </view>
                             </subviews>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFc-7R-lHT">
-                            <rect key="frame" x="0.0" y="197" width="300" height="60"/>
+                            <rect key="frame" x="0.0" y="300" width="300" height="10"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
-                            <rect key="frame" x="0.0" y="257" width="300" height="30"/>
+                            <rect key="frame" x="0.0" y="310" width="300" height="30"/>
                             <state key="normal" title="Login"/>
                             <connections>
                                 <action selector="onLoginClick:" destination="-1" eventType="touchUpInside" id="iFH-WJ-eHf"/>
@@ -86,7 +110,7 @@
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="width" constant="300" id="N49-f2-el3"/>
-                        <constraint firstAttribute="height" constant="287" id="VhL-01-GI1"/>
+                        <constraint firstAttribute="height" constant="340" id="VhL-01-GI1"/>
                     </constraints>
                 </stackView>
             </subviews>
@@ -97,6 +121,7 @@
                 <constraint firstItem="oaN-my-EP0" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="63c-uc-PFv"/>
                 <constraint firstItem="thj-Tl-IYL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Y3x-bI-exG"/>
             </constraints>
+            <point key="canvasLocation" x="339" y="305"/>
         </view>
     </objects>
 </document>
