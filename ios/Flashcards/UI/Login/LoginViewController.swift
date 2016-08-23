@@ -28,12 +28,17 @@ class LoginViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad();
+        presenter!.onCreate();
         presenter!.onBindWithIView(self);
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
         view.addGestureRecognizer(tapGesture)
         
         activityIndicatorView.hidesWhenStopped = true;
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        presenter!.onRebindWithIView(self);
     }
     
     func tap(gesture: UITapGestureRecognizer) {
@@ -94,6 +99,17 @@ extension LoginViewController: ILoginView {
     }
     
     func advance() {
+        let controller = MainViewController();
+        let mainVC = VocabularyListTableViewController();
+        let secondaryVC = VocabularyWordViewController();
+        mainVC.delegate = secondaryVC;
+        let mainNavContoller = UINavigationController(rootViewController: mainVC);
+        let secondaryNavController = UINavigationController(rootViewController: secondaryVC);
+        controller.viewControllers = [mainNavContoller, secondaryNavController];
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.window!.rootViewController = controller;
+        //presentViewController(controller, animated: true, completion: nil);
+        
         
     }
     
@@ -108,4 +124,8 @@ extension LoginViewController: ILoginView {
     func showNetworkError() {
         
     }
+}
+
+protocol LalalaDelegate:class {
+    func lala(value:String)
 }
