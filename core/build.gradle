@@ -82,7 +82,7 @@ j2objcConfig {
     }
     j2objcVersion "1.1"
     autoConfigureDeps true
-    supportedArchs = ['ios_i386'] //ios_x86_64
+    supportedArchs = ['ios_i386', 'ios_x86_64'] //ios_x86_64
 
     generatedSourceDirs "build/generated/source/apt/main"
     translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"

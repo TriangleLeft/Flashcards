@@ -28,20 +28,20 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="thj-Tl-IYL">
                     <rect key="frame" x="150" y="130" width="300" height="340"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flashcards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hi0-DE-fE7">
-                            <rect key="frame" x="0.0" y="0.0" width="300" height="66"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Flashcards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hi0-DE-fE7">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="55"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pc2-am-xyR">
-                            <rect key="frame" x="0.0" y="66" width="300" height="40"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pc2-am-xyR">
+                            <rect key="frame" x="0.0" y="30" width="300" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="Z1i-eV-7fb"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iKh-qJ-UnR" customClass="ErrorTextField" customModule="Material">
-                            <rect key="frame" x="0.0" y="106" width="300" height="32"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iKh-qJ-UnR" customClass="ErrorTextField" customModule="Material">
+                            <rect key="frame" x="0.0" y="70" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -51,14 +51,14 @@
                                 <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="6gz-z5-OC3"/>
                             </connections>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6pV-RQ-JDy">
-                            <rect key="frame" x="0.0" y="138" width="300" height="50"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6pV-RQ-JDy">
+                            <rect key="frame" x="0.0" y="100" width="300" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="dz0-uW-UFL"/>
                             </constraints>
                         </view>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RWf-Me-TEJ" customClass="ErrorTextField" customModule="Material">
-                            <rect key="frame" x="0.0" y="188" width="300" height="32"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RWf-Me-TEJ" customClass="ErrorTextField" customModule="Material">
+                            <rect key="frame" x="0.0" y="150" width="300" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                             <userDefinedRuntimeAttributes>
@@ -69,14 +69,14 @@
                                 <action selector="onPasswordChanged:" destination="-1" eventType="editingChanged" id="a74-SC-oa9"/>
                             </connections>
                         </textField>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5he-No-P2D">
-                            <rect key="frame" x="0.0" y="220" width="300" height="50"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5he-No-P2D">
+                            <rect key="frame" x="0.0" y="180" width="300" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="RvO-Yf-MYI"/>
                             </constraints>
                         </view>
-                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F1b-hQ-1mI">
-                            <rect key="frame" x="0.0" y="270" width="300" height="30"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1b-hQ-1mI">
+                            <rect key="frame" x="0.0" y="230" width="300" height="30"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIQ-ix-pTw">
                                     <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
@@ -97,8 +97,8 @@
                                 </view>
                             </subviews>
                         </stackView>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eFc-7R-lHT">
-                            <rect key="frame" x="0.0" y="300" width="300" height="10"/>
+                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFc-7R-lHT">
+                            <rect key="frame" x="0.0" y="260" width="300" height="50"/>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
                             <rect key="frame" x="0.0" y="310" width="300" height="30"/>

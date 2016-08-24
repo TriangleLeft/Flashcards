@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
 		8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
-		8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */; };
+		8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
 		8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
 		8F3DF59C1D6C796F0005C9C3 /* MainView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F3DF59B1D6C796F0005C9C3 /* MainView.xib */; };
 		8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */; };
@@ -56,7 +56,7 @@
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentStorage.swift; path = ../../UI/Common/PersistentStorage.swift; sourceTree = "<group>"; };
 		8F2928241D6203BD007B1CCF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyWordsRepository.swift; sourceTree = "<group>"; };
+		8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOSVocabularyWordsRepository.swift; sourceTree = "<group>"; };
 		8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flashcards-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F2928321D620CDB007B1CCF /* libjavax_inject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjavax_inject.a; path = "../../../Library/j2objc-1.1/lib/libjavax_inject.a"; sourceTree = "<group>"; };
 		8F3DF59B1D6C796F0005C9C3 /* MainView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainView.xib; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		8F29282A1D62060F007B1CCF /* Vocabulary */ = {
 			isa = PBXGroup;
 			children = (
-				8F29282C1D620632007B1CCF /* VocabularyWordsRepository.swift */,
+				8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */,
 			);
 			path = Vocabulary;
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 				8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */,
 				8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */,
 				8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */,
-				8F29282D1D620632007B1CCF /* VocabularyWordsRepository.swift in Sources */,
+				8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */,
 				8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

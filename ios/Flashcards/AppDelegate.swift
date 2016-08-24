@@ -14,6 +14,10 @@ import AFNetworkActivityLogger
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var accountModule:AccountModule?;
+    var settingsModule:SettingsModule?;
+    var loginModule:LoginModule?;
+    var vocabularyModule:VocabularyModule?;
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -21,28 +25,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo;
         AFNetworkActivityLogger.sharedLogger().startLogging();
         
-        let gson = ComGoogleGsonGson();
+        let gson = ComGoogleGsonGsonBuilder().registerTypeAdapterFactoryWithComGoogleGsonTypeAdapterFactory(AutoValueAdapterFactory()).create()
+        
         let storage = IOSPersistentStorage(gson);
+        let wordRepository = IOSVocabularyWordsRepository();
         
         let restService = ObjRestService(gson: gson);
         
-        let accountModule = SimpleAccountModule(persistentStorage: storage);
-        
-        let settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule);
-        
-        let loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule);
+        self.accountModule = SimpleAccountModule(persistentStorage: storage);
+        self.settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule);
+        self.loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule);
+        self.vocabularyModule = RestVocabularyModule(restService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository)
         
         let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
-        
-        
-        let rootView: LoginViewController = LoginViewController()
-        rootView.presenter = presenter;
+        let rootView: LoginViewController = LoginViewController(presenter: presenter)
+      //  rootView.presenter = presenter;
         
         if let window = self.window{
             window.rootViewController = rootView
         }
         
         return true
+    }
+    
+    func setMainViewController() {
+    
+        let mainPresenter = MainPresenter(accountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let wordPresenter = VocabularyWordPresenter()
+        let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
+        let controller = MainViewController.buildToolbarController(mainVC)
+        window!.rootViewController = controller
     }
 
     func applicationWillResignActive(application: UIApplication) {

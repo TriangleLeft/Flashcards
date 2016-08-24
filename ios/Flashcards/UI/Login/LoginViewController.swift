@@ -24,12 +24,22 @@ class LoginViewController: UIViewController  {
     
     @IBOutlet weak var loginButton: UIButton!
     
-    var presenter:LoginPresenter?;
+    var presenter:LoginPresenter;
+    
+    init(presenter:LoginPresenter) {
+        self.presenter = presenter;
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        presenter!.onCreate();
-        presenter!.onBindWithIView(self);
+        presenter.onCreate();
+        presenter.onBindWithIView(self);
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -38,7 +48,7 @@ class LoginViewController: UIViewController  {
     }
     
     override func viewDidAppear(animated: Bool) {
-        presenter!.onRebindWithIView(self);
+        presenter.onRebindWithIView(self);
     }
     
     func tap(gesture: UITapGestureRecognizer) {
@@ -47,19 +57,19 @@ class LoginViewController: UIViewController  {
     }
     
     @IBAction func onLoginClick(sender: AnyObject) {
-        presenter!.onLoginClick();
+        presenter.onLoginClick();
     }
     
     @IBAction func onRememberMeChanged(sender: AnyObject) {
-        presenter!.onRememberCheckWithBoolean(rememberMeSwich.on);
+        presenter.onRememberCheckWithBoolean(rememberMeSwich.on);
     }
     
     @IBAction func onPasswordChanged(sender: AnyObject) {
-        presenter!.onPasswordChangedWithNSString(passwordTextField.text ?? "");
+        presenter.onPasswordChangedWithNSString(passwordTextField.text ?? "");
     }
     
     @IBAction func onLoginChanged(sender: AnyObject) {
-        presenter!.onLoginChangedWithNSString(loginTextField.text ?? "");
+        presenter.onLoginChangedWithNSString(loginTextField.text ?? "");
     }
     
 }
@@ -99,40 +109,8 @@ extension LoginViewController: ILoginView {
     }
     
     func advance() {
-        let controller = MainViewController();
-        let toolbar = ToolbarController(rootViewController: controller);
-        toolbar.toolbar.title = "Main controller"
-        toolbar.toolbar.backgroundColor = MaterialColor.lightBlue.base
-        toolbar.toolbar.titleLabel.textColor = MaterialColor.white
-        toolbar.toolbar.titleLabel.textAlignment = .Center
-        toolbar.statusBarStyle = .LightContent
-        
-        let img2: UIImage? = MaterialIcon.menu;
-        let btn2: IconButton = IconButton()
-        btn2.pulseColor = MaterialColor.white
-        btn2.tintColor = MaterialColor.white
-        btn2.setImage(img2, forState: .Normal)
-        btn2.setImage(img2, forState: .Highlighted)
-        
-        let imgSettings: UIImage? = MaterialIcon.settings;
-        let btnSettings: IconButton = IconButton()
-        btnSettings.pulseColor = MaterialColor.white
-        btnSettings.tintColor = MaterialColor.white
-        btnSettings.setImage(imgSettings, forState: .Normal)
-        btnSettings.setImage(imgSettings, forState: .Highlighted)
-        
-        toolbar.toolbar.leftControls = [btn2]
-        toolbar.toolbar.rightControls = [btnSettings];
-        
-        let mainVC = VocabularyListTableViewController();
-        let secondaryVC = VocabularyWordViewController();
-        mainVC.delegate = secondaryVC;
-        controller.viewControllers = [mainVC, secondaryVC];
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.window!.rootViewController = toolbar;
-        //presentViewController(controller, animated: true, completion: nil);
-        
-        
+        appDelegate.setMainViewController();
     }
     
     func setRememberUserWithBoolean(rememberUser: jboolean) {

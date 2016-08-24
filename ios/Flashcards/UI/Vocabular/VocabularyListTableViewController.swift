@@ -10,39 +10,79 @@ import UIKit
 
 class VocabularyListTableViewController: UITableViewController {
     
-    let items = ["Item 1", "Item2", "Item3", "Item4"]
-    
     weak var delegate: LalalaDelegate?
+    var items:JavaUtilList = JavaUtilArrayList();
     
     let nibStringName = "VocabularyListTableViewCell";
     
+    let presenter:VocabularyListPresenter;
+    
+    init(_ presenter:VocabularyListPresenter) {
+        self.presenter = presenter;
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
+        
+        presenter.onCreate()
+        presenter.onBindWithIView(self)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        presenter.onRebindWithIView(self)
     }
 
-    // MARK: - Table view data source
+}
+
+extension VocabularyListTableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        return Int(items.size())
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(nibStringName, forIndexPath: indexPath) as! VocabularyListTableViewCell
-
-        let item = items[indexPath.row]
         
-        cell.label.text = item
+        let item = items.getWithInt(Int32(indexPath.row)) as! VocabularyWord;
         
-
+        cell.label.text = item.getWord();
+        
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        delegate?.lala(items[indexPath.row])
-        if let detailViewController = self.delegate as? VocabularyWordViewController {
-            splitViewController?.showDetailViewController(detailViewController, sender: nil)
-        }
+        presenter.onWordSelectedWithInt(Int32(indexPath.row))
+    }
+}
+
+extension VocabularyListTableViewController: IVocabularyListView {
+    
+    func showWordsWithJavaUtilList(words: JavaUtilList, withInt selectedPosition: jint) {
+        self.items = words
+        tableView.reloadData()
+    }
+    
+    func showProgress() {
+        
+    }
+    
+    func showRefreshError() {
+        
+    }
+    
+    func showLoadError() {
+        
+    }
+    
+    func showEmpty() {
+        
     }
 }

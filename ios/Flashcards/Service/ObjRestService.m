@@ -43,7 +43,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
 -(instancetype)initWithGson:(ComGoogleGsonGson *)gson {
     _gson = gson;
-    
+
     return self;
 }
 
@@ -53,9 +53,11 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)getVocabularyListWithLong:(jlong)timestamp {
-    // GET
-    // class
-    return NULL;
+    NSString* timestampString = [NSString stringWithFormat:@"%lld", timestamp];
+    NSArray<NSURLQueryItem *> *params = @[[[NSURLQueryItem alloc] initWithName:[RestService QUERY_TIMESTAMP] value:timestampString]];
+    NSURLRequest *req = [self requestWithMethod:@"GET" url:[self urlWithPath:[RestService PATH_VOCABULARY] queryParams:params]];
+    return [self observableWithRequest:req responseModelClass:VocabularyResponseModel_class_()];
+
 }
 
 - (RxObservable *)getFlashcardDataWithInt:(jint)count
@@ -82,7 +84,11 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 - (RxObservable *)getTranslationWithNSString:(NSString *)languageIdFrom
                                 withNSString:(NSString *)languageIdTo
                                 withNSString:(NSString *)tokens {
-    return NULL;
+    NSString* urlString = [[NSString alloc] initWithFormat:@"%@/%@/%@", [RestService URL_TRANSLATION], languageIdFrom, languageIdTo];
+    NSURLComponents *components = [[NSURLComponents alloc] initWithString:urlString];
+    components.queryItems = @[[[NSURLQueryItem alloc] initWithName:[RestService QUERY_TOKENS] value:tokens]];
+    NSURLRequest *req = [self requestWithMethod:@"GET" url:components.URL];
+    return [self observableWithRequest:req responseModelClass:WordTranslationModel_class_()];
 }
 
 - (RxObservable *)observableWithRequest:(NSURLRequest *)request responseModelClass:(IOSClass *)clazz {

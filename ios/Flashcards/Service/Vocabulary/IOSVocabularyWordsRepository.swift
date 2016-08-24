@@ -12,7 +12,7 @@ import FlashcardsCore
 class IOSVocabularyWordsRepository: NSObject, VocabularyWordsRepository {
     
     func getWordsWithNSString(uiLanguageId: String!, withNSString learningLanguageId: String!) -> JavaUtilList! {
-        return nil;
+        return JavaUtilArrayList();
     }
     
     func putWordsWithJavaUtilList(words: JavaUtilList!) {
