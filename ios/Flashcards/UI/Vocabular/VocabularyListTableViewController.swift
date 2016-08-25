@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 
 class VocabularyListTableViewController: UITableViewController {
     
@@ -39,11 +40,39 @@ class VocabularyListTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self)
     }
-
+    
+    class func build(presenter:VocabularyListPresenter) ->ToolbarController {
+        let controller = VocabularyListTableViewController(presenter)
+        let toolbarController = ToolbarController(rootViewController: controller)
+        
+        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
+        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
+        toolbarController.toolbar.titleLabel.textAlignment = .Center
+        toolbarController.statusBarStyle = .LightContent
+        
+        let menuImage: UIImage? = MaterialIcon.menu;
+        let menuButton: IconButton = IconButton()
+        menuButton.pulseColor = MaterialColor.white
+        menuButton.tintColor = MaterialColor.white
+        menuButton.setImage(menuImage, forState: .Normal)
+        menuButton.setImage(menuImage, forState: .Highlighted)
+        
+        let settingsImage: UIImage? = MaterialIcon.settings;
+        let settingsButton: IconButton = IconButton()
+        settingsButton.pulseColor = MaterialColor.white
+        settingsButton.tintColor = MaterialColor.white
+        settingsButton.setImage(settingsImage, forState: .Normal)
+        settingsButton.setImage(settingsImage, forState: .Highlighted)
+        
+        toolbarController.toolbar.leftControls = [menuButton]
+        toolbarController.toolbar.rightControls = [settingsButton];
+        
+        return toolbarController;
+    }
 }
 
 extension VocabularyListTableViewController {
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Int(items.size())
     }

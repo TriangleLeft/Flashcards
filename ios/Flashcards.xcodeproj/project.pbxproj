@@ -34,6 +34,7 @@
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
 		8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
 		8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
+		8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
 		8FE6B54A1D6B1BBC00532B3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LoginView.xib; sourceTree = "<group>"; };
 		8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 		8F29281B1D61FDC1007B1CCF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FB1ED881D6CA57200DCFDA7 /* VocabularyWordViewController.swift in Sources */,
+				8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */,
 				8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */,
 				8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */,
 				8F3DF5A41D6C7BF10005C9C3 /* VocabularyListTableViewController.swift in Sources */,

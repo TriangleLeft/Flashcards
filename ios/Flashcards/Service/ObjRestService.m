@@ -103,6 +103,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
             } else {
                 NSLog(@"Error: %@, %@, %@", error, response, responseObject);
             }
+            [subscriber onCompleted];
         }] resume];
         
     }]];

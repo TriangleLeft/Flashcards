@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Material
 
 class VocabularyWordViewController: UIViewController {
     
@@ -33,6 +34,43 @@ class VocabularyWordViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self);
+    }
+    
+    func onBackPressed(sender: UIButton!) {
+        //presenter.
+    }
+    
+    class func build(presenter:VocabularyWordPresenter) -> ToolbarController {
+        let controller = VocabularyWordViewController(presenter)
+        let toolbarController = ToolbarController(rootViewController: controller)
+        
+        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
+        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
+        toolbarController.toolbar.titleLabel.textAlignment = .Center
+        toolbarController.statusBarStyle = .LightContent
+        toolbarController.toolbar.title = "Detail"
+        
+        let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
+        let backButton: IconButton = IconButton()
+        backButton.pulseColor = MaterialColor.white
+        backButton.tintColor = MaterialColor.white
+        backButton.setImage(arrowBackImage, forState: .Normal)
+        backButton.setImage(arrowBackImage, forState: .Highlighted)
+        backButton.addTarget(controller, action: #selector(VocabularyWordViewController.onBackPressed(_:)), forControlEvents: .TouchUpInside)
+        
+     //   let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
+        let fakeButton: IconButton = IconButton()
+        //backButton.pulseColor = MaterialColor.white
+        //backButton.tintColor = MaterialColor.white
+        //fakeButton.setImage(arrowBackImage, forState: .Normal)
+        //fakeButton.setImage(arrowBackImage, forState: .Highlighted)
+        fakeButton.hidden = true;
+        
+        toolbarController.toolbar.leftControls = [backButton]
+        toolbarController.toolbar.rightControls = [fakeButton]
+        
+        
+        return toolbarController;
     }
 }
 

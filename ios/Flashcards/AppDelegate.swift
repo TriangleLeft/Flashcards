@@ -14,48 +14,51 @@ import AFNetworkActivityLogger
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var accountModule:AccountModule?;
-    var settingsModule:SettingsModule?;
-    var loginModule:LoginModule?;
-    var vocabularyModule:VocabularyModule?;
+    var accountModule:AccountModule?
+    var settingsModule:SettingsModule?
+    var loginModule:LoginModule?
+    var vocabularyModule:VocabularyModule?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger;
-        consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo;
-        AFNetworkActivityLogger.sharedLogger().startLogging();
+        let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger
+        consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo
+        AFNetworkActivityLogger.sharedLogger().startLogging()
         
         let gson = ComGoogleGsonGsonBuilder().registerTypeAdapterFactoryWithComGoogleGsonTypeAdapterFactory(AutoValueAdapterFactory()).create()
         
-        let storage = IOSPersistentStorage(gson);
-        let wordRepository = IOSVocabularyWordsRepository();
+        let storage = IOSPersistentStorage(gson)
+        let wordRepository = IOSVocabularyWordsRepository()
         
-        let restService = ObjRestService(gson: gson);
+        let restService = ObjRestService(gson: gson)
         
         self.accountModule = SimpleAccountModule(persistentStorage: storage);
         self.settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule);
         self.loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule);
         self.vocabularyModule = RestVocabularyModule(restService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository)
         
-        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
-        let rootView: LoginViewController = LoginViewController(presenter: presenter)
-      //  rootView.presenter = presenter;
+        // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
+        JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
         
-        if let window = self.window{
-            window.rootViewController = rootView
-        }
+        setLoginViewController();
         
         return true
+    }
+    
+    func setLoginViewController() {
+        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let rootView: LoginViewController = LoginViewController(presenter: presenter)
+        window!.rootViewController = rootView
+        
     }
     
     func setMainViewController() {
     
         let mainPresenter = MainPresenter(accountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: RxSchedulersSchedulers_immediate())
-        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
-        let controller = MainViewController.buildToolbarController(mainVC)
-        window!.rootViewController = controller
+        window!.rootViewController = mainVC
     }
 
     func applicationWillResignActive(application: UIApplication) {

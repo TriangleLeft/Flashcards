@@ -10,45 +10,15 @@ import UIKit
 import Material
 
 class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
-
-    class func buildToolbarController(mainController:MainViewController) -> ToolbarController {
-        let toolbarController = ToolbarController(rootViewController: mainController);
-        mainController.toolbar = toolbarController.toolbar;
-        
-        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
-        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
-        toolbarController.toolbar.titleLabel.textAlignment = .Center
-        toolbarController.statusBarStyle = .LightContent
-        
-        let menuImage: UIImage? = MaterialIcon.menu;
-        let menuButton: IconButton = IconButton()
-        menuButton.pulseColor = MaterialColor.white
-        menuButton.tintColor = MaterialColor.white
-        menuButton.setImage(menuImage, forState: .Normal)
-        menuButton.setImage(menuImage, forState: .Highlighted)
-        
-        let settingsImage: UIImage? = MaterialIcon.settings;
-        let settingsButton: IconButton = IconButton()
-        settingsButton.pulseColor = MaterialColor.white
-        settingsButton.tintColor = MaterialColor.white
-        settingsButton.setImage(settingsImage, forState: .Normal)
-        settingsButton.setImage(settingsImage, forState: .Highlighted)
-        
-        toolbarController.toolbar.leftControls = [menuButton]
-        toolbarController.toolbar.rightControls = [settingsButton];
-  
-        return toolbarController;
-    }
     
     let presenter:MainPresenter
-    var toolbar:Toolbar?
-    let listVC:VocabularyListTableViewController;
-    let wordVC:VocabularyWordViewController;
+    let listVC:ToolbarController;
+    let wordVC:ToolbarController;
     
     init(_ presenter:MainPresenter, listPrensenter:VocabularyListPresenter, wordPresenter:VocabularyWordPresenter) {
         self.presenter = presenter;
-        self.listVC = VocabularyListTableViewController(listPrensenter);
-        self.wordVC = VocabularyWordViewController(wordPresenter);
+        self.listVC = VocabularyListTableViewController.build(listPrensenter);
+        self.wordVC = VocabularyWordViewController.build(wordPresenter);
         
         super.init(nibName: nil, bundle: nil);
     
@@ -80,11 +50,11 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
 extension MainViewController: IMainView {
     
     func setTitleWithNSString(title: String!) {
-        toolbar!.title = title;
+        listVC.toolbar.title = title;
     }
     
     func showWordWithComAnnimonStreamOptional(word: ComAnnimonStreamOptional!) {
-        wordVC.presenter.showWordWithComAnnimonStreamOptional(word);
+        (wordVC.rootViewController as! VocabularyWordViewController).presenter.showWordWithComAnnimonStreamOptional(word);
         if (collapsed) {
             showDetailViewController(wordVC, sender: nil)
         }
