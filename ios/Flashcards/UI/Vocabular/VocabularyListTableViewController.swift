@@ -41,7 +41,7 @@ class VocabularyListTableViewController: UITableViewController {
         presenter.onRebindWithIView(self)
     }
     
-    class func build(presenter:VocabularyListPresenter) ->ToolbarController {
+    class func build(presenter:VocabularyListPresenter) ->VocabularyListTableViewController {
         let controller = VocabularyListTableViewController(presenter)
         let toolbarController = ToolbarController(rootViewController: controller)
         
@@ -67,7 +67,7 @@ class VocabularyListTableViewController: UITableViewController {
         toolbarController.toolbar.leftControls = [menuButton]
         toolbarController.toolbar.rightControls = [settingsButton];
         
-        return toolbarController;
+        return controller;
     }
 }
 

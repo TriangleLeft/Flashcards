@@ -11,8 +11,17 @@ import Material
 
 class VocabularyWordViewController: UIViewController {
     
-    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var infoEntry: UIStackView!
+    @IBOutlet weak var posEntry: UIStackView!
+    @IBOutlet weak var genderEntry: UIStackView!
+    @IBOutlet weak var translationEntry: UIStackView!
     
+    @IBOutlet weak var voiceOverButton: FabButton!
+
+    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var posLabel: UILabel!
+    @IBOutlet weak var genderLabel: UILabel!
+    @IBOutlet weak var translationLabel: UILabel!
     let presenter:VocabularyWordPresenter;
     
     init(_ presenter:VocabularyWordPresenter) {
@@ -40,7 +49,7 @@ class VocabularyWordViewController: UIViewController {
         //presenter.
     }
     
-    class func build(presenter:VocabularyWordPresenter) -> ToolbarController {
+    class func build(presenter:VocabularyWordPresenter) -> VocabularyWordViewController {
         let controller = VocabularyWordViewController(presenter)
         let toolbarController = ToolbarController(rootViewController: controller)
         
@@ -70,17 +79,36 @@ class VocabularyWordViewController: UIViewController {
         toolbarController.toolbar.rightControls = [fakeButton]
         
         
-        return toolbarController;
+        return controller
     }
 }
 
 extension VocabularyWordViewController: IVocabularyWordView {
     func showWordWithVocabularyWord(word: VocabularyWord!) {
-        wordLabel.text = word.getWord();
+        infoEntry.hidden = false
+        wordLabel.text = word.getWord()
+        if (word.getTranslations().isEmpty()) {
+            translationEntry.hidden = true;
+        } else {
+            translationEntry.hidden = false;
+            translationLabel.text = word.getTranslations().getWithInt(0) as? String;
+        }
+        if (word.getPos().isPresent()) {
+            posEntry.hidden = false
+            posLabel.text = word.getPos().get() as? String
+        } else {
+            posEntry.hidden = true
+        }
+        if (word.getGender().isPresent()) {
+            genderEntry.hidden = false
+            genderLabel.text = word.getGender().get() as? String
+        } else {
+            genderEntry.hidden = true
+        }
     }
     
     func showEmpty() {
-        wordLabel.text = "";
+        infoEntry.hidden = true;
     }
 }
 

@@ -12,8 +12,8 @@ import Material
 class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let presenter:MainPresenter
-    let listVC:ToolbarController;
-    let wordVC:ToolbarController;
+    let listVC:VocabularyListTableViewController;
+    let wordVC:VocabularyWordViewController;
     
     init(_ presenter:MainPresenter, listPrensenter:VocabularyListPresenter, wordPresenter:VocabularyWordPresenter) {
         self.presenter = presenter;
@@ -50,11 +50,11 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
 extension MainViewController: IMainView {
     
     func setTitleWithNSString(title: String!) {
-        listVC.toolbar.title = title;
+       // listVC.toolbar.title = title;
     }
     
     func showWordWithComAnnimonStreamOptional(word: ComAnnimonStreamOptional!) {
-        (wordVC.rootViewController as! VocabularyWordViewController).presenter.showWordWithComAnnimonStreamOptional(word);
+        wordVC.presenter.showWordWithComAnnimonStreamOptional(word);
         if (collapsed) {
             showDetailViewController(wordVC, sender: nil)
         }
