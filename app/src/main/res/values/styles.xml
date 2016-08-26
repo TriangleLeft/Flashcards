@@ -4,7 +4,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/white</item>
+        <item name="textColorError">@color/red</item>
+        <item name="colorControlNormal">@color/textColorSecondaryInverse</item>
+        <!--<item name="colorControlActivated">@color/colorAccent</item>-->
+        <!--<item name="colorControlHighlight">@color/colorAccent</item>-->
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
@@ -63,4 +66,8 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference</item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
     </style>
+
+    <!--<style name="ErrorTextAppearance" parent="@style/TextAppearance.Design.Error">-->
+    <!--<item name="android:textColor">@color/red</item>-->
+    <!--</style>-->
 </resources>

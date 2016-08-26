@@ -93,19 +93,19 @@ j2objcConfig {
 
     finalConfigure()
 }
-
-j2objcPodspec.doLast {
-    println('Modifying generated podspecs to be able to run pod install')
-    [getPodspecDebug(), getPodspecRelease()].asList().each {
-        File podspec = it
-
-        String text = podspec.text.replace(
-                "Pod::Spec.new do |spec|",
-                '''Pod::Spec.new do |spec|
-  spec.authors = 'authors'
-  spec.license = 'license'
-  spec.homepage = 'homepage'
-  spec.source = { :git => 'https://github.com/TriangleLeft/Flashcards.git' }''')
-        podspec.write(text)
-    }
-}
+//
+//j2objcPodspec.doLast {
+//    println('Modifying generated podspecs to be able to run pod install')
+//    [getPodspecDebug(), getPodspecRelease()].asList().each {
+//        File podspec = it
+//
+//        String text = podspec.text.replace(
+//                "Pod::Spec.new do |spec|",
+//                '''Pod::Spec.new do |spec|
+//  spec.authors = 'authors'
+//  spec.license = 'license'
+//  spec.homepage = 'homepage'
+//  spec.source = { :git => 'https://github.com/TriangleLeft/Flashcards.git' }''')
+//        podspec.write(text)
+//    }
+//}

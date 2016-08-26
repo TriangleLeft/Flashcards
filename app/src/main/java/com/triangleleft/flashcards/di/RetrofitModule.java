@@ -1,15 +1,16 @@
 package com.triangleleft.flashcards.di;
 
-import android.content.Context;
+import com.google.gson.Gson;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
-import com.google.gson.Gson;
 import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.converter.CustomGsonConverterFactory;
+
+import android.content.Context;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,6 +45,7 @@ public class RetrofitModule {
             .client(client)
             .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
             .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
+        // FIXME: should use custom adapter factory to map exceptions to domain ones
     }
 
     @ApplicationScope

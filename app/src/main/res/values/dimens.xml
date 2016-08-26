@@ -26,4 +26,7 @@
     <dimen name="vocabular_word_padding">@dimen/activity_horizontal_margin</dimen>
     <dimen name="retry_button_margin_top">16dp</dimen>
 
+    <dimen name="match_parent">-1dp</dimen>
+    <dimen name="login_form_width">@dimen/match_parent</dimen>
+
 </resources>
