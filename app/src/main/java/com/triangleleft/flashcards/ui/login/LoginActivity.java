@@ -17,10 +17,11 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -40,14 +41,18 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @Bind(R.id.login_email)
     CustomEditText loginView;
+    @Bind(R.id.login_email_layout)
+    TextInputLayout loginLayoutView;
     @Bind(R.id.login_password)
     CustomEditText passwordView;
+    @Bind(R.id.login_password_layout)
+    TextInputLayout passwordLayoutView;
     @Bind(R.id.view_flipper)
     ViewFlipper flipperView;
     @Bind(R.id.login_button)
     Button loginButton;
-    @Bind(R.id.login_checkbox)
-    CheckBox checkBox;
+    @Bind(R.id.login_switch)
+    SwitchCompat rememberSwitch;
     @Bind(R.id.login_container)
     View container;
 
@@ -116,25 +121,17 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @Override
     public void setLoginErrorVisible(boolean visible) {
-        if (visible) {
-            loginView.setError(getString(R.string.wrong_login));
-        } else {
-            loginView.setError(null);
-        }
+        loginLayoutView.setError(visible ? getString(R.string.wrong_login) : null);
     }
 
     @Override
     public void setPasswordErrorVisible(boolean visible) {
-        if (visible) {
-            passwordView.setError(getString(R.string.wrong_password));
-        } else {
-            passwordView.setError(null);
-        }
+        passwordLayoutView.setError(visible ? getString(R.string.wrong_password) : null);
     }
 
-    @OnClick(R.id.login_checkbox)
+    @OnClick(R.id.login_switch)
     public void onCheckboxClick() {
-        getPresenter().onRememberCheck(checkBox.isChecked());
+        getPresenter().onRememberCheck(rememberSwitch.isChecked());
     }
 
     @OnClick(R.id.login_button)
@@ -154,7 +151,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @Override
     public void setRememberUser(boolean rememberUser) {
-        checkBox.setChecked(rememberUser);
+        rememberSwitch.setChecked(rememberUser);
     }
 
     @Override
