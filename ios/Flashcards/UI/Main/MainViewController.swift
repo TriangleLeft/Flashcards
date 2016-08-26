@@ -7,22 +7,30 @@
 //
 
 import UIKit
-import Material
+import DrawerController
 
 class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let presenter:MainPresenter
-    let listVC:VocabularyListTableViewController;
-    let wordVC:VocabularyWordViewController;
+    let listVC:VocabularyListTableViewController
+    let wordVC:VocabularyWordViewController
+    let navListVC:UINavigationController
+    let navWordVC:UINavigationController
+    var collapseDetailViewController = true
     
     init(_ presenter:MainPresenter, listPrensenter:VocabularyListPresenter, wordPresenter:VocabularyWordPresenter) {
         self.presenter = presenter;
-        self.listVC = VocabularyListTableViewController.build(listPrensenter);
-        self.wordVC = VocabularyWordViewController.build(wordPresenter);
+        self.listVC = VocabularyListTableViewController(listPrensenter)
+        self.wordVC = VocabularyWordViewController(wordPresenter);
+        self.navListVC = UINavigationController(rootViewController: listVC)
+        self.navWordVC = UINavigationController(rootViewController: wordVC)
         
         super.init(nibName: nil, bundle: nil);
-    
-        viewControllers = [listVC, wordVC];
+        
+        preferredDisplayMode = .AllVisible
+        delegate = self
+        
+        viewControllers = [navListVC, navWordVC];
     }
     
     @available(*, unavailable)
@@ -35,34 +43,52 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         
         presenter.onCreate();
         presenter.onBindWithIView(self);
+        
+        wordVC.navigationItem.title = "Detail"
+        listVC.navigationItem.title = "Main"
     }
     
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self);
     }
     
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool{
-        return true
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        return collapseDetailViewController
     }
-
+    
+    class func wrapWithDrawer(vc: MainViewController) -> UIViewController {
+        let drawerVC = MainDrawerViewController()
+        let drawer = DrawerController(centerViewController: vc, leftDrawerViewController: drawerVC)
+        drawer.openDrawerGestureModeMask = .BezelPanningCenterView
+        drawer.closeDrawerGestureModeMask = .PanningCenterView
+        drawer.centerHiddenInteractionMode = .CloseDrawer
+        drawer.showsShadows = false
+        drawer.shouldStretchDrawer = false
+        return drawer
+    }
+    
 }
 
 extension MainViewController: IMainView {
     
     func setTitleWithNSString(title: String!) {
-       // listVC.toolbar.title = title;
+        listVC.navigationItem.title = title
     }
     
     func showWordWithComAnnimonStreamOptional(word: ComAnnimonStreamOptional!) {
         wordVC.presenter.showWordWithComAnnimonStreamOptional(word);
+        collapseDetailViewController = false
         if (collapsed) {
-            showDetailViewController(wordVC, sender: nil)
+          //  evo_drawerController?.openDrawerGestureModeMask = []
+        
+            showDetailViewController(wordVC, sender: self)
         }
     }
     
     func showList() {
         if (collapsed) {
-            showViewController(listVC, sender: nil);
+           // evo_drawerController?.openDrawerGestureModeMask = .BezelPanningCenterView
+            showViewController(navListVC, sender: nil);
         }
     }
     

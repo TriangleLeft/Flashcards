@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        
         let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger
         consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo
         AFNetworkActivityLogger.sharedLogger().startLogging()
@@ -40,8 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
         JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
         
-        setLoginViewController();
+        setLoginViewController()
         
+        window!.makeKeyAndVisible()
         return true
     }
     
@@ -58,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
-        window!.rootViewController = mainVC
+        window!.rootViewController = MainViewController.wrapWithDrawer(mainVC)
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -41,31 +41,8 @@ class VocabularyListTableViewController: UITableViewController {
         presenter.onRebindWithIView(self)
     }
     
-    class func build(presenter:VocabularyListPresenter) ->VocabularyListTableViewController {
+    class func build(presenter:VocabularyListPresenter) -> VocabularyListTableViewController {
         let controller = VocabularyListTableViewController(presenter)
-        let toolbarController = ToolbarController(rootViewController: controller)
-        
-        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
-        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
-        toolbarController.toolbar.titleLabel.textAlignment = .Center
-        toolbarController.statusBarStyle = .LightContent
-        
-        let menuImage: UIImage? = MaterialIcon.menu;
-        let menuButton: IconButton = IconButton()
-        menuButton.pulseColor = MaterialColor.white
-        menuButton.tintColor = MaterialColor.white
-        menuButton.setImage(menuImage, forState: .Normal)
-        menuButton.setImage(menuImage, forState: .Highlighted)
-        
-        let settingsImage: UIImage? = MaterialIcon.settings;
-        let settingsButton: IconButton = IconButton()
-        settingsButton.pulseColor = MaterialColor.white
-        settingsButton.tintColor = MaterialColor.white
-        settingsButton.setImage(settingsImage, forState: .Normal)
-        settingsButton.setImage(settingsImage, forState: .Highlighted)
-        
-        toolbarController.toolbar.leftControls = [menuButton]
-        toolbarController.toolbar.rightControls = [settingsButton];
         
         return controller;
     }

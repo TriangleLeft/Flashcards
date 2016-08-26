@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Material
 
 class VocabularyWordViewController: UIViewController {
     
@@ -16,7 +15,6 @@ class VocabularyWordViewController: UIViewController {
     @IBOutlet weak var genderEntry: UIStackView!
     @IBOutlet weak var translationEntry: UIStackView!
     
-    @IBOutlet weak var voiceOverButton: FabButton!
 
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var posLabel: UILabel!
@@ -36,6 +34,10 @@ class VocabularyWordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
+//        navigationItem.leftItemsSupplementBackButton = true
+        
         wordLabel.text = "lalala";
         presenter.onCreate();
         presenter.onBindWithIView(self);
@@ -51,33 +53,33 @@ class VocabularyWordViewController: UIViewController {
     
     class func build(presenter:VocabularyWordPresenter) -> VocabularyWordViewController {
         let controller = VocabularyWordViewController(presenter)
-        let toolbarController = ToolbarController(rootViewController: controller)
-        
-        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
-        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
-        toolbarController.toolbar.titleLabel.textAlignment = .Center
-        toolbarController.statusBarStyle = .LightContent
-        toolbarController.toolbar.title = "Detail"
-        
-        let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
-        let backButton: IconButton = IconButton()
-        backButton.pulseColor = MaterialColor.white
-        backButton.tintColor = MaterialColor.white
-        backButton.setImage(arrowBackImage, forState: .Normal)
-        backButton.setImage(arrowBackImage, forState: .Highlighted)
-        backButton.addTarget(controller, action: #selector(VocabularyWordViewController.onBackPressed(_:)), forControlEvents: .TouchUpInside)
-        
-     //   let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
-        let fakeButton: IconButton = IconButton()
-        //backButton.pulseColor = MaterialColor.white
-        //backButton.tintColor = MaterialColor.white
-        //fakeButton.setImage(arrowBackImage, forState: .Normal)
-        //fakeButton.setImage(arrowBackImage, forState: .Highlighted)
-        fakeButton.hidden = true;
-        
-        toolbarController.toolbar.leftControls = [backButton]
-        toolbarController.toolbar.rightControls = [fakeButton]
-        
+//        let toolbarController = ToolbarController(rootViewController: controller)
+//        
+//        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
+//        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
+//        toolbarController.toolbar.titleLabel.textAlignment = .Center
+//        toolbarController.statusBarStyle = .LightContent
+//        toolbarController.toolbar.title = "Detail"
+//        
+//        let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
+//        let backButton: IconButton = IconButton()
+//        backButton.pulseColor = MaterialColor.white
+//        backButton.tintColor = MaterialColor.white
+//        backButton.setImage(arrowBackImage, forState: .Normal)
+//        backButton.setImage(arrowBackImage, forState: .Highlighted)
+//        backButton.addTarget(controller, action: #selector(VocabularyWordViewController.onBackPressed(_:)), forControlEvents: .TouchUpInside)
+//        
+//     //   let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
+//        let fakeButton: IconButton = IconButton()
+//        //backButton.pulseColor = MaterialColor.white
+//        //backButton.tintColor = MaterialColor.white
+//        //fakeButton.setImage(arrowBackImage, forState: .Normal)
+//        //fakeButton.setImage(arrowBackImage, forState: .Highlighted)
+//        fakeButton.hidden = true;
+//        
+//        toolbarController.toolbar.leftControls = [backButton]
+//        toolbarController.toolbar.rightControls = [fakeButton]
+//        
         
         return controller
     }
