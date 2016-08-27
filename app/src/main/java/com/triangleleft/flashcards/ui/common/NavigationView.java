@@ -1,5 +1,16 @@
 package com.triangleleft.flashcards.ui.common;
 
+import com.squareup.picasso.Picasso;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.main.MainPageComponent;
+import com.triangleleft.flashcards.service.settings.Language;
+import com.triangleleft.flashcards.ui.main.DrawerLanguagesAdapter;
+import com.triangleleft.flashcards.ui.main.DrawerPresenter;
+import com.triangleleft.flashcards.ui.main.IDrawerView;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.animation.FloatEvaluator;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,16 +21,20 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
-import com.squareup.picasso.Picasso;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.ui.main.DrawerLanguagesAdapter;
 
-public class NavigationView extends FrameLayout {
+public class NavigationView extends FrameLayout implements IDrawerView {
+
+    private static final Logger logger = LoggerFactory.getLogger(NavigationView.class);
 
     private static final int DRAWER_PAGE_PROGRESS = 0;
     private static final int DRAWER_PAGE_CONTENT = 1;
@@ -49,7 +64,13 @@ public class NavigationView extends FrameLayout {
     @BindDimen(R.dimen.activity_vertical_margin)
     float activityVerticalMargin;
 
+    @Inject
+    FlagImagesProvider flagImagesProvider;
+    @Inject
+    DrawerPresenter presenter;
+
     private final FloatEvaluator evaluator;
+    private DrawerLanguagesAdapter adapter;
 
     public NavigationView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -61,6 +82,15 @@ public class NavigationView extends FrameLayout {
         drawerUserAvatar.setPivotY(-1 * drawerUserAvatar.getMeasuredHeight() / 2);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    }
+
+    public void init(MainPageComponent component) {
+        component.inject(this);
+        adapter = new DrawerLanguagesAdapter(flagImagesProvider,
+                (viewHolder, position) -> presenter.onLanguageSelected(adapter.getItem(position)));
+        recyclerView.setAdapter(adapter);
+        presenter.onCreate();
+        presenter.onBind(this);
     }
 
     public void setAnimationProgress(float value) {
@@ -92,16 +122,25 @@ public class NavigationView extends FrameLayout {
         overlay.setOnClickListener(listener);
     }
 
-    public void setLanguagesAdapter(DrawerLanguagesAdapter adapter) {
-        recyclerView.setAdapter(adapter);
-    }
-
-    public void showUserData(String username, String avatar) {
+    @Override
+    public void showUserData(String username, String avatar, List<Language> languages) {
+        logger.debug("showUserData() called with: username = [{}], avatar = [{}], languages = [{}]", username, avatar,
+                languages);
         Picasso.with(getContext()).load(avatar).into(drawerUserAvatar);
         drawerUserName.setText(username);
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_CONTENT);
+
+        // Need to post via handler, otherwise there are visual issues (probably because at this frame list is not
+        // visible yet)
+        post(() -> adapter.setData(languages));
     }
 
+    @Override
+    public void notifyLanguageSwitchError() {
+        Toast.makeText(getContext(), R.string.language_switch_error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showDrawerProgress() {
         drawerContentFlipper.setDisplayedChild(DRAWER_PAGE_PROGRESS);
     }

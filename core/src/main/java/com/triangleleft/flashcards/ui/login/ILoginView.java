@@ -1,8 +1,8 @@
 package com.triangleleft.flashcards.ui.login;
 
-import android.support.annotation.Nullable;
-
 import com.triangleleft.flashcards.ui.common.view.IView;
+
+import android.support.annotation.Nullable;
 
 /**
  * View interface for login screen.
@@ -30,7 +30,7 @@ public interface ILoginView extends IView {
 
     void setRememberUser(boolean rememberUser);
 
-    void showGenericError();
+    void notifyGenericError();
 
-    void showNetworkError();
+    void notifyNetworkError();
 }

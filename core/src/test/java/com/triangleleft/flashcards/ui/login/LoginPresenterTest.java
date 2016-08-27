@@ -1,9 +1,5 @@
 package com.triangleleft.flashcards.ui.login;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
-
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -12,17 +8,22 @@ import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.service.settings.UserData;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class LoginPresenterTest {
@@ -148,7 +149,7 @@ public class LoginPresenterTest {
         when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new NetworkException()));
 
         presenter.onLoginClick();
-        verify(view).showNetworkError();
+        verify(view).notifyNetworkError();
     }
 
     @Test
@@ -157,7 +158,7 @@ public class LoginPresenterTest {
         when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new ServerException()));
 
         presenter.onLoginClick();
-        verify(view).showGenericError();
+        verify(view).notifyGenericError();
     }
 
     @Test

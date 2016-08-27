@@ -170,12 +170,12 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void showGenericError() {
+    public void notifyGenericError() {
         Toast.makeText(this, R.string.login_generic_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showNetworkError() {
+    public void notifyNetworkError() {
         Toast.makeText(this, R.string.login_network_error, Toast.LENGTH_SHORT).show();
     }
 

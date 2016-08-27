@@ -4,11 +4,9 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.main.DaggerMainPageComponent;
 import com.triangleleft.flashcards.di.main.MainPageComponent;
-import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.common.NavigationView;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
@@ -19,7 +17,6 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -30,8 +27,6 @@ import android.view.MenuItem;
 
 import java.util.Arrays;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,12 +43,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @Bind(R.id.navigation_view)
     NavigationView navigationView;
 
-    @Inject
-    FlagImagesProvider flagImagesProvider;
-
-    private DrawerLanguagesAdapter adapter;
     private IMainActivityDelegate delegate;
-    private Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,11 +73,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
             delegate = new PhoneDelegate(this);
         }
 
-        adapter = new DrawerLanguagesAdapter(flagImagesProvider,
-            (viewHolder, position) -> getPresenter().onLanguageSelected(adapter.getItem(position)));
-        navigationView.setLanguagesAdapter(adapter);
-
-        handler = new Handler();
+        navigationView.init(getComponent());
     }
 
     @Override
@@ -146,34 +132,9 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
-    public void showUserData(String username, String avatar, List<Language> languages) {
-        logger.debug("showUserData()");
-        // We assume that first language in list is the one we are learning
-        // Though it's possible that we don't learn any languages
-        if (languages.size() > 0) {
-            toolbar.setTitle(languages.get(0).getName());
-        } else {
-            toolbar.setTitle(R.string.app_name);
-        }
-
-        navigationView.showUserData(username, avatar);
-        handler.post(() -> adapter.setData(languages));
-    }
-
-    @Override
     public void reloadList() {
         logger.debug("reloadList()");
         delegate.reloadList();
-    }
-
-    @Override
-    public void showDrawerProgress() {
-        navigationView.showDrawerProgress();
-    }
-
-    @Override
-    public void showDrawerError() {
-        // TODO: show drawer error
     }
 
     @Override

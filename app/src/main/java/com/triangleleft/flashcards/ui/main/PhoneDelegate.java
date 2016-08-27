@@ -92,6 +92,11 @@ import butterknife.ButterKnife;
     public void showWord(Optional<VocabularyWord> word) {
         if (!word.isPresent()) {
             // In phone view, just don't open this screen
+            // FIXME: when we turn screen from tablet to phone, current state is word
+            // But when we have no words, we don't show anything
+            // Either also show "no data" here and remove return
+            // Or make sure that if we are moving from tablet to phone and and there are no words, show list
+            // Ugh...
             return;
         }
         hideFragment(vocabularListFragment);

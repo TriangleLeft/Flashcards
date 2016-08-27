@@ -30,11 +30,13 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
 
-        Optional<Component> optional = getApplicationComponent().componentManager().restoreComponent(getClass());
-        this.component = optional.orElse(buildComponent());
+        Optional<Component> restoredComponent =
+                getApplicationComponent().componentManager().restoreComponent(getClass());
+        this.component = restoredComponent.orElse(buildComponent());
 
         inject();
-        if (!optional.isPresent()) {
+        // If we didn't had restored component, it's a new one, run presenter's onCreate
+        if (!restoredComponent.isPresent()) {
             getPresenter().onCreate();
         }
     }

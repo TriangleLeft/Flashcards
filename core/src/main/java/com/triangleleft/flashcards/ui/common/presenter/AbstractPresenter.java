@@ -59,7 +59,6 @@ public abstract class AbstractPresenter<View extends IView>
     public void onBind(View view) {
         logger.debug("onBind() called with: view = [{}]", view);
         this.view = view;
-        // TODO: all presenters should use state
         if (currentState != null) {
             currentState.apply(view);
         }
@@ -70,10 +69,10 @@ public abstract class AbstractPresenter<View extends IView>
     public synchronized void onRebind(View view) {
         logger.debug("onRebind() called with: view = [{}]", view);
         this.view = view;
-        applyState();
+        applyViewCalls();
     }
 
-    private void applyState() {
+    private void applyViewCalls() {
         for (Map.Entry<Method, Object[]> entry : viewCalls) {
             invokeMethod(view, entry.getKey(), entry.getValue());
         }
