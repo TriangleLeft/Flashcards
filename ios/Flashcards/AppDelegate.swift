@@ -56,12 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setMainViewController() {
-    
-        let mainPresenter = MainPresenter(accountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let mainPresenter = MainPresenter(accountModule: accountModule)
+        let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: MainThreadScheduler())
         let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
-        window!.rootViewController = MainViewController.wrapWithDrawer(mainVC)
+        window!.rootViewController = MainViewController.wrapWithDrawer(mainVC, drawerPresenter: drawerPresenter)
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -11,12 +11,12 @@ import Material
 
 class VocabularyListTableViewController: UITableViewController {
     
-    weak var delegate: LalalaDelegate?
-    var items:JavaUtilList = JavaUtilArrayList();
+    let nibStringName = "VocabularyListTableViewCell"
+    let presenter:VocabularyListPresenter
+    let activityIndicatorView:UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
-    let nibStringName = "VocabularyListTableViewCell";
-    
-    let presenter:VocabularyListPresenter;
+    var items:JavaUtilList = JavaUtilArrayList()
+    var showContent = false
     
     init(_ presenter:VocabularyListPresenter) {
         self.presenter = presenter;
@@ -32,9 +32,11 @@ class VocabularyListTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
+        tableView.backgroundView = activityIndicatorView
+        tableView.separatorStyle = .None
         
-        presenter.onCreate()
         presenter.onBindWithIView(self)
+        presenter.onCreate()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -51,7 +53,11 @@ class VocabularyListTableViewController: UITableViewController {
 extension VocabularyListTableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int(items.size())
+        if (showContent) {
+            return Int(items.size())
+        } else {
+            return 0;
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -72,12 +78,18 @@ extension VocabularyListTableViewController {
 extension VocabularyListTableViewController: IVocabularyListView {
     
     func showWordsWithJavaUtilList(words: JavaUtilList, withInt selectedPosition: jint) {
-        self.items = words
+        activityIndicatorView.stopAnimating()
+        items = words
+        showContent = true
         tableView.reloadData()
+        tableView.separatorStyle = .SingleLine
     }
     
     func showProgress() {
-        
+        activityIndicatorView.startAnimating()
+        showContent = false
+        tableView.reloadData()
+        tableView.separatorStyle = .None
     }
     
     func showRefreshError() {

@@ -56,8 +56,8 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         return collapseDetailViewController
     }
     
-    class func wrapWithDrawer(vc: MainViewController) -> UIViewController {
-        let drawerVC = MainDrawerViewController()
+    class func wrapWithDrawer(vc: MainViewController, drawerPresenter:DrawerPresenter) -> UIViewController {
+        let drawerVC = DrawerViewController(presenter: drawerPresenter)
         let drawer = DrawerController(centerViewController: vc, leftDrawerViewController: drawerVC)
         drawer.openDrawerGestureModeMask = .BezelPanningCenterView
         drawer.closeDrawerGestureModeMask = .PanningCenterView
@@ -97,18 +97,6 @@ extension MainViewController: IMainView {
     }
     
     func reloadList() {
-        
-    }
-    
-    func showDrawerProgress() {
-        
-    }
-    
-    func showUserDataWithNSString(username: String!, withNSString avatar: String!, withJavaUtilList languages: JavaUtilList!) {
-        
-    }
-    
-    func showDrawerError() {
-        
+        listVC.presenter.onLoadList()
     }
 }

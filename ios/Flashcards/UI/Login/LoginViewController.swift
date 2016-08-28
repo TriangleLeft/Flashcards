@@ -117,11 +117,11 @@ extension LoginViewController: ILoginView {
         rememberMeSwich.on = rememberUser;
     }
     
-    func showGenericError() {
+    func notifyGenericError() {
         
     }
     
-    func showNetworkError() {
+    func notifyNetworkError() {
         
     }
 }

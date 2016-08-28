@@ -72,7 +72,8 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)switchLanguageWithSwitchLanguageController:(SwitchLanguageController *)controller {
-    return NULL;
+    NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:[RestService PATH_SWITCH_LANGUAGE]] body:controller];
+    return [self observableWithRequest:req responseModelClass:LanguageDataModel_class_()];
 }
 
 - (RxObservable *)getUserDataWithNSString:(NSString *)userId {

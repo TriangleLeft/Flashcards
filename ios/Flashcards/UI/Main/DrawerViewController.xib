@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="DrawerViewController" customModule="Flashcards" customModuleProvider="target">
+            <connections>
+                <outlet property="avatarView" destination="emv-KJ-n0E" id="siP-3G-vnJ"/>
+                <outlet property="tableView" destination="oZt-W8-U0n" id="61U-2h-D3T"/>
+                <outlet property="userNameLabel" destination="GvC-Eb-fsa" id="M2U-d3-DQq"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="emv-KJ-n0E">
+                    <rect key="frame" x="16" y="16" width="64" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="64" id="GaW-Xp-x9P"/>
+                        <constraint firstAttribute="height" constant="64" id="i8d-s3-ddl"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GvC-Eb-fsa">
+                    <rect key="frame" x="88" y="38" width="42" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1nn-1k-QUD">
+                    <rect key="frame" x="0.0" y="96" width="600" height="1"/>
+                    <color key="backgroundColor" red="0.71372549019607845" green="0.71372549019607845" blue="0.71372549019607845" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="C2k-GA-Xut"/>
+                    </constraints>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="oZt-W8-U0n">
+                    <rect key="frame" x="0.0" y="96" width="600" height="504"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" red="0.44705882668495178" green="0.44705882668495178" blue="0.44705882668495178" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="oZt-W8-U0n" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="0BF-bo-KN0"/>
+                <constraint firstItem="emv-KJ-n0E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="8IQ-Ho-30V"/>
+                <constraint firstItem="GvC-Eb-fsa" firstAttribute="leading" secondItem="emv-KJ-n0E" secondAttribute="trailing" constant="8" id="BSa-ah-OdE"/>
+                <constraint firstItem="oZt-W8-U0n" firstAttribute="top" secondItem="1nn-1k-QUD" secondAttribute="bottom" constant="-1" id="KzS-JX-YZO"/>
+                <constraint firstItem="1nn-1k-QUD" firstAttribute="top" secondItem="emv-KJ-n0E" secondAttribute="bottom" constant="16" id="Oop-q5-ZOa"/>
+                <constraint firstItem="oZt-W8-U0n" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QPl-Yc-xzV"/>
+                <constraint firstItem="GvC-Eb-fsa" firstAttribute="centerY" secondItem="emv-KJ-n0E" secondAttribute="centerY" id="Rme-h5-qdk"/>
+                <constraint firstAttribute="bottom" secondItem="oZt-W8-U0n" secondAttribute="bottom" id="V8R-SP-05S"/>
+                <constraint firstItem="1nn-1k-QUD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="X2w-DI-vnn"/>
+                <constraint firstItem="1nn-1k-QUD" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="hXD-5W-HqY"/>
+                <constraint firstItem="emv-KJ-n0E" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="16" id="orU-2M-mL9"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
