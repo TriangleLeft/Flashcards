@@ -60,6 +60,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onBind(ILoginView view) {
         super.onBind(view);
+        // FIXME: What about showing progress or content?
         view.setLogin(login);
         view.setPassword(password);
         view.setRememberUser(rememberUser);
