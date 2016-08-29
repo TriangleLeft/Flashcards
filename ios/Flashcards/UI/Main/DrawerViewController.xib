@@ -43,7 +43,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
-            <color key="backgroundColor" red="0.44705882668495178" green="0.44705882668495178" blue="0.44705882668495178" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="oZt-W8-U0n" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="0BF-bo-KN0"/>
                 <constraint firstItem="emv-KJ-n0E" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="8IQ-Ho-30V"/>

@@ -39,6 +39,10 @@ class VocabularyListTableViewController: UITableViewController {
         presenter.onCreate()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        //NSLog("appear")
+    }
+    
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self)
     }

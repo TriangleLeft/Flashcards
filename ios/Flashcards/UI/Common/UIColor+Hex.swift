@@ -10,6 +10,10 @@ import UIKit
 
 extension UIColor {
     
+    static func flashcardsPrimary() -> UIColor {
+        return UIColor(inHex: "#2196F3")
+    }
+    
     static func flashcardsGreen() -> UIColor {
         return UIColor(inHex: "#4CAF50")
     }
