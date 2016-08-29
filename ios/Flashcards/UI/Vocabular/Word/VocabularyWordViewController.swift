@@ -15,7 +15,7 @@ class VocabularyWordViewController: UIViewController {
     @IBOutlet weak var genderEntry: UIStackView!
     @IBOutlet weak var translationEntry: UIStackView!
     
-
+    @IBOutlet weak var strengthView: VocabularyStrengthView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var posLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
@@ -35,10 +35,8 @@ class VocabularyWordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem()
-//        navigationItem.leftItemsSupplementBackButton = true
-        
-        wordLabel.text = "lalala";
+        // Hidden by default
+        infoEntry.hidden = true
         presenter.onCreate();
         presenter.onBindWithIView(self);
     }
@@ -46,48 +44,12 @@ class VocabularyWordViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self);
     }
-    
-    func onBackPressed(sender: UIButton!) {
-        //presenter.
-    }
-    
-    class func build(presenter:VocabularyWordPresenter) -> VocabularyWordViewController {
-        let controller = VocabularyWordViewController(presenter)
-//        let toolbarController = ToolbarController(rootViewController: controller)
-//        
-//        toolbarController.toolbar.backgroundColor = MaterialColor.lightBlue.base
-//        toolbarController.toolbar.titleLabel.textColor = MaterialColor.white
-//        toolbarController.toolbar.titleLabel.textAlignment = .Center
-//        toolbarController.statusBarStyle = .LightContent
-//        toolbarController.toolbar.title = "Detail"
-//        
-//        let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
-//        let backButton: IconButton = IconButton()
-//        backButton.pulseColor = MaterialColor.white
-//        backButton.tintColor = MaterialColor.white
-//        backButton.setImage(arrowBackImage, forState: .Normal)
-//        backButton.setImage(arrowBackImage, forState: .Highlighted)
-//        backButton.addTarget(controller, action: #selector(VocabularyWordViewController.onBackPressed(_:)), forControlEvents: .TouchUpInside)
-//        
-//     //   let arrowBackImage: UIImage? = MaterialIcon.cm.arrowBack;
-//        let fakeButton: IconButton = IconButton()
-//        //backButton.pulseColor = MaterialColor.white
-//        //backButton.tintColor = MaterialColor.white
-//        //fakeButton.setImage(arrowBackImage, forState: .Normal)
-//        //fakeButton.setImage(arrowBackImage, forState: .Highlighted)
-//        fakeButton.hidden = true;
-//        
-//        toolbarController.toolbar.leftControls = [backButton]
-//        toolbarController.toolbar.rightControls = [fakeButton]
-//        
-        
-        return controller
-    }
 }
 
 extension VocabularyWordViewController: IVocabularyWordView {
     func showWordWithVocabularyWord(word: VocabularyWord!) {
         infoEntry.hidden = false
+        strengthView.setStrength(Int(word.getStrength()))
         wordLabel.text = word.getWord()
         if (word.getTranslations().isEmpty()) {
             translationEntry.hidden = true;

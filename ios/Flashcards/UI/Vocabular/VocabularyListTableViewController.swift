@@ -42,12 +42,6 @@ class VocabularyListTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self)
     }
-    
-    class func build(presenter:VocabularyListPresenter) -> VocabularyListTableViewController {
-        let controller = VocabularyListTableViewController(presenter)
-        
-        return controller;
-    }
 }
 
 extension VocabularyListTableViewController {
@@ -63,9 +57,8 @@ extension VocabularyListTableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(nibStringName, forIndexPath: indexPath) as! VocabularyListTableViewCell
         
-        let item = items.getWithInt(Int32(indexPath.row)) as! VocabularyWord;
-        
-        cell.label.text = item.getWord();
+        let item = items.getWithInt(Int32(indexPath.row)) as! VocabularyWord
+        cell.showWord(item)
         
         return cell
     }

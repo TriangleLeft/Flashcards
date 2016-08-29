@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,15 +15,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol5-3X-tA6">
-                        <rect key="frame" x="8" y="11" width="304" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol5-3X-tA6">
+                        <rect key="frame" x="8" y="11" width="255" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="olX-zX-SEV" customClass="VocabularyStrengthView" customModule="Flashcards" customModuleProvider="target">
+                        <rect key="frame" x="279" y="10" width="33" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="33" id="dqL-Ju-Cea"/>
+                            <constraint firstAttribute="height" constant="24" id="fvt-1P-QiG"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="Ol5-3X-tA6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="V7P-SD-o9z"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="olX-zX-SEV" secondAttribute="trailing" id="jhK-3f-W5m"/>
+                    <constraint firstItem="Ol5-3X-tA6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="mUS-5R-YRy"/>
+                    <constraint firstItem="olX-zX-SEV" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="ujU-R5-dYh"/>
+                    <constraint firstItem="olX-zX-SEV" firstAttribute="leading" secondItem="Ol5-3X-tA6" secondAttribute="trailing" constant="16" id="yJ0-SB-DnZ"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="iconView" destination="olX-zX-SEV" id="kpW-IQ-ei3"/>
                 <outlet property="label" destination="Ol5-3X-tA6" id="riq-dQ-rF2"/>
             </connections>
         </tableViewCell>

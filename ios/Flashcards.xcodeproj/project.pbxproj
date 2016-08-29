@@ -35,6 +35,8 @@
 		8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
 		8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
+		8FE1B97D1D74391800482A66 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */; };
+		8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97E1D743B3500482A66 /* VocabularyStrengthView.swift */; };
 		8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
 		8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
 		8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
@@ -92,6 +94,8 @@
 		8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListTableViewCell.xib; sourceTree = "<group>"; };
 		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
+		8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
+		8FE1B97E1D743B3500482A66 /* VocabularyStrengthView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyStrengthView.swift; sourceTree = "<group>"; };
 		8FE6B54A1D6B1BBC00532B3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LoginView.xib; sourceTree = "<group>"; };
 		8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */,
+				8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			children = (
 				8FB1ED851D6CA53F00DCFDA7 /* Word */,
 				8FB1ED801D6C93F100DCFDA7 /* List */,
+				8FE1B97E1D743B3500482A66 /* VocabularyStrengthView.swift */,
 			);
 			path = Vocabular;
 			sourceTree = "<group>";
@@ -410,7 +416,9 @@
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
+				8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */,
 				8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */,
+				8FE1B97D1D74391800482A66 /* UIColor+Hex.swift in Sources */,
 				8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */,
 				8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */,
 				8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */,

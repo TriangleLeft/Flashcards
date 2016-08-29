@@ -13,7 +13,7 @@ import Material
 class LoginViewController: UIViewController  {
     
     @IBOutlet weak var contentView: UIStackView!
-
+    
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     @IBOutlet weak var loginTextField: ErrorTextField!
@@ -38,9 +38,12 @@ class LoginViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad();
-        presenter.onCreate();
-        presenter.onBindWithIView(self);
         
+        presenter.onBindWithIView(self);
+        presenter.onCreate();
+        
+        
+        // Close keyboard if we tap on background
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LoginViewController.tap(_:)))
         view.addGestureRecognizer(tapGesture)
         

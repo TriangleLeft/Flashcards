@@ -13,6 +13,7 @@
                 <outlet property="infoEntry" destination="kio-Bh-YAM" id="sPN-CY-dgE"/>
                 <outlet property="posEntry" destination="b5S-jJ-WQM" id="edU-6j-XKI"/>
                 <outlet property="posLabel" destination="6O6-Qi-ld2" id="vd2-A6-rzC"/>
+                <outlet property="strengthView" destination="283-lQ-6ct" id="1fO-yQ-W8I"/>
                 <outlet property="translationEntry" destination="NZi-vO-Cpq" id="u92-Eq-oTa"/>
                 <outlet property="translationLabel" destination="6XD-RC-g0s" id="eP6-TM-Pwa"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -38,6 +39,12 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="131" height="50"/>
+                                            </variation>
+                                            <variation key="widthClass=regular" misplaced="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="131" height="50"/>
+                                            </variation>
                                             <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
                                                 <rect key="frame" x="0.0" y="0.0" width="672" height="21"/>
                                             </variation>
@@ -47,6 +54,12 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="16" id="x9C-Zh-v34"/>
                                             </constraints>
+                                            <variation key="widthClass=compact" misplaced="YES">
+                                                <rect key="frame" x="133" y="0.0" width="16" height="50"/>
+                                            </variation>
+                                            <variation key="widthClass=regular" misplaced="YES">
+                                                <rect key="frame" x="133" y="0.0" width="16" height="50"/>
+                                            </variation>
                                         </view>
                                     </subviews>
                                 </stackView>
@@ -62,10 +75,10 @@
                             </variation>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RRg-ha-JHy">
-                            <rect key="frame" x="0.0" y="80" width="536" height="21"/>
+                            <rect key="frame" x="0.0" y="78" width="536" height="24"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="STRENGTH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B4S-mS-X5K">
-                                    <rect key="frame" x="0.0" y="0.0" width="494" height="21"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="503" height="24"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.44705882352941173" green="0.44705882352941173" blue="0.44705882352941173" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -73,15 +86,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="630" height="21"/>
                                     </variation>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dg-4a-Hlf">
-                                    <rect key="frame" x="494" y="0.0" width="42" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                    <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                        <rect key="frame" x="630" y="0.0" width="42" height="21"/>
-                                    </variation>
-                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="283-lQ-6ct" customClass="VocabularyStrengthView" customModule="Flashcards" customModuleProvider="target">
+                                    <rect key="frame" x="503" y="0.0" width="33" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="24" id="S4C-AV-XpR"/>
+                                        <constraint firstAttribute="width" constant="33" id="cb4-gU-gOY"/>
+                                    </constraints>
+                                </view>
                             </subviews>
                             <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
                                 <rect key="frame" x="0.0" y="71" width="672" height="21"/>
@@ -184,11 +195,13 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="kio-Bh-YAM" secondAttribute="trailing" constant="32" id="JIV-V6-Fte">
+                    <variation key="widthClass=compact" constant="16"/>
                     <variation key="widthClass=regular" constant="64"/>
                 </constraint>
                 <constraint firstItem="kio-Bh-YAM" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="OMQ-CC-2gq"/>
                 <constraint firstItem="kio-Bh-YAM" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fMl-1T-yxA"/>
                 <constraint firstItem="kio-Bh-YAM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="kFy-K6-bm6">
+                    <variation key="widthClass=compact" constant="16"/>
                     <variation key="widthClass=regular" constant="64"/>
                 </constraint>
             </constraints>
