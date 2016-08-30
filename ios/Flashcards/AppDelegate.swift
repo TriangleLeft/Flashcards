@@ -55,13 +55,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func setMainViewController() {
+    func setMainViewController(animated:Bool) {
         let mainPresenter = MainPresenter(accountModule: accountModule)
         let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: MainThreadScheduler())
         let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
-        window!.rootViewController = MainViewController.wrapWithDrawer(mainVC, drawerPresenter: drawerPresenter)
+        changeRootViewController(MainViewController.wrapWithDrawer(mainVC, drawerPresenter: drawerPresenter), animated: animated)
+    }
+    
+    func setCardsViewController() {
+        let cardsController:CardsViewController = CardsViewController()
+        let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
+        navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
+        navCardsController.navigationBar.tintColor = UIColor.whiteColor()
+      
+        changeRootViewController(navCardsController, animated: true)
+    }
+    
+    private func changeRootViewController(controller:UIViewController!, animated:Bool) {
+        if (self.window!.rootViewController == nil || !animated) {
+            self.window!.rootViewController = controller
+            return
+        }
+        
+        let snapshot:UIView = self.window!.snapshotViewAfterScreenUpdates(true)
+        controller.view.addSubview(snapshot)
+        
+        self.window!.rootViewController = controller;
+        
+        UIView.animateWithDuration(0.3, animations: {() in
+            snapshot.layer.opacity = 0;
+            snapshot.layer.transform = CATransform3DMakeScale(1.5, 1.5, 1.5);
+            }, completion: {
+                (value: Bool) in
+                snapshot.removeFromSuperview();
+        });
+    }
+    
+    class func sharedAppDelegate() -> AppDelegate? {
+        return UIApplication.sharedApplication().delegate as? AppDelegate;
     }
 
     func applicationWillResignActive(application: UIApplication) {

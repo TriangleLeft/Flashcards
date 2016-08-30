@@ -40,6 +40,9 @@
 		8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
 		8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
 		8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
+		8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
+		8FFE91561D76285F0079B37E /* CardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE91551D76285F0079B37E /* CardsView.xib */; };
+		8FFE91581D76415B0079B37E /* MainViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +102,9 @@
 		8FE6B54A1D6B1BBC00532B3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LoginView.xib; sourceTree = "<group>"; };
 		8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
+		8FFE91531D7628400079B37E /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
+		8FFE91551D76285F0079B37E /* CardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsView.xib; sourceTree = "<group>"; };
+		8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewControllerDelegate.swift; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +128,7 @@
 		8F29281A1D61FBB1007B1CCF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8FFE91521D7627EE0079B37E /* Cards */,
 				8F3DF5A11D6C7B1E0005C9C3 /* Vocabular */,
 				8F3DF59A1D6C793A0005C9C3 /* Main */,
 				8FE6B5461D6B19E300532B3C /* Login */,
@@ -176,6 +183,7 @@
 				8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */,
 				8F041F871D7343F600E4D68E /* DrawerViewCell.swift */,
 				8F041F881D7343F600E4D68E /* DrawerViewCell.xib */,
+				8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -259,6 +267,15 @@
 				8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		8FFE91521D7627EE0079B37E /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				8FFE91531D7628400079B37E /* CardsViewController.swift */,
+				8FFE91551D76285F0079B37E /* CardsView.xib */,
+			);
+			path = Cards;
 			sourceTree = "<group>";
 		};
 		B13338B283C3A5B893AEF959 /* Pods */ = {
@@ -349,6 +366,7 @@
 				8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */,
 				8F3DF5A51D6C7BF10005C9C3 /* VocabularyListTableView.xib in Resources */,
 				8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */,
+				8FFE91561D76285F0079B37E /* CardsView.xib in Resources */,
 				8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,10 +428,12 @@
 			files = (
 				8FB1ED881D6CA57200DCFDA7 /* VocabularyWordViewController.swift in Sources */,
 				8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */,
+				8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */,
 				8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */,
 				8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */,
 				8F3DF5A41D6C7BF10005C9C3 /* VocabularyListTableViewController.swift in Sources */,
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
+				8FFE91581D76415B0079B37E /* MainViewControllerDelegate.swift in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
 				8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */,

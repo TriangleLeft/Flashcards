@@ -17,6 +17,7 @@ class VocabularyListTableViewController: UITableViewController {
     
     var items:JavaUtilList = JavaUtilArrayList()
     var showContent = false
+    weak var mainDelegate:MainViewControllerDelegate?
     
     init(_ presenter:VocabularyListPresenter) {
         self.presenter = presenter;
@@ -31,6 +32,22 @@ class VocabularyListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Add flashcards button
+        let flashcardsImage = UIImage(named: "ic_flashcards")!.imageWithRenderingMode(.AlwaysTemplate)
+        let flashcardsButton = UIButton(type: .InfoDark)
+        flashcardsButton.setImage(flashcardsImage, forState: .Normal)
+        flashcardsButton.frame = CGRect(x: 0, y: 0, width: flashcardsImage.size.width, height: flashcardsImage.size.height)
+        flashcardsButton.addTarget(self, action: #selector(VocabularyListTableViewController.onFlashcardsClick), forControlEvents: .TouchUpInside)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: flashcardsButton)
+        
+        // Add drawer button
+        let menuImage = UIImage(named: "ic_menu_black_24dp")!.imageWithRenderingMode(.AlwaysTemplate)
+        let menuButton = UIButton(type: .InfoDark)
+        menuButton.setImage(menuImage, forState: .Normal)
+        menuButton.frame = CGRect(x: 0, y: 0, width: menuImage.size.width, height: menuImage.size.height)
+        menuButton.addTarget(self, action: #selector(VocabularyListTableViewController.onMenuClick), forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: menuButton)
+        
         tableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
         tableView.backgroundView = activityIndicatorView
         tableView.separatorStyle = .None
@@ -40,11 +57,37 @@ class VocabularyListTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        //NSLog("appear")
+        super.viewWillAppear(animated)
+        NSLog("appear")
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         presenter.onRebindWithIView(self)
+    }
+    
+    func onFlashcardsClick() {
+        let cardsController:CardsViewController = CardsViewController()
+        let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
+        navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
+        navCardsController.navigationBar.tintColor = UIColor.whiteColor()
+        
+        self.navigationController?.delegate = self
+        mainDelegate?.setMasterCollapsed(false)
+        self.navigationController?.pushViewController(cardsController, animated: false)
+    }
+    
+    func onMenuClick() {
+        mainDelegate?.onMenuClicked()
+    }
+}
+
+extension VocabularyListTableViewController: UINavigationControllerDelegate {
+    func navigationController(navigationController: UINavigationController, willShowViewController viewController: UIViewController, animated: Bool) {
+        if (viewController == self) {
+            mainDelegate?.setMasterCollapsed(true)
+        }
+        NSLog("Will show %@", viewController)
     }
 }
 
@@ -80,6 +123,9 @@ extension VocabularyListTableViewController: IVocabularyListView {
         showContent = true
         tableView.reloadData()
         tableView.separatorStyle = .SingleLine
+        let indexPath:NSIndexPath = NSIndexPath(forRow: Int(selectedPosition), inSection: 0)
+        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+        presenter.onWordSelectedWithInt(selectedPosition)
     }
     
     func showProgress() {
