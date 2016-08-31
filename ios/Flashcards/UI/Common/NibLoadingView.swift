@@ -9,8 +9,7 @@
 import UIKit
 
 // http://stackoverflow.com/questions/25513271/how-to-initialise-a-uiview-class-with-a-xib-file-in-swift-ios/36424842#36424842
-@IBDesignable
-class NibLoadingView: UIView {
+@IBDesignable class NibLoadingView: UIView {
     
     @IBOutlet weak var view: UIView!
     
