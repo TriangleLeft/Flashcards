@@ -32,6 +32,11 @@ import UIKit
         view.translatesAutoresizingMaskIntoConstraints = true
         
         addSubview(view)
+        didLoad()
+    }
+    
+    func didLoad() {
+        
     }
     
     private func loadViewFromNib() -> UIView {

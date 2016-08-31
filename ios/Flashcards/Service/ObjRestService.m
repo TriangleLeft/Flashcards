@@ -63,7 +63,17 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 - (RxObservable *)getFlashcardDataWithInt:(jint)count
                               withBoolean:(jboolean)allowPartialDeck
                                  withLong:(jlong)timestamp {
-    return NULL;
+    NSString* timestampString = [NSString stringWithFormat:@"%lld", timestamp];
+    NSURLQueryItem *query_timestamp = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_TIMESTAMP] value:timestampString];
+    NSString* countString = [NSString stringWithFormat:@"%d", count];
+    NSURLQueryItem *query_count = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_FLASHCARDS_COUNT] value:countString];
+    NSString* partialString = allowPartialDeck ? @"true" : @"false";
+    NSURLQueryItem *query_partial =  [[NSURLQueryItem alloc] initWithName:[RestService QUERY_ALLOW_PARTIAL_DECK] value:partialString];
+    NSArray<NSURLQueryItem *> *params = @[query_count, query_partial, query_timestamp];
+    
+    NSURLRequest *req = [self requestWithMethod:@"GET" url:[self urlWithPath:[RestService PATH_FLASHCARDS] queryParams:params]];
+    return [self observableWithRequest:req responseModelClass:FlashcardResponseModel_class_()];
+
 }
 
 - (RxObservable *)postFlashcardResultsWithFlashcardResultsController:(FlashcardResultsController *)model {

@@ -45,7 +45,7 @@ public interface RestService {
 
     @GET(PATH_FLASHCARDS)
     Observable<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,
-                                                        @Query(QUERY_ALLOW_PARTIAL_DECK) boolean allowPartialDeck,
+                                                        @Query(QUERY_ALLOW_PARTIAL_DECK) boolean alwPartialDeck,
                                                         @Query(QUERY_TIMESTAMP) long timestamp);
 
     @POST(PATH_FLASHCARDS)

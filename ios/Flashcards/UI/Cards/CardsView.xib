@@ -2,12 +2,13 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10117"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardsViewController" customModule="Flashcards" customModuleProvider="target">
             <connections>
-                <outlet property="cardView" destination="UYt-CF-rj8" id="LPf-Bb-Vwv"/>
+                <outlet property="activityIndicator" destination="5Mz-BO-Nwr" id="dHy-BT-ucf"/>
+                <outlet property="kolodaView" destination="Tye-9f-Zpo" id="2OI-MY-PUQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="4gp-1B-g2s"/>
             </connections>
         </placeholder>
@@ -16,27 +17,32 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UYt-CF-rj8" customClass="FlashcardView" customModule="Flashcards" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tye-9f-Zpo" customClass="KolodaView" customModule="Koloda">
                     <rect key="frame" x="16" y="16" width="568" height="568"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <variation key="heightClass=regular" misplaced="YES">
-                        <rect key="frame" x="64" y="16" width="520" height="768"/>
-                    </variation>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="5Mz-BO-Nwr">
+                            <rect key="frame" x="266" y="265" width="37" height="37"/>
+                        </activityIndicatorView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="5Mz-BO-Nwr" firstAttribute="centerY" secondItem="Tye-9f-Zpo" secondAttribute="centerY" id="5x2-qU-Mto"/>
+                        <constraint firstItem="5Mz-BO-Nwr" firstAttribute="centerX" secondItem="Tye-9f-Zpo" secondAttribute="centerX" id="wRT-xd-gWu"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" red="0.12941176469999999" green="0.58823529409999997" blue="0.95294117649999999" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="UYt-CF-rj8" secondAttribute="bottom" constant="16" id="6r0-VP-fjW">
-                    <variation key="heightClass=regular" constant="64"/>
-                </constraint>
-                <constraint firstItem="UYt-CF-rj8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="811-8B-k2q">
+                <constraint firstItem="Tye-9f-Zpo" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="EXR-B7-WYv">
                     <variation key="widthClass=regular" constant="64"/>
                 </constraint>
-                <constraint firstAttribute="trailing" secondItem="UYt-CF-rj8" secondAttribute="trailing" constant="16" id="9fW-7r-ZxZ">
+                <constraint firstAttribute="trailing" secondItem="Tye-9f-Zpo" secondAttribute="trailing" constant="16" id="Shw-6s-MWo">
                     <variation key="widthClass=regular" constant="64"/>
                 </constraint>
-                <constraint firstItem="UYt-CF-rj8" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="yhY-L1-JTz">
-                    <variation key="heightClass=regular" constant="64"/>
+                <constraint firstItem="Tye-9f-Zpo" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="16" id="pM3-ma-VqP">
+                    <variation key="heightClass=regular-widthClass=regular" constant="64"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="Tye-9f-Zpo" secondAttribute="bottom" constant="16" id="wRD-m0-fWp">
+                    <variation key="heightClass=regular-widthClass=regular" constant="64"/>
                 </constraint>
             </constraints>
         </view>

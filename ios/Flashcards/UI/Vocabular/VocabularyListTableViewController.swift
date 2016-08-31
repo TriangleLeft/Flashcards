@@ -67,11 +67,7 @@ class VocabularyListTableViewController: UITableViewController {
     }
     
     func onFlashcardsClick() {
-        let cardsController:CardsViewController = CardsViewController()
-        let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
-        navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
-        navCardsController.navigationBar.tintColor = UIColor.whiteColor()
-        
+        let cardsController: CardsViewController = AppDelegate.sharedAppDelegate().buildCardsViewController()
         self.navigationController?.delegate = self
         mainDelegate?.setMasterCollapsed(false)
         self.navigationController?.pushViewController(cardsController, animated: false)

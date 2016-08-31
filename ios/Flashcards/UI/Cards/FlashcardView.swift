@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FlashcardsCore
 
 @IBDesignable class FlashcardView: NibLoadingView {
     
@@ -20,12 +21,16 @@ import UIKit
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var translationLabel: UILabel!
     
+    var revealed: Bool = false
+    var delegate: FlashcardViewDelegate?
+    var word: FlashcardWord?
+    
     @IBAction func onButtonRight(sender: AnyObject) {
-        NSLog("Right")
+        delegate!.onRightClicked(word)
     }
     
     @IBAction func onButtonWrong(sender: AnyObject) {
-        NSLog("Wrong")
+        delegate!.onWrongClicked(word)
     }
     
     @IBAction func onShowAnswer(sender: AnyObject) {
@@ -44,7 +49,49 @@ import UIKit
             // Show answer with buttons, hide original one
             self.answerGroup.alpha = 1
             self.showAnswerButton.alpha = 0
-            }, completion: nil)
+            }, completion: {
+                finished in
+                self.revealed = true
+        })
+    }
+    
+    @IBInspectable var cornerRadius: CGFloat = 10
+    
+    @IBInspectable var shadowOffsetWidth: Int = 0
+    @IBInspectable var shadowOffsetHeight: Int = 3
+    @IBInspectable var shadowColor: UIColor? = UIColor.blackColor()
+    @IBInspectable var shadowOpacity: Float = 0.5
+    
+    func showWord(word: FlashcardWord) {
+        self.word = word
+        wordLabel.text = word.getWord()
+        translationLabel.text = word.getTranslation()
+    }
+    
+    override func didLoad() {
+        super.didLoad()
+        view.layer.cornerRadius = cornerRadius
+        view.layer.masksToBounds = true
         
     }
+    
+    override func layoutSubviews() {
+        let shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        
+        layer.shadowColor = shadowColor?.CGColor
+        layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight);
+        layer.shadowOpacity = shadowOpacity
+        layer.shadowPath = shadowPath.CGPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.mainScreen().scale
+        
+    }
+}
+
+protocol FlashcardViewDelegate: class {
+    
+    func onRightClicked(word: FlashcardWord?)
+    
+    func onWrongClicked(word: FlashcardWord?)
+    
 }
