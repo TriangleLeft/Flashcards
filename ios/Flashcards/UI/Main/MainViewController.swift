@@ -34,10 +34,9 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         // Set navigation bar colors
         navListVC.navigationBar.barTintColor = UIColor.flashcardsPrimary()
         navListVC.navigationBar.tintColor = UIColor.whiteColor()
+        navListVC.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         navWordVC.navigationBar.barTintColor = UIColor.flashcardsPrimary()
         navWordVC.navigationBar.tintColor = UIColor.whiteColor()
-        
-        //navWordVC.
         
         delegate = self
         viewControllers = [navListVC, navWordVC];
@@ -51,14 +50,12 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-      //  maximumPrimaryColumnWidth = view.bounds.size.width;
-     //   preferredPrimaryColumnWidthFraction = defaultWidthFraction
+        maximumPrimaryColumnWidth = view.bounds.size.width;
+        preferredPrimaryColumnWidthFraction = defaultWidthFraction
         preferredDisplayMode = .AllVisible
-     
+        
         presenter.onCreate();
         presenter.onBindWithIView(self);
-        wordVC.navigationItem.title = "Detail"
-        listVC.navigationItem.title = "Main"
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -99,9 +96,9 @@ extension MainViewController: MainViewControllerDelegate {
     
     func setMasterCollapsed(collapsed: Bool) {
         if (collapsed) {
-           // preferredPrimaryColumnWidthFraction = defaultWidthFraction
+            preferredPrimaryColumnWidthFraction = defaultWidthFraction
         } else {
-         //   preferredPrimaryColumnWidthFraction = 1.0
+            preferredPrimaryColumnWidthFraction = 1.0
         }
         NSLog("Collaped %@", collapsed)
     }
@@ -110,7 +107,9 @@ extension MainViewController: MainViewControllerDelegate {
 extension MainViewController: IMainView {
     
     func setTitleWithNSString(title: String!) {
-        listVC.navigationItem.title = title
+        //listVC.navigationItem.title = title
+        //navListVC.navigationBar.topItem?.title = title
+        listVC.title = title
     }
     
     func showWordWithComAnnimonStreamOptional(word: ComAnnimonStreamOptional!) {
@@ -119,14 +118,14 @@ extension MainViewController: IMainView {
         if (collapsed) {
             
             
-//            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-//                // Disable drawer
-//                if let array = drawer.view.gestureRecognizers {
-//                    for recognizer in array {
-//                        recognizer.enabled = false
-//                    }
-//                }
-//            }
+            //            if let drawer: DrawerController = self.parentViewController as? DrawerController {
+            //                // Disable drawer
+            //                if let array = drawer.view.gestureRecognizers {
+            //                    for recognizer in array {
+            //                        recognizer.enabled = false
+            //                    }
+            //                }
+            //            }
             
             showDetailViewController(wordVC, sender: self)
         }
@@ -135,13 +134,13 @@ extension MainViewController: IMainView {
     func showList() {
         if (collapsed) {
             // Enable drawer
-//            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-//                if let array = drawer.view.gestureRecognizers {
-//                    for recognizer in array {
-//                        recognizer.enabled = true
-//                    }
-//                }
-//            }
+            //            if let drawer: DrawerController = self.parentViewController as? DrawerController {
+            //                if let array = drawer.view.gestureRecognizers {
+            //                    for recognizer in array {
+            //                        recognizer.enabled = true
+            //                    }
+            //                }
+            //            }
             showViewController(navListVC, sender: nil);
         }
     }
