@@ -19,7 +19,6 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     let defaultWidthFraction:CGFloat = 0.4
     
     var collapseDetailViewController: Bool = true
-    var splitVCGestureRecognizer: UIGestureRecognizer? = nil
     
     init(_ presenter:MainPresenter, listPrensenter:VocabularyListPresenter, wordPresenter:VocabularyWordPresenter) {
         self.presenter = presenter;
@@ -38,6 +37,8 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         navWordVC.navigationBar.barTintColor = UIColor.flashcardsPrimary()
         navWordVC.navigationBar.tintColor = UIColor.whiteColor()
         
+        //navWordVC.
+        
         delegate = self
         viewControllers = [navListVC, navWordVC];
     }
@@ -50,12 +51,10 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        maximumPrimaryColumnWidth = view.bounds.size.width;
-        preferredPrimaryColumnWidthFraction = defaultWidthFraction
+      //  maximumPrimaryColumnWidth = view.bounds.size.width;
+     //   preferredPrimaryColumnWidthFraction = defaultWidthFraction
         preferredDisplayMode = .AllVisible
      
-        splitVCGestureRecognizer = view.gestureRecognizers![0]
-        
         presenter.onCreate();
         presenter.onBindWithIView(self);
         wordVC.navigationItem.title = "Detail"
@@ -100,9 +99,9 @@ extension MainViewController: MainViewControllerDelegate {
     
     func setMasterCollapsed(collapsed: Bool) {
         if (collapsed) {
-            preferredPrimaryColumnWidthFraction = defaultWidthFraction
+           // preferredPrimaryColumnWidthFraction = defaultWidthFraction
         } else {
-            preferredPrimaryColumnWidthFraction = 1.0
+         //   preferredPrimaryColumnWidthFraction = 1.0
         }
         NSLog("Collaped %@", collapsed)
     }
@@ -119,22 +118,15 @@ extension MainViewController: IMainView {
         collapseDetailViewController = false
         if (collapsed) {
             
-            let arr = view.gestureRecognizers
-            //let recog:UIGestureRecognizer = view.gestureRecognizers![0]
-            //recog.enabled = false
-            //recog.delegate = nil
-            //recog.
-            splitVCGestureRecognizer?.enabled = false
             
-            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-                // Disable drawer
-                if let array = drawer.view.gestureRecognizers {
-                    for recognizer in array {
-                        recognizer.enabled = false
-                    }
-                }
-            }
-            //  evo_drawerController?.openDrawerGestureModeMask = []
+//            if let drawer: DrawerController = self.parentViewController as? DrawerController {
+//                // Disable drawer
+//                if let array = drawer.view.gestureRecognizers {
+//                    for recognizer in array {
+//                        recognizer.enabled = false
+//                    }
+//                }
+//            }
             
             showDetailViewController(wordVC, sender: self)
         }
@@ -143,14 +135,13 @@ extension MainViewController: IMainView {
     func showList() {
         if (collapsed) {
             // Enable drawer
-            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-                if let array = drawer.view.gestureRecognizers {
-                    for recognizer in array {
-                        recognizer.enabled = true
-                    }
-                }
-            }
-            // evo_drawerController?.openDrawerGestureModeMask = .BezelPanningCenterView
+//            if let drawer: DrawerController = self.parentViewController as? DrawerController {
+//                if let array = drawer.view.gestureRecognizers {
+//                    for recognizer in array {
+//                        recognizer.enabled = true
+//                    }
+//                }
+//            }
             showViewController(navListVC, sender: nil);
         }
     }
@@ -162,4 +153,10 @@ extension MainViewController: IMainView {
     func reloadList() {
         listVC.presenter.onLoadList()
     }
+}
+
+protocol MainViewControllerDelegate: class {
+    func onMenuClicked()
+    
+    func setMasterCollapsed(collapsed: Bool)
 }

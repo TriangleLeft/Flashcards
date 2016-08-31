@@ -45,7 +45,6 @@
 		8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
 		8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
 		8FFE91561D76285F0079B37E /* CardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE91551D76285F0079B37E /* CardsView.xib */; };
-		8FFE91581D76415B0079B37E /* MainViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 /* End PBXBuildFile section */
 
@@ -110,7 +109,6 @@
 		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
 		8FFE91531D7628400079B37E /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		8FFE91551D76285F0079B37E /* CardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsView.xib; sourceTree = "<group>"; };
-		8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewControllerDelegate.swift; sourceTree = "<group>"; };
 		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,7 +188,6 @@
 				8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */,
 				8F041F871D7343F600E4D68E /* DrawerViewCell.swift */,
 				8F041F881D7343F600E4D68E /* DrawerViewCell.xib */,
-				8FFE91571D76415B0079B37E /* MainViewControllerDelegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -445,7 +442,6 @@
 				8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */,
 				8F3DF5A41D6C7BF10005C9C3 /* VocabularyListTableViewController.swift in Sources */,
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
-				8FFE91581D76415B0079B37E /* MainViewControllerDelegate.swift in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
 				8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */,
