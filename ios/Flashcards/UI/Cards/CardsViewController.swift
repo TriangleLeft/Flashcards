@@ -10,16 +10,16 @@ import UIKit
 
 class CardsViewController: UIViewController {
     
+    @IBOutlet weak var cardView: FlashcardView!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Add flashcards button
-        let back = UIBarButtonItem(title: "Back",style: .Plain, target: self,action: #selector(CardsViewController.onBackPressed))
-        //self.navigationItem.leftBarButtonItem = back
-    }
-    
-    func onBackPressed() {
-        AppDelegate.sharedAppDelegate()?.setMainViewController(true)
+        // Need this because otherwise content would be placed below navigation bar
+        self.edgesForExtendedLayout = .None
+        
+        
+      //  cardView.textLabel.text = "Hey!"
+        
     }
 
 }

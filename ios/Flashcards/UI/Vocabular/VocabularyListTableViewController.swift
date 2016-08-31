@@ -123,9 +123,12 @@ extension VocabularyListTableViewController: IVocabularyListView {
         showContent = true
         tableView.reloadData()
         tableView.separatorStyle = .SingleLine
-        let indexPath:NSIndexPath = NSIndexPath(forRow: Int(selectedPosition), inSection: 0)
-        tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
-        presenter.onWordSelectedWithInt(selectedPosition)
+        // on Ipads, simulate click so the second controller shows selected word
+        if (self.traitCollection.horizontalSizeClass == .Regular) {
+            let indexPath:NSIndexPath = NSIndexPath(forRow: Int(selectedPosition), inSection: 0)
+            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .Middle)
+            presenter.onWordSelectedWithInt(0)
+        }
     }
     
     func showProgress() {

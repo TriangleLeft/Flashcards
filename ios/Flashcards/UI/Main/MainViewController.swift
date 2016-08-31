@@ -60,7 +60,6 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         presenter.onBindWithIView(self);
         wordVC.navigationItem.title = "Detail"
         listVC.navigationItem.title = "Main"
-        
     }
     
     override func viewDidAppear(animated: Bool) {
