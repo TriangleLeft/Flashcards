@@ -29,6 +29,8 @@
 		8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */; };
 		8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
 		8F99DFF21D7719C9006F8847 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */; };
+		8FA512A91D78F083005BDE26 /* ErrorWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */; };
+		8FA512AA1D78F083005BDE26 /* ErrorWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FA512A81D78F083005BDE26 /* ErrorWordCell.xib */; };
 		8FB1EA0C1D67AF9900545EB7 /* prefixes.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA091D67AED400545EB7 /* prefixes.properties */; };
 		8FB1EA0E1D67C35000545EB7 /* simplelogger.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */; };
 		8FB1ED881D6CA57200DCFDA7 /* VocabularyWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */; };
@@ -92,6 +94,8 @@
 		8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewController.xib; sourceTree = "<group>"; };
 		8F9714C01D66516200C388AA /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlashcardsCore.framework; path = ../core/build/FlashcardsCore.framework; sourceTree = "<group>"; };
 		8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
+		8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWordCell.swift; sourceTree = "<group>"; };
+		8FA512A81D78F083005BDE26 /* ErrorWordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorWordCell.xib; sourceTree = "<group>"; };
 		8FB1EA091D67AED400545EB7 /* prefixes.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = prefixes.properties; path = ../core/src/main/resources/prefixes.properties; sourceTree = "<group>"; };
 		8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */ = {isa = PBXFileReference; lastKnownFileType = text; name = simplelogger.properties; path = ../core/src/main/resources/simplelogger.properties; sourceTree = "<group>"; };
 		8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyWordViewController.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 		8FFE91521D7627EE0079B37E /* Cards */ = {
 			isa = PBXGroup;
 			children = (
+				8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */,
+				8FA512A81D78F083005BDE26 /* ErrorWordCell.xib */,
 				8FFE91531D7628400079B37E /* CardsViewController.swift */,
 				8FFE91551D76285F0079B37E /* CardsView.xib */,
 				8FD30A661D76FAE5007C31BD /* FlashcardView.swift */,
@@ -368,6 +374,7 @@
 				8F8A0CE01D61D0E00038DFAB /* LaunchScreen.storyboard in Resources */,
 				8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */,
 				8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */,
+				8FA512AA1D78F083005BDE26 /* ErrorWordCell.xib in Resources */,
 				8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */,
 				8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */,
 				8F3DF5A51D6C7BF10005C9C3 /* VocabularyListTableView.xib in Resources */,
@@ -444,6 +451,7 @@
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
+				8FA512A91D78F083005BDE26 /* ErrorWordCell.swift in Sources */,
 				8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */,
 				8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */,
 				8FE1B97D1D74391800482A66 /* UIColor+Hex.swift in Sources */,

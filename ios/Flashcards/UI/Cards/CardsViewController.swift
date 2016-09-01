@@ -13,10 +13,15 @@ class CardsViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var errorsView: UIStackView!
+    @IBOutlet weak var noErrorsLabel: UILabel!
+    @IBOutlet weak var errorsTableView: UITableView!
     
     let presenter: FlashcardsPresenter
+    let nibStringName: String = "ErrorWordCell"
     
     var wordList:JavaUtilList = JavaUtilArrayList()
+    var errorWordList:JavaUtilList = JavaUtilArrayList()
     
     init(_ presenter:FlashcardsPresenter) {
         self.presenter = presenter;
@@ -37,6 +42,13 @@ class CardsViewController: UIViewController {
         kolodaView.dataSource = self
         kolodaView.delegate = self
         
+        errorsTableView.dataSource = self
+        errorsTableView.delegate = self
+        errorsTableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
+        // Fake footer to hide empty cells and last divider
+        errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
+
+        
         presenter.onBindWithIView(self)
         presenter.onCreate()
         
@@ -46,13 +58,13 @@ class CardsViewController: UIViewController {
 extension CardsViewController: IFlashcardsView {
     
     func showWordsWithJavaUtilList(wordList: JavaUtilList!) {
-        activityIndicator.stopAnimating()
+        setPage(.Content)
         self.wordList = wordList
         kolodaView.reloadData()
     }
     
     func showProgress() {
-        activityIndicator.startAnimating()
+        setPage(.Progress)
     }
     
     func showError() {
@@ -60,25 +72,72 @@ extension CardsViewController: IFlashcardsView {
     }
     
     func showResultsNoErrors() {
-        
+        setPage(.NoErrors)
     }
     
     func showResultErrorsWithJavaUtilList(wordList: JavaUtilList!) {
-        
+        setPage(.Errors)
+        errorWordList = wordList
+        errorsTableView.reloadData()
     }
     
+    private func setPage(page: Page) {
+        kolodaView.hidden = true
+        errorsView.hidden = true
+        noErrorsLabel.hidden = true
+        activityIndicator.stopAnimating()
+        switch page {
+        case .Progress:
+            activityIndicator.startAnimating()
+            break
+        case .Content:
+            kolodaView.hidden = false
+            break
+        case .Errors:
+            errorsView.hidden = false
+            break
+        case .NoErrors:
+            noErrorsLabel.hidden = false
+            break
+        }
+    }
+    
+    private enum Page {
+        case Progress
+        case Content
+        case NoErrors
+        case Errors
+    }
 }
+
+extension CardsViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Int(errorWordList.size())
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(nibStringName, forIndexPath: indexPath) as! ErrorWordCell
+        let item = errorWordList.getWithInt(Int32(indexPath.row)) as! FlashcardWord
+        
+        cell.showWord(item)
+        
+        return cell
+    }
+}
+
 
 extension CardsViewController: FlashcardViewDelegate {
     
     func onRightClicked(word: FlashcardWord?) {
-        kolodaView.swipe(.Right)
         presenter.onWordRightWithFlashcardWord(word)
+        kolodaView.swipe(.Right)
     }
     
     func onWrongClicked(word: FlashcardWord?) {
-        kolodaView.swipe(.Left)
         presenter.onWordWrongWithFlashcardWord(word)
+        kolodaView.swipe(.Left)
+
     }
 }
 

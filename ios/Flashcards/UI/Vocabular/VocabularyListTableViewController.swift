@@ -50,6 +50,8 @@ class VocabularyListTableViewController: UITableViewController {
         tableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
         tableView.backgroundView = activityIndicatorView
         tableView.separatorStyle = .None
+        // Fake footer to hide empty cells and last divider
+        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         
         presenter.onBindWithIView(self)
         presenter.onCreate()

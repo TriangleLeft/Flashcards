@@ -66,7 +66,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     NSString* timestampString = [NSString stringWithFormat:@"%lld", timestamp];
     NSURLQueryItem *query_timestamp = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_TIMESTAMP] value:timestampString];
     NSString* countString = [NSString stringWithFormat:@"%d", count];
-    NSURLQueryItem *query_count = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_FLASHCARDS_COUNT] value:countString];
+    NSURLQueryItem *query_count = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_FLASHCARDS_COUNT] value:@"5"];
     NSString* partialString = allowPartialDeck ? @"true" : @"false";
     NSURLQueryItem *query_partial =  [[NSURLQueryItem alloc] initWithName:[RestService QUERY_ALLOW_PARTIAL_DECK] value:partialString];
     NSArray<NSURLQueryItem *> *params = @[query_count, query_partial, query_timestamp];
@@ -77,13 +77,13 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (RxObservable *)postFlashcardResultsWithFlashcardResultsController:(FlashcardResultsController *)model {
-    //NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:] body:model];
-    return NULL;
+    NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:[RestService PATH_FLASHCARDS]] body:model];
+    return [self observableWithRequest:req responseModelClass:LanguageDataModel_class_()];
 }
 
 - (RxObservable *)switchLanguageWithSwitchLanguageController:(SwitchLanguageController *)controller {
     NSURLRequest *req = [self requestWithMethod:@"POST" url:[self urlWithPath:[RestService PATH_SWITCH_LANGUAGE]] body:controller];
-    return [self observableWithRequest:req responseModelClass:LanguageDataModel_class_()];
+    return [self observableWithRequest:req responseModelClass:nil];
 }
 
 - (RxObservable *)getUserDataWithNSString:(NSString *)userId {
@@ -105,7 +105,9 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 - (RxObservable *)observableWithRequest:(NSURLRequest *)request responseModelClass:(IOSClass *)clazz {
     RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[MyClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager new];
-        manager.responseSerializer = [[GsonResponseSerializer alloc] initWithClass:clazz gson:_gson];
+        if (clazz) {
+            manager.responseSerializer = [[GsonResponseSerializer alloc] initWithClass:clazz gson:_gson];
+        }
         
         [[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             
