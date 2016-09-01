@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Material
 
 class VocabularyListTableViewController: UITableViewController {
     

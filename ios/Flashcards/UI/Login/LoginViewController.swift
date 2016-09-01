@@ -8,22 +8,18 @@
 
 import UIKit
 import FlashcardsCore
-import Material
 
 class LoginViewController: UIViewController  {
     
     @IBOutlet weak var contentView: UIStackView!
-    
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    
-    @IBOutlet weak var loginTextField: ErrorTextField!
-    
-    @IBOutlet weak var passwordTextField: ErrorTextField!
-    
-    @IBOutlet weak var rememberMeSwich: MaterialSwitch!
-    
+    @IBOutlet weak var loginTextField: UITextField!
+    @IBOutlet weak var loginErrorLabel: UILabel!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var passwordErrorLabel: UILabel!
+    @IBOutlet weak var rememberMeSwitch: UISwitch!
     @IBOutlet weak var loginButton: UIButton!
-    
+
     var presenter:LoginPresenter;
     
     init(presenter:LoginPresenter) {
@@ -64,7 +60,7 @@ class LoginViewController: UIViewController  {
     }
     
     @IBAction func onRememberMeChanged(sender: AnyObject) {
-        presenter.onRememberCheckWithBoolean(rememberMeSwich.on);
+        presenter.onRememberCheckWithBoolean(rememberMeSwitch.on);
     }
     
     @IBAction func onPasswordChanged(sender: AnyObject) {
@@ -92,13 +88,11 @@ extension LoginViewController: ILoginView {
     }
     
     func setLoginErrorVisibleWithBoolean(visible: jboolean) {
-        loginTextField.revealError = visible;
-        loginTextField.detail = "Wrong login";
+        loginErrorLabel.alpha = visible ? 1.0 : 0.0
     }
     
     func setPasswordErrorVisibleWithBoolean(visible: jboolean) {
-        passwordTextField.revealError = visible;
-        passwordTextField.detail = "Wrong password";
+        passwordErrorLabel.alpha = visible ? 1.0 : 0.0
     }
     
     func showProgress() {
@@ -117,7 +111,7 @@ extension LoginViewController: ILoginView {
     }
     
     func setRememberUserWithBoolean(rememberUser: jboolean) {
-        rememberMeSwich.on = rememberUser;
+        rememberMeSwitch.on = rememberUser;
     }
     
     func notifyGenericError() {
@@ -127,8 +121,4 @@ extension LoginViewController: ILoginView {
     func notifyNetworkError() {
         
     }
-}
-
-protocol LalalaDelegate:class {
-    func lala(value:String)
 }

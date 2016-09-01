@@ -75,9 +75,3 @@ extension VocabularyWordViewController: IVocabularyWordView {
         infoEntry.hidden = true;
     }
 }
-
-extension VocabularyWordViewController : LalalaDelegate {
-    func lala(value:String) {
-        wordLabel.text = value
-    }
-}
