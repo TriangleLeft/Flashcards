@@ -47,11 +47,16 @@ class CardsViewController: UIViewController {
         errorsTableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
         // Fake footer to hide empty cells and last divider
         errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
-
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Restart", style: .Plain, target: self, action: #selector(CardsViewController.onRestartClick))
         
         presenter.onBindWithIView(self)
         presenter.onCreate()
         
+    }
+    
+    func onRestartClick() {
+        presenter.onLoadFlashcards()
     }
 }
 
@@ -60,7 +65,7 @@ extension CardsViewController: IFlashcardsView {
     func showWordsWithJavaUtilList(wordList: JavaUtilList!) {
         setPage(.Content)
         self.wordList = wordList
-        kolodaView.reloadData()
+        kolodaView.resetCurrentCardIndex()
     }
     
     func showProgress() {
@@ -145,10 +150,6 @@ extension CardsViewController: KolodaViewDelegate {
     
     func kolodaDidRunOutOfCards(koloda: KolodaView) {
         presenter.onCardsDepleted()
-    }
-    
-    func koloda(koloda: KolodaView, didSelectCardAtIndex index: UInt) {
-        //UIApplication.sharedApplication().openURL(NSURL(string: "http://yalantis.com/")!)
     }
     
     func koloda(koloda: KolodaView, shouldDragCardAtIndex index: UInt ) -> Bool {
