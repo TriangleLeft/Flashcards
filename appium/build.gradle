@@ -6,5 +6,5 @@ dependencies {
 
     compile 'io.appium:java-client:4.0.0'
     compile dep.JUNIT
-    compile dep.HAMCREST
+    compile "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
 }

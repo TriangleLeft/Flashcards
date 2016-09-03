@@ -3,7 +3,7 @@ apply plugin: 'java'
 apply from: '../dependencies.gradle'
 
 dependencies {
-    compile dep.HAMCREST
+    compile "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
     //j2objcTranslation 'org.hamcrest:hamcrest-all:1.3:sources'
 }
 

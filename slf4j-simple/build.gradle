@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'com.github.j2objccontrib.j2objcgradle'
+
+dependencies {
+    compile "org.slf4j:slf4j-simple:1.7.21"
+}
+
+
+j2objcConfig {
+    j2objcVersion "1.1"
+    autoConfigureDeps true
+    supportedArchs = ['ios_i386', 'ios_x86_64']
+
+    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
+    //translateArgs "--prefixes", "src/main/resources/prefixes.properties"
+    testMinExpectedTests 0
+
+
+    finalConfigure()
+}

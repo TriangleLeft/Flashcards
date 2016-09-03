@@ -57,13 +57,15 @@ dependencies {
     compile dep.SUPPORT
     compile dep.SUPPORT_ANNOTATION
 
+    // We have to exclude timber here, as this lib is jar, and timber is aar, and gradle doesn't
+    // allow this (Error:Module <> depends on one or more Android Libraries but is a jar)
     compile('com.arcao:slf4j-timber:2.1') {
         exclude group: 'com.jakewharton.timber', module: 'timber'
-        exclude group: 'org.slf4j', module: 'slf4j-api'
     }
+    compile "org.slf4j:slf4j-api:1.7.21"
+    compile 'com.jakewharton.timber:timber:4.1.2'
 
     compile dep.PCJ
-    compile dep.RETROFIT_MISC
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:retrofit-mock:$RETROFIT_VERSION"
@@ -89,7 +91,6 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.3.1'
     compile 'com.makeramen:roundedimageview:2.2.1'
 
-    compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.0.0'
@@ -101,11 +102,6 @@ dependencies {
     apt "com.google.auto.value:auto-value:1.2"
 
 
-    androidTestCompile('com.arcao:slf4j-timber:2.1') {
-        exclude group: 'com.jakewharton.timber', module: 'timber'
-        exclude group: 'org.slf4j', module: 'slf4j-api'
-    }
-    androidTestCompile 'com.jakewharton.timber:timber:4.1.2'
     androidTestCompile dep.SUPPORT_ANNOTATION
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.4.1'
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
