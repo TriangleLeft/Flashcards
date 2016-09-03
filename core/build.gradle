@@ -48,7 +48,7 @@ dependencies {
     compile files('libs/rxjava-1.1.8.jar')
     j2objcTranslation files('libs/rxjava-1.1.8-sources.jar')
     compile 'com.annimon:stream:1.0.9'
-    compile dep.SUPPORT_ANNOTATION
+    compile "com.android.support:support-annotations:$SUPPORT_VERSION"
 
     // use api as provided-only, we don't need it in jar
     compileOnly "org.slf4j:slf4j-api:1.7.21"
@@ -66,25 +66,20 @@ dependencies {
     testCompile project(":slf4j-simple")
 
     // Only annotations are used
-    compile dep.RETROFIT
-    compile dep.OKHTTP
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
 
-    compile "com.google.auto.value:auto-value:1.2"
-    apt "com.google.auto.value:auto-value:1.2"
+
+    compile "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
+    apt "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
     apt 'com.gabrielittner.auto.value:auto-value-with:1.0.0-rc1'
 
-    compile dep.DAGGER
-    apt dep.DAGGER_COMPILER
+    compile "com.google.dagger:dagger:$DAGGER_VERSION"
+    apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
-    testCompile 'org.mockito:mockito-core:1.10.19'
-//    testCompile project(":j2objc-hamcrest")
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     compile "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
-    testCompile dep.JUNIT
-
-//    testCompile 'com.squareup.okhttp3:mockwebserver:3.2.0'
-//    j2objcTestTranslation 'com.squareup.okhttp3:mockwebserver:3.4.1:sources'
-//    j2objcTestTranslation 'com.squareup.okhttp3:okhttp-ws:3.4.1:sources'
-//    j2objcTestTranslation 'org.bouncycastle:bcprov-jdk15on:1.50:sources'
+    testCompile "junit:junit:$JUNIT_VERSION"
 
 }
 
