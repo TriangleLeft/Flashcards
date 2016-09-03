@@ -53,6 +53,9 @@ class VocabularyListTableViewController: UITableViewController {
         // Fake footer to hide empty cells and last divider
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(VocabularyListTableViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
         presenter.onBindWithIView(self)
         presenter.onCreate()
     }
@@ -65,6 +68,10 @@ class VocabularyListTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         presenter.onRebindWithIView(self)
+    }
+    
+    func refresh(sender:AnyObject) {
+        presenter.onRefreshList()
     }
     
     func onFlashcardsClick() {
@@ -116,6 +123,7 @@ extension VocabularyListTableViewController: IVocabularyListView {
     
     func showWordsWithJavaUtilList(words: JavaUtilList, withInt selectedPosition: jint) {
         activityIndicatorView.stopAnimating()
+        refreshControl!.endRefreshing()
         items = words
         showContent = true
         tableView.reloadData()
