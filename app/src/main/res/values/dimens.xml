@@ -28,5 +28,6 @@
 
     <dimen name="match_parent">-1dp</dimen>
     <dimen name="login_form_width">@dimen/match_parent</dimen>
+    <dimen name="flashcard_button_height">60dp</dimen>
 
 </resources>

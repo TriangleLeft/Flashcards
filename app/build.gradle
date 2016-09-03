@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.triangleleft.flashcards"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -64,8 +64,35 @@ dependencies {
 
     compile dep.PCJ
     compile dep.RETROFIT_MISC
+    compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:retrofit-mock:$RETROFIT_VERSION"
+
+    // We have to exclude all rx dependencies as we are using custom one
+    // though probably we shouldn't use jar lib and use jitpack instead
+    compile("com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION") {
+        exclude group: 'io.reactivex', module: 'rxjava'
+    }
+    compile('io.reactivex:rxandroid:1.2.0') {
+        exclude group: 'io.reactivex', module: 'rxjava'
+    }
     compile dep.OKHTTP
     compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+
+    compile 'com.daprlabs.aaron:cardstack:0.3.0'
+    //compile 'com.daprlabs.aaron:swipedeck:2.0.3'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.triangleleft.assertdialog:assert-dialog:0.8.5'
+    compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
+    compile 'javax.inject:javax.inject:1'
+    compile 'javax.annotation:javax.annotation-api:1.2'
+    compile 'com.facebook.stetho:stetho:1.3.1'
+    compile 'com.makeramen:roundedimageview:2.2.1'
+
+    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'com.pnikosis:materialish-progress:1.7'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 
     compile dep.DAGGER
     apt dep.DAGGER_COMPILER
@@ -94,16 +121,5 @@ dependencies {
     }
     androidTestApt dep.DAGGER_COMPILER
 
-    compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.triangleleft.assertdialog:assert-dialog:0.8.5'
-    compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
-    compile 'javax.inject:javax.inject:1'
-    compile 'javax.annotation:javax.annotation-api:1.2'
-    compile 'com.facebook.stetho:stetho:1.3.1'
-    compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'io.reactivex:rxandroid:1.2.0'
-    compile 'com.jakewharton.timber:timber:4.1.2'
-    compile 'com.pnikosis:materialish-progress:1.7'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'de.hdodenhof:circleimageview:2.0.0'
+
 }
