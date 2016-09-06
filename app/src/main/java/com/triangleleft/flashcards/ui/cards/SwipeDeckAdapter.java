@@ -43,10 +43,13 @@ public class SwipeDeckAdapter extends BaseAdapter {
         FlashcardView view = (FlashcardView) convertView;
         if (view == null) {
             view = new FlashcardView(parent.getContext());
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
             view.setListener(listener);
         }
 
         view.showFlashcard(getItem(position));
         return view;
     }
+
 }

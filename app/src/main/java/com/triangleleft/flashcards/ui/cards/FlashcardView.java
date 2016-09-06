@@ -57,7 +57,7 @@ public class FlashcardView extends FrameLayout {
         inflate(getContext(), R.layout.view_flashcard, this);
         ButterKnife.bind(this);
 
-        // setOnClickListener((view) -> reveal());
+        setOnClickListener((view) -> reveal());
     }
 
     @Override
@@ -81,6 +81,10 @@ public class FlashcardView extends FrameLayout {
         // Reveal buttons and translation
         buttonBlock.animate().setInterpolator(interpolator).alpha(1f).setDuration(300).setStartDelay(100);
         answerBlock.animate().setInterpolator(interpolator).alpha(1f).setDuration(300).setStartDelay(100);
+
+        if (listener != null) {
+            listener.onRevealed();
+        }
     }
 
 
@@ -114,6 +118,8 @@ public class FlashcardView extends FrameLayout {
         void onRightClick();
 
         void onWrongClick();
+
+        void onRevealed();
     }
 
 

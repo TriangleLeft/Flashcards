@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="vocabular_word_padding">32dp</dimen>
+    <dimen name="screen_padding">32dp</dimen>
     <dimen name="main_panel_width">350dp</dimen>
 
     <dimen name="login_form_width">500dp</dimen>

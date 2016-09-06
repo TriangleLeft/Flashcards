@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.daprlabs.cardstack.SwipeDeck;
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.cards.CardsComponent;
 import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
@@ -9,9 +9,11 @@ import com.triangleleft.flashcards.ui.common.BaseActivity;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ViewFlipper;
 
@@ -40,6 +42,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     @Bind(R.id.flashcard_button_container)
     View buttonContainer;
     private SwipeDeckAdapter adapter;
+    private SparseBooleanArray revealedCards = new SparseBooleanArray();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,37 +60,45 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
             public void onWrongClick() {
                 swipeDeck.swipeTopCardLeft(100);
             }
+
+            @Override
+            public void onRevealed() {
+                revealedCards.put((int) swipeDeck.getTopCardItemId(), true);
+            }
         });
         swipeDeck.setAdapter(adapter);
-
-        swipeDeck.setEventCallback(new SwipeDeck.SwipeEventCallback() {
+        swipeDeck.setCallback(new SwipeDeck.SwipeDeckCallback() {
             @Override
-            public void cardSwipedLeft(int positionInAdapter) {
-                FlashcardWord word = adapter.getItem(positionInAdapter);
+            public void cardSwipedLeft(long positionInAdapter) {
+                FlashcardWord word = adapter.getItem((int) positionInAdapter);
                 getPresenter().onWordWrong(word);
+                if (positionInAdapter == adapter.getCount() - 1) {
+                    getPresenter().onCardsDepleted();
+                }
             }
 
             @Override
-            public void cardSwipedRight(int positionInAdapter) {
-                FlashcardWord word = adapter.getItem(positionInAdapter);
+            public void cardSwipedRight(long positionInAdapter) {
+                FlashcardWord word = adapter.getItem((int) positionInAdapter);
                 getPresenter().onWordRight(word);
+                if (positionInAdapter == adapter.getCount() - 1) {
+                    getPresenter().onCardsDepleted();
+                }
             }
 
             @Override
-            public void cardsDepleted() {
-                getPresenter().onCardsDepleted();
+            public boolean isDragEnabled(long itemId) {
+                return revealedCards.get((int) itemId);
             }
 
-            @Override
-            public void cardActionDown() {
-
-            }
-
-            @Override
-            public void cardActionUp() {
-
-            }
+//            @Override
+//            public void cardsDepleted() {
+//                getPresenter().onCardsDepleted();
+//            }
+//
+//
         });
+
 
         resultErrorList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
@@ -111,8 +122,14 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
 
     @Override
     public void showWords(List<FlashcardWord> wordList) {
-        adapter.setData(wordList);
         viewFlipper.setDisplayedChild(CARDS);
+        new Handler().post(() -> {
+            revealedCards.clear();
+            swipeDeck.setAdapterIndex(0);
+            adapter.setData(wordList);
+        });
+
+
         buttonContainer.setVisibility(View.GONE);
     }
 

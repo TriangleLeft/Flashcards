@@ -88,8 +88,12 @@ dependencies {
     compile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
     compile "com.facebook.stetho:stetho:$STETHO_VERSION"
 
-    compile 'com.daprlabs.aaron:cardstack:0.3.0'
-    //compile 'com.daprlabs.aaron:swipedeck:2.0.3'
+    //compile 'com.daprlabs.aaron:cardstack:0.3.0'
+    compile('com.github.lekz112:SwipeDeck2:is_drag_enabled-SNAPSHOT') {
+        //compile('com.daprlabs.aaron:swipedeck:2.0.5') {
+        exclude group: 'io.reactivex', module: 'rxjava'
+        exclude group: 'io.reactivex', module: 'rxandroid'
+    }
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.triangleleft.assertdialog:assert-dialog:0.8.5'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.5'
