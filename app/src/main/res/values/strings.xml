@@ -30,10 +30,10 @@
     <string name="flashcard_error">Couldn\'t load flashcards</string>
 
     <!-- Vocabulary word -->
-    <string name="word_translation">TRANSLATION</string>
-    <string name="word_strength">STRENGTH</string>
-    <string name="word_gender">GENDER</string>
-    <string name="word_part_of_speech">PART OF SPEECH</string>
+    <string name="word_translation">Translation</string>
+    <string name="word_strength">Strength</string>
+    <string name="word_gender">Gender</string>
+    <string name="word_part_of_speech">Part of speech</string>
 
     <!-- Navigation drawer -->
     <string name="language_level">%s lvl</string>
