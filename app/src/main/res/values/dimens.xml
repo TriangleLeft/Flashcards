@@ -14,6 +14,9 @@
     <!-- Login form -->
     <dimen name="login_form_padding">16dp</dimen>
 
+    <!-- Vocabulary -->
+    <dimen name="vocabulary_word_padding">16dp</dimen>
+
     <!-- Drawer -->
     <dimen name="avatar_size">64dp</dimen>
     <dimen name="drawer_width">320dp</dimen>

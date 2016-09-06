@@ -36,6 +36,9 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         slidingPaneLayout.setPanelSlideListener(new SlidingPaneLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
+                // As soon as we start dragging panel, reset scroll
+                // Otherwise we could see some items being cut by clipping
+                navigationView.resetScroll();
                 navigationView.setAnimationProgress(slideOffset);
             }
 
@@ -46,6 +49,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
             @Override
             public void onPanelClosed(View panel) {
+                // When pannel is closed, clicking it should open it
                 navigationView.setOnOverlayClickListener(view -> slidingPaneLayout.openPane());
             }
         });

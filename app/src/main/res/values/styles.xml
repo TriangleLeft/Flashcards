@@ -47,6 +47,13 @@
         <item name="android:textSize">30sp</item>
     </style>
 
+    <style name="ProgressBar">
+        <item name="android:layout_width">@dimen/progress_wheel_size</item>
+        <item name="android:layout_height">@dimen/progress_wheel_size</item>
+        <item name="matProg_barColor">@color/colorPrimary</item>
+        <item name="matProg_progressIndeterminate">true</item>
+    </style>
+
     <style name="FlashcardResultText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

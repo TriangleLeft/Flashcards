@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="@dimen/screen_padding">
+        android:paddingLeft="@dimen/vocabulary_word_padding"
+        android:paddingRight="@dimen/vocabulary_word_padding">
 
         <!-- Title -->
         <LinearLayout
@@ -27,7 +28,6 @@
                 style="?android:textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
                 android:gravity="center_vertical"
                 android:text="@string/placeholder"/>
 

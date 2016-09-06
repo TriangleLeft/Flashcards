@@ -1,14 +1,14 @@
 package com.triangleleft.flashcards.ui.main;
 
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.common.OnItemClickListener;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.util.Collections;
 import java.util.List;

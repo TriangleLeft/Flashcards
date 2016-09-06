@@ -6,4 +6,7 @@
     <!-- Login form -->
     <dimen name="login_form_padding">160dp</dimen>
 
+    <!-- Vocabulary -->
+    <dimen name="vocabulary_word_padding">32dp</dimen>
+
 </resources>
