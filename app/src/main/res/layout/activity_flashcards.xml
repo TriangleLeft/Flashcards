@@ -9,40 +9,41 @@
     <ViewFlipper
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/screen_padding">
 
         <!-- Progress -->
-        <com.pnikosis.materialishprogress.ProgressWheel
-            android:id="@+id/progress_wheel"
-            android:layout_width="@dimen/progress_wheel_size"
-            android:layout_height="@dimen/progress_wheel_size"
-            android:layout_gravity="center"
-            app:matProg_barColor="@color/white"
-            app:matProg_progressIndeterminate="true" />
+        <!--<com.pnikosis.materialishprogress.ProgressWheel-->
+        <!--android:id="@+id/progress_wheel"-->
+        <!--android:layout_width="@dimen/progress_wheel_size"-->
+        <!--android:layout_height="@dimen/progress_wheel_size"-->
+        <!--android:layout_gravity="center"-->
+        <!--app:matProg_barColor="@color/white"-->
+        <!--app:matProg_progressIndeterminate="true" />-->
 
         <!-- Cards -->
-        <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-            <com.daprlabs.aaron.swipedeck.SwipeDeck
-                android:id="@+id/swipe_deck"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="32dp"
-                app:card_spacing="15dp"
-                app:render_above="false"
-                app:max_visible="3" />
+        <!--<com.daprlabs.aaron.swipedeck.SwipeDeck-->
+        <!--android:id="@+id/swipe_deck"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="32dp"-->
+        <!--app:card_spacing="15dp"-->
+        <!--app:render_above="false"-->
+        <!--app:max_visible="3" />-->
 
-        </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
+        <!--</com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>-->
 
         <!-- Result no errors -->
-        <TextView
-            android:id="@+id/flashcard_result_success_text"
-            style="@style/FlashcardResultText"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/flashcard_result_no_errors" />
+        <!--<TextView-->
+        <!--android:id="@+id/flashcard_result_success_text"-->
+        <!--style="@style/FlashcardResultText"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/flashcard_result_no_errors" />-->
 
 
         <!-- Result errors -->

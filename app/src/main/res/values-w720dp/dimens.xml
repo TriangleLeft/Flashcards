@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="screen_padding">32dp</dimen>
+    <dimen name="screen_padding">128dp</dimen>
     <dimen name="main_panel_width">350dp</dimen>
 
-    <dimen name="login_form_width">500dp</dimen>
+    <!-- Login form -->
+    <dimen name="login_form_padding">160dp</dimen>
+
 </resources>
