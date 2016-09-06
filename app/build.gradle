@@ -100,7 +100,7 @@ dependencies {
     compile 'javax.inject:javax.inject:1'
     compile 'javax.annotation:javax.annotation-api:1.2'
     compile 'com.makeramen:roundedimageview:2.2.1'
-
+    compile 'com.github.AndroidDeveloperLB:AutoFitTextView:3'
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'de.hdodenhof:circleimageview:2.0.0'

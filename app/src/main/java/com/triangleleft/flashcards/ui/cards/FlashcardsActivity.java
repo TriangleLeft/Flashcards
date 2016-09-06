@@ -53,12 +53,12 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
         adapter = new SwipeDeckAdapter(new FlashcardView.IFlashcardListener() {
             @Override
             public void onRightClick() {
-                swipeDeck.swipeTopCardRight(100);
+                swipeDeck.swipeTopCardRight(500);
             }
 
             @Override
             public void onWrongClick() {
-                swipeDeck.swipeTopCardLeft(100);
+                swipeDeck.swipeTopCardLeft(500);
             }
 
             @Override

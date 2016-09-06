@@ -60,19 +60,11 @@ public class FlashcardView extends FrameLayout {
         setOnClickListener((view) -> reveal());
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-        buttonRight.setEnabled(enabled);
-        buttonWrong.setEnabled(enabled);
-    }
-
     private void reveal() {
         if (revealed) {
             return;
         }
         revealed = true;
-        // setOnClickListener(null);
         TimeInterpolator interpolator = new AccelerateDecelerateInterpolator();
         // Move word up
         int diff = fakeWord.getTop() - wordView.getTop();
@@ -81,6 +73,8 @@ public class FlashcardView extends FrameLayout {
         // Reveal buttons and translation
         buttonBlock.animate().setInterpolator(interpolator).alpha(1f).setDuration(300).setStartDelay(100);
         answerBlock.animate().setInterpolator(interpolator).alpha(1f).setDuration(300).setStartDelay(100);
+
+        buttonBlock.setVisibility(VISIBLE);
 
         if (listener != null) {
             listener.onRevealed();
@@ -94,6 +88,7 @@ public class FlashcardView extends FrameLayout {
         answerBlock.clearAnimation();
         buttonBlock.clearAnimation();
         wordView.clearAnimation();
+        buttonBlock.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.button_right)

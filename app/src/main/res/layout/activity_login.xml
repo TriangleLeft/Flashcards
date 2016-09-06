@@ -13,8 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingLeft="@dimen/login_form_padding"
-        android:paddingRight="@dimen/login_form_padding"
+        android:paddingLeft="@dimen/login_side_padding"
+        android:paddingRight="@dimen/login_side_padding"
+        android:paddingTop="@dimen/login_top_padding"
+        android:paddingBottom="@dimen/login_top_padding"
         android:clipToPadding="false"
         android:fillViewport="true">
 
@@ -37,7 +39,7 @@
                     android:gravity="center"
                     android:text="@string/app_name"
                     android:textColor="@color/textColorPrimaryInverse"
-                    android:textSize="50sp" />
+                    android:textSize="45sp" />
 
                 <ViewFlipper
                     android:id="@+id/view_flipper"

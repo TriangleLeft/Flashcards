@@ -12,10 +12,16 @@
     <dimen name="content_padding">16dp</dimen>
 
     <!-- Login form -->
-    <dimen name="login_form_padding">16dp</dimen>
+    <dimen name="login_side_padding">16dp</dimen>
+    <dimen name="login_top_padding">16dp</dimen>
 
     <!-- Vocabulary -->
     <dimen name="vocabulary_word_padding">16dp</dimen>
+
+    <!-- Flashcards -->
+    <dimen name="flashcards_side_padding">16dp</dimen>
+    <dimen name="flashcards_top_padding">64dp</dimen>
+    <dimen name="flashcard_text_size">40sp</dimen>
 
     <!-- Drawer -->
     <dimen name="avatar_size">64dp</dimen>
@@ -43,5 +49,6 @@
 
     <!-- Flashcards screen -->
     <dimen name="flashcard_button_height">60dp</dimen>
+
 
 </resources>

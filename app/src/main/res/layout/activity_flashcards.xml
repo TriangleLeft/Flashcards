@@ -9,8 +9,7 @@
     <ViewFlipper
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/screen_padding">
+        android:layout_height="match_parent">
 
         <!-- Progress -->
         <com.pnikosis.materialishprogress.ProgressWheel
@@ -30,7 +29,10 @@
                 android:id="@+id/swipe_deck"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="32dp"
+                android:paddingLeft="@dimen/flashcards_side_padding"
+                android:paddingRight="@dimen/flashcards_side_padding"
+                android:paddingTop="@dimen/flashcards_top_padding"
+                android:paddingBottom="@dimen/flashcards_top_padding"
                 app:card_spacing="15dp"
                 app:render_above="false"
                 app:max_visible="3" />

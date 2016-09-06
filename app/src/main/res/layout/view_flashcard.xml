@@ -28,18 +28,18 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_centerVertical="true" />
 
-            <TextView
+            <com.lb.auto_fit_textview.AutoResizeTextView
                 android:id="@+id/flashcard_fake_word"
-                style="@style/Flashcard"
+                style="@style/FlashcardText"
                 android:layout_centerInParent="true"
                 android:layout_above="@+id/flashcard_divider"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:visibility="invisible"
                 android:text="@string/placeholder" />
 
-            <TextView
+            <com.lb.auto_fit_textview.AutoResizeTextView
                 android:id="@+id/flashcard_translation"
-                style="@style/Flashcard"
+                style="@style/FlashcardText"
                 android:layout_centerInParent="true"
                 android:layout_below="@+id/flashcard_divider"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -47,9 +47,9 @@
 
         </RelativeLayout>
 
-        <TextView
+        <com.lb.auto_fit_textview.AutoResizeTextView
             android:id="@+id/flashcard_word"
-            style="@style/Flashcard"
+            style="@style/FlashcardText"
             android:layout_centerInParent="true"
             android:text="@string/placeholder" />
 
@@ -59,6 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/flashcard_button_height"
             android:layout_alignParentBottom="true"
+            android:clickable="false"
+            android:background="@null"
             android:text="@string/flashcard_button_show_answer" />
 
         <LinearLayout
@@ -67,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/flashcard_button_height"
             android:layout_alignParentBottom="true"
+            android:visibility="invisible"
             android:alpha="0"
             android:orientation="horizontal">
 

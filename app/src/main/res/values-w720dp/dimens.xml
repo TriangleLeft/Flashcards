@@ -4,9 +4,16 @@
     <dimen name="main_panel_width">350dp</dimen>
 
     <!-- Login form -->
-    <dimen name="login_form_padding">160dp</dimen>
+    <dimen name="login_side_padding">160dp</dimen>
+    <dimen name="login_top_padding">32dp</dimen>
+
 
     <!-- Vocabulary -->
     <dimen name="vocabulary_word_padding">32dp</dimen>
+
+    <!-- Flashcards -->
+    <dimen name="flashcards_side_padding">192dp</dimen>
+    <dimen name="flashcards_top_padding">64dp</dimen>
+    <dimen name="flashcard_text_size">60sp</dimen>
 
 </resources>
