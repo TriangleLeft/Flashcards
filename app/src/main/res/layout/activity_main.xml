@@ -17,14 +17,13 @@
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
+            android:paddingTop="@dimen/status_bar_height"
             android:theme="@style/AppTheme.AppBarOverlay">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="@dimen/status_bar_height"
                 android:background="?attr/colorPrimary"
                 app:titleTextColor="@color/textColorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
@@ -49,9 +48,10 @@
             android:tint="@color/textColorPrimary"
             app:fabSize="normal"
             app:layout_anchor="@id/main_container"
-            app:layout_anchorGravity="bottom|right|end"/>
+            app:layout_anchorGravity="bottom|right" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 
     <com.triangleleft.flashcards.ui.common.NavigationView
         android:id="@+id/navigation_view"

@@ -17,6 +17,7 @@
 
     <!-- Vocabulary -->
     <dimen name="vocabulary_word_padding">16dp</dimen>
+    <dimen name="item_vocabulary_word_height">60dp</dimen>
 
     <!-- Flashcards -->
     <dimen name="flashcards_side_padding">16dp</dimen>

@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.main;
 
+import com.android.debug.hv.ViewServer;
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.main.DaggerMainPageComponent;
@@ -24,6 +25,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,6 +44,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     Toolbar toolbar;
     @Bind(R.id.navigation_view)
     NavigationView navigationView;
+    @Bind(R.id.main_container)
+    View mainContainer;
 
     private IMainActivityDelegate delegate;
 
@@ -62,7 +66,8 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
         Configuration configuration = getResources().getConfiguration();
         int screenWidthDp = configuration.screenWidthDp;
-        logger.debug("onCreate() width: {}, fixedDrawer: {}, twoPanes: {}", screenWidthDp, fixedDrawer, twoPanes);
+        int screenHeightDp = configuration.screenHeightDp;
+        logger.debug("onCreate() width: {}, height: {}", screenWidthDp, screenHeightDp);
 
         // TODO: Factory.buildViewDelegate(fixedDrawer, twoPanes);
         if (fixedDrawer && twoPanes) {
@@ -74,6 +79,13 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         }
 
         navigationView.init(getComponent());
+        ViewServer.get(this).addWindow(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
     }
 
     @Override
