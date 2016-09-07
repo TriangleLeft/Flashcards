@@ -25,6 +25,8 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="6dp"
             app:cardElevation="0dp"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
             app:cardUseCompatPadding="true">
 
             <LinearLayout

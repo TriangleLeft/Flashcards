@@ -14,7 +14,7 @@
  *
  */
 
-package com.triangleleft.flashcards.ui.common.presenter;
+package com.triangleleft.flashcards.ui.common;
 
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.IComponent;
@@ -23,12 +23,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.mockito.Mockito.*;
 
 /**
  * Tests for {@link ComponentManager}.
@@ -52,7 +51,7 @@ public class ComponentManagerTest {
 
     @Test
     public void saveComponent() throws Exception {
-        IComponent component = mock(IComponent.class);
+        IComponent component = Mockito.mock(IComponent.class);
 
         manager.saveComponent(getClass(), component);
 

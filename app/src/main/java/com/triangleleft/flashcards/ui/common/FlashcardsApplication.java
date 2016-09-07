@@ -2,9 +2,9 @@ package com.triangleleft.flashcards.ui.common;
 
 import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
-import com.triangleleft.flashcards.di.AndroidApplicationComponent;
-import com.triangleleft.flashcards.di.AndroidApplicationModule;
-import com.triangleleft.flashcards.di.DaggerAndroidApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationModule;
+import com.triangleleft.flashcards.di.DaggerApplicationComponent;
 import com.triangleleft.flashcards.service.common.exception.ConversionException;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
@@ -27,7 +27,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsApplication.class);
 
     protected static FlashcardsApplication debugInstance;
-    private AndroidApplicationComponent component;
+    private ApplicationComponent component;
 
     public static void showDebugToast(String text) {
         Toast.makeText(debugInstance, text, Toast.LENGTH_LONG).show();
@@ -57,14 +57,14 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
     }
 
     @NonNull
-    protected AndroidApplicationComponent buildComponent() {
-        return DaggerAndroidApplicationComponent.builder()
-                .androidApplicationModule(new AndroidApplicationModule(this))
+    protected ApplicationComponent buildComponent() {
+        return DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
     @NonNull
-    public AndroidApplicationComponent getComponent() {
+    public ApplicationComponent getComponent() {
         Utils.checkState(component != null, "Calling getComponent() before application was created!");
         return component;
     }

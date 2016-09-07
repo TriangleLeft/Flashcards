@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.di.login;
 
-import com.triangleleft.flashcards.di.AndroidApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.ui.login.LoginPresenter;
@@ -8,8 +8,8 @@ import com.triangleleft.flashcards.ui.login.LoginPresenter;
 import dagger.Component;
 
 @ActivityScope
-@Component(dependencies = AndroidApplicationComponent.class)
-public interface LoginActivityComponent extends AndroidApplicationComponent {
+@Component(dependencies = ApplicationComponent.class)
+public interface LoginActivityComponent extends ApplicationComponent {
 
     LoginPresenter loginPresenter();
 

@@ -16,15 +16,16 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+
 public class FlashcardPage extends BasePage {
 
-    @AndroidFindBy(id = "com.triangleleft.flashcards:id/flashcard_flipper")
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/flashcard_content")
     public WebElement card;
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/flashcard_word")
     public WebElement word;

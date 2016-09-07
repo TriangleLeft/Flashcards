@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @Override
     protected MainPageComponent buildComponent() {
         return DaggerMainPageComponent.builder()
-                .androidApplicationComponent(getApplicationComponent())
+                .applicationComponent(getApplicationComponent())
                 .mainPageModule(new MainPageModule())
                 .build();
     }

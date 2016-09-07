@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.common;
 
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.di.AndroidApplicationComponent;
+import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.IComponent;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
@@ -74,7 +74,7 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         }
     }
 
-    protected AndroidApplicationComponent getApplicationComponent() {
+    protected ApplicationComponent getApplicationComponent() {
         return ((FlashcardsApplication) getApplication()).getComponent();
     }
 

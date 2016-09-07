@@ -27,6 +27,16 @@ android {
             testCoverageEnabled true
         }
     }
+    productFlavors {
+        web {
+            buildConfigField "String", "REST_SERVICE_URL", "\"https://www.duolingo.com\""
+            buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"https://www.duolingo.com\""
+        }
+        local {
+            buildConfigField "String", "REST_SERVICE_URL", "\"http://10.0.2.2:8080\""
+            buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"http://10.0.2.2:8080\""
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -48,6 +58,12 @@ android {
     }
 }
 
+configurations {
+    localDebug
+    localRelease
+    webDebug
+    webRelease
+}
 
 apply from: '../dependencies.gradle'
 
@@ -132,5 +148,6 @@ dependencies {
     }
     androidTestApt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
-
+    testCompile "junit:junit:$JUNIT_VERSION"
+    testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
 }

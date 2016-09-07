@@ -111,7 +111,7 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     @NonNull
     @Override
     protected CardsComponent buildComponent() {
-        return DaggerCardsComponent.builder().androidApplicationComponent(getApplicationComponent()).build();
+        return DaggerCardsComponent.builder().applicationComponent(getApplicationComponent()).build();
     }
 
     @NonNull

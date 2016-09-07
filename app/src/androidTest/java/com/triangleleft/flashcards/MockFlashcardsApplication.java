@@ -3,7 +3,7 @@ package com.triangleleft.flashcards;
 import com.triangleleft.flashcards.di.AndroidApplicationComponent;
 import com.triangleleft.flashcards.di.AndroidApplicationModule;
 import com.triangleleft.flashcards.di.DaggerAndroidApplicationComponent;
-import com.triangleleft.flashcards.di.RetrofitModule;
+import com.triangleleft.flashcards.di.NetworkModule;
 import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
 
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class MockFlashcardsApplication extends FlashcardsApplication {
         logger.debug("buildComponent() called");
         return DaggerAndroidApplicationComponent.builder()
                 .androidApplicationModule(new AndroidApplicationModule(this))
-                .retrofitModule(new RetrofitModule() {
+                .retrofitModule(new NetworkModule() {
                     @Override
                     public HttpUrl endpoint() {
                         return MockWebServerRule.MOCK_SERVER_URL;

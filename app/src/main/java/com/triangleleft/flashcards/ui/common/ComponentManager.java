@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.common.presenter;
+package com.triangleleft.flashcards.ui.common;
 
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.IComponent;

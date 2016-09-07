@@ -17,13 +17,7 @@
 package com.triangleleft.flashcards.rule;
 
 import com.triangleleft.flashcards.FlashcardsApp;
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import io.appium.java_client.pagefactory.TimeOutDuration;
-import io.appium.java_client.remote.AndroidMobileCapabilityType;
-import io.appium.java_client.remote.MobileCapabilityType;
-import io.appium.java_client.remote.MobilePlatform;
+
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.openqa.selenium.ScreenOrientation;
@@ -34,6 +28,14 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
+
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.TimeOutDuration;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.remote.MobilePlatform;
 
 public class AppiumAndroidRule implements AppiumRule {
 
@@ -90,7 +92,7 @@ public class AppiumAndroidRule implements AppiumRule {
     private void before() throws MalformedURLException, InterruptedException {
         File classpathRoot = new File(System.getProperty("user.dir"));
         File appDir = new File(classpathRoot, "../app/build/outputs/apk/");
-        File appFile = new File(appDir, "app-debug.apk");
+        File appFile = new File(appDir, "app-local-debug.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "emulator-5556");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);

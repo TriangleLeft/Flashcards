@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     protected LoginActivityComponent buildComponent() {
         logger.debug("buildComponent() called");
         return DaggerLoginActivityComponent.builder()
-                .androidApplicationComponent(getApplicationComponent())
+                .applicationComponent(getApplicationComponent())
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.service.vocabular.rest;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.service.RestService;
+import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
@@ -34,10 +35,13 @@ public class RestVocabularyModule implements VocabularyModule {
     private final RestService service;
     private final AccountModule accountModule;
     private final VocabularyWordsRepository provider;
+    private final TranslationService translationService;
 
     @Inject
-    public RestVocabularyModule(RestService service, AccountModule accountModule, VocabularyWordsRepository provider) {
+    public RestVocabularyModule(RestService service, TranslationService translationService, AccountModule accountModule,
+                                VocabularyWordsRepository provider) {
         this.service = service;
+        this.translationService = translationService;
         this.accountModule = accountModule;
         this.provider = provider;
     }
@@ -53,7 +57,7 @@ public class RestVocabularyModule implements VocabularyModule {
     public Observable<List<VocabularyWord>> refreshVocabularyWords() {
         logger.debug("refreshVocabularyWords()");
         return service.getVocabularyList(System.currentTimeMillis())
-            .map(VocabularyResponseModel::toVocabularyData)
+                .map(VocabularyResponseModel::toVocabularyData)
                 .map(VocabularyData::getWords)
                 .flatMapIterable(list -> list) // split list of item into stream of items
                 .buffer(10) // group them by 10
@@ -72,7 +76,8 @@ public class RestVocabularyModule implements VocabularyModule {
                 .collect(joining(","));
         query = "[" + query + "]";
         WordTranslationModel model =
-                service.getTranslation(words.get(0).getLearningLanguage(), words.get(0).getUiLanguage(), query)
+                translationService
+                        .getTranslation(words.get(0).getLearningLanguage(), words.get(0).getUiLanguage(), query)
                         .toBlocking().first();
         return Stream.of(words)
                 .map(word -> getTranslation(word, model))
