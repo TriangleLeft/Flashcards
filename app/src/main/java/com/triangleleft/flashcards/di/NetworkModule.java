@@ -10,6 +10,7 @@ import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.TranslationService;
+import com.triangleleft.flashcards.service.adapter.FlashcardsCallAdapterFactory;
 import com.triangleleft.flashcards.service.converter.CustomGsonConverterFactory;
 
 import android.content.Context;
@@ -23,7 +24,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.schedulers.Schedulers;
 
 @Module
@@ -48,9 +48,8 @@ public class NetworkModule {
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .addCallAdapterFactory(new FlashcardsCallAdapterFactory(Schedulers.io()))
                 .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
-        // FIXME: should use custom adapter factory to map exceptions to domain ones
     }
 
     @ApplicationScope

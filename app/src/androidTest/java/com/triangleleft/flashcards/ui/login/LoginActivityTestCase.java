@@ -32,7 +32,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.triangleleft.flashcards.test.EspressoUtils.checkHasView;
-import static com.triangleleft.flashcards.test.EspressoUtils.withError;
 import static org.hamcrest.Matchers.not;
 
 @RunWith(AndroidJUnit4.class)
@@ -71,22 +70,6 @@ public class LoginActivityTestCase {
         webServer.enqueue(MockServerResponse.makeNetworkErrorResponse());
     }
 
-    // TODO: Some timeout problems
-    //    @Test
-    //    @MockJsonResponse("login/wrong_login_response.json")
-    //    public void loginErrorIsShown() {
-    //        enterCredentials();
-    //
-    //        checkHasView(withError(R.string.wrong_login));
-    //    }
-
-    @Test
-    @MockJsonResponse("login/wrong_password_response.json")
-    public void passwordErrorIsShown() throws InterruptedException {
-        enterCredentials();
-
-        checkHasView(withError(R.string.wrong_password));
-    }
 
     @Test
     public void toastIsShownForNetworkError() throws InterruptedException {

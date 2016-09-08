@@ -14,7 +14,7 @@
  *
  */
 
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.test;
 
 import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;

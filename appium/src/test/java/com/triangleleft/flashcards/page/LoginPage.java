@@ -17,6 +17,10 @@ public class LoginPage extends BasePage {
     public WebElement buttonSignIn;
     @AndroidFindBy(xpath = "//TextInputLayout[@resource-id='com.triangleleft.flashcards:id/login_email_layout']/android.widget.LinearLayout/android.widget.TextView")
     public WebElement loginError;
+    @AndroidFindBy(xpath = "//TextInputLayout[@resource-id='com.triangleleft.flashcards:id/login_password_layout']/android.widget.LinearLayout/android.widget.TextView")
+    public WebElement passwordError;
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_progress")
+    public WebElement progressBar;
 
     public LoginPage(AppiumFieldDecorator driver) {
         super(driver);

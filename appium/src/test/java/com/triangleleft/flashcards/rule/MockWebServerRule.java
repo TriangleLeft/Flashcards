@@ -1,7 +1,7 @@
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.rule;
 
-import com.triangleleft.flashcards.test.MockJsonResponse;
-import com.triangleleft.flashcards.test.MockServerResponse;
+import com.triangleleft.flashcards.util.MockJsonResponse;
+import com.triangleleft.flashcards.util.MockServerResponse;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -30,7 +30,7 @@ public class MockWebServerRule implements TestRule {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // If method is annotated with our annotation, read json from assets and add it server responses
+        // If method is annotated with our annotation, read json from resources and add it server responses
         MockJsonResponse annotation = description.getAnnotation(MockJsonResponse.class);
         if (annotation != null) {
             webServer.enqueue(MockServerResponse.make(annotation.value(), annotation.httpCode()));

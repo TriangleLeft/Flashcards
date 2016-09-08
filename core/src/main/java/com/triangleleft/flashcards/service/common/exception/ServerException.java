@@ -17,11 +17,11 @@
 package com.triangleleft.flashcards.service.common.exception;
 
 public class ServerException extends RuntimeException {
-    public ServerException() {
-        super();
-    }
-
     public ServerException(String message) {
         super(message);
+    }
+
+    public ServerException(Throwable e) {
+        super(e);
     }
 }

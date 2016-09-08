@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.service.login.rest;
 
 import com.google.gson.annotations.SerializedName;
+
 import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
@@ -25,7 +26,7 @@ public class LoginResponseModel {
     String message;
 
     public boolean isSuccess() {
-        return RESPONSE_OK.equals(response) && TextUtils.hasText(userId);
+        return RESPONSE_OK.equals(response) && TextUtils.hasText(userId) && TextUtils.isEmpty(failureReason);
     }
 
     public String getUserId() {
@@ -34,17 +35,13 @@ public class LoginResponseModel {
 
     public Exception getError() {
         if (!isSuccess()) {
-            if (TextUtils.hasText(failureReason)) {
-                switch (failureReason) {
-                    case FAILURE_LOGIN:
-                        return new LoginException();
-                    case FAILURE_PASSWORD:
-                        return new PasswordException();
+            switch (failureReason) {
+                case FAILURE_LOGIN:
+                    return new LoginException();
+                case FAILURE_PASSWORD:
+                    return new PasswordException();
                 default:
-                    return new ServerException();
-                }
-            } else {
-                return new ServerException();
+                    return new ServerException("Unknown failure reason: " + failureReason);
             }
         } else {
             throw new IllegalStateException("Can't build error for successful result");

@@ -130,7 +130,6 @@ dependencies {
 
     // For some reason excluding support-annotations from runner doesn't work, so just add it directly
     androidTestCompile "com.android.support:support-annotations:$SUPPORT_VERSION"
-    androidTestCompile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
     androidTestCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     androidTestCompile "com.crittercism.dexmaker:dexmaker:$DEXMAKER_VERSION"
     androidTestCompile "com.crittercism.dexmaker:dexmaker-dx:$DEXMAKER_VERSION"

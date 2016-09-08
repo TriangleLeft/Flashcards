@@ -14,14 +14,15 @@
  *
  */
 
-package com.triangleleft.flashcards;
+package com.triangleleft.flashcards.util;
 
-import io.appium.java_client.AppiumDriver;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
+
+import io.appium.java_client.AppiumDriver;
 
 public class TestUtils {
     private TestUtils() {

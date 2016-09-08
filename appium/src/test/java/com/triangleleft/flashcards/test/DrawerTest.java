@@ -14,20 +14,21 @@
  *
  */
 
-package com.triangleleft.flashcards;
-
-import static com.triangleleft.flashcards.TestUtils.hasText;
-import static org.hamcrest.MatcherAssert.assertThat;
+package com.triangleleft.flashcards.test;
 
 import com.triangleleft.flashcards.page.DrawerPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.openqa.selenium.Dimension;
+
+import static com.triangleleft.flashcards.util.TestUtils.hasText;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(JUnit4.class)
 public class DrawerTest {

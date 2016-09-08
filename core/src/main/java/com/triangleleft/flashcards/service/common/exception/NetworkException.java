@@ -17,4 +17,7 @@
 package com.triangleleft.flashcards.service.common.exception;
 
 public class NetworkException extends RuntimeException {
+    public NetworkException(Throwable e) {
+        super(e);
+    }
 }

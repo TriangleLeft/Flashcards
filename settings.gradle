@@ -1,1 +1,1 @@
-include ':app', ':core', ':appium', ':j2objc-hamcrest', ':slf4j-simple'
+include ':app', ':core', ':appium', ':j2objc-hamcrest', ':slf4j-simple', ':mockservice'

@@ -1,10 +1,9 @@
-package com.triangleleft.flashcards.test;
+package com.triangleleft.flashcards.util;
 
-import android.annotation.SuppressLint;
-import android.support.test.InstrumentationRegistry;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
@@ -25,10 +24,9 @@ public class MockServerResponse {
     }
 
 
-    @SuppressLint("NewApi") // backported by retrolambda
-    private static String getJsonFromAsset(String name) {
+    private static String getJsonFromAsset(String filename) {
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(InstrumentationRegistry.getContext().getAssets().open(name)))) {
+                new InputStreamReader(getResource(filename)))) {
 
             StringBuilder builder = new StringBuilder();
             String line;
@@ -39,5 +37,10 @@ public class MockServerResponse {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static InputStream getResource(String filename) {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        return classloader.getResourceAsStream(filename);
     }
 }

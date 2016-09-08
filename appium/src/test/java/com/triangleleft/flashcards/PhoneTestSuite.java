@@ -16,6 +16,10 @@
 
 package com.triangleleft.flashcards;
 
+import com.triangleleft.flashcards.test.DrawerTest;
+import com.triangleleft.flashcards.test.FlashcardsTest;
+import com.triangleleft.flashcards.test.LoginTest;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
