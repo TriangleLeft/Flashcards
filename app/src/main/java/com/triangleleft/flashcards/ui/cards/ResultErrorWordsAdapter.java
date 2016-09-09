@@ -47,8 +47,7 @@ public class ResultErrorWordsAdapter extends RecyclerView.Adapter<ResultErrorWor
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // Don't show divider for last item
-        // Do it only when there is at least five items
-        boolean showDivider = position != getItemCount() - 1 || getItemCount() < 5;
+        boolean showDivider = position != getItemCount() - 1;
         holder.showWord(wordList.get(position), showDivider);
     }
 

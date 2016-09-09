@@ -2,12 +2,18 @@
 <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/flashcards_top_padding"
+    android:paddingBottom="@dimen/flashcards_bottom_padding"
+    android:paddingLeft="@dimen/flashcards_side_padding"
+    android:paddingRight="@dimen/flashcards_side_padding"
+    android:clipToPadding="false">
 
     <com.daprlabs.aaron.swipedeck.SwipeDeck
         android:id="@+id/swipe_deck"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="30dp"
         app:card_spacing="15dp"
         app:max_visible="3"
         app:render_above="false"

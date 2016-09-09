@@ -6,23 +6,11 @@
     android:background="@color/colorPrimary"
     android:paddingTop="@dimen/status_bar_height">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textColor="@color/black"
-        android:tag="debug" />
-
     <com.triangleleft.flashcards.ui.view.ViewFlipper
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="@dimen/flashcards_top_padding"
-        android:paddingBottom="@dimen/flashcards_top_padding"
-        android:paddingLeft="@dimen/flashcards_side_padding"
-        android:paddingRight="@dimen/flashcards_side_padding"
-        app:previewChild="0">
+        app:previewChild="3">
 
         <!-- Progress -->
         <com.pnikosis.materialishprogress.ProgressWheel

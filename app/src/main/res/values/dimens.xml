@@ -10,7 +10,7 @@
     <dimen name="screen_padding">16dp</dimen>
     <!-- Padding inside container -->
     <dimen name="content_padding">16dp</dimen>
-
+    <dimen name="match_parent">-1dp</dimen>
     <dimen name="status_bar_height">0dp</dimen>
 
     <!-- Login form -->
@@ -23,8 +23,12 @@
 
     <!-- Flashcards -->
     <dimen name="flashcards_side_padding">16dp</dimen>
-    <dimen name="flashcards_top_padding">64dp</dimen>
+    <dimen name="flashcards_top_padding">16dp</dimen>
+    <dimen name="flashcards_bottom_padding">16dp</dimen>
     <dimen name="flashcard_text_size">40sp</dimen>
+    <dimen name="flashcard_button_height">60dp</dimen>
+    <dimen name="item_vocabulary_word_text_size">20sp</dimen>
+    <dimen name="flashcard_navigation_block_height">56dp</dimen>
 
     <!-- Drawer -->
     <dimen name="avatar_size">64dp</dimen>
@@ -46,15 +50,6 @@
     <dimen name="shadow_size_small">4dp</dimen>
     <dimen name="shadow_size">10dp</dimen>
     <dimen name="shadow_size_negative">-10dp</dimen>
-
-
-    <dimen name="match_parent">-1dp</dimen>
-
-
-    <!-- Flashcards screen -->
-    <dimen name="flashcard_button_height">60dp</dimen>
-    <dimen name="item_vocabulary_word_text_size">20sp</dimen>
-    <dimen name="flashcard_navigation_block_height">56dp</dimen>
 
 
 </resources>

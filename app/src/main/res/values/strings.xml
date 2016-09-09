@@ -23,7 +23,7 @@
 
     <!-- Flashcards -->
     <string name="flashcard_result_no_errors">Great job!\nYou knew all the words</string>
-    <string name="flashcard_result_errors">Keep practising.\nHere is list of words you didn\'t know</string>
+    <string name="flashcard_result_errors">Keep practising.\nYou didn\'t know following words</string>
     <string name="flashcard_button_wrong">I was wrong</string>
     <string name="flashcard_button_right">I was right</string>
     <string name="flashcard_button_show_answer">Show answer</string>
