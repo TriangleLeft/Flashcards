@@ -28,8 +28,6 @@ import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import okhttp3.mockwebserver.MockWebServer;
-
 import static com.triangleleft.flashcards.util.TestUtils.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -37,16 +35,12 @@ import static org.hamcrest.core.Is.is;
 @RunWith(JUnit4.class)
 public class LoginTest {
 
-    public static final String LOGIN = "login";
 
     private MockWebServerRule webServerRule = new MockWebServerRule();
-    private MockWebServer webServer = webServerRule.getWebServer();
-
     private AppiumRule appium = new AppiumAndroidRule(true);
 
     @Rule
-    public RuleChain ruleChain = RuleChain.outerRule(webServerRule)
-            .around(appium);
+    public RuleChain ruleChain = RuleChain.outerRule(webServerRule).around(appium);
     private LoginPage loginPage;
 
     @Test
@@ -54,7 +48,7 @@ public class LoginTest {
     public void wrongLogin() {
         loginPage = appium.getApp().loginPage();
 
-        enterCredentials();
+        loginPage.login("login", "password");
 
         assertThat(loginPage.loginError, hasText("Wrong login"));
     }
@@ -64,7 +58,7 @@ public class LoginTest {
     public void wrongPassword() {
         loginPage = appium.getApp().loginPage();
 
-        enterCredentials();
+        loginPage.login("login", "password");
 
         assertThat(loginPage.passwordError, hasText("Wrong password"));
     }
@@ -72,17 +66,10 @@ public class LoginTest {
     @Test
     public void progressIsShown() {
         loginPage = appium.getApp().loginPage();
-        enterCredentials();
+        loginPage.login("login", "password");
 
         loginPage = appium.getApp().loginPage();
         assertThat(loginPage.progressBar.isDisplayed(), is(true));
-    }
-
-    private void enterCredentials() {
-        loginPage.email.sendKeys(LOGIN);
-        loginPage.password.sendKeys("password");
-        loginPage.rememberSwitch.click();
-        loginPage.buttonSignIn.click();
     }
 
 }

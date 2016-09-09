@@ -27,7 +27,7 @@
     <string name="flashcard_button_wrong">I was wrong</string>
     <string name="flashcard_button_right">I was right</string>
     <string name="flashcard_button_show_answer">Show answer</string>
-    <string name="flashcard_error">Couldn\'t load flashcards</string>
+    <string name="flashcard_error">Failed to load flashcards</string>
 
     <!-- Vocabulary word -->
     <string name="word_translation">Translation</string>

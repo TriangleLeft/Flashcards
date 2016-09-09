@@ -3,8 +3,6 @@ package com.triangleleft.flashcards.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 
 import okhttp3.mockwebserver.MockResponse;
@@ -25,8 +23,7 @@ public class MockServerResponse {
 
 
     private static String getJsonFromAsset(String filename) {
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(getResource(filename)))) {
+        try (BufferedReader reader = TestUtils.getReader(filename)) {
 
             StringBuilder builder = new StringBuilder();
             String line;
@@ -37,10 +34,5 @@ public class MockServerResponse {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static InputStream getResource(String filename) {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        return classloader.getResourceAsStream(filename);
     }
 }

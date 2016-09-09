@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView android:id="@+id/flashcard_result_success_text"
+    style="@style/FlashcardResultText"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:text="@string/flashcard_result_no_errors" />

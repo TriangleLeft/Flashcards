@@ -9,6 +9,8 @@ test {
 }
 
 dependencies {
+    compile project(":core")
+
     compile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
     compile 'io.appium:java-client:4.0.0'
     compile "junit:junit:$JUNIT_VERSION"

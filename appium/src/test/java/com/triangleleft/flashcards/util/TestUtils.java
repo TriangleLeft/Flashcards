@@ -22,6 +22,9 @@ import org.hamcrest.TypeSafeMatcher;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import io.appium.java_client.AppiumDriver;
 
 public class TestUtils {
@@ -61,6 +64,31 @@ public class TestUtils {
                 return item.getText().equals(text);
             }
         };
+    }
+
+    public static <T extends WebElement> Matcher<T> isDisplayed() {
+        return new TypeSafeMatcher<T>() {
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("an element ");
+            }
+
+            @Override
+            protected void describeMismatchSafely(T item, Description mismatchDescription) {
+                mismatchDescription.appendText("was not displayed");
+            }
+
+            @Override
+            protected boolean matchesSafely(T item) {
+                return item.isDisplayed();
+            }
+        };
+    }
+
+    public static BufferedReader getReader(String filename) {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        return new BufferedReader(new InputStreamReader(classloader.getResourceAsStream(filename)));
     }
 
 }

@@ -1,0 +1,37 @@
+{
+  "learning_language": "es",
+  "ui_language": "en",
+  "email": "email@email.com",
+  "languages": [
+    {
+      "language_string": "French",
+      "learning": true,
+      "language": "fr",
+      "level": 2,
+      "current_learning": false
+    },
+    {
+      "language_string": "Spanish",
+      "learning": true,
+      "language": "es",
+      "level": 1,
+      "current_learning": true
+    },
+    {
+      "language_string": "German",
+      "learning": false,
+      "language": "de",
+      "level": 1,
+      "current_learning": false
+    },
+    {
+      "language_string": "German",
+      "learning": false,
+      "language": "de",
+      "level": 1,
+      "current_learning": false
+    }
+  ],
+  "avatar": "",
+  "username": "username"
+}

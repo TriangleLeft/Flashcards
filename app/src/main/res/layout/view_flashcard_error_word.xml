@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:paddingLeft="@dimen/activity_vertical_margin"
-              android:paddingRight="@dimen/activity_vertical_margin"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/item_vocabulary_word_height"
         android:orientation="horizontal">
 
         <TextView
@@ -18,23 +19,25 @@
             android:layout_weight="0.5"
             android:gravity="left|center_vertical"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textStyle="bold"/>
+            android:textColor="@color/textColorPrimaryInverse"
+            android:textSize="@dimen/item_vocabulary_word_text_size"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/flashcard_result_error_word_translation"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            android:gravity="left|center_vertical"
+            android:gravity="right|center_vertical"
             android:text="@string/placeholder"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+            android:textColor="@color/textColorSecondaryInverse"
+            android:textSize="@dimen/item_vocabulary_word_text_size" />
     </LinearLayout>
 
     <!-- Divider -->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/divider"/>
+        android:background="@color/divider" />
 
 </LinearLayout>

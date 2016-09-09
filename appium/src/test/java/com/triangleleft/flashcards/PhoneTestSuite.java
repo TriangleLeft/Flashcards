@@ -18,6 +18,7 @@ package com.triangleleft.flashcards;
 
 import com.triangleleft.flashcards.test.DrawerTest;
 import com.triangleleft.flashcards.test.FlashcardsTest;
+import com.triangleleft.flashcards.test.LoginSuccessfulTest;
 import com.triangleleft.flashcards.test.LoginTest;
 
 import org.junit.runner.RunWith;
@@ -26,9 +27,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         LoginTest.class,
+        LoginSuccessfulTest.class,
+        DrawerTest.class,
         //PhoneMainTest.class
-        FlashcardsTest.class,
-        DrawerTest.class
+        FlashcardsTest.class
 })
 public class PhoneTestSuite {
 }

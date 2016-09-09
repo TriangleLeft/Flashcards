@@ -16,11 +16,17 @@
 
 package com.triangleleft.flashcards.test;
 
+import com.google.gson.Gson;
+
 import com.triangleleft.flashcards.page.DrawerPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
+import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
+import com.triangleleft.flashcards.util.TestUtils;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,24 +39,32 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @RunWith(JUnit4.class)
 public class DrawerTest {
 
-    public static final String FIRST_LANGUAGE = "Spanish";
-    public static final String SECOND_LANGUAGE = "French";
-
     @Rule
     public AppiumRule appiumRule = new AppiumAndroidRule();
+    private UserData userData;
+
+    @Before
+    public void before() {
+        // We don't want to duplicate constants is json and here, so read json and use resolved model
+        userData = new Gson().fromJson(TestUtils.getReader("userdata/userdata_french.json"), UserDataModel.class)
+                .toUserData();
+    }
 
     @Test
     public void drawer() throws InterruptedException {
         MainPage main = appiumRule.getApp().mainPage();
-        assertThat(main.title, hasText(FIRST_LANGUAGE));
+        // Title should show current learning language
+        assertThat(main.title, hasText(userData.getCurrentLearningLanguage().get().getName()));
 
         openDrawer();
         DrawerPage drawer = appiumRule.getApp().drawerPage();
-        assertThat(drawer.userName, hasText(LoginTest.LOGIN));
-        assertThat(drawer.languages.get(0), hasText(FIRST_LANGUAGE));
-        assertThat(drawer.languages.get(1), hasText(SECOND_LANGUAGE));
+        // Username is shown
+        assertThat(drawer.userName, hasText(userData.getUsername()));
+        // learning languages are shown
+        assertThat(drawer.languages.get(0), hasText(userData.getSortedLanguages().get(0).getName()));
+        assertThat(drawer.languages.get(1), hasText(userData.getSortedLanguages().get(1).getName()));
 
-        // Select second language
+        // Switch language to second one
         drawer.languages.get(1).click();
         assertThat(drawer.languages.get(0), hasText(SECOND_LANGUAGE));
         assertThat(drawer.languages.get(1), hasText(FIRST_LANGUAGE));

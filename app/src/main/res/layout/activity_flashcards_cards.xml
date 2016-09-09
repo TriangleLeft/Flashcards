@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.daprlabs.aaron.swipedeck.SwipeDeck
+        android:id="@+id/swipe_deck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:card_spacing="15dp"
+        app:max_visible="3"
+        app:render_above="false" />
+
+</com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>

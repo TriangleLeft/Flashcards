@@ -14,89 +14,21 @@
         <!-- Progress -->
         <com.pnikosis.materialishprogress.ProgressWheel
             android:id="@+id/progress_wheel"
-            android:layout_width="@dimen/progress_wheel_size"
-            android:layout_height="@dimen/progress_wheel_size"
+            style="@style/ProgressBar"
             android:layout_gravity="center"
-            app:matProg_barColor="@color/white"
-            app:matProg_progressIndeterminate="true" />
+            app:matProg_barColor="@color/white" />
 
         <!--Cards -->
-        <com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.daprlabs.aaron.swipedeck.SwipeDeck
-                android:id="@+id/swipe_deck"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/flashcards_side_padding"
-                android:paddingRight="@dimen/flashcards_side_padding"
-                android:paddingTop="@dimen/flashcards_top_padding"
-                android:paddingBottom="@dimen/flashcards_top_padding"
-                app:card_spacing="15dp"
-                app:render_above="false"
-                app:max_visible="3" />
-
-        </com.daprlabs.aaron.swipedeck.layouts.SwipeFrameLayout>
+        <include layout="@layout/activity_flashcards_cards" />
 
         <!-- Result no errors -->
-        <TextView
-            android:id="@+id/flashcard_result_success_text"
-            style="@style/FlashcardResultText"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/flashcard_result_no_errors" />
-
+        <include layout="@layout/activity_flashcards_result_no_errors" />
 
         <!-- Result errors -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingLeft="64dp"
-            android:paddingRight="64dp">
-
-            <TextView
-                android:id="@+id/flashcard_result_errors_text"
-                style="@style/FlashcardResultText"
-                android:gravity="center"
-                android:text="@string/flashcard_result_errors" />
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="0dp">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/flashcard_result_errors_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white" />
-            </android.support.v7.widget.CardView>
-
-        </LinearLayout>
+        <include layout="@layout/activity_flashcards_result_errors" />
 
         <!-- Error -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/flashcard_error" />
-
-            <Button
-                android:id="@+id/button_retry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button_retry" />
-        </LinearLayout>
+        <include layout="@layout/activity_flashcards_connection_error" />
 
     </ViewFlipper>
 

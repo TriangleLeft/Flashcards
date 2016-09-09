@@ -50,6 +50,7 @@
 
     <!-- Flashcards screen -->
     <dimen name="flashcard_button_height">60dp</dimen>
+    <dimen name="item_vocabulary_word_text_size">20sp</dimen>
 
 
 </resources>

@@ -8,9 +8,9 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 public class LoginPage extends BasePage {
 
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_email")
-    public WebElement email;
+    public WebElement emailText;
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_password")
-    public WebElement password;
+    public WebElement passwordText;
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_switch")
     public WebElement rememberSwitch;
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/login_button")
@@ -24,5 +24,12 @@ public class LoginPage extends BasePage {
 
     public LoginPage(AppiumFieldDecorator driver) {
         super(driver);
+    }
+
+    public void login(String login, String password) {
+        emailText.sendKeys(login);
+        passwordText.sendKeys(password);
+        rememberSwitch.click();
+        buttonSignIn.click();
     }
 }
