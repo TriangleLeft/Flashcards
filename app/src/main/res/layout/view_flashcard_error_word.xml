@@ -36,6 +36,7 @@
 
     <!-- Divider -->
     <View
+        android:id="@+id/flashcard_result_error_word_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider" />

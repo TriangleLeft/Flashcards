@@ -11,6 +11,8 @@
     <!-- Padding inside container -->
     <dimen name="content_padding">16dp</dimen>
 
+    <dimen name="status_bar_height">0dp</dimen>
+
     <!-- Login form -->
     <dimen name="login_side_padding">16dp</dimen>
     <dimen name="login_top_padding">16dp</dimen>
@@ -41,6 +43,7 @@
     <dimen name="drawer_item_language_description_size">14sp</dimen>
 
     <!-- Shadows -->
+    <dimen name="shadow_size_small">4dp</dimen>
     <dimen name="shadow_size">10dp</dimen>
     <dimen name="shadow_size_negative">-10dp</dimen>
 

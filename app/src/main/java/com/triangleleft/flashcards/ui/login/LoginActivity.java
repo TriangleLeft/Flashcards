@@ -17,11 +17,14 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CheckableImageButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -67,13 +70,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         loginView.setOnTextChangedListener(newText -> getPresenter().onLoginChanged(newText));
         passwordView.setOnTextChangedListener(newText -> getPresenter().onPasswordChanged(newText));
 
-        View.OnFocusChangeListener focusChangeListener = (view, hasFocus) -> {
-            if (!hasFocus && !loginView.isFocused() && !passwordView.isFocused()) {
-                hideKeyboard(view);
-            }
-        };
-        loginView.setOnFocusChangeListener(focusChangeListener);
-        passwordView.setOnFocusChangeListener(focusChangeListener);
+        setupUI(container);
     }
 
     @Override
@@ -179,10 +176,31 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         Toast.makeText(this, R.string.login_network_error, Toast.LENGTH_SHORT).show();
     }
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    public void hideKeyboard() {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (getCurrentFocus() != null) {
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        // We should also ignore "show password" icon
+        if (!(view instanceof EditText) && !(view instanceof CheckableImageButton)) {
+            view.setOnTouchListener((v, event) -> {
+                hideKeyboard();
+                return false;
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
     }
 
 }

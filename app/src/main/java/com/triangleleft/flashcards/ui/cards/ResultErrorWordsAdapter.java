@@ -16,18 +16,19 @@
 
 package com.triangleleft.flashcards.ui.cards;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-
-import java.util.List;
 
 public class ResultErrorWordsAdapter extends RecyclerView.Adapter<ResultErrorWordsAdapter.ViewHolder> {
 
@@ -45,7 +46,10 @@ public class ResultErrorWordsAdapter extends RecyclerView.Adapter<ResultErrorWor
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.showWord(wordList.get(position));
+        // Don't show divider for last item
+        // Do it only when there is at least five items
+        boolean showDivider = position != getItemCount() - 1 || getItemCount() < 5;
+        holder.showWord(wordList.get(position), showDivider);
     }
 
     @Override
@@ -59,15 +63,18 @@ public class ResultErrorWordsAdapter extends RecyclerView.Adapter<ResultErrorWor
         TextView value;
         @Bind(R.id.flashcard_result_error_word_translation)
         TextView translation;
+        @Bind(R.id.flashcard_result_error_word_divider)
+        View divider;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void showWord(FlashcardWord flashcardWord) {
+        public void showWord(FlashcardWord flashcardWord, boolean showDivider) {
             value.setText(flashcardWord.getWord());
             translation.setText(flashcardWord.getTranslation());
+            divider.setVisibility(showDivider ? View.VISIBLE : View.INVISIBLE);
         }
     }
 }

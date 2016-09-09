@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -19,7 +19,7 @@
             android:layout_marginTop="@dimen/status_bar_height"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:titleTextColor="@color/textColorPrimary"/>
+            app:titleTextColor="@color/textColorPrimary" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SlidingPaneLayout
@@ -31,8 +31,8 @@
 
         <com.triangleleft.flashcards.ui.common.NavigationView
             android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_width="@dimen/drawer_width"
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
                 android:alpha="0.8"
-                android:background="@drawable/shadow_left"/>
+                android:background="@drawable/shadow_left" />
 
             <android.support.design.widget.CoordinatorLayout
                 android:id="@+id/main_panel"
@@ -70,7 +70,7 @@
                     android:tint="@color/textColorPrimary"
                     app:fabSize="normal"
                     app:layout_anchor="@id/main_container"
-                    app:layout_anchorGravity="bottom|right|end"/>
+                    app:layout_anchorGravity="bottom|right|end" />
 
             </android.support.design.widget.CoordinatorLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
                 android:alpha="0.8"
-                android:background="@drawable/shadow_right"/>
+                android:background="@drawable/shadow_right" />
 
             <FrameLayout
                 android:id="@+id/secondary_container"
@@ -86,7 +86,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/shadow_size_negative"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context=".ui.main.MainActivity"/>
+                tools:context=".ui.main.MainActivity" />
 
         </LinearLayout>
 
@@ -96,6 +96,13 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/shadow_size_small"
+        android:layout_below="@+id/appbar"
+        android:alpha="0.7"
+        android:background="@drawable/shadow_bottom" />
 
 </RelativeLayout>

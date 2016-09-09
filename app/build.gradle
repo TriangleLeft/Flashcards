@@ -15,6 +15,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField "String", "REST_SERVICE_URL", "\"https://www.duolingo.com\""
+        buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"https://d2.duolingo.com\""
         testInstrumentationRunner "com.triangleleft.flashcards.MockTestRunner"
     }
     buildTypes {
@@ -26,13 +28,8 @@ android {
         debug {
             testCoverageEnabled true
         }
-    }
-    productFlavors {
-        web {
-            buildConfigField "String", "REST_SERVICE_URL", "\"https://www.duolingo.com\""
-            buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"https://www.duolingo.com\""
-        }
-        local {
+        appium {
+            initWith debug
             buildConfigField "String", "REST_SERVICE_URL", "\"http://10.0.2.2:8080\""
             buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"http://10.0.2.2:8080\""
         }
@@ -58,12 +55,6 @@ android {
     }
 }
 
-configurations {
-    localDebug
-    localRelease
-    webDebug
-    webRelease
-}
 
 apply from: '../dependencies.gradle'
 
@@ -105,7 +96,7 @@ dependencies {
     compile "com.facebook.stetho:stetho:$STETHO_VERSION"
 
     //compile 'com.daprlabs.aaron:cardstack:0.3.0'
-    compile('com.github.lekz112:SwipeDeck2:is_drag_enabled-SNAPSHOT') {
+    compile('com.github.lekz112:SwipeDeck2:preview_layout-SNAPSHOT') {
         //compile('com.daprlabs.aaron:swipedeck:2.0.5') {
         exclude group: 'io.reactivex', module: 'rxjava'
         exclude group: 'io.reactivex', module: 'rxandroid'
