@@ -6,10 +6,19 @@
     android:background="@color/colorPrimary"
     android:paddingTop="@dimen/status_bar_height">
 
-    <ViewFlipper
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/black"
+        android:tag="debug" />
+
+    <com.triangleleft.flashcards.ui.view.ViewFlipper
         android:id="@+id/view_flipper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/flashcards_side_padding"
+        android:paddingRight="@dimen/flashcards_side_padding"
+        app:previewChild="0">
 
         <!-- Progress -->
         <com.pnikosis.materialishprogress.ProgressWheel
@@ -30,12 +39,12 @@
         <!-- Error -->
         <include layout="@layout/activity_flashcards_connection_error" />
 
-    </ViewFlipper>
+    </com.triangleleft.flashcards.ui.view.ViewFlipper>
 
     <FrameLayout
         android:id="@+id/flashcard_button_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/flashcard_navigation_block_height"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
