@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -105,9 +106,9 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-        case R.id.action_settings:
-            startActivity(new Intent(this, SettingsActivity.class));
-            break;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -165,8 +166,20 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @OnClick(R.id.button_flashcards)
-    public void onFlashcardsClick() {
+    public void onFlashcardsClick(View view) {
         Intent intent = new Intent(this, FlashcardsActivity.class);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int[] location = new int[2];
+            view.getLocationOnScreen(location);
+            int cx = location[0] + view.getWidth() / 2;
+            int cy = location[1] + view.getHeight() / 2;
+            intent.putExtra(FlashcardsActivity.REVEAL_X, cx);
+            intent.putExtra(FlashcardsActivity.REVEAL_Y, cy);
+            startActivity(intent);
+            overridePendingTransition(-1, -1);
+        } else {
+            startActivity(intent);
+        }
+
     }
 }

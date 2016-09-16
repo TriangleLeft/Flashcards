@@ -51,6 +51,7 @@
             android:layout_margin="@dimen/activity_vertical_margin"
             android:src="@drawable/ic_flashcards"
             android:tint="@color/textColorPrimary"
+            app:backgroundTint="@color/colorPrimary"
             app:fabSize="normal"
             app:layout_anchor="@id/main_container"
             app:layout_anchorGravity="bottom|right" />

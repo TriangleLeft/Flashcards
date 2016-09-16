@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="72dp"
+            android:layout_marginLeft="@dimen/nav_panel_collapsed_width"
             android:clipChildren="false"
             android:orientation="horizontal">
 
@@ -68,6 +68,7 @@
                     android:layout_margin="@dimen/activity_vertical_margin"
                     android:src="@drawable/ic_flashcards"
                     android:tint="@color/textColorPrimary"
+                    app:backgroundTint="@color/colorPrimary"
                     app:fabSize="normal"
                     app:layout_anchor="@id/main_container"
                     app:layout_anchorGravity="bottom|right|end" />

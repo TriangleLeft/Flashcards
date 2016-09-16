@@ -38,7 +38,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:src="@drawable/ic_volume_up_black_24dp"
                 android:tint="@color/textColorPrimary"
-                app:backgroundTint="@color/colorPrimary"
+                app:backgroundTint="@color/colorAccent"
                 app:elevation="0dp"
                 app:fabSize="mini"/>
         </LinearLayout>

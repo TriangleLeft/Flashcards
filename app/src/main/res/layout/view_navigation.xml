@@ -63,9 +63,10 @@
 
     </LinearLayout>
 
+    <!-- Overlay used for collapsed view only, needed to capture clicks on collapsed view -->
     <FrameLayout
         android:id="@+id/drawer_overlay"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/nav_panel_collapsed_width"
         android:layout_height="match_parent"
         android:clickable="true"
         android:visibility="gone" />

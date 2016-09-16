@@ -7,19 +7,27 @@ import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+import com.triangleleft.flashcards.util.SimpleAnimatorListener;
 
+import android.animation.Animator;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
 import android.widget.ViewFlipper;
 
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindInt;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,6 +40,8 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     private static final int RESULT_NO_ERRORS = 2;
     private static final int RESULT_ERRORS = 3;
     private static final int ERROR = 4;
+    public static final String REVEAL_X = "revealX";
+    public static final String REVEAL_Y = "revealY";
 
     @Bind(R.id.view_flipper)
     ViewFlipper viewFlipper;
@@ -41,14 +51,43 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     RecyclerView resultErrorList;
     @Bind(R.id.flashcard_button_container)
     View buttonContainer;
+    @Bind(R.id.root_layout)
+    View rootLayout;
+    @BindInt(android.R.integer.config_mediumAnimTime)
+    int animationTime;
+
     private SwipeDeckAdapter adapter;
     private SparseBooleanArray revealedCards = new SparseBooleanArray();
+    private int cx = -1;
+    private int cy = -1;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcards);
         ButterKnife.bind(this);
+
+
+        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            rootLayout.setVisibility(View.INVISIBLE);
+
+            cx = getIntent().getIntExtra(REVEAL_X, 0);
+            cy = getIntent().getIntExtra(REVEAL_Y, 0);
+
+            ViewTreeObserver viewTreeObserver = rootLayout.getViewTreeObserver();
+
+            if (viewTreeObserver.isAlive()) {
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        circularRevealActivity(rootLayout, cx, cy, true);
+
+                        rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+            }
+
+        }
 
         adapter = new SwipeDeckAdapter(new FlashcardView.IFlashcardListener() {
             @Override
@@ -99,8 +138,39 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
 //
         });
 
-
         resultErrorList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private Animator circularRevealActivity(View rootView, int cx, int cy, boolean show) {
+        float maxRadius = Math.max(rootView.getWidth(), rootView.getHeight());
+        float startRadius = show ? 0 : maxRadius;
+        float endRadius = show ? maxRadius : 0;
+
+        // create the animator for this view (the start radius is zero)
+        Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootView, cx, cy, startRadius, endRadius);
+        circularReveal.setDuration(animationTime);
+
+        // make the view visible and start the animation
+        rootView.setVisibility(View.VISIBLE);
+        circularReveal.start();
+        return circularReveal;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (cx > 0 && cy > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            circularRevealActivity(rootLayout, cx, cy, false).addListener(new SimpleAnimatorListener() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    rootLayout.setVisibility(View.INVISIBLE);
+                    finish();
+                    overridePendingTransition(-1, -1);
+                }
+            });
+        } else {
+            finish();
+        }
     }
 
     @Override
