@@ -23,11 +23,7 @@ import rx.schedulers.Schedulers;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Ignore
 @RunWith(JUnit4.class)
@@ -77,7 +73,7 @@ public class DrawerPresenterTest {
 
         presenter.onLanguageSelected(languages.get(0));
 
-        verify(view).showDrawerProgress();
+        verify(view).showListProgress();
         verify(view).showUserData("user", "avatar", languages);
         verify(mainPresenter).onLanguageChanged(languages.get(0));
     }
@@ -93,7 +89,7 @@ public class DrawerPresenterTest {
 
         presenter.onLanguageSelected(languages.get(0));
 
-        verify(view, never()).showDrawerProgress();
+        verify(view, never()).showListProgress();
         verify(view, never()).showUserData(any(), any(), any());
         verify(mainPresenter, never()).onLanguageChanged(any());
     }

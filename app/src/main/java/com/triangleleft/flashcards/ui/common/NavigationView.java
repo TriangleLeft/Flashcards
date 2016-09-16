@@ -149,23 +149,24 @@ public class NavigationView extends FrameLayout implements IDrawerView {
         recyclerView.setVisibility(View.VISIBLE);
         progressWheel.setVisibility(View.INVISIBLE);
 
-//        // Need to post via handler, otherwise there are visual issues (probably because at this frame list is not
-//        // visible yet)
-//        post(() -> {
         recyclerView.scrollToPosition(0);
         adapter.setData(languages);
-//        });
     }
 
     @Override
     public void notifyLanguageSwitchError() {
-        Toast.makeText(getContext(), R.string.language_switch_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.drawer_language_switch_error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showDrawerProgress() {
+    public void showListProgress() {
         recyclerView.setVisibility(View.INVISIBLE);
         progressWheel.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void notifyUserDataUpdateError() {
+        Toast.makeText(getContext(), R.string.drawer_userdata_update_error, Toast.LENGTH_SHORT).show();
     }
 
     public void resetScroll() {

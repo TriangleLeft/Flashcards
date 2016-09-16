@@ -43,6 +43,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     @Override
     public void onCreate() {
+        logger.debug("onCreate() called");
         applyState(IVocabularyListView::showProgress);
         onLoadList();
     }
@@ -54,6 +55,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     }
 
     public void onWordSelected(int position) {
+        logger.debug("onWordSelected() called with: position = [{}]", position);
         selectedPosition = position;
         VocabularyWord word = vocabularyList.get(position);
         navigator.showWord(Optional.of(word));
@@ -65,8 +67,12 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         // Reset position
         selectedPosition = NO_POSITION;
         subscription.unsubscribe();
+        // NOTE: we have to materialze/dematerialze because of this:
+        // https://github.com/ReactiveX/RxJava/issues/2887
         subscription = vocabularyModule.loadVocabularyWords()
+                .materialize()
                 .observeOn(mainThreadScheduler)
+                .<List<VocabularyWord>>dematerialize()
                 .subscribe(this::processData, this::processLoadError);
     }
 

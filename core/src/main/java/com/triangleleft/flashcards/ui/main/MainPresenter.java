@@ -9,6 +9,7 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+import com.triangleleft.flashcards.util.Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +36,10 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
 
     @Override
     public void onCreate() {
-        UserData userData = accountModule.getUserData().get();
-        userData.getCurrentLearningLanguage().ifPresent(language -> title = language.getName());
+        Optional<UserData> userData = accountModule.getUserData();
+        Utils.checkState(userData.isPresent(), "Showing main screen without userdata present");
+        // It's possible that we are using account that doesn't have any languages
+        userData.get().getCurrentLearningLanguage().ifPresent(language -> title = language.getName());
         currentPage = Page.LIST;
     }
 

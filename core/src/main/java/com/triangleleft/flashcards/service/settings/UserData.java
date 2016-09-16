@@ -42,6 +42,10 @@ public abstract class UserData {
 
     public abstract String getLearningLanguageId();
 
+    public abstract UserData withLanguages(List<Language> languages);
+
+    public abstract UserData withLearningLanguageId(String learningLanguageId);
+
     public List<Language> getSortedLanguages() {
         // We assume that is only one language that we are currently learning
         // Sort it, so it is always top of the list

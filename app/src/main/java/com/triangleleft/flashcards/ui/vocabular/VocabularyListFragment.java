@@ -106,14 +106,23 @@ public class VocabularyListFragment
     @Override
     public void showRefreshError() {
         logger.debug("showError() called");
-        viewFlipper.setDisplayedChild(ERROR);
+        Snackbar.make(vocabList, R.string.vocabulary_list_refresh_error, Snackbar.LENGTH_INDEFINITE)
+                .setAction(R.string.button_retry, v -> {
+                    swipeRefresh.setRefreshing(true);
+                    getPresenter().onRefreshList();
+                }).show();
+
+        swipeRefresh.setRefreshing(false);
     }
 
     @Override
     public void showLoadError() {
-        Snackbar.make(getView(), "No connection", Snackbar.LENGTH_INDEFINITE).setAction("Retry", view -> {
-            getPresenter().onLoadList();
-        });
+        logger.debug("showLoadError() called");
+        if (vocabularyAdapter.getItemCount() > 0) {
+            showRefreshError();
+        } else {
+            viewFlipper.setDisplayedChild(ERROR);
+        }
     }
 
     @Override

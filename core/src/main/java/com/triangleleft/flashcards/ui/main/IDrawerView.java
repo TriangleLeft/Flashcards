@@ -11,6 +11,7 @@ public interface IDrawerView extends IView {
 
     void notifyLanguageSwitchError();
 
-    void showDrawerProgress();
+    void showListProgress();
 
+    void notifyUserDataUpdateError();
 }
