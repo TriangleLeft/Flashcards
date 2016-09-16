@@ -10,6 +10,7 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -30,7 +31,8 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private final Scheduler mainThreadScheduler;
     private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
-    private List<VocabularyWord> vocabularyList;
+    private List<VocabularyWord> vocabularyList = Collections.emptyList();
+    private boolean hasRefreshError;
 
     @Inject
     public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
@@ -44,8 +46,15 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     @Override
     public void onCreate() {
         logger.debug("onCreate() called");
-        applyState(IVocabularyListView::showProgress);
         onLoadList();
+    }
+
+    @Override
+    public void onBind(IVocabularyListView view) {
+        super.onBind(view);
+        if (hasRefreshError) {
+            getView().showRefreshError();
+        }
     }
 
     @Override
@@ -64,6 +73,8 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     public void onLoadList() {
         logger.debug("onLoadList() called");
         applyState(IVocabularyListView::showProgress);
+        // clear list
+        vocabularyList.clear();
         // Reset position
         selectedPosition = NO_POSITION;
         subscription.unsubscribe();
@@ -87,6 +98,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     private void processData(List<VocabularyWord> list) {
         vocabularyList = list;
+        hasRefreshError = false;
         if (list.isEmpty()) {
             selectedPosition = NO_POSITION;
             applyState(view -> {
@@ -105,11 +117,18 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         }
     }
 
-    private void processRefreshError(Throwable throwable) {
-        applyState(IVocabularyListView::showRefreshError);
+    private void processRefreshError(Throwable error) {
+        hasRefreshError = true;
+        getView().showRefreshError();
     }
 
     private void processLoadError(Throwable error) {
-        applyState(IVocabularyListView::showLoadError);
+        if (vocabularyList.isEmpty()) {
+            applyState(IVocabularyListView::showLoadError);
+        } else {
+            // If we got here that means we were able to show some cached data
+            // That's why we don't need to show words list, it should be already shown
+            processRefreshError(error);
+        }
     }
 }

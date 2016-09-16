@@ -20,7 +20,7 @@
     <!-- Vocabulary list -->
     <string name="vocabulary_list_error">Couldn\'t load words</string>
     <string name="vocabulary_list_no_words">You haven\'t learned any words yet</string>
-    <string name="vocabulary_list_refresh_error">Failed to refresh list of words</string>
+    <string name="vocabulary_list_refresh_error">Failed to refresh words list</string>
 
     <!-- Flashcards -->
     <string name="flashcard_result_no_errors">Great job!\nYou knew all the words</string>
