@@ -16,9 +16,12 @@
 
 package com.triangleleft.flashcards.util;
 
+import com.triangleleft.flashcards.rule.AppiumRule;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 
@@ -26,6 +29,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import io.appium.java_client.AppiumDriver;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 public class TestUtils {
     private TestUtils() {
@@ -50,7 +56,7 @@ public class TestUtils {
             @Override
             public void describeTo(Description description) {
                 description.appendText("a element ")
-                    .appendText("with text")
+                        .appendText("with text ")
                     .appendValue(text);
             }
 
@@ -91,4 +97,15 @@ public class TestUtils {
         return new BufferedReader(new InputStreamReader(classloader.getResourceAsStream(filename)));
     }
 
+    public static void assertNotVisible(AppiumRule rule, WebElement element) {
+        rule.getTimeOutDuration().setTime(0);
+        boolean displayed = false;
+        try {
+            displayed = element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            // Ignored;
+        }
+        assertThat(displayed, is(false));
+        rule.getTimeOutDuration().setTime(AppiumRule.TIMEOUT);
+    }
 }

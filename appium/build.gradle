@@ -1,6 +1,14 @@
 apply plugin: 'java'
 apply from: '../dependencies.gradle'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def sdkDir = properties.getProperty('sdk.dir')
+
+repositories {
+    maven { url "$sdkDir/extras/android/m2repository" }
+}
+
 test {
     // After first fresh install, we would need to pass login first
     // And with junit we can't force test order unless using suite
@@ -8,9 +16,18 @@ test {
     include '**/PhoneTestSuite*'
 }
 
+task androidTest(type: Test) {
+    systemProperty "com.triangleleft.flashcards.platform", "ANDROID"
+}
+
+task iosTest(type: Test) {
+    systemProperty "com.triangleleft.flashcards.platform", "IOS"
+}
+
 dependencies {
     compile project(":core")
 
+    compile "com.android.support:support-annotations:$SUPPORT_VERSION"
     compile "com.squareup.okhttp3:mockwebserver:$OKHTTP_VERSION"
     compile 'io.appium:java-client:4.0.0'
     compile "junit:junit:$JUNIT_VERSION"

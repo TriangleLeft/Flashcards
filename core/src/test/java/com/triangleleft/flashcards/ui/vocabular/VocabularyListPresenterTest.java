@@ -1,26 +1,27 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.*;
-
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class VocabularyListPresenterTest {
@@ -84,7 +85,7 @@ public class VocabularyListPresenterTest {
 
     @Test
     public void onListLoadErrorWouldShowError() {
-        when(module.loadVocabularyWords()).thenReturn(Observable.error(new ServerException()));
+        when(module.loadVocabularyWords()).thenReturn(Observable.error(new ServerException(new Throwable())));
 
         presenter.onCreate();
         presenter.onBind(view);

@@ -18,7 +18,6 @@ package com.triangleleft.flashcards.test;
 
 import com.triangleleft.flashcards.page.FlashcardPage;
 import com.triangleleft.flashcards.page.MainPage;
-import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
 
 import org.junit.Rule;
@@ -38,7 +37,7 @@ public class FlashcardsTest {
     private static final int FLASHCARDS_COUNT = 15;
     private static final int WRONG_WORDS_COUNT = 5;
     @Rule
-    public AppiumRule appium = new AppiumAndroidRule();
+    public AppiumRule appium = new AppiumRule(false);
 
     @Test
     public void flashcardsNoErrors() throws InterruptedException {

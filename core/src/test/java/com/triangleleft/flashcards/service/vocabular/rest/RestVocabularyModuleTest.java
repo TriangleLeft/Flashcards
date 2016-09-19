@@ -20,11 +20,7 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
-import com.triangleleft.flashcards.service.vocabular.VocabularyData;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
-import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
-import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,15 +30,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
-
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 //import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
@@ -66,7 +55,7 @@ public class RestVocabularyModuleTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        module = new RestVocabularyModule(service, accountModule, cache);
+        // module = new RestVocabularyModule(service, accountModule, cache);
         when(accountModule.getUserData()).thenReturn(Optional
             .of(UserData.create(Collections.emptyList(), "", "", UI_LANG, LEARN_LANG)));
     }
@@ -128,30 +117,30 @@ public class RestVocabularyModuleTest {
 //
 //        verify(cache).putWords(result);
 //    }
-
-    private TestSubscriber<List<VocabularyWord>> loadWords() {
-        TestSubscriber<List<VocabularyWord>> subscriber = TestSubscriber.create();
-        module.loadVocabularyWords().subscribe(subscriber);
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
-        return subscriber;
-    }
-
-    private void addTranslation(String word, List<String> translations) {
-        WordTranslationModel model = new WordTranslationModel();
-        model.put(word, translations);
-        when(service.getTranslation(LEARN_LANG, UI_LANG, "[\"" + word + "\"]")).thenReturn(Observable.just(model));
-    }
-
-    private VocabularyWord makeWord(String word, String translation) {
-        return VocabularyWord
-            .create(word, word, Optional.empty(), Optional.empty(), 0, Collections.singletonList(translation), UI_LANG, LEARN_LANG);
-    }
-
-    private void addVocabularyData(VocabularyWord word) {
-        List<VocabularyWord> words = Collections.singletonList(word);
-        VocabularyData data = VocabularyData.create(words, UI_LANG, LEARN_LANG);
-        VocabularyResponseModel model = mock(VocabularyResponseModel.class);
-        when(model.toVocabularyData()).thenReturn(data);
-        when(service.getVocabularyList(anyLong())).thenReturn(Observable.just(model));
-    }
+//
+//    private TestSubscriber<List<VocabularyWord>> loadWords() {
+//        TestSubscriber<List<VocabularyWord>> subscriber = TestSubscriber.create();
+//        module.loadVocabularyWords().subscribe(subscriber);
+//        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+//        return subscriber;
+//    }
+//
+//    private void addTranslation(String word, List<String> translations) {
+//        WordTranslationModel model = new WordTranslationModel();
+//        model.put(word, translations);
+//        when(service.getTranslation(LEARN_LANG, UI_LANG, "[\"" + word + "\"]")).thenReturn(Observable.just(model));
+//    }
+//
+//    private VocabularyWord makeWord(String word, String translation) {
+//        return VocabularyWord
+//            .create(word, word, Optional.empty(), Optional.empty(), 0, Collections.singletonList(translation), UI_LANG, LEARN_LANG);
+//    }
+//
+//    private void addVocabularyData(VocabularyWord word) {
+//        List<VocabularyWord> words = Collections.singletonList(word);
+//        VocabularyData data = VocabularyData.create(words, UI_LANG, LEARN_LANG);
+//        VocabularyResponseModel model = mock(VocabularyResponseModel.class);
+//        when(model.toVocabularyData()).thenReturn(data);
+//        when(service.getVocabularyList(anyLong())).thenReturn(Observable.just(model));
+//    }
 }

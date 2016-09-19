@@ -26,10 +26,25 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    public void login(String login, String password) {
+    public void setLogin(String login) {
+        emailText.click();
+        emailText.clear();
         emailText.sendKeys(login);
+    }
+
+    public void setPassword(String password) {
+        passwordText.click();
+        passwordText.clear();
         passwordText.sendKeys(password);
-        rememberSwitch.click();
+    }
+
+    public void setRememberSwitch(boolean remember) {
+        if (rememberSwitch.isSelected() != remember) {
+            rememberSwitch.click();
+        }
+    }
+
+    public void login() {
         buttonSignIn.click();
     }
 }

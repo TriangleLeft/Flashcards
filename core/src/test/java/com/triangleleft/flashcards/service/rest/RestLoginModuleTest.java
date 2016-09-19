@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -24,9 +23,7 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class RestLoginModuleTest {
@@ -77,7 +74,7 @@ public class RestLoginModuleTest {
 
     @Test
     public void loginHttpException() {
-        ServerException exception = new ServerException();
+        ServerException exception = new ServerException(new Throwable());
         when(service.login(any(LoginRequestController.class))).thenReturn(Observable.error(exception));
 
         TestSubscriber<Void> subscriber = doLogin();
@@ -87,7 +84,7 @@ public class RestLoginModuleTest {
 
     @Test
     public void loginIOException() {
-        NetworkException exception = new NetworkException();
+        NetworkException exception = new NetworkException(new IOException());
         when(service.login(any(LoginRequestController.class))).thenReturn(Observable.error(exception));
 
         TestSubscriber<Void> subscriber = doLogin();

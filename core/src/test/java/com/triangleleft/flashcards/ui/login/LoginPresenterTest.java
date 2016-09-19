@@ -146,7 +146,8 @@ public class LoginPresenterTest {
     @Test
     public void handleNetworkError() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new NetworkException()));
+        when(loginModule.login(anyString(), anyString()))
+                .thenReturn(Observable.error(new NetworkException(new Throwable())));
 
         presenter.onLoginClick();
         verify(view).notifyNetworkError();
@@ -155,7 +156,8 @@ public class LoginPresenterTest {
     @Test
     public void handleGenericError() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new ServerException()));
+        when(loginModule.login(anyString(), anyString()))
+                .thenReturn(Observable.error(new ServerException(new Throwable())));
 
         presenter.onLoginClick();
         verify(view).notifyGenericError();

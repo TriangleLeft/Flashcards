@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 public class MockWebServerRule implements TestRule {
@@ -40,6 +41,10 @@ public class MockWebServerRule implements TestRule {
 
     public MockWebServer getWebServer() {
         return webServer;
+    }
+
+    public void enqueue(MockResponse response) {
+        webServer.enqueue(response);
     }
 
 }

@@ -16,23 +16,17 @@
 
 package com.triangleleft.flashcards.test;
 
-import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 @RunWith(JUnit4.class)
 public class PhoneMainTest {
 
     @Rule
-    public AppiumRule appiumRule = new AppiumAndroidRule();
+    public AppiumRule appiumRule = new AppiumRule(false);
 
 //    @Test
 //    public void words() throws InterruptedException {
@@ -79,15 +73,5 @@ public class PhoneMainTest {
 //        }
 //    }
 
-    private void checkNotVisible(WebElement element) {
-        appiumRule.getTimeOutDuration().setTime(0);
-        boolean displayed = false;
-        try {
-            displayed = element.isDisplayed();
-        } catch (NoSuchElementException e) {
-            // Ignored;
-        }
-        assertThat(displayed, is(false));
-        appiumRule.getTimeOutDuration().setTime(60);
-    }
+
 }

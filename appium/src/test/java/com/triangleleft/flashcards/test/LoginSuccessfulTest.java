@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.test;
 
 import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.page.MainPage;
-import com.triangleleft.flashcards.rule.AppiumAndroidRule;
 import com.triangleleft.flashcards.rule.AppiumRule;
 import com.triangleleft.flashcards.rule.MockWebServerRule;
 import com.triangleleft.flashcards.util.MockJsonResponse;
@@ -23,7 +22,7 @@ public class LoginSuccessfulTest {
     public static final String LOGIN = "login";
 
     private MockWebServerRule webServerRule = new MockWebServerRule();
-    private AppiumRule appium = new AppiumAndroidRule(true);
+    private AppiumRule appium = new AppiumRule(true);
 
     @Rule
     public RuleChain ruleChain = RuleChain.outerRule(webServerRule).around(appium);
@@ -34,7 +33,7 @@ public class LoginSuccessfulTest {
         // After login, we immediately request userdata
         webServerRule.getWebServer().enqueue(MockServerResponse.make("userdata/userdata_french.json"));
         LoginPage loginPage = appium.getApp().loginPage();
-        loginPage.login(LOGIN, "password");
+        //loginPage.login(LOGIN, "password");
 
         MainPage mainPage = appium.getApp().mainPage();
         assertThat(mainPage.title, isDisplayed());

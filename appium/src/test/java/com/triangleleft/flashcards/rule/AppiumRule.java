@@ -17,19 +17,92 @@
 package com.triangleleft.flashcards.rule;
 
 import com.triangleleft.flashcards.FlashcardsApp;
+import com.triangleleft.flashcards.util.TextUtils;
+
+import org.junit.rules.TestRule;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
+import org.openqa.selenium.ScreenOrientation;
+import org.openqa.selenium.WebElement;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.TimeOutDuration;
-import org.junit.rules.TestRule;
-import org.openqa.selenium.WebElement;
 
-public interface AppiumRule extends TestRule {
+public class AppiumRule implements TestRule {
 
-    AppiumDriver<WebElement> getDriver();
+    public static final int TIMEOUT = 5;
+    private static final String PLATFORM_KEY = "com.triangleleft.flashcards.platform";
+    private static final String PLATFORM_ANDROID = "ANDROID";
+    private static final String PLATFORM_IOS = "IOS";
+    private static final String remoteAddress = "http://127.0.0.1:4723/wd/hub";
+    private AppiumDriver<WebElement> driver;
+    private FlashcardsApp app;
+    private final boolean fullReset;
+    private final TimeOutDuration timeOutDuration = new TimeOutDuration(TIMEOUT, TimeUnit.SECONDS);
+    private AppiumFieldDecorator decorator;
 
-    AppiumFieldDecorator getDecorator();
+    public AppiumRule(boolean fullReset) {
+        this.fullReset = fullReset;
+    }
 
-    TimeOutDuration getTimeOutDuration();
+    public AppiumDriver<WebElement> getDriver() {
+        return driver;
+    }
 
-    FlashcardsApp getApp();
+    public AppiumFieldDecorator getDecorator() {
+        return decorator;
+    }
+
+    public TimeOutDuration getTimeOutDuration() {
+        return timeOutDuration;
+    }
+
+    public FlashcardsApp getApp() {
+        return app;
+    }
+
+    private void before() throws MalformedURLException {
+        String platform = System.getProperty(PLATFORM_KEY);
+        if (TextUtils.isEmpty(platform)) {
+            platform = PLATFORM_ANDROID;
+            //throw new IllegalArgumentException("Platform key (" + PLATFORM_KEY + ") was not set!");
+        }
+        URL remoteURL = new URL(remoteAddress);
+        switch (platform) {
+            case PLATFORM_ANDROID:
+                driver = AppiumAndroidDriver.create(remoteURL, fullReset);
+                break;
+            case PLATFORM_IOS:
+            default:
+                throw new IllegalArgumentException("Unknown platform key :" + platform);
+        }
+        driver.rotate(ScreenOrientation.PORTRAIT);
+        decorator = new AppiumFieldDecorator(driver, timeOutDuration);
+        app = new FlashcardsApp(decorator);
+    }
+
+    private void after() {
+        driver.quit();
+    }
+
+    @Override
+    public Statement apply(Statement base, Description description) {
+        return new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                before();
+                try {
+                    base.evaluate();
+                } finally {
+                    after();
+                }
+            }
+        };
+    }
+
 }
