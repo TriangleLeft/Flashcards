@@ -79,6 +79,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     }
 
     public void onLanguageChanged(Language currentLanguage) {
+        logger.debug("onLanguageChanged() called with: currentLanguage = [{}]", currentLanguage);
         title = currentLanguage.getName();
         getView().setTitle(title);
         getView().reloadList();

@@ -108,24 +108,21 @@ public class VocabularyWordFragment
         flipper.setDisplayedChild(CONTENT);
         this.word = word;
         titleView.setText(word.getWord());
-        if (word.getTranslations().isEmpty()) {
-            translationView.setVisibility(View.GONE);
-        } else {
-            translationView.setVisibility(View.VISIBLE);
+        if (!word.getTranslations().isEmpty()) {
             translationView.setText(word.getTranslations().get(0));
+        } else {
+            translationView.setText(R.string.vocabulary_word_not_available);
         }
         strengthValue.setStrength(word.getStrength());
         if (word.getGender().isPresent()) {
-            genderEntry.setVisibility(View.VISIBLE);
             genderView.setText(word.getGender().get());
         } else {
-            genderEntry.setVisibility(View.GONE);
+            genderView.setText(R.string.vocabulary_word_not_available);
         }
         if (word.getPos().isPresent()) {
-            posEntry.setVisibility(View.VISIBLE);
             posView.setText(word.getPos().get());
         } else {
-            posEntry.setVisibility(View.GONE);
+            posView.setText(R.string.vocabulary_word_not_available);
         }
     }
 
@@ -140,6 +137,7 @@ public class VocabularyWordFragment
     }
 
     private static class VoiceOverPlayer {
+        // TODO: move to core module
         private final static String URL = "https://d7mj4aqfscim2.cloudfront.net/tts/%s/token/%s";
         private MediaPlayer mediaPlayer;
         private VocabularyWord currentWord;

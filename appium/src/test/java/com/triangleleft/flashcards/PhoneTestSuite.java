@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
         LoginTest.class,
         LoginSuccessfulTest.class,
         DrawerTest.class,
-        //PhoneMainTest.class
+        //VocabularyTest.class
         FlashcardsTest.class
 })
 public class PhoneTestSuite {

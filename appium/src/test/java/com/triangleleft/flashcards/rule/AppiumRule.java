@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.TimeOutDuration;
+import okhttp3.mockwebserver.MockResponse;
 
 public class AppiumRule implements TestRule {
 
@@ -40,6 +41,7 @@ public class AppiumRule implements TestRule {
     private static final String PLATFORM_ANDROID = "ANDROID";
     private static final String PLATFORM_IOS = "IOS";
     private static final String remoteAddress = "http://127.0.0.1:4723/wd/hub";
+    private final MockWebServerRule webServerRule = new MockWebServerRule();
     private AppiumDriver<WebElement> driver;
     private FlashcardsApp app;
     private final boolean fullReset;
@@ -56,6 +58,10 @@ public class AppiumRule implements TestRule {
 
     public AppiumFieldDecorator getDecorator() {
         return decorator;
+    }
+
+    public void enqueue(MockResponse response) {
+        webServerRule.enqueue(response);
     }
 
     public TimeOutDuration getTimeOutDuration() {
@@ -92,7 +98,7 @@ public class AppiumRule implements TestRule {
 
     @Override
     public Statement apply(Statement base, Description description) {
-        return new Statement() {
+        return webServerRule.apply(new Statement() {
             @Override
             public void evaluate() throws Throwable {
                 before();
@@ -102,7 +108,7 @@ public class AppiumRule implements TestRule {
                     after();
                 }
             }
-        };
+        }, description);
     }
 
 }

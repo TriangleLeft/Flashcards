@@ -19,16 +19,12 @@ package com.triangleleft.flashcards.test;
 import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumRule;
-import com.triangleleft.flashcards.rule.MockWebServerRule;
 import com.triangleleft.flashcards.util.MockServerResponse;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-
-import okhttp3.mockwebserver.MockWebServer;
 
 import static com.triangleleft.flashcards.util.TestUtils.assertNotVisible;
 import static com.triangleleft.flashcards.util.TestUtils.hasText;
@@ -38,20 +34,15 @@ import static org.hamcrest.core.Is.is;
 @RunWith(JUnit4.class)
 public class LoginTest {
 
-
-    private MockWebServerRule webServerRule = new MockWebServerRule();
-    private AppiumRule appium = new AppiumRule(true);
-    private MockWebServer webServer = webServerRule.getWebServer();
-
     @Rule
-    public RuleChain ruleChain = RuleChain.outerRule(webServerRule).around(appium);
+    public AppiumRule appium = new AppiumRule(true);
     private LoginPage loginPage;
 
     @Test
     public void progressIsShown() {
         loginPage = appium.getApp().loginPage();
         login("login", "pass");
-
+        // Reload page to find progress bar
         loginPage = appium.getApp().loginPage();
         // Check that progress bar is shown while request is underway
         assertThat(loginPage.progressBar.isDisplayed(), is(true));
@@ -62,8 +53,7 @@ public class LoginTest {
         loginPage = appium.getApp().loginPage();
         login("login", "pass");
         // Answer with login error
-        webServerRule.enqueue(MockServerResponse.make("login/wrong_login_response.json"));
-        loginPage = appium.getApp().loginPage();
+        appium.enqueue(MockServerResponse.make("login/wrong_login_response.json"));
         // Check that login error is shown
         assertThat(loginPage.loginError, hasText("Wrong login"));
         // change login
@@ -78,8 +68,7 @@ public class LoginTest {
         loginPage = appium.getApp().loginPage();
         login("login", "pass");
         // Prepare wrong password answer
-        webServerRule.enqueue(MockServerResponse.make("login/wrong_password_response.json"));
-        loginPage.login();
+        appium.enqueue(MockServerResponse.make("login/wrong_password_response.json"));
         // Check password error is shown
         assertThat(loginPage.passwordError, hasText("Wrong password"));
         loginPage.setPassword("newPassw");
@@ -94,9 +83,9 @@ public class LoginTest {
         login("login", "pass");
 
         // Prepare valid response
-        webServerRule.enqueue(MockServerResponse.make("login/valid_response.json"));
+        appium.enqueue(MockServerResponse.make("login/valid_response.json"));
         // Prepare userdata with French as current language
-        webServerRule.enqueue(MockServerResponse.make("userdata/userdata_french.json"));
+        appium.enqueue(MockServerResponse.make("userdata/userdata_french.json"));
 
         MainPage mainPage = appium.getApp().mainPage();
         assertThat(mainPage.title, hasText("French"));

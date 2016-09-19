@@ -16,6 +16,7 @@
 
 package com.triangleleft.flashcards.util;
 
+import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.rule.AppiumRule;
 
 import org.hamcrest.Description;
@@ -57,7 +58,7 @@ public class TestUtils {
             public void describeTo(Description description) {
                 description.appendText("a element ")
                         .appendText("with text ")
-                    .appendValue(text);
+                        .appendValue(text);
             }
 
             @Override
@@ -90,6 +91,17 @@ public class TestUtils {
                 return item.isDisplayed();
             }
         };
+    }
+
+    public static void loginWithUserdata(AppiumRule appium, String userdata) {
+        LoginPage loginPage = appium.getApp().loginPage();
+        loginPage.setLogin("login");
+        loginPage.setPassword("passw");
+        appium.getDriver().hideKeyboard();
+        loginPage.login();
+        // Prepare wrong password answer
+        appium.enqueue(MockServerResponse.make("login/valid_response.json"));
+        appium.enqueue(MockServerResponse.make(userdata));
     }
 
     public static BufferedReader getReader(String filename) {

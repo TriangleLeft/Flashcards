@@ -28,13 +28,11 @@ public class LoginPage extends BasePage {
 
     public void setLogin(String login) {
         emailText.click();
-        emailText.clear();
         emailText.sendKeys(login);
     }
 
     public void setPassword(String password) {
         passwordText.click();
-        passwordText.clear();
         passwordText.sendKeys(password);
     }
 

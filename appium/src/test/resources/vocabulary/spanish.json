@@ -11,7 +11,9 @@
     {
       "normalized_string": "word2",
       "strength_bars": 0,
-      "word_string": "word2"
+      "word_string": "word2",
+      "pos": "pos2",
+      "gender": "gender2"
     },
     {
       "normalized_string": "word3",

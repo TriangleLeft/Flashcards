@@ -45,6 +45,7 @@
 
     <!-- Strings related to Settings -->
     <string name="logout">Logout</string>
+    <string name="vocabulary_word_not_available">N/A</string>
 
 
 </resources>

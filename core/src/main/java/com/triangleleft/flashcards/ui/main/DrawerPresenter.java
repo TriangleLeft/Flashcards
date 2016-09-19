@@ -47,6 +47,7 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
     @Override
     public void onCreate() {
         logger.debug("onCreate() called");
+        currentLanguage = accountModule.getUserData().get().getCurrentLearningLanguage();
         applyState(IDrawerView::showListProgress);
         // start with cached data, continue with fresh one
         // NOTE: we don't show progress bar while we are doing it, progress bar is shown only for language switch

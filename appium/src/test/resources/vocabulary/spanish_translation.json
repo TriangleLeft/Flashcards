@@ -1,0 +1,10 @@
+{
+  "word1": [
+    "translation1"
+  ],
+  "word2": [
+    "translation2",
+    "some other"
+  ],
+  "word3": []
+}
