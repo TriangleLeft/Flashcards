@@ -15,6 +15,10 @@ public class VocabularyListPage extends BasePage {
     public WebElement list;
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/item_vocabular_text")
     public List<WebElement> words;
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/vocabulary_list_button_retry")
+    public WebElement retryButton;
+    @AndroidFindBy(id = "com.triangleleft.flashcards:id/vocabulary_list_no_words")
+    public WebElement noWordsLabel;
 
     public VocabularyListPage(AppiumFieldDecorator driver) {
         super(driver);

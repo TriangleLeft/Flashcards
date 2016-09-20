@@ -23,8 +23,8 @@ import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
+import com.triangleleft.flashcards.util.MockJsonResponse;
 import com.triangleleft.flashcards.util.MockServerResponse;
-import com.triangleleft.flashcards.util.ResourcesUtils;
 import com.triangleleft.flashcards.util.TestUtils;
 
 import org.junit.Before;
@@ -44,14 +44,15 @@ public class DrawerTest {
 
     @Before
     public void before() {
-        TestUtils.loginWithUserdata(appium, ResourcesUtils.USERDATA_SPANISH);
-        appium.enqueue(RestService.PATH_VOCABULARY, ResourcesUtils.VOCABULARY_SPANISH);
-        appium.enqueue(TranslationService.PATH_TRANSLATION, ResourcesUtils.VOCABULARY_SPANISH_TRANSLATION);
+        TestUtils.loginWithUserdata(appium, MockJsonResponse.USERDATA_SPANISH);
+        appium.enqueue(RestService.PATH_VOCABULARY, MockJsonResponse.VOCABULARY_SPANISH);
+        appium.enqueue(TranslationService.PATH_TRANSLATION, MockJsonResponse.VOCABULARY_SPANISH_TRANSLATION);
     }
 
     @Test
     public void languageChange() throws InterruptedException {
-        UserData userData = ResourcesUtils.getModel(ResourcesUtils.USERDATA_SPANISH, UserDataModel.class).toUserData();
+        UserData userData =
+                MockJsonResponse.getModel(MockJsonResponse.USERDATA_SPANISH, UserDataModel.class).toUserData();
         MainPage mainPage = appium.getApp().mainPage();
         mainPage.openDrawer();
         DrawerPage drawer = appium.getApp().drawerPage();
@@ -63,7 +64,7 @@ public class DrawerTest {
         assertThat(drawer.languages.get(1), hasText(userData.getLanguages().get(0).getName()));
 
         // Switch language to french
-        appium.enqueue(RestService.PATH_SWITCH_LANGUAGE, MockServerResponse.make(ResourcesUtils.LANGUAGE_FRENCH));
+        appium.enqueue(RestService.PATH_SWITCH_LANGUAGE, MockServerResponse.make(MockJsonResponse.LANGUAGE_FRENCH));
         drawer.languages.get(1).click();
 
         // Selected language should become first

@@ -35,12 +35,13 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/vocabulary_list_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vocabulary_list_error"/>
 
         <Button
-            android:id="@+id/button_retry"
+            android:id="@+id/vocabulary_list_button_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -49,6 +50,7 @@
 
     <!-- 3:Empty-->
     <TextView
+        android:id="@+id/vocabulary_list_no_words"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

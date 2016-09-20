@@ -20,7 +20,7 @@ import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumRule;
 import com.triangleleft.flashcards.service.RestService;
-import com.triangleleft.flashcards.util.ResourcesUtils;
+import com.triangleleft.flashcards.util.MockJsonResponse;
 
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -56,7 +56,7 @@ public class LoginTest {
     public void loginError() {
         loginPage = appium.getApp().loginPage();
         // Prepare login error
-        appium.enqueue(RestService.PATH_LOGIN, ResourcesUtils.LOGIN_WRONG_LOGIN);
+        appium.enqueue(RestService.PATH_LOGIN, MockJsonResponse.LOGIN_WRONG_LOGIN);
         login("login", "pass");
         // Check that login error is shown
         assertThat(loginPage.loginError, hasText("Wrong login"));
@@ -71,7 +71,7 @@ public class LoginTest {
     public void passwordError() {
         loginPage = appium.getApp().loginPage();
         // Prepare wrong password answer
-        appium.enqueue(RestService.PATH_LOGIN, ResourcesUtils.LOGIN_WRONG_PASSWORD);
+        appium.enqueue(RestService.PATH_LOGIN, MockJsonResponse.LOGIN_WRONG_PASSWORD);
         login("login", "pass");
         // Check password error is shown
         assertThat(loginPage.passwordError, hasText("Wrong password"));
@@ -84,9 +84,9 @@ public class LoginTest {
     @Test
     public void validLogin() {
         // Prepare valid response
-        appium.enqueue(RestService.PATH_LOGIN, ResourcesUtils.LOGIN_SUCCESS);
+        appium.enqueue(RestService.PATH_LOGIN, MockJsonResponse.LOGIN_SUCCESS);
         // Prepare userdata with French as current language
-        appium.enqueue(RestService.PATH_USERDATA, ResourcesUtils.USERDATA_FRENCH);
+        appium.enqueue(RestService.PATH_USERDATA, MockJsonResponse.USERDATA_FRENCH);
 
         loginPage = appium.getApp().loginPage();
         login("login", "pass");

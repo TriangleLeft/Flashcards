@@ -70,11 +70,11 @@ public class MockWebServerRule implements TestRule {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // If method is annotated with our annotation, read json from resources and add it server responses
-        MockJsonResponse annotation = description.getAnnotation(MockJsonResponse.class);
-        if (annotation != null) {
-            webServer.enqueue(MockServerResponse.make(annotation.value(), annotation.httpCode()));
-        }
+//        // If method is annotated with our annotation, read json from resources and add it server responses
+//        MockJsonResponse annotation = description.getAnnotation(MockJsonResponse.class);
+//        if (annotation != null) {
+//            webServer.enqueue(MockServerResponse.make(annotation.value(), annotation.httpCode()));
+//        }
         return webServer.apply(base, description);
     }
 
@@ -86,7 +86,7 @@ public class MockWebServerRule implements TestRule {
         dispatcher.enqueue(path, response);
     }
 
-    public void enqueue(String path, String response) {
+    public void enqueue(String path, MockJsonResponse response) {
         dispatcher.enqueue(path, MockServerResponse.make(response));
     }
 

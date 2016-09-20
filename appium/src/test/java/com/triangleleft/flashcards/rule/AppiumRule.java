@@ -17,6 +17,7 @@
 package com.triangleleft.flashcards.rule;
 
 import com.triangleleft.flashcards.FlashcardsApp;
+import com.triangleleft.flashcards.util.MockJsonResponse;
 import com.triangleleft.flashcards.util.TextUtils;
 
 import org.junit.rules.TestRule;
@@ -60,7 +61,7 @@ public class AppiumRule implements TestRule {
         return decorator;
     }
 
-    public void enqueue(String path, String response) {
+    public void enqueue(String path, MockJsonResponse response) {
         webServerRule.enqueue(path, response);
     }
 

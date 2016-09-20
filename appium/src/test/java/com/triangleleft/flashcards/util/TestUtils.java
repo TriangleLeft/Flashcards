@@ -91,9 +91,9 @@ public class TestUtils {
         };
     }
 
-    public static void loginWithUserdata(AppiumRule appium, String userdata) {
+    public static void loginWithUserdata(AppiumRule appium, MockJsonResponse userdata) {
         // Prepare wrong password answer
-        appium.enqueue(RestService.PATH_LOGIN, ResourcesUtils.LOGIN_SUCCESS);
+        appium.enqueue(RestService.PATH_LOGIN, MockJsonResponse.LOGIN_SUCCESS);
         // First userdata request - after login
         appium.enqueue(RestService.PATH_USERDATA, userdata);
         // Second - in drawer presenter

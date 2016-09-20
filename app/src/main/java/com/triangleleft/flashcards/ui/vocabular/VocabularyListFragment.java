@@ -29,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 @FunctionsAreNonnullByDefault
 public class VocabularyListFragment
@@ -146,5 +147,11 @@ public class VocabularyListFragment
     @Override
     protected IVocabularyListView getMvpView() {
         return this;
+    }
+
+    @OnClick(R.id.vocabulary_list_button_retry)
+    public void onRetryClick() {
+        // This button is shown only if we failed to load list first time
+        getPresenter().onLoadList();
     }
 }
