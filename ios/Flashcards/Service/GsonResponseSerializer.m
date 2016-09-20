@@ -28,8 +28,8 @@
 
     if ([self validateResponse:(NSHTTPURLResponse *)response data:data error:error]) {
         NSString * json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        responseObject = [_gson fromJsonWithNSString:json withIOSClass:_class];
         //NSLog(@"Reponse: %@", json);
+        responseObject = [_gson fromJsonWithNSString:json withIOSClass:_class];
     } else {
         NSLog(@"Validation failed");
     }

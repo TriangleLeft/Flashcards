@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <FlashcardsCore.h>
 
-@interface ObjRestService : NSObject <RestService>
+@interface ObjRestService : NSObject <RestService, TranslationService>
 
 -(instancetype)initWithGson:(ComGoogleGsonGson *)gson;
 
