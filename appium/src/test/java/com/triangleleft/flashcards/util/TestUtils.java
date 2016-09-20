@@ -18,6 +18,7 @@ package com.triangleleft.flashcards.util;
 
 import com.triangleleft.flashcards.page.LoginPage;
 import com.triangleleft.flashcards.rule.AppiumRule;
+import com.triangleleft.flashcards.service.RestService;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -25,9 +26,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 import io.appium.java_client.AppiumDriver;
 
@@ -94,20 +92,19 @@ public class TestUtils {
     }
 
     public static void loginWithUserdata(AppiumRule appium, String userdata) {
+        // Prepare wrong password answer
+        appium.enqueue(RestService.PATH_LOGIN, ResourcesUtils.LOGIN_SUCCESS);
+        // First userdata request - after login
+        appium.enqueue(RestService.PATH_USERDATA, userdata);
+        // Second - in drawer presenter
+        appium.enqueue(RestService.PATH_USERDATA, userdata);
         LoginPage loginPage = appium.getApp().loginPage();
         loginPage.setLogin("login");
         loginPage.setPassword("passw");
         appium.getDriver().hideKeyboard();
         loginPage.login();
-        // Prepare wrong password answer
-        appium.enqueue(MockServerResponse.make("login/valid_response.json"));
-        appium.enqueue(MockServerResponse.make(userdata));
     }
 
-    public static BufferedReader getReader(String filename) {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        return new BufferedReader(new InputStreamReader(classloader.getResourceAsStream(filename)));
-    }
 
     public static void assertNotVisible(AppiumRule rule, WebElement element) {
         rule.getTimeOutDuration().setTime(0);

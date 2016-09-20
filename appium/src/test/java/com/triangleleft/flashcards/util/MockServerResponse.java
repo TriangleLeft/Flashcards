@@ -23,7 +23,7 @@ public class MockServerResponse {
 
 
     private static String getJsonFromAsset(String filename) {
-        try (BufferedReader reader = TestUtils.getReader(filename)) {
+        try (BufferedReader reader = ResourcesUtils.getReader(filename)) {
 
             StringBuilder builder = new StringBuilder();
             String line;

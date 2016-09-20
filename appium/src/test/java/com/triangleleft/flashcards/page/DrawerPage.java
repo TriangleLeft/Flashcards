@@ -16,11 +16,12 @@
 
 package com.triangleleft.flashcards.page;
 
-import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+
+import io.appium.java_client.pagefactory.AndroidFindBy;
+import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 
 public class DrawerPage extends BasePage {
 
@@ -31,5 +32,17 @@ public class DrawerPage extends BasePage {
 
     public DrawerPage(AppiumFieldDecorator driver) {
         super(driver);
+    }
+
+
+    public void openDrawerSwipe() {
+//        Dimension size = appium.getDriver().manage().window().getSize();
+//        appium.getDriver().swipe(
+//                5,
+//                size.getHeight() / 2,
+//                (int) (size.getWidth() * 0.8f),
+//                size.getHeight() / 2,
+//                200
+//        );
     }
 }

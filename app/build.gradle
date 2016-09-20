@@ -29,6 +29,8 @@ android {
             testCoverageEnabled true
         }
         appium {
+            applicationIdSuffix ".appium"
+
             initWith debug
             buildConfigField "String", "REST_SERVICE_URL", "\"http://10.0.2.2:8080\""
             buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"http://10.0.2.2:8080\""

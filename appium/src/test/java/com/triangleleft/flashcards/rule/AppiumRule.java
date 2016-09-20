@@ -60,8 +60,12 @@ public class AppiumRule implements TestRule {
         return decorator;
     }
 
-    public void enqueue(MockResponse response) {
-        webServerRule.enqueue(response);
+    public void enqueue(String path, String response) {
+        webServerRule.enqueue(path, response);
+    }
+
+    public void enqueue(String path, MockResponse response) {
+        webServerRule.enqueue(path, response);
     }
 
     public TimeOutDuration getTimeOutDuration() {

@@ -15,7 +15,6 @@
         android:vmSafeMode="true">
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

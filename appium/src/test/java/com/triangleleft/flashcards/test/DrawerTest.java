@@ -16,13 +16,15 @@
 
 package com.triangleleft.flashcards.test;
 
-import com.google.gson.Gson;
-
 import com.triangleleft.flashcards.page.DrawerPage;
 import com.triangleleft.flashcards.page.MainPage;
 import com.triangleleft.flashcards.rule.AppiumRule;
+import com.triangleleft.flashcards.service.RestService;
+import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
+import com.triangleleft.flashcards.util.MockServerResponse;
+import com.triangleleft.flashcards.util.ResourcesUtils;
 import com.triangleleft.flashcards.util.TestUtils;
 
 import org.junit.Before;
@@ -30,7 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.openqa.selenium.Dimension;
 
 import static com.triangleleft.flashcards.util.TestUtils.hasText;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,49 +40,33 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class DrawerTest {
 
     @Rule
-    public AppiumRule appiumRule = new AppiumRule(false);
-    private UserData userData;
+    public AppiumRule appium = new AppiumRule(true);
 
     @Before
     public void before() {
-        // We don't want to duplicate constants is json and here, so read json and use resolved model
-        userData = new Gson().fromJson(TestUtils.getReader("userdata/userdata_french.json"), UserDataModel.class)
-                .toUserData();
+        TestUtils.loginWithUserdata(appium, ResourcesUtils.USERDATA_SPANISH);
+        appium.enqueue(RestService.PATH_VOCABULARY, ResourcesUtils.VOCABULARY_SPANISH);
+        appium.enqueue(TranslationService.PATH_TRANSLATION, ResourcesUtils.VOCABULARY_SPANISH_TRANSLATION);
     }
 
     @Test
-    public void drawer() throws InterruptedException {
-        MainPage main = appiumRule.getApp().mainPage();
-        // Title should show current learning language
-        assertThat(main.title, hasText(userData.getCurrentLearningLanguage().get().getName()));
-
-        openDrawer();
-        DrawerPage drawer = appiumRule.getApp().drawerPage();
+    public void languageChange() throws InterruptedException {
+        UserData userData = ResourcesUtils.getModel(ResourcesUtils.USERDATA_SPANISH, UserDataModel.class).toUserData();
+        MainPage mainPage = appium.getApp().mainPage();
+        mainPage.openDrawer();
+        DrawerPage drawer = appium.getApp().drawerPage();
         // Username is shown
         assertThat(drawer.userName, hasText(userData.getUsername()));
-        // learning languages are shown
-        assertThat(drawer.languages.get(0), hasText(userData.getSortedLanguages().get(0).getName()));
-        assertThat(drawer.languages.get(1), hasText(userData.getSortedLanguages().get(1).getName()));
+        // current learning should be first language
+        assertThat(drawer.languages.get(0), hasText(userData.getLanguages().get(1).getName()));
+        // Then all other languages
+        assertThat(drawer.languages.get(1), hasText(userData.getLanguages().get(0).getName()));
 
-        // Switch language to second one
+        // Switch language to french
+        appium.enqueue(RestService.PATH_SWITCH_LANGUAGE, MockServerResponse.make(ResourcesUtils.LANGUAGE_FRENCH));
         drawer.languages.get(1).click();
-//        assertThat(drawer.languages.get(0), hasText(SECOND_LANGUAGE));
-//        assertThat(drawer.languages.get(1), hasText(FIRST_LANGUAGE));
-//
-//        // Select first language again
-//        drawer.languages.get(1).click();
-//        assertThat(drawer.languages.get(0), hasText(FIRST_LANGUAGE));
-//        assertThat(main.title, hasText(FIRST_LANGUAGE));
-    }
 
-    private void openDrawer() {
-        Dimension size = appiumRule.getDriver().manage().window().getSize();
-        appiumRule.getDriver().swipe(
-            5,
-            size.getHeight() / 2,
-            (int) (size.getWidth() * 0.8f),
-            size.getHeight() / 2,
-            200
-        );
+        // Selected language should become first
+        assertThat(drawer.languages.get(0), hasText(userData.getLanguages().get(0).getName()));
     }
 }

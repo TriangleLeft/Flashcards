@@ -16,9 +16,10 @@
 
 package com.triangleleft.flashcards.page;
 
+import org.openqa.selenium.WebElement;
+
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
-import org.openqa.selenium.WebElement;
 
 public class MainPage extends BasePage {
 
@@ -33,5 +34,9 @@ public class MainPage extends BasePage {
 
     public MainPage(AppiumFieldDecorator driver) {
         super(driver);
+    }
+
+    public void openDrawer() {
+        drawerButton.click();
     }
 }
