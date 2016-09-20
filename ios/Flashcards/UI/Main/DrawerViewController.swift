@@ -91,7 +91,12 @@ extension DrawerViewController: IDrawerView {
         
     }
     
-    func showDrawerProgress() {
+    
+    func notifyUserDataUpdateError() {
+        
+    }
+    
+    func showListProgress() {
         activityIndicatorView.startAnimating()
         showContent = false;
         tableView.separatorStyle = .None

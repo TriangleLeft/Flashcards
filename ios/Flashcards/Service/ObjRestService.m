@@ -13,10 +13,18 @@
 
 typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
-@interface MyClosure : NSObject <RxObservable_OnSubscribe>
+#ifdef APPIUM
+NSString* const RestServiceUrl = @"https://10.0.2.2:8080";
+NSString* const TranslationServiceUrl = @"https://10.0.2.2:8080";
+#else
+NSString* const RestServiceUrl = @"https://www.duolingo.com";
+NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
+#endif
+
+@interface OnSubscribeClosure : NSObject <RxObservable_OnSubscribe>
 @property (nonatomic, copy) RxSubscriberHandler handler;
 @end
-@implementation MyClosure
+@implementation OnSubscribeClosure
 
 
 -(instancetype)initWithClosure:(RxSubscriberHandler)closure {
@@ -66,7 +74,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
     NSString* timestampString = [NSString stringWithFormat:@"%lld", timestamp];
     NSURLQueryItem *query_timestamp = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_TIMESTAMP] value:timestampString];
     NSString* countString = [NSString stringWithFormat:@"%d", count];
-    NSURLQueryItem *query_count = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_FLASHCARDS_COUNT] value:@"5"];
+    NSURLQueryItem *query_count = [[NSURLQueryItem alloc] initWithName:[RestService QUERY_FLASHCARDS_COUNT] value:countString];
     NSString* partialString = allowPartialDeck ? @"true" : @"false";
     NSURLQueryItem *query_partial =  [[NSURLQueryItem alloc] initWithName:[RestService QUERY_ALLOW_PARTIAL_DECK] value:partialString];
     NSArray<NSURLQueryItem *> *params = @[query_count, query_partial, query_timestamp];
@@ -95,15 +103,15 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 - (RxObservable *)getTranslationWithNSString:(NSString *)languageIdFrom
                                 withNSString:(NSString *)languageIdTo
                                 withNSString:(NSString *)tokens {
-    NSString* urlString = [[NSString alloc] initWithFormat:@"%@/%@/%@", [RestService URL_TRANSLATION], languageIdFrom, languageIdTo];
+    NSString* urlString = [[NSString alloc] initWithFormat:@"%@/%@/%@/%@", TranslationServiceUrl, [TranslationService PATH_TRANSLATION], languageIdFrom, languageIdTo];
     NSURLComponents *components = [[NSURLComponents alloc] initWithString:urlString];
-    components.queryItems = @[[[NSURLQueryItem alloc] initWithName:[RestService QUERY_TOKENS] value:tokens]];
+    components.queryItems = @[[[NSURLQueryItem alloc] initWithName:[TranslationService QUERY_TOKENS] value:tokens]];
     NSURLRequest *req = [self requestWithMethod:@"GET" url:components.URL];
     return [self observableWithRequest:req responseModelClass:WordTranslationModel_class_()];
 }
 
 - (RxObservable *)observableWithRequest:(NSURLRequest *)request responseModelClass:(IOSClass *)clazz {
-    RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[MyClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
+    RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[OnSubscribeClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
         AFHTTPSessionManager *manager = [AFHTTPSessionManager new];
         if (clazz) {
             manager.responseSerializer = [[GsonResponseSerializer alloc] initWithClass:clazz gson:_gson];
@@ -128,9 +136,7 @@ typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 }
 
 - (NSURL *)urlWithPath:(NSString *)path queryParams:(NSArray<NSURLQueryItem *> *)queryParams {
-    NSURLComponents *components = [[NSURLComponents alloc] init];
-    components.scheme = [RestService BASE_SCHEME];
-    components.host = [RestService BASE_URL];
+    NSURLComponents *components = [[NSURLComponents alloc] initWithString:RestServiceUrl];
     components.path = path;
     if (queryParams) {
         components.queryItems = queryParams;

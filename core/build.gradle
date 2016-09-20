@@ -63,7 +63,7 @@ dependencies {
     We don't need it for actual jar, only for ios translation.
     */
     j2objcTranslationClosure files('libs/slf4j-simple-1.7.21-sources.jar')
-    //  testCompile project(":slf4j-simple")
+    testCompile project(":slf4j-simple")
 
     // Only annotations are used
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
