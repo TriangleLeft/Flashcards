@@ -13,7 +13,7 @@ class CardsViewController: UIViewController {
     
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var errorsView: UIStackView!
+    @IBOutlet weak var errorsView: UIView!
     @IBOutlet weak var noErrorsLabel: UILabel!
     @IBOutlet weak var errorsTableView: UITableView!
     
@@ -25,7 +25,7 @@ class CardsViewController: UIViewController {
     
     init(_ presenter:FlashcardsPresenter) {
         self.presenter = presenter;
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "CardsView", bundle: nil)
     }
     
     @available(*, unavailable)
@@ -35,7 +35,7 @@ class CardsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Need this because otherwise content would be placed below navigation bar
         self.edgesForExtendedLayout = .None
         
@@ -46,8 +46,9 @@ class CardsViewController: UIViewController {
         errorsTableView.delegate = self
         errorsTableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
         // Fake footer to hide empty cells and last divider
-        errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
+       // errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: #selector(CardsViewController.onDoneClick))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Restart", style: .Plain, target: self, action: #selector(CardsViewController.onRestartClick))
         
         presenter.onBindWithIView(self)
@@ -57,6 +58,10 @@ class CardsViewController: UIViewController {
     
     func onRestartClick() {
         presenter.onLoadFlashcards()
+    }
+    
+    func onDoneClick() {
+        dismissViewControllerAnimated(true, completion: nil)
     }
 }
 
@@ -142,7 +147,7 @@ extension CardsViewController: FlashcardViewDelegate {
     func onWrongClicked(word: FlashcardWord?) {
         presenter.onWordWrongWithFlashcardWord(word)
         kolodaView.swipe(.Left)
-
+        
     }
 }
 

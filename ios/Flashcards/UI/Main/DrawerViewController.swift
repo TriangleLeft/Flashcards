@@ -24,7 +24,7 @@ class DrawerViewController: UIViewController {
     
     init(presenter:DrawerPresenter) {
         self.presenter = presenter;
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "DrawerViewController", bundle: nil)
     }
     
     @available(*, unavailable)

@@ -10,10 +10,12 @@ import UIKit
 
 class VocabularyWordViewController: UIViewController {
     
-    @IBOutlet weak var infoEntry: UIStackView!
-    @IBOutlet weak var posEntry: UIStackView!
-    @IBOutlet weak var genderEntry: UIStackView!
-    @IBOutlet weak var translationEntry: UIStackView!
+    @IBOutlet weak var wordGroup: UIView!
+    @IBOutlet weak var strengthGroup: UIView!
+    @IBOutlet weak var translationGroup: UIView!
+    @IBOutlet weak var genderGroup: UIView!
+    @IBOutlet weak var posGroup: UIView!
+
     
     @IBOutlet weak var strengthView: VocabularyStrengthView!
     @IBOutlet weak var wordLabel: UILabel!
@@ -24,7 +26,7 @@ class VocabularyWordViewController: UIViewController {
     
     init(_ presenter:VocabularyWordPresenter) {
         self.presenter = presenter;
-        super.init(nibName: nil, bundle: nil);
+        super.init(nibName: "VocabularyWordView", bundle: nil);
     }
     
     @available(*, unavailable)
@@ -36,7 +38,7 @@ class VocabularyWordViewController: UIViewController {
         super.viewDidLoad()
         
         // Hidden by default
-        infoEntry.hidden = true
+        showEmpty()
         presenter.onCreate();
         presenter.onBindWithIView(self);
     }
@@ -48,30 +50,27 @@ class VocabularyWordViewController: UIViewController {
 
 extension VocabularyWordViewController: IVocabularyWordView {
     func showWordWithVocabularyWord(word: VocabularyWord!) {
-        infoEntry.hidden = false
-        strengthView.setStrength(Int(word.getStrength()))
+        wordGroup.hidden = false
+        strengthGroup.hidden = false
+        translationGroup.hidden = false
+        genderGroup.hidden = false
+        posGroup.hidden = false
+        
+        // We expected that there is always word to show
         wordLabel.text = word.getWord()
-        if (word.getTranslations().isEmpty()) {
-            translationEntry.hidden = true;
-        } else {
-            translationEntry.hidden = false;
-            translationLabel.text = word.getTranslations().getWithInt(0) as? String;
-        }
-        if (word.getPos().isPresent()) {
-            posEntry.hidden = false
-            posLabel.text = word.getPos().get() as? String
-        } else {
-            posEntry.hidden = true
-        }
-        if (word.getGender().isPresent()) {
-            genderEntry.hidden = false
-            genderLabel.text = word.getGender().get() as? String
-        } else {
-            genderEntry.hidden = true
-        }
+        // We expect that every word has strength level
+        strengthView.setStrength(Int(word.getStrength()))
+        // Some words doesn't have tranlsations
+        translationLabel.text = word.getTranslations().isEmpty() ? "N/A" : word.getTranslations().getWithInt(0) as! String;
+        posLabel.text = (word.getPos().orElseWithId("N/A") as! String)
+        genderLabel.text = (word.getGender().orElseWithId("N/A") as! String)
     }
     
     func showEmpty() {
-        infoEntry.hidden = true;
+        wordGroup.hidden = true
+        strengthGroup.hidden = true
+        translationGroup.hidden = true
+        genderGroup.hidden = true
+        posGroup.hidden = true
     }
 }

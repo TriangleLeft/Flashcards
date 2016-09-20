@@ -41,8 +41,9 @@ import FlashcardsCore
                 finished in
                 // Disable constraint that pinned word label to center of container
                 self.wordLabelCenterY.active = false
-                // Add new constraint to place word label above divider
-                self.divider.topAnchor.constraintEqualToAnchor(self.wordLabel.bottomAnchor, constant: 16).active = true
+                // Enable one that places word label above divider
+                let constraint = NSLayoutConstraint(item: self.divider, attribute: .Top, relatedBy: .Equal, toItem: self.wordLabel, attribute: .Bottom, multiplier: 1, constant: 16)
+                self.view.addConstraint(constraint)
         })
         
         UIView.animateWithDuration(0.3, delay: 0.1, options: [.CurveEaseInOut], animations: {

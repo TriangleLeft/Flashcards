@@ -38,8 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         accountModule = SimpleAccountModule(persistentStorage: storage)
         settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule)
         loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule)
-        vocabularyModule = RestVocabularyModule(restService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository)
-        flashcardsModule = RestFlashcardsModule(restService: restService)
+        //vocabularyModule = RestVocabularyModule(restService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository)
+        vocabularyModule = StubVocabularyModule(accountModule: accountModule, withVocabularyWordsRepository: wordRepository)
+        //flashcardsModule = RestFlashcardsModule(restService: restService)
+        flashcardsModule = StubFlashcardsModule()
         
         // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
         JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
@@ -66,14 +68,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         changeRootViewController(MainViewController.wrapWithDrawer(mainVC, drawerPresenter: drawerPresenter), animated: animated)
     }
     
-    func buildCardsViewController() -> CardsViewController {
+    func buildCardsViewController() -> UIViewController {
         let presenter = FlashcardsPresenter(flashcardsModule: flashcardsModule, withRxScheduler: MainThreadScheduler())
         let cardsController:CardsViewController = CardsViewController(presenter)
         let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
         navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
         navCardsController.navigationBar.tintColor = UIColor.whiteColor()
         
-        return cardsController
+        return navCardsController
     }
     
     private func changeRootViewController(controller:UIViewController!, animated:Bool) {

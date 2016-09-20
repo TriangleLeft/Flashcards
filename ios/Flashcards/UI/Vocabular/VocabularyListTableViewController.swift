@@ -20,7 +20,7 @@ class VocabularyListTableViewController: UITableViewController {
     
     init(_ presenter:VocabularyListPresenter) {
         self.presenter = presenter;
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "VocabularyListTableView", bundle: nil)
     }
     
     @available(*, unavailable)
@@ -75,10 +75,8 @@ class VocabularyListTableViewController: UITableViewController {
     }
     
     func onFlashcardsClick() {
-        let cardsController: CardsViewController = AppDelegate.sharedAppDelegate().buildCardsViewController()
-        self.navigationController?.delegate = self
-        mainDelegate?.setMasterCollapsed(false)
-        self.navigationController?.pushViewController(cardsController, animated: false)
+        let cardsController: UIViewController = AppDelegate.sharedAppDelegate().buildCardsViewController()
+        presentViewController(cardsController, animated: true, completion: nil)
     }
     
     func onMenuClick() {

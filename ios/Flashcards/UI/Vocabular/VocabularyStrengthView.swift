@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VocabularyStrengthView: UIImageView {
+@IBDesignable class VocabularyStrengthView: UIImageView {
 
     func setStrength(value:Int) {
         var color:UIColor?

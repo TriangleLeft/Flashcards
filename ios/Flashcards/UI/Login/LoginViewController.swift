@@ -11,7 +11,7 @@ import FlashcardsCore
 
 class LoginViewController: UIViewController  {
     
-    @IBOutlet weak var contentView: UIStackView!
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var loginErrorLabel: UILabel!
@@ -24,7 +24,7 @@ class LoginViewController: UIViewController  {
     
     init(presenter:LoginPresenter) {
         self.presenter = presenter;
-        super.init(nibName: nil, bundle: nil)
+        super.init(nibName: "LoginView", bundle: nil)
     }
     
     @available(*, unavailable)
