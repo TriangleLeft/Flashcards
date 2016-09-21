@@ -23,6 +23,7 @@ import com.triangleleft.flashcards.service.RestService;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
@@ -113,8 +114,9 @@ public class TestUtils {
         appium.enqueue(RestService.PATH_USERDATA, userdata);
         LoginPage loginPage = appium.getApp().loginPage();
         loginPage.setLogin("login");
+        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
         loginPage.setPassword("passw");
-        appium.getDriver().hideKeyboard();
+        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
         loginPage.login();
     }
 
