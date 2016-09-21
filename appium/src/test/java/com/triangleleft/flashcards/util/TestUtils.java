@@ -52,6 +52,9 @@ public class TestUtils {
     public static <T extends WebElement> Matcher<T> hasText(final String text) {
         return new TypeSafeMatcher<T>() {
 
+            private boolean wasDisplayed;
+            private boolean hadText;
+
             @Override
             public void describeTo(Description description) {
                 description.appendText("a element ")
@@ -61,12 +64,22 @@ public class TestUtils {
 
             @Override
             protected void describeMismatchSafely(T item, Description mismatchDescription) {
-                mismatchDescription.appendText("was \"").appendText(item.getText()).appendText("\"");
+                if (!wasDisplayed) {
+                    mismatchDescription.appendText("element wasn't displayed");
+                }
+                if (!hadText) {
+                    if (!wasDisplayed) {
+                        mismatchDescription.appendText(" and ");
+                    }
+                    mismatchDescription.appendText("was \"").appendText(item.getText()).appendText("\"");
+                }
             }
 
             @Override
             protected boolean matchesSafely(T item) {
-                return item.getText().equals(text);
+                wasDisplayed = item.isDisplayed();
+                hadText = item.getText().equals(text);
+                return wasDisplayed && hadText;
             }
         };
     }

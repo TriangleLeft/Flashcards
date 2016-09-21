@@ -35,6 +35,8 @@ class LoginViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad();
         
+        UITextField.connectFields([loginTextField, passwordTextField])
+        
         presenter.onBindWithIView(self);
         presenter.onCreate();
         
@@ -88,11 +90,11 @@ extension LoginViewController: ILoginView {
     }
     
     func setLoginErrorVisibleWithBoolean(visible: jboolean) {
-        loginErrorLabel.alpha = visible ? 1.0 : 0.0
+        loginErrorLabel.hidden = !visible
     }
     
     func setPasswordErrorVisibleWithBoolean(visible: jboolean) {
-        passwordErrorLabel.alpha = visible ? 1.0 : 0.0
+        passwordErrorLabel.hidden = !visible
     }
     
     func showProgress() {

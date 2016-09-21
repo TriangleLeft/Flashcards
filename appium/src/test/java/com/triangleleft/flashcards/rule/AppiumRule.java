@@ -80,7 +80,7 @@ public class AppiumRule implements TestRule {
     private void before() throws MalformedURLException {
         String platform = System.getProperty(PLATFORM_KEY);
         if (TextUtils.isEmpty(platform)) {
-            platform = PLATFORM_ANDROID;
+            platform = PLATFORM_IOS;
             //throw new IllegalArgumentException("Platform key (" + PLATFORM_KEY + ") was not set!");
         }
         URL remoteURL = new URL(remoteAddress);
@@ -89,6 +89,8 @@ public class AppiumRule implements TestRule {
                 driver = AppiumAndroidDriver.create(remoteURL, fullReset);
                 break;
             case PLATFORM_IOS:
+                driver = AppiumIOSDriver.create(remoteURL, fullReset);
+                break;
             default:
                 throw new IllegalArgumentException("Unknown platform key :" + platform);
         }

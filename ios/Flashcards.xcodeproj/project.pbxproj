@@ -9,6 +9,47 @@
 /* Begin PBXBuildFile section */
 		8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F041F871D7343F600E4D68E /* DrawerViewCell.swift */; };
 		8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F041F881D7343F600E4D68E /* DrawerViewCell.xib */; };
+		8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */; };
+		8F284DB61D9203E700BD087F /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
+		8F284DB71D9203E700BD087F /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
+		8F284DB81D9203E700BD087F /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */; };
+		8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
+		8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
+		8F284DBB1D9203E700BD087F /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
+		8F284DBC1D9203E700BD087F /* VocabularyListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListTableViewController.swift */; };
+		8F284DBD1D9203E700BD087F /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
+		8F284DBE1D9203E700BD087F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */; };
+		8F284DBF1D9203E700BD087F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
+		8F284DC01D9203E700BD087F /* ErrorWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */; };
+		8F284DC11D9203E700BD087F /* VocabularyStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97E1D743B3500482A66 /* VocabularyStrengthView.swift */; };
+		8F284DC21D9203E700BD087F /* DrawerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F041F871D7343F600E4D68E /* DrawerViewCell.swift */; };
+		8F284DC31D9203E700BD087F /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */; };
+		8F284DC41D9203E700BD087F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
+		8F284DC51D9203E700BD087F /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD91D61D0E00038DFAB /* Flashcards.xcdatamodeld */; };
+		8F284DC61D9203E700BD087F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */; };
+		8F284DC71D9203E700BD087F /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
+		8F284DC81D9203E700BD087F /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */; };
+		8F284DC91D9203E700BD087F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
+		8F284DCB1D9203E700BD087F /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F488B841D653E1B00A1B99B /* libjre_emul.a */; };
+		8F284DCC1D9203E700BD087F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
+		8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
+		8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
+		8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
+		8F284DD01D9203E700BD087F /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
+		8F284DD21D9203E700BD087F /* VocabularyWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */; };
+		8F284DD31D9203E700BD087F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
+		8F284DD41D9203E700BD087F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
+		8F284DD51D9203E700BD087F /* DrawerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F041F881D7343F600E4D68E /* DrawerViewCell.xib */; };
+		8F284DD61D9203E700BD087F /* ErrorWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FA512A81D78F083005BDE26 /* ErrorWordCell.xib */; };
+		8F284DD71D9203E700BD087F /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
+		8F284DD81D9203E700BD087F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD61D61D0E00038DFAB /* Main.storyboard */; };
+		8F284DD91D9203E700BD087F /* VocabularyListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A31D6C7BF10005C9C3 /* VocabularyListTableView.xib */; };
+		8F284DDA1D9203E700BD087F /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */; };
+		8F284DDB1D9203E700BD087F /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
+		8F284DDC1D9203E700BD087F /* CardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE91551D76285F0079B37E /* CardsView.xib */; };
+		8F284DDD1D9203E700BD087F /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
+		8F284DE11D9203E700BD087F /* simplelogger.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */; };
+		8F284DE21D9203E700BD087F /* prefixes.properties in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8FB1EA091D67AED400545EB7 /* prefixes.properties */; };
 		8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
 		8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
 		8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
@@ -51,6 +92,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		8F284DE01D9203E700BD087F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				8F284DE11D9203E700BD087F /* simplelogger.properties in CopyFiles */,
+				8F284DE21D9203E700BD087F /* prefixes.properties in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FB1EA0B1D67AF8200545EB7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +121,8 @@
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F041F871D7343F600E4D68E /* DrawerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewCell.swift; sourceTree = "<group>"; };
 		8F041F881D7343F600E4D68E /* DrawerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewCell.xib; sourceTree = "<group>"; };
+		8F284DE61D9203E700BD087F /* Flashcards-Appium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flashcards-Appium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F284DE71D9203E800BD087F /* Info-Appium.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Appium.plist"; path = "/Users/aleksey.kurnosenko/Documents/Flashcards/ios/Info-Appium.plist"; sourceTree = "<absolute>"; };
 		8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentStorage.swift; path = ../../UI/Common/PersistentStorage.swift; sourceTree = "<group>"; };
 		8F2928241D6203BD007B1CCF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOSVocabularyWordsRepository.swift; sourceTree = "<group>"; };
@@ -117,6 +171,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8F284DCA1D9203E700BD087F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F284DCB1D9203E700BD087F /* libjre_emul.a in Frameworks */,
+				8F284DCC1D9203E700BD087F /* libz.tbd in Frameworks */,
+				8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */,
+				8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */,
+				8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */,
+				8F284DD01D9203E700BD087F /* Pods_Flashcards.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8A0CCC1D61D0DF0038DFAB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,6 +287,7 @@
 				8F8A0CD01D61D0DF0038DFAB /* Products */,
 				B13338B283C3A5B893AEF959 /* Pods */,
 				BFD909537CED0AC6073FED4F /* Frameworks */,
+				8F284DE71D9203E800BD087F /* Info-Appium.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -227,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				8F8A0CCF1D61D0DF0038DFAB /* Flashcards.app */,
+				8F284DE61D9203E700BD087F /* Flashcards-Appium.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -311,6 +380,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8F284DB21D9203E700BD087F /* Flashcards-Appium */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F284DE31D9203E700BD087F /* Build configuration list for PBXNativeTarget "Flashcards-Appium" */;
+			buildPhases = (
+				8F284DB31D9203E700BD087F /* [CP] Check Pods Manifest.lock */,
+				8F284DB41D9203E700BD087F /* Sources */,
+				8F284DCA1D9203E700BD087F /* Frameworks */,
+				8F284DD11D9203E700BD087F /* Resources */,
+				8F284DDE1D9203E700BD087F /* [CP] Embed Pods Frameworks */,
+				8F284DDF1D9203E700BD087F /* [CP] Copy Pods Resources */,
+				8F284DE01D9203E700BD087F /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Flashcards-Appium";
+			productName = Flashcards;
+			productReference = 8F284DE61D9203E700BD087F /* Flashcards-Appium.app */;
+			productType = "com.apple.product-type.application";
+		};
 		8F8A0CCE1D61D0DF0038DFAB /* Flashcards */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F8A0CE41D61D0E00038DFAB /* Build configuration list for PBXNativeTarget "Flashcards" */;
@@ -362,11 +452,31 @@
 			projectRoot = "";
 			targets = (
 				8F8A0CCE1D61D0DF0038DFAB /* Flashcards */,
+				8F284DB21D9203E700BD087F /* Flashcards-Appium */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8F284DD11D9203E700BD087F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F284DD21D9203E700BD087F /* VocabularyWordView.xib in Resources */,
+				8F284DD31D9203E700BD087F /* LaunchScreen.storyboard in Resources */,
+				8F284DD41D9203E700BD087F /* Assets.xcassets in Resources */,
+				8F284DD51D9203E700BD087F /* DrawerViewCell.xib in Resources */,
+				8F284DD61D9203E700BD087F /* ErrorWordCell.xib in Resources */,
+				8F284DD71D9203E700BD087F /* LoginView.xib in Resources */,
+				8F284DD81D9203E700BD087F /* Main.storyboard in Resources */,
+				8F284DD91D9203E700BD087F /* VocabularyListTableView.xib in Resources */,
+				8F284DDA1D9203E700BD087F /* DrawerViewController.xib in Resources */,
+				8F284DDB1D9203E700BD087F /* FlashcardView.xib in Resources */,
+				8F284DDC1D9203E700BD087F /* CardsView.xib in Resources */,
+				8F284DDD1D9203E700BD087F /* VocabularyListTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8A0CCD1D61D0DF0038DFAB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,6 +529,51 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		8F284DB31D9203E700BD087F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8F284DDE1D9203E700BD087F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8F284DDF1D9203E700BD087F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		D19D487F229791067E3A97A6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -437,6 +592,34 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8F284DB41D9203E700BD087F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */,
+				8F284DB61D9203E700BD087F /* FlashcardView.swift in Sources */,
+				8F284DB71D9203E700BD087F /* MainThreadScheduler.swift in Sources */,
+				8F284DB81D9203E700BD087F /* NibLoadingView.swift in Sources */,
+				8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */,
+				8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */,
+				8F284DBB1D9203E700BD087F /* PersistentStorage.swift in Sources */,
+				8F284DBC1D9203E700BD087F /* VocabularyListTableViewController.swift in Sources */,
+				8F284DBD1D9203E700BD087F /* ObjRestService.m in Sources */,
+				8F284DBE1D9203E700BD087F /* ViewController.swift in Sources */,
+				8F284DBF1D9203E700BD087F /* GsonResponseSerializer.m in Sources */,
+				8F284DC01D9203E700BD087F /* ErrorWordCell.swift in Sources */,
+				8F284DC11D9203E700BD087F /* VocabularyStrengthView.swift in Sources */,
+				8F284DC21D9203E700BD087F /* DrawerViewCell.swift in Sources */,
+				8F284DC31D9203E700BD087F /* UIColor+Hex.swift in Sources */,
+				8F284DC41D9203E700BD087F /* LoginViewController.swift in Sources */,
+				8F284DC51D9203E700BD087F /* Flashcards.xcdatamodeld in Sources */,
+				8F284DC61D9203E700BD087F /* MainViewController.swift in Sources */,
+				8F284DC71D9203E700BD087F /* IOSVocabularyWordsRepository.swift in Sources */,
+				8F284DC81D9203E700BD087F /* DrawerViewController.swift in Sources */,
+				8F284DC91D9203E700BD087F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8F8A0CCB1D61D0DF0038DFAB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -495,6 +678,90 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		8F284DE41D9203E700BD087F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"APPIUM=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+				);
+				INFOPLIST_FILE = "Info-Appium.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.triangleleft.Flashcards-Appium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";
+			};
+			name = Debug;
+		};
+		8F284DE51D9203E700BD087F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"APPIUM=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
+					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+				);
+				INFOPLIST_FILE = "Info-Appium.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
+					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.triangleleft.Flashcards-Appium";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";
+			};
+			name = Release;
+		};
 		8F8A0CE21D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -657,6 +924,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8F284DE31D9203E700BD087F /* Build configuration list for PBXNativeTarget "Flashcards-Appium" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F284DE41D9203E700BD087F /* Debug */,
+				8F284DE51D9203E700BD087F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		8F8A0CCA1D61D0DF0038DFAB /* Build configuration list for PBXProject "Flashcards" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

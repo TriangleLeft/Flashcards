@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import AFNetworkActivityLogger
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.sharedManager().enableAutoToolbar = false
         
         let consoleLogger = AFNetworkActivityLogger.sharedLogger().loggers.first as! AFNetworkActivityConsoleLogger
         consoleLogger.level = AFHTTPRequestLoggerLevel.AFLoggerLevelInfo
@@ -189,5 +192,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+}
+
+extension UITextField {
+    class func connectFields(fields:[UITextField]) -> Void {
+        guard let last = fields.last else {
+            return
+        }
+        for i in 0 ..< fields.count - 1 {
+            fields[i].returnKeyType = .Next
+            fields[i].addTarget(fields[i+1], action: #selector(UIResponder.becomeFirstResponder), forControlEvents: .EditingDidEndOnExit)
+        }
+        last.returnKeyType = .Done
+        last.addTarget(last, action: #selector(UIResponder.resignFirstResponder), forControlEvents: .EditingDidEndOnExit)
+    }
 }
 

@@ -27,6 +27,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.openqa.selenium.Keys;
 
 import static com.triangleleft.flashcards.util.TestUtils.assertNotVisible;
 import static com.triangleleft.flashcards.util.TestUtils.hasText;
@@ -62,7 +63,7 @@ public class LoginTest {
         assertThat(loginPage.loginError, hasText("Wrong login"));
         // change login
         loginPage.setLogin("newLogin");
-        appium.getDriver().hideKeyboard();
+        //appium.getDriver().hideKeyboard();
         // Error should be hidden
         assertNotVisible(appium, loginPage.loginError);
     }
@@ -76,7 +77,7 @@ public class LoginTest {
         // Check password error is shown
         assertThat(loginPage.passwordError, hasText("Wrong password"));
         loginPage.setPassword("newPassw");
-        appium.getDriver().hideKeyboard();
+        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
         // Error should be hidden
         assertNotVisible(appium, loginPage.passwordError);
     }
@@ -97,8 +98,9 @@ public class LoginTest {
 
     private void login(String login, String password) {
         loginPage.setLogin(login);
+        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
         loginPage.setPassword(password);
-        appium.getDriver().hideKeyboard();
+        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
         loginPage.login();
     }
 

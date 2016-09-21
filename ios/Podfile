@@ -11,6 +11,7 @@ target 'Flashcards' do
   pod 'DrawerController', '~> 1.1'
   pod 'Koloda', '~> 3.1.2'
   pod 'OAStackView'
+  pod 'IQKeyboardManagerSwift'
 
 end
 

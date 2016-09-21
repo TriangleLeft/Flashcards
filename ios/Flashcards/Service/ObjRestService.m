@@ -14,8 +14,8 @@
 typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
 #ifdef APPIUM
-NSString* const RestServiceUrl = @"https://10.0.2.2:8080";
-NSString* const TranslationServiceUrl = @"https://10.0.2.2:8080";
+NSString* const RestServiceUrl = @"http://localhost:8080";
+NSString* const TranslationServiceUrl = @"http://localhost:8080";
 #else
 NSString* const RestServiceUrl = @"https://www.duolingo.com";
 NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
