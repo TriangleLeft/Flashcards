@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80F4721E48CA4B485280375C /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 		8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F041F871D7343F600E4D68E /* DrawerViewCell.swift */; };
 		8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F041F881D7343F600E4D68E /* DrawerViewCell.xib */; };
 		8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */; };
@@ -35,7 +36,6 @@
 		8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
 		8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
 		8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
-		8F284DD01D9203E700BD087F /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 		8F284DD21D9203E700BD087F /* VocabularyWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */; };
 		8F284DD31D9203E700BD087F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
 		8F284DD41D9203E700BD087F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
@@ -65,6 +65,7 @@
 		8F8A0CDB1D61D0E00038DFAB /* Flashcards.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD91D61D0E00038DFAB /* Flashcards.xcdatamodeld */; };
 		8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
 		8F8A0CE01D61D0E00038DFAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
+		8F8B11321D93339500AC935B /* CoreAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8B11311D93339500AC935B /* CoreAssets.xcassets */; };
 		8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
 		8F92DCAA1D70A39E00959DC3 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */; };
 		8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */; };
@@ -117,8 +118,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
+		7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		8F041F871D7343F600E4D68E /* DrawerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewCell.swift; sourceTree = "<group>"; };
 		8F041F881D7343F600E4D68E /* DrawerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewCell.xib; sourceTree = "<group>"; };
 		8F284DE61D9203E700BD087F /* Flashcards-Appium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flashcards-Appium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,6 +144,7 @@
 		8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F8A0CDF1D61D0E00038DFAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F8A0CE11D61D0E00038DFAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F8B11311D93339500AC935B /* CoreAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CoreAssets.xcassets; path = ../../core/build/CoreAssets.xcassets; sourceTree = "<group>"; };
 		8F9142FE1D673A3D00DB815F /* GsonResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GsonResponseSerializer.h; sourceTree = "<group>"; };
 		8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsonResponseSerializer.m; sourceTree = "<group>"; };
 		8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
@@ -167,7 +170,6 @@
 		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
 		8FFE91531D7628400079B37E /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		8FFE91551D76285F0079B37E /* CardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsView.xib; sourceTree = "<group>"; };
-		D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +182,6 @@
 				8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */,
 				8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */,
 				8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */,
-				8F284DD01D9203E700BD087F /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +195,7 @@
 				8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */,
 				8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */,
 				BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */,
+				80F4721E48CA4B485280375C /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +305,7 @@
 		8F8A0CD11D61D0DF0038DFAB /* Flashcards */ = {
 			isa = PBXGroup;
 			children = (
+				8F8B11311D93339500AC935B /* CoreAssets.xcassets */,
 				8F2928261D6203FF007B1CCF /* Service */,
 				8F29281A1D61FBB1007B1CCF /* UI */,
 				8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */,
@@ -362,8 +365,8 @@
 		B13338B283C3A5B893AEF959 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */,
-				1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */,
+				6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */,
+				7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */,
 				8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */,
 				8FFE91561D76285F0079B37E /* CardsView.xib in Resources */,
+				8F8B11321D93339500AC935B /* CoreAssets.xcassets in Resources */,
 				8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -680,7 +684,7 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -717,12 +721,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -759,6 +764,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Flashcards/Flashcards-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -849,7 +855,7 @@
 		};
 		8F8A0CE51D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D764DE803C87C979A01D7B3B /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -886,7 +892,7 @@
 		};
 		8F8A0CE61D61D0E00038DFAB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1AC11670E0B32E23D91C39EC /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

@@ -27,6 +27,7 @@
 #   STATIC_FRAMEWORK_RESOURCES_DIR
 #
 # Author: Tom Ball
+# Modified by: Aleksey Kurnosenko
 
 BUILD_DIR = build/j2objcOutputs
 STATIC_LIBRARY_NAME = core-j2objc
@@ -42,38 +43,14 @@ STATIC_HEADERS_DIR = $(BUILD_DIR)/src/main/objc
 STATIC_FRAMEWORK_HEADERS := $(shell find $(STATIC_HEADERS_DIR) -name "*.h" | sed -e 's/[$$]/\\$$/g')
 STATIC_FRAMEWORK_HEADERS := $(STATIC_FRAMEWORK_HEADERS:$(STATIC_HEADERS_DIR)/%=%)
 
+STATIC_FRAMEWORK_RESOURCES_DIR = $(STATIC_FRAMEWORK_DIR)/Versions/A/Resources
+
 FRAMEWORK_HEADER = $(BUILD_DIR)/src/main/objc/$(STATIC_FRAMEWORK_NAME).h
 MODULE_MAP = $(BUILD_DIR)/module.modulemap
 
-# These are warnings that are suppressed for J2ObjC headers and generated code.
-#
-# c++98-compat: NS_ENUM/CF_ENUM fails with this warning.
-# direct-ivar-access: direct access is faster than accessor invocations.
-# documentation: Javadoc formatting is more lenient than clang's.
-# dollar-in-identifier-extension: follows Java inner-class naming.
-# objc-interface-ivars: non-private fields are valid in Java.
-# overriding-method-mismatch: supports parameterized types.
-# reserved-id-macro: external headers (Apple, ICU) have header guards with leading underscores.
-# super-class-method-mismatch: overridden methods with parameters with type variables are valid.
-DISALLOWED_WARNINGS = \
-  -Wno-c++98-compat \
-  -Wno-c++98-compat-pedantic \
-  -Wno-direct-ivar-access \
-  -Wno-documentation \
-  -Wno-documentation-unknown-command \
-  -Wno-dollar-in-identifier-extension \
-  -Wno-objc-interface-ivars \
-  -Wno-old-style-cast \
-  -Wno-overriding-method-mismatch \
-  -Wno-reserved-id-macro \
-  -Wno-super-class-method-mismatch
-
-# Check that headers compile with most compiler flags.
-VERIFY_FLAGS := -I$(STATIC_FRAMEWORK_DIR)/Headers -I$(DIST_INCLUDE_DIR) \
-  -Werror -Weverything $(DISALLOWED_WARNINGS)
-
 framework: $(STATIC_FRAMEWORK_DIR)
 	@:
+
 
 $(STATIC_FRAMEWORK_DIR): $(STATIC_LIBRARY) $(FRAMEWORK_HEADER) $(MODULE_MAP)
 	@echo building $(STATIC_FRAMEWORK_NAME) framework
@@ -96,16 +73,6 @@ $(FRAMEWORK_HEADER):
 	@echo "//\n// $(STATIC_FRAMEWORK_NAME).h\n//\n" > $@
 	@for f in $(STATIC_FRAMEWORK_HEADERS); do \
 	    echo '#include <'$${f}'>'; done >> $@
-
-test_warnings: $(FRAMEWORK_HEADER)
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c -std=c11 $@
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c -std=c11 -fobjc-arc $@
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c -std=c11 -fno-objc-arc $@
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c++ -std=c++11 $@
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c++ -std=c++11 -fobjc-arc $@
-	@clang -c -o $(FRAMEWORK_HEADER:%.h=%.o) $(VERIFY_FLAGS) -x objective-c++ -std=c++11 \
-	    -fno-objc-arc $@
-	@rm $(FRAMEWORK_HEADER:%.h=%.o)
 
 $(MODULE_MAP):
 	@echo "module" $(STATIC_FRAMEWORK_NAME) "{" > $(MODULE_MAP)

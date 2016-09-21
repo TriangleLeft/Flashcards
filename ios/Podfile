@@ -12,7 +12,7 @@ target 'Flashcards' do
   pod 'Koloda', '~> 3.1.2'
   pod 'OAStackView'
   pod 'IQKeyboardManagerSwift'
-
+ 
 end
 
 post_install do |installer|
