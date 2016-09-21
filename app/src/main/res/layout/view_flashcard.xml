@@ -17,7 +17,7 @@
             android:alpha="0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/button_show_answer"
+            android:layout_above="@+id/flashcard_button_show_answer"
             android:layout_alignParentTop="true">
 
             <View
@@ -55,7 +55,7 @@
             android:text="@string/placeholder" />
 
         <Button
-            android:id="@+id/button_show_answer"
+            android:id="@+id/flashcard_button_show_answer"
             style="?android:buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/flashcard_button_height"
@@ -75,7 +75,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button_wrong"
+                android:id="@+id/flashcard_button_wrong"
                 style="?android:buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -85,7 +85,7 @@
                 android:textColor="@color/flashcard_text_wrong" />
 
             <Button
-                android:id="@+id/button_right"
+                android:id="@+id/flashcard_button_right"
                 style="?android:buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

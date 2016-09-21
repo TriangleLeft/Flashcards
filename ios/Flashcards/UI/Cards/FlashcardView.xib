@@ -30,11 +30,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kqN-gi-les">
                             <rect key="frame" x="-1" y="0.0" width="640" height="387"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                    <integer key="value" value="10"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="74b-ht-uJz">
                             <rect key="frame" x="319" y="387" width="320" height="60"/>
@@ -45,6 +40,9 @@
                             <state key="normal" title="I was right">
                                 <color key="titleColor" red="0.4941176471" green="0.70980392160000005" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_button_right"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onButtonRight:" destination="-1" eventType="touchUpInside" id="ejF-b0-N7J"/>
                             </connections>
@@ -58,6 +56,9 @@
                             <state key="normal" title="I was wrong">
                                 <color key="titleColor" red="0.86666667461395264" green="0.21960784494876862" blue="0.11372549086809158" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_button_wrong"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onButtonWrong:" destination="-1" eventType="touchUpInside" id="5zh-ww-LTk"/>
                             </connections>
@@ -80,6 +81,9 @@
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_translation"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                     </subviews>
                     <constraints>
@@ -102,6 +106,9 @@
                         <constraint firstAttribute="trailing" secondItem="74b-ht-uJz" secondAttribute="trailing" id="vjD-iF-6Xb"/>
                         <constraint firstItem="QmS-wq-xJQ" firstAttribute="centerY" secondItem="kqN-gi-les" secondAttribute="centerY" id="xwQ-OB-HFg"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_content"/>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wyN-bk-MdZ">
                     <rect key="frame" x="0.0" y="0.0" width="639" height="447"/>
@@ -109,6 +116,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="16"/>
                     <state key="normal" title="Show answer"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_button_show_answer"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="onShowAnswer:" destination="-1" eventType="touchUpInside" id="HI4-4V-NqP"/>
                     </connections>
@@ -118,6 +128,9 @@
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="flashcard_word"/>
+                    </userDefinedRuntimeAttributes>
                 </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -26,9 +26,12 @@
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="oaN-my-EP0">
                     <rect key="frame" x="282" y="282" width="37" height="37"/>
                     <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_progress"/>
+                    </userDefinedRuntimeAttributes>
                 </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fcO-vb-HG3">
-                    <rect key="frame" x="16" y="122" width="568" height="357"/>
+                    <rect key="frame" x="16" y="130" width="568" height="341"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flashcards" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hi0-DE-fE7">
                             <rect key="frame" x="0.0" y="0.0" width="568" height="66"/>
@@ -36,83 +39,105 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PPj-Aw-vPB">
-                            <rect key="frame" x="16" y="116" width="536" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
-                            <connections>
-                                <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="t2G-jJ-BLu"/>
-                            </connections>
-                        </textField>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wrong login" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ehs-Yq-emM">
-                            <rect key="frame" x="16" y="162" width="536" height="17"/>
+                            <rect key="frame" x="16" y="154" width="536" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_email_error"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ea-Fl-He5">
-                            <rect key="frame" x="16" y="195" width="536" height="30"/>
+                            <rect key="frame" x="16" y="187" width="536" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_password"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onPasswordChanged:" destination="-1" eventType="editingChanged" id="3we-Gj-sMI"/>
                             </connections>
                         </textField>
                         <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wrong password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fHL-Rd-z6M">
-                            <rect key="frame" x="16" y="241" width="536" height="17"/>
+                            <rect key="frame" x="16" y="225" width="536" height="17"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_password_error"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Remember me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIQ-ix-pTw">
-                            <rect key="frame" x="16" y="274" width="112" height="21"/>
+                            <rect key="frame" x="16" y="258" width="112" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pbS-sQ-BzF">
-                            <rect key="frame" x="503" y="269" width="51" height="31"/>
+                            <rect key="frame" x="503" y="253" width="51" height="31"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_switch"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onRememberMeChanged:" destination="-1" eventType="valueChanged" id="mbm-4O-H6s"/>
                             </connections>
                         </switch>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
-                            <rect key="frame" x="265" y="327" width="38" height="30"/>
-                            <state key="normal" title="Login"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PPj-Aw-vPB">
+                            <rect key="frame" x="16" y="116" width="536" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_email"/>
+                            </userDefinedRuntimeAttributes>
                             <connections>
-                                <action selector="onLoginClick:" destination="-1" eventType="touchUpInside" id="iFH-WJ-eHf"/>
+                                <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="t2G-jJ-BLu"/>
                             </connections>
-                        </button>
+                        </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="pbS-sQ-BzF" secondAttribute="trailing" constant="16" id="5oO-tU-7ts"/>
-                        <constraint firstItem="fHL-Rd-z6M" firstAttribute="top" secondItem="6ea-Fl-He5" secondAttribute="bottom" constant="16" id="Aqf-dv-bWa"/>
+                        <constraint firstItem="fHL-Rd-z6M" firstAttribute="top" secondItem="6ea-Fl-He5" secondAttribute="bottom" constant="8" id="Aqf-dv-bWa"/>
                         <constraint firstItem="fHL-Rd-z6M" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="Ed2-lV-0xi"/>
                         <constraint firstItem="6ea-Fl-He5" firstAttribute="top" secondItem="Ehs-Yq-emM" secondAttribute="bottom" constant="16" id="Fsi-jl-8Pz"/>
                         <constraint firstAttribute="trailing" secondItem="6ea-Fl-He5" secondAttribute="trailing" constant="16" id="Iy8-Je-LKe"/>
                         <constraint firstItem="tIQ-ix-pTw" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="Kyd-Un-VBh"/>
                         <constraint firstItem="hi0-DE-fE7" firstAttribute="centerX" secondItem="fcO-vb-HG3" secondAttribute="centerX" id="NhU-Dy-QNY"/>
                         <constraint firstItem="PPj-Aw-vPB" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="OAE-XK-yih"/>
-                        <constraint firstItem="dfc-ah-4rS" firstAttribute="top" secondItem="tIQ-ix-pTw" secondAttribute="bottom" constant="32" id="PVf-id-1qZ"/>
-                        <constraint firstAttribute="bottom" secondItem="dfc-ah-4rS" secondAttribute="bottom" id="QDL-Ek-PDD"/>
                         <constraint firstItem="PPj-Aw-vPB" firstAttribute="top" secondItem="hi0-DE-fE7" secondAttribute="bottom" constant="50" id="YKM-pf-Vke"/>
                         <constraint firstAttribute="trailing" secondItem="PPj-Aw-vPB" secondAttribute="trailing" constant="16" id="agf-oK-pf9"/>
                         <constraint firstAttribute="trailing" secondItem="fHL-Rd-z6M" secondAttribute="trailing" constant="16" id="bws-rI-eBS"/>
+                        <constraint firstAttribute="bottom" secondItem="pbS-sQ-BzF" secondAttribute="bottom" constant="57" id="g82-47-ljG"/>
                         <constraint firstItem="hi0-DE-fE7" firstAttribute="width" secondItem="fcO-vb-HG3" secondAttribute="width" id="g92-TY-x4D"/>
                         <constraint firstItem="hi0-DE-fE7" firstAttribute="top" secondItem="fcO-vb-HG3" secondAttribute="top" id="hrS-Vu-VFl"/>
                         <constraint firstItem="Ehs-Yq-emM" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="jqn-f0-Fww"/>
-                        <constraint firstItem="Ehs-Yq-emM" firstAttribute="top" secondItem="PPj-Aw-vPB" secondAttribute="bottom" constant="16" id="l9a-dR-2wD"/>
+                        <constraint firstItem="Ehs-Yq-emM" firstAttribute="top" secondItem="PPj-Aw-vPB" secondAttribute="bottom" constant="8" id="l9a-dR-2wD"/>
                         <constraint firstAttribute="trailing" secondItem="Ehs-Yq-emM" secondAttribute="trailing" constant="16" id="q3Q-HR-J43"/>
-                        <constraint firstItem="dfc-ah-4rS" firstAttribute="centerX" secondItem="fcO-vb-HG3" secondAttribute="centerX" id="sAG-LU-RL1"/>
                         <constraint firstItem="tIQ-ix-pTw" firstAttribute="top" secondItem="fHL-Rd-z6M" secondAttribute="bottom" constant="16" id="stq-Ui-fwk"/>
                         <constraint firstItem="6ea-Fl-He5" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="voT-4h-fng"/>
                         <constraint firstItem="pbS-sQ-BzF" firstAttribute="centerY" secondItem="tIQ-ix-pTw" secondAttribute="centerY" id="wz8-bh-haO"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="10"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
+                    <rect key="frame" x="281" y="441" width="38" height="30"/>
+                    <state key="normal" title="Login"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_button"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="onLoginClick:" destination="-1" eventType="touchUpInside" id="iFH-WJ-eHf"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.1294117719" green="0.58823531870000001" blue="0.9529411793" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
+                <constraint firstItem="fcO-vb-HG3" firstAttribute="bottom" secondItem="dfc-ah-4rS" secondAttribute="bottom" id="2Hb-fu-asg"/>
                 <constraint firstItem="oaN-my-EP0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2fx-N7-xuS"/>
                 <constraint firstItem="fcO-vb-HG3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="5hs-mx-FMC">
                     <variation key="widthClass=regular" constant="128"/>
@@ -122,6 +147,7 @@
                 <constraint firstAttribute="trailing" secondItem="fcO-vb-HG3" secondAttribute="trailing" constant="16" id="efn-ll-7aR">
                     <variation key="widthClass=regular" constant="128"/>
                 </constraint>
+                <constraint firstItem="fcO-vb-HG3" firstAttribute="centerX" secondItem="dfc-ah-4rS" secondAttribute="centerX" id="jYc-O2-XGU"/>
                 <constraint firstItem="fcO-vb-HG3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uoH-yX-zll"/>
             </constraints>
             <point key="canvasLocation" x="339" y="305"/>

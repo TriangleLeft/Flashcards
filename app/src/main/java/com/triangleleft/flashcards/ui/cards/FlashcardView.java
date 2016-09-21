@@ -1,11 +1,5 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -14,6 +8,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,9 +30,9 @@ public class FlashcardView extends FrameLayout {
     TextView wordView;
     @Bind(R.id.flashcard_translation)
     TextView translationView;
-    @Bind(R.id.button_right)
+    @Bind(R.id.flashcard_button_right)
     Button buttonRight;
-    @Bind(R.id.button_wrong)
+    @Bind(R.id.flashcard_button_wrong)
     Button buttonWrong;
     @Bind(R.id.flashcard_fake_word)
     View fakeWord;
@@ -91,14 +91,14 @@ public class FlashcardView extends FrameLayout {
         buttonBlock.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick(R.id.button_right)
+    @OnClick(R.id.flashcard_button_right)
     public void onRightClick() {
         if (listener != null) {
             listener.onRightClick();
         }
     }
 
-    @OnClick(R.id.button_wrong)
+    @OnClick(R.id.flashcard_button_wrong)
     public void onWrongClick() {
         if (listener != null) {
             listener.onWrongClick();

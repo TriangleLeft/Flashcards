@@ -37,7 +37,7 @@ import static org.hamcrest.core.Is.is;
 public class FlashcardsTest {
 
     @Rule
-    public AppiumRule appium = new AppiumRule(false);
+    public AppiumRule appium = new AppiumRule(true);
 
     @Before
     public void before() {
@@ -74,7 +74,7 @@ public class FlashcardsTest {
 
         FlashcardPage flashcardPage = appium.getApp().flashcardPage();
         for (int i = 0; i < flashcardsData.getWords().size(); i++) {
-            flashcardPage.card.click();
+            flashcardPage.showAnswerButton.click();
             flashcardPage.buttonRight.click();
             Thread.sleep(1000);
         }
@@ -95,7 +95,7 @@ public class FlashcardsTest {
 
         FlashcardPage flashcardPage = appium.getApp().flashcardPage();
         for (int i = 0; i < flashcardsData.getWords().size(); i++) {
-            flashcardPage.card.click();
+            flashcardPage.showAnswerButton.click();
             // Mark second word as error
             if (i == 1) {
                 flashcardPage.buttonWrong.click();
