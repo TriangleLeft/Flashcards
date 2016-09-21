@@ -61,8 +61,7 @@ extension DrawerViewController: UITableViewDataSource, UITableViewDelegate {
         
         let item = items.getWithInt(Int32(indexPath.row)) as! Language
         
-        cell.titleLabel.text = item.getName()
-        cell.levelLabel.text = String(item.getLevel())
+        cell.showLanguage(item)
         
         return cell
     }

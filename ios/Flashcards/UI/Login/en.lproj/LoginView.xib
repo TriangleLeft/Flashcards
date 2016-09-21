@@ -39,7 +39,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PPj-Aw-vPB">
                             <rect key="frame" x="16" y="116" width="536" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             <connections>
                                 <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="t2G-jJ-BLu"/>
                             </connections>
@@ -53,7 +53,7 @@
                         <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ea-Fl-He5">
                             <rect key="frame" x="16" y="195" width="536" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
                             <connections>
                                 <action selector="onPasswordChanged:" destination="-1" eventType="editingChanged" id="3we-Gj-sMI"/>
                             </connections>
