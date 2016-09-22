@@ -13,7 +13,7 @@ import io.appium.java_client.pagefactory.iOSFindBy;
 public class VocabularyListPage extends BasePage {
 
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/vocab_list")
-    @iOSFindBy(xpath = "//UIAApplication[1]/UIAWindow[1]/UIATableView[2]")
+    @iOSFindBy(accessibility = "vocabulary_list")
     public WebElement list;
 
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/item_vocabular_text")
@@ -21,11 +21,11 @@ public class VocabularyListPage extends BasePage {
     public List<WebElement> words;
 
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/vocabulary_list_button_retry")
-    // TODO: missing
+    @iOSFindBy(accessibility = "vocabulary_list_button_retry")
     public WebElement retryButton;
 
     @AndroidFindBy(id = "com.triangleleft.flashcards:id/vocabulary_list_no_words")
-    // TODO: missing
+    @iOSFindBy(accessibility = "vocabulary_list_no_words")
     public WebElement noWordsLabel;
 
     public VocabularyListPage(AppiumFieldDecorator driver) {

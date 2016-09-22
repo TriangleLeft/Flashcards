@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VocabularyListViewController" customModule="Flashcards" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="L7x-2x-j6g" id="dPX-Cy-n8U"/>
+                <outlet property="loadErrorGroup" destination="SQr-lC-i9f" id="mNd-03-BLC"/>
+                <outlet property="noKnownWordsLabel" destination="cIZ-5t-UkZ" id="c62-q9-BgX"/>
+                <outlet property="tableView" destination="pSZ-QV-6y8" id="jG3-Lj-ABe"/>
+                <outlet property="view" destination="iN0-l3-epB" id="Fw5-wd-joT"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="L7x-2x-j6g">
+                    <rect key="frame" x="282" y="282" width="37" height="37"/>
+                    <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="pSZ-QV-6y8">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="vocabulary_list"/>
+                    </userDefinedRuntimeAttributes>
+                </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You haven't learned any words yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cIZ-5t-UkZ">
+                    <rect key="frame" x="170" y="290" width="261" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="vocabulary_list_no_words"/>
+                    </userDefinedRuntimeAttributes>
+                </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQr-lC-i9f">
+                    <rect key="frame" x="224" y="267" width="153" height="67"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Couldn't load words" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8cK-SM-THC">
+                            <rect key="frame" x="0.0" y="0.0" width="153" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Y1-ta-o3b">
+                            <rect key="frame" x="58" y="37" width="37" height="30"/>
+                            <state key="normal" title="Retry"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="vocabulary_list_button_retry"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onRetryButtonClick:" destination="-1" eventType="touchUpInside" id="leU-iD-MCz"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="7Y1-ta-o3b" secondAttribute="bottom" id="KBj-IZ-J1L"/>
+                        <constraint firstItem="7Y1-ta-o3b" firstAttribute="top" secondItem="8cK-SM-THC" secondAttribute="bottom" constant="16" id="Qcc-UO-2Yx"/>
+                        <constraint firstItem="7Y1-ta-o3b" firstAttribute="centerX" secondItem="SQr-lC-i9f" secondAttribute="centerX" id="RHL-Zw-Kc2"/>
+                        <constraint firstItem="8cK-SM-THC" firstAttribute="leading" secondItem="SQr-lC-i9f" secondAttribute="leading" id="nJX-la-tle"/>
+                        <constraint firstItem="8cK-SM-THC" firstAttribute="top" secondItem="SQr-lC-i9f" secondAttribute="top" id="r7e-SW-RpU"/>
+                        <constraint firstAttribute="trailing" secondItem="8cK-SM-THC" secondAttribute="trailing" id="uip-ce-CtG"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="L7x-2x-j6g" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Kkj-Bd-skV"/>
+                <constraint firstItem="L7x-2x-j6g" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Lfh-Fv-eOH"/>
+                <constraint firstItem="SQr-lC-i9f" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="MXN-pV-Sw4"/>
+                <constraint firstItem="SQr-lC-i9f" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Z6w-QX-VyX"/>
+                <constraint firstItem="pSZ-QV-6y8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="beI-Jt-Q17"/>
+                <constraint firstItem="pSZ-QV-6y8" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="bq4-NW-rlS"/>
+                <constraint firstItem="cIZ-5t-UkZ" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="crW-IN-u0u"/>
+                <constraint firstItem="pSZ-QV-6y8" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="lav-Jr-gCx"/>
+                <constraint firstItem="pSZ-QV-6y8" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="lmq-uU-Z8f"/>
+                <constraint firstItem="cIZ-5t-UkZ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vWo-aR-QfI"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+        </view>
+    </objects>
+</document>

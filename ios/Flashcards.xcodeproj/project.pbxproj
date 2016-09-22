@@ -17,7 +17,7 @@
 		8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
 		8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
 		8F284DBB1D9203E700BD087F /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
-		8F284DBC1D9203E700BD087F /* VocabularyListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListTableViewController.swift */; };
+		8F284DBC1D9203E700BD087F /* VocabularyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */; };
 		8F284DBD1D9203E700BD087F /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
 		8F284DBE1D9203E700BD087F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */; };
 		8F284DBF1D9203E700BD087F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
@@ -43,7 +43,6 @@
 		8F284DD61D9203E700BD087F /* ErrorWordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FA512A81D78F083005BDE26 /* ErrorWordCell.xib */; };
 		8F284DD71D9203E700BD087F /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
 		8F284DD81D9203E700BD087F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD61D61D0E00038DFAB /* Main.storyboard */; };
-		8F284DD91D9203E700BD087F /* VocabularyListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A31D6C7BF10005C9C3 /* VocabularyListTableView.xib */; };
 		8F284DDA1D9203E700BD087F /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */; };
 		8F284DDB1D9203E700BD087F /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
 		8F284DDC1D9203E700BD087F /* CardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE91551D76285F0079B37E /* CardsView.xib */; };
@@ -55,8 +54,7 @@
 		8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
 		8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
 		8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */; };
-		8F3DF5A41D6C7BF10005C9C3 /* VocabularyListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListTableViewController.swift */; };
-		8F3DF5A51D6C7BF10005C9C3 /* VocabularyListTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A31D6C7BF10005C9C3 /* VocabularyListTableView.xib */; };
+		8F3DF5A41D6C7BF10005C9C3 /* VocabularyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */; };
 		8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F488B841D653E1B00A1B99B /* libjre_emul.a */; };
 		8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
 		8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
@@ -81,6 +79,8 @@
 		8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
 		8FD30A671D76FAE5007C31BD /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
 		8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
+		8FD6AF021D940A8800A88A47 /* VocabularyListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */; };
+		8FD6AF031D940A8D00A88A47 /* VocabularyListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */; };
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
 		8FE1B97D1D74391800482A66 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */; };
 		8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1B97E1D743B3500482A66 /* VocabularyStrengthView.swift */; };
@@ -131,8 +131,7 @@
 		8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flashcards-Bridging-Header.h"; sourceTree = "<group>"; };
 		8F2928321D620CDB007B1CCF /* libjavax_inject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjavax_inject.a; path = "../../../Library/j2objc-1.1/lib/libjavax_inject.a"; sourceTree = "<group>"; };
 		8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		8F3DF5A21D6C7BF10005C9C3 /* VocabularyListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VocabularyListTableViewController.swift; path = ../VocabularyListTableViewController.swift; sourceTree = "<group>"; };
-		8F3DF5A31D6C7BF10005C9C3 /* VocabularyListTableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = VocabularyListTableView.xib; path = ../VocabularyListTableView.xib; sourceTree = "<group>"; };
+		8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VocabularyListViewController.swift; path = ../VocabularyListViewController.swift; sourceTree = "<group>"; };
 		8F488B741D65361000A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = ../../j2objc/jre_emul/build_result/libjre_emul.a; sourceTree = "<group>"; };
 		8F488B841D653E1B00A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = "../../j2objc/jre_emul/build/Debug-iphoneos/libjre_emul.a"; sourceTree = "<group>"; };
 		8F7E3D451D6661A0004B2D7D /* libjsr305.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsr305.a; path = ../../j2objc/jsr305/build_result/libjsr305.a; sourceTree = "<group>"; };
@@ -161,6 +160,7 @@
 		8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListTableViewCell.xib; sourceTree = "<group>"; };
 		8FD30A661D76FAE5007C31BD /* FlashcardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 		8FD30A681D76FAFB007C31BD /* FlashcardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashcardView.xib; sourceTree = "<group>"; };
+		8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListView.xib; sourceTree = "<group>"; };
 		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
 		8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
@@ -323,10 +323,10 @@
 		8FB1ED801D6C93F100DCFDA7 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				8F3DF5A21D6C7BF10005C9C3 /* VocabularyListTableViewController.swift */,
-				8F3DF5A31D6C7BF10005C9C3 /* VocabularyListTableView.xib */,
+				8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */,
 				8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */,
 				8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */,
+				8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */,
 			);
 			path = List;
 			sourceTree = "<group>";
@@ -471,8 +471,8 @@
 				8F284DD51D9203E700BD087F /* DrawerViewCell.xib in Resources */,
 				8F284DD61D9203E700BD087F /* ErrorWordCell.xib in Resources */,
 				8F284DD71D9203E700BD087F /* LoginView.xib in Resources */,
+				8FD6AF031D940A8D00A88A47 /* VocabularyListView.xib in Resources */,
 				8F284DD81D9203E700BD087F /* Main.storyboard in Resources */,
-				8F284DD91D9203E700BD087F /* VocabularyListTableView.xib in Resources */,
 				8F284DDA1D9203E700BD087F /* DrawerViewController.xib in Resources */,
 				8F284DDB1D9203E700BD087F /* FlashcardView.xib in Resources */,
 				8F284DDC1D9203E700BD087F /* CardsView.xib in Resources */,
@@ -489,9 +489,9 @@
 				8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */,
 				8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */,
 				8FA512AA1D78F083005BDE26 /* ErrorWordCell.xib in Resources */,
+				8FD6AF021D940A8800A88A47 /* VocabularyListView.xib in Resources */,
 				8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */,
 				8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */,
-				8F3DF5A51D6C7BF10005C9C3 /* VocabularyListTableView.xib in Resources */,
 				8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */,
 				8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */,
 				8FFE91561D76285F0079B37E /* CardsView.xib in Resources */,
@@ -607,7 +607,7 @@
 				8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */,
 				8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */,
 				8F284DBB1D9203E700BD087F /* PersistentStorage.swift in Sources */,
-				8F284DBC1D9203E700BD087F /* VocabularyListTableViewController.swift in Sources */,
+				8F284DBC1D9203E700BD087F /* VocabularyListViewController.swift in Sources */,
 				8F284DBD1D9203E700BD087F /* ObjRestService.m in Sources */,
 				8F284DBE1D9203E700BD087F /* ViewController.swift in Sources */,
 				8F284DBF1D9203E700BD087F /* GsonResponseSerializer.m in Sources */,
@@ -635,7 +635,7 @@
 				8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */,
 				8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */,
 				8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */,
-				8F3DF5A41D6C7BF10005C9C3 /* VocabularyListTableViewController.swift in Sources */,
+				8F3DF5A41D6C7BF10005C9C3 /* VocabularyListViewController.swift in Sources */,
 				8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */,
 				8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */,
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,

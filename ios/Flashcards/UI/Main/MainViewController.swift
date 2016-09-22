@@ -12,7 +12,7 @@ import DrawerController
 class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     let presenter:MainPresenter
-    let listVC:VocabularyListTableViewController
+    let listVC:VocabularyListViewController
     let wordVC:VocabularyWordViewController
     let navListVC:UINavigationController
     let navWordVC:UINavigationController
@@ -22,7 +22,7 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     
     init(_ presenter:MainPresenter, listPrensenter:VocabularyListPresenter, wordPresenter:VocabularyWordPresenter) {
         self.presenter = presenter;
-        self.listVC = VocabularyListTableViewController(listPrensenter)
+        self.listVC = VocabularyListViewController(listPrensenter)
         self.wordVC = VocabularyWordViewController(wordPresenter);
         self.navListVC = UINavigationController(rootViewController: listVC)
         self.navWordVC = UINavigationController(rootViewController: wordVC)
@@ -93,22 +93,11 @@ extension MainViewController: MainViewControllerDelegate {
             drawer.closeDrawerAnimated(true, completion: nil)
         }
     }
-    
-    func setMasterCollapsed(collapsed: Bool) {
-        if (collapsed) {
-            preferredPrimaryColumnWidthFraction = defaultWidthFraction
-        } else {
-            preferredPrimaryColumnWidthFraction = 1.0
-        }
-        NSLog("Collaped %@", collapsed)
-    }
 }
 
 extension MainViewController: IMainView {
     
     func setTitleWithNSString(title: String!) {
-        //listVC.navigationItem.title = title
-        //navListVC.navigationBar.topItem?.title = title
         listVC.title = title
     }
     
@@ -116,31 +105,12 @@ extension MainViewController: IMainView {
         wordVC.presenter.showWordWithComAnnimonStreamOptional(word);
         collapseDetailViewController = false
         if (collapsed) {
-            
-            
-            //            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-            //                // Disable drawer
-            //                if let array = drawer.view.gestureRecognizers {
-            //                    for recognizer in array {
-            //                        recognizer.enabled = false
-            //                    }
-            //                }
-            //            }
-            
             showDetailViewController(wordVC, sender: self)
         }
     }
     
     func showList() {
         if (collapsed) {
-            // Enable drawer
-            //            if let drawer: DrawerController = self.parentViewController as? DrawerController {
-            //                if let array = drawer.view.gestureRecognizers {
-            //                    for recognizer in array {
-            //                        recognizer.enabled = true
-            //                    }
-            //                }
-            //            }
             showViewController(navListVC, sender: nil);
         }
     }
@@ -156,6 +126,4 @@ extension MainViewController: IMainView {
 
 protocol MainViewControllerDelegate: class {
     func onMenuClicked()
-    
-    func setMasterCollapsed(collapsed: Bool)
 }
