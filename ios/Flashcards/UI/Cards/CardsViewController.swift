@@ -46,7 +46,7 @@ class CardsViewController: UIViewController {
         errorsTableView.delegate = self
         errorsTableView.registerNib(UINib(nibName: nibStringName, bundle: nil), forCellReuseIdentifier: nibStringName)
         // Fake footer to hide empty cells and last divider
-       // errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
+        // errorsTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: errorsTableView.frame.size.width, height: 1))
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: self, action: #selector(CardsViewController.onDoneClick))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Restart", style: .Plain, target: self, action: #selector(CardsViewController.onRestartClick))
@@ -155,6 +155,20 @@ extension CardsViewController: KolodaViewDelegate {
     
     func kolodaDidRunOutOfCards(koloda: KolodaView) {
         presenter.onCardsDepleted()
+    }
+    
+    func koloda(koloda: KolodaView, didSwipeCardAtIndex index: UInt, inDirection direction: SwipeResultDirection) {
+        let word:FlashcardWord = wordList.getWithInt(Int32(index)) as! FlashcardWord
+        switch direction {
+        case .Left:
+            presenter.onWordWrongWithFlashcardWord(word)
+            break
+        case .Right:
+            presenter.onWordRightWithFlashcardWord(word)
+            break
+        default:
+            NSLog("Unsupported direction: \(direction)")
+        }
     }
     
     func koloda(koloda: KolodaView, shouldDragCardAtIndex index: UInt ) -> Bool {
