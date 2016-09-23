@@ -8,12 +8,14 @@ import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.ui.main.DrawerLanguagesAdapter;
 import com.triangleleft.flashcards.ui.main.DrawerPresenter;
 import com.triangleleft.flashcards.ui.main.IDrawerView;
+import com.triangleleft.flashcards.ui.main.SettingsActivity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import android.animation.FloatEvaluator;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.BindDimen;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NavigationView extends FrameLayout implements IDrawerView {
 
@@ -171,5 +174,10 @@ public class NavigationView extends FrameLayout implements IDrawerView {
 
     public void resetScroll() {
         recyclerView.smoothScrollToPosition(0);
+    }
+
+    @OnClick(R.id.drawer_button_settings)
+    public void onSettingsClick() {
+        getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
     }
 }

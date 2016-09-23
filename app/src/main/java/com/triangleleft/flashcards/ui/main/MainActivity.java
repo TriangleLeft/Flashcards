@@ -16,20 +16,12 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
-import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -87,30 +79,6 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     protected void onDestroy() {
         super.onDestroy();
         ViewServer.get(this).removeWindow(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        List<Integer> list = Arrays.asList(R.id.action_settings);
-        for (Integer itemId : list) {
-            MenuItem menuItem = menu.findItem(itemId);
-            Drawable wrap = DrawableCompat.wrap(menuItem.getIcon());
-            DrawableCompat.setTint(wrap, ContextCompat.getColor(this, R.color.textColorPrimary));
-            menuItem.setIcon(wrap);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
