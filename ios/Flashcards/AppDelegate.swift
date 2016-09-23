@@ -81,6 +81,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return navCardsController
     }
     
+    func buildSettingsViewController() -> UIViewController {
+        let settingsController:SettingsViewController = SettingsViewController()
+        let navController:UINavigationController = UINavigationController(rootViewController: settingsController)
+        navController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
+        navController.navigationBar.tintColor = UIColor.whiteColor()
+        return navController
+    }
+    
     private func changeRootViewController(controller:UIViewController!, animated:Bool) {
         if (self.window!.rootViewController == nil || !animated) {
             self.window!.rootViewController = controller

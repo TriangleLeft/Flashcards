@@ -1,5 +1,5 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '8.3'
 
 target 'Flashcards' do
   # Comment this line if you're not using Swift and don't want to use dynamic frameworks
@@ -10,8 +10,9 @@ target 'Flashcards' do
   pod 'AFNetworkActivityLogger', git: 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', branch: '3_0_0'
   pod 'DrawerController', '~> 1.1'
   pod 'Koloda', '~> 3.1.2'
-  pod 'OAStackView'
   pod 'IQKeyboardManagerSwift'
+  pod 'HanekeSwift'
+  #pod 'Toast-Swift', '~> 2.0.0'
  
 end
 

@@ -10,25 +10,7 @@ import UIKit
 
 class DrawerViewCell: UITableViewCell {
     
-    var flagImages = [
-        "de":"germany",
-        "fr":"france",
-        "es":"spain",
-        "dn":"netherlands",
-        "ru":"russia",
-        "uk":"ukraine",
-        "pt":"brazil",
-        "vi":"viewtnam",
-        "nb":"norway",
-        "tr":"turkey",
-        "sv":"sweden",
-        "da":"denmark",
-        "cy":"wales",
-        "ga":"ireland",
-        "it":"italy",
-        "pl":"polish",
-        "he":"israel",
-    ]
+    var flagImages = ["de":"germany", "fr":"france","es":"spain", "dn":"netherlands", "ru":"russia", "uk":"ukraine", "pt":"brazil", "vi":"viewtnam", "nb":"norway", "tr":"turkey", "sv":"sweden","da":"denmark","cy":"wales", "ga":"ireland","it":"italy", "pl":"polish", "he":"israel"]
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconView: UIImageView!

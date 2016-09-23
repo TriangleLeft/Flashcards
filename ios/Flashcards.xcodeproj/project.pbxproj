@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		80F4721E48CA4B485280375C /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
 		8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F041F871D7343F600E4D68E /* DrawerViewCell.swift */; };
 		8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F041F881D7343F600E4D68E /* DrawerViewCell.xib */; };
 		8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */; };
@@ -67,6 +66,10 @@
 		8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */; };
 		8F92DCAA1D70A39E00959DC3 /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */; };
 		8F92DCAB1D70A39E00959DC3 /* DrawerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */; };
+		8F94DFD01D9590330098F36B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F94DFCE1D9590330098F36B /* SettingsViewController.swift */; };
+		8F94DFD11D9590330098F36B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F94DFCE1D9590330098F36B /* SettingsViewController.swift */; };
+		8F94DFD21D9590330098F36B /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F94DFCF1D9590330098F36B /* SettingsViewController.xib */; };
+		8F94DFD31D9590330098F36B /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F94DFCF1D9590330098F36B /* SettingsViewController.xib */; };
 		8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
 		8F99DFF21D7719C9006F8847 /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */; };
 		8FA512A91D78F083005BDE26 /* ErrorWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */; };
@@ -119,8 +122,8 @@
 
 /* Begin PBXFileReference section */
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
-		7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
+		34FFD68D13F2728671DAB55A /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
+		44FE4DCAEC91B92244EACF24 /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		8F041F871D7343F600E4D68E /* DrawerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewCell.swift; sourceTree = "<group>"; };
 		8F041F881D7343F600E4D68E /* DrawerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewCell.xib; sourceTree = "<group>"; };
 		8F284DE61D9203E700BD087F /* Flashcards-Appium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flashcards-Appium.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -148,6 +151,8 @@
 		8F9142FF1D673A3D00DB815F /* GsonResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GsonResponseSerializer.m; sourceTree = "<group>"; };
 		8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewController.swift; sourceTree = "<group>"; };
 		8F92DCA91D70A39E00959DC3 /* DrawerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewController.xib; sourceTree = "<group>"; };
+		8F94DFCE1D9590330098F36B /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8F94DFCF1D9590330098F36B /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		8F9714C01D66516200C388AA /* FlashcardsCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FlashcardsCore.framework; path = ../core/build/FlashcardsCore.framework; sourceTree = "<group>"; };
 		8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NibLoadingView.swift; sourceTree = "<group>"; };
 		8FA512A71D78F083005BDE26 /* ErrorWordCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWordCell.swift; sourceTree = "<group>"; };
@@ -195,7 +200,6 @@
 				8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */,
 				8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */,
 				BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */,
-				80F4721E48CA4B485280375C /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,6 +209,7 @@
 		8F29281A1D61FBB1007B1CCF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				8F94DFCD1D95900A0098F36B /* Settings */,
 				8FFE91521D7627EE0079B37E /* Cards */,
 				8F3DF5A11D6C7B1E0005C9C3 /* Vocabular */,
 				8F3DF59A1D6C793A0005C9C3 /* Main */,
@@ -320,6 +325,15 @@
 			path = Flashcards;
 			sourceTree = "<group>";
 		};
+		8F94DFCD1D95900A0098F36B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8F94DFCE1D9590330098F36B /* SettingsViewController.swift */,
+				8F94DFCF1D9590330098F36B /* SettingsViewController.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		8FB1ED801D6C93F100DCFDA7 /* List */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,8 +379,8 @@
 		B13338B283C3A5B893AEF959 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */,
-				7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */,
+				34FFD68D13F2728671DAB55A /* Pods-Flashcards.debug.xcconfig */,
+				44FE4DCAEC91B92244EACF24 /* Pods-Flashcards.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -465,6 +479,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F94DFD31D9590330098F36B /* SettingsViewController.xib in Resources */,
 				8F284DD21D9203E700BD087F /* VocabularyWordView.xib in Resources */,
 				8F284DD31D9203E700BD087F /* LaunchScreen.storyboard in Resources */,
 				8F284DD41D9203E700BD087F /* Assets.xcassets in Resources */,
@@ -489,6 +504,7 @@
 				8F8A0CDD1D61D0E00038DFAB /* Assets.xcassets in Resources */,
 				8F041F8A1D7343F600E4D68E /* DrawerViewCell.xib in Resources */,
 				8FA512AA1D78F083005BDE26 /* ErrorWordCell.xib in Resources */,
+				8F94DFD21D9590330098F36B /* SettingsViewController.xib in Resources */,
 				8FD6AF021D940A8800A88A47 /* VocabularyListView.xib in Resources */,
 				8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */,
 				8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */,
@@ -613,6 +629,7 @@
 				8F284DBF1D9203E700BD087F /* GsonResponseSerializer.m in Sources */,
 				8F284DC01D9203E700BD087F /* ErrorWordCell.swift in Sources */,
 				8F284DC11D9203E700BD087F /* VocabularyStrengthView.swift in Sources */,
+				8F94DFD11D9590330098F36B /* SettingsViewController.swift in Sources */,
 				8F284DC21D9203E700BD087F /* DrawerViewCell.swift in Sources */,
 				8F284DC31D9203E700BD087F /* UIColor+Hex.swift in Sources */,
 				8F284DC41D9203E700BD087F /* LoginViewController.swift in Sources */,
@@ -641,6 +658,7 @@
 				8F9143001D673A3D00DB815F /* GsonResponseSerializer.m in Sources */,
 				8FA512A91D78F083005BDE26 /* ErrorWordCell.swift in Sources */,
 				8FE1B97F1D743B3500482A66 /* VocabularyStrengthView.swift in Sources */,
+				8F94DFD01D9590330098F36B /* SettingsViewController.swift in Sources */,
 				8F041F891D7343F600E4D68E /* DrawerViewCell.swift in Sources */,
 				8FE1B97D1D74391800482A66 /* UIColor+Hex.swift in Sources */,
 				8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */,
@@ -684,7 +702,7 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 34FFD68D13F2728671DAB55A /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -727,7 +745,7 @@
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 44FE4DCAEC91B92244EACF24 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -805,7 +823,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -845,7 +863,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -855,7 +873,7 @@
 		};
 		8F8A0CE51D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6490A2067DE53C3ECC46F08B /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 34FFD68D13F2728671DAB55A /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -892,7 +910,7 @@
 		};
 		8F8A0CE61D61D0E00038DFAB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7EE1AD5118A4D0D46342C28E /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 44FE4DCAEC91B92244EACF24 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

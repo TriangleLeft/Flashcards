@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Haneke
 
 class DrawerViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var avatarView: UIImageView!
+    @IBOutlet weak var settingsButton: UIButton!
     
     let presenter:DrawerPresenter
     let nibStringName = "VocabularyListTableViewCell"
@@ -34,7 +36,14 @@ class DrawerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let settingsImage = UIImage(named: "ic_settings")!.imageWithRenderingMode(.AlwaysTemplate)
+        settingsButton.tintColor = UIColor.whiteColor()
+        settingsButton.setImage(settingsImage, forState: .Normal)
+        
+        avatarView.layer.cornerRadius = avatarView.frame.size.width / 2
+        avatarView.clipsToBounds = true
+        
         tableView.registerNib(UINib(nibName: "DrawerViewCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
         tableView.dataSource = self
         tableView.delegate = self
@@ -44,6 +53,11 @@ class DrawerViewController: UIViewController {
         
         presenter.onBindWithIView(self)
         presenter.onCreate()
+    }
+    
+    @IBAction func onSettingsButtonClick(sender: AnyObject) {
+        let settingController: UIViewController = AppDelegate.sharedAppDelegate().buildSettingsViewController()
+        presentViewController(settingController, animated: true, completion: nil)
     }
 }
 
@@ -79,7 +93,7 @@ extension DrawerViewController: IDrawerView {
     func showUserDataWithNSString(username: String!, withNSString avatar: String!, withJavaUtilList languages: JavaUtilList!) {
         userNameLabel.text = username
         items = languages
-        
+        avatarView.hnk_setImageFromURL(NSURL(string: avatar)!)
         activityIndicatorView.stopAnimating()
         showContent = true
         tableView.separatorStyle = .SingleLine

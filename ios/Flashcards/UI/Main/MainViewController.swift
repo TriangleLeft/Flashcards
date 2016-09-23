@@ -77,7 +77,7 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
         drawer.openDrawerGestureModeMask = .BezelPanningCenterView
         drawer.closeDrawerGestureModeMask = .PanningCenterView
         drawer.centerHiddenInteractionMode = .CloseDrawer
-        drawer.showsShadows = true
+        drawer.showsShadows = false
         drawer.shouldStretchDrawer = false
         return drawer
     }
@@ -104,7 +104,7 @@ extension MainViewController: IMainView {
     func showWordWithComAnnimonStreamOptional(word: ComAnnimonStreamOptional!) {
         wordVC.presenter.showWordWithComAnnimonStreamOptional(word);
         collapseDetailViewController = false
-        if (collapsed) {
+        if (collapsed && word.isPresent()) {
             showDetailViewController(wordVC, sender: self)
         }
     }
