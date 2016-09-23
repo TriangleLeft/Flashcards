@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import AFNetworkActivityLogger
 import IQKeyboardManagerSwift
+import DrawerController
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -49,26 +50,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
         JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
         
-        setLoginViewController()
+        changeRootViewController(buildLoginViewController(), animated: false)
         
         window!.makeKeyAndVisible()
         return true
     }
     
-    func setLoginViewController() {
+    func buildLoginViewController() -> UIViewController {
         let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
-        let rootView: LoginViewController = LoginViewController(presenter: presenter)
-        window!.rootViewController = rootView
-        
+        return LoginViewController(presenter: presenter)
     }
     
-    func setMainViewController(animated:Bool) {
+    func buildMainViewController() -> UIViewController {
         let mainPresenter = MainPresenter(accountModule: accountModule)
-        let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: MainThreadScheduler())
         let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
-        changeRootViewController(MainViewController.wrapWithDrawer(mainVC, drawerPresenter: drawerPresenter), animated: animated)
+        
+        let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: MainThreadScheduler())
+        let drawerVC = DrawerViewController(presenter: drawerPresenter)
+        
+        let drawer = DrawerController(centerViewController: mainVC, leftDrawerViewController: drawerVC)
+        drawer.openDrawerGestureModeMask = .BezelPanningCenterView
+        drawer.closeDrawerGestureModeMask = .PanningCenterView
+        drawer.centerHiddenInteractionMode = .CloseDrawer
+        drawer.showsShadows = false
+        drawer.shouldStretchDrawer = false
+        
+        return drawer;
     }
     
     func buildCardsViewController() -> UIViewController {
@@ -89,7 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return navController
     }
     
-    private func changeRootViewController(controller:UIViewController!, animated:Bool) {
+    func changeRootViewController(controller:UIViewController!, animated:Bool) {
         if (self.window!.rootViewController == nil || !animated) {
             self.window!.rootViewController = controller
             return

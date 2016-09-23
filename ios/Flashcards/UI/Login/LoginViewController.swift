@@ -108,8 +108,8 @@ extension LoginViewController: ILoginView {
     }
     
     func advance() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        appDelegate.setMainViewController(true);
+        let mainVC = AppDelegate.sharedAppDelegate().buildMainViewController()
+        AppDelegate.sharedAppDelegate().changeRootViewController(mainVC, animated: true)
     }
     
     func setRememberUserWithBoolean(rememberUser: jboolean) {

@@ -70,17 +70,6 @@ class MainViewController: UISplitViewController, UISplitViewControllerDelegate {
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
         return collapseDetailViewController
     }
-    
-    class func wrapWithDrawer(vc: MainViewController, drawerPresenter:DrawerPresenter) -> UIViewController {
-        let drawerVC = DrawerViewController(presenter: drawerPresenter)
-        let drawer = DrawerController(centerViewController: vc, leftDrawerViewController: drawerVC)
-        drawer.openDrawerGestureModeMask = .BezelPanningCenterView
-        drawer.closeDrawerGestureModeMask = .PanningCenterView
-        drawer.centerHiddenInteractionMode = .CloseDrawer
-        drawer.showsShadows = false
-        drawer.shouldStretchDrawer = false
-        return drawer
-    }
 }
 
 extension MainViewController: MainViewControllerDelegate {
