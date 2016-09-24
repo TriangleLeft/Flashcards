@@ -13,6 +13,7 @@ target 'Flashcards' do
   pod 'IQKeyboardManagerSwift'
   pod 'HanekeSwift'
   #pod 'Toast-Swift', '~> 2.0.0'
+  pod 'JLToast', '~> 1.4'
  
 end
 

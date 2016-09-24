@@ -59,7 +59,7 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
                 .materialize()
                 .observeOn(scheduler)
                 .<UserData>dematerialize()
-                .subscribe(this::processUserData);
+                .subscribe(this::processUserData, this::processUserDataError);
     }
 
     private void processUserData(UserData data) {

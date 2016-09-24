@@ -122,7 +122,7 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
             if (!error) {
                 [subscriber onNextWithId:responseObject];
             } else {
-                NSLog(@"Error: %@, %@, %@", error, response, responseObject);
+                [subscriber onErrorWithNSException: [NetworkException new]];
             }
             [subscriber onCompleted];
         }] resume];

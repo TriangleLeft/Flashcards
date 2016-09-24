@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JLToast
 
 class VocabularyListViewController: UIViewController {
     
@@ -164,7 +165,8 @@ extension VocabularyListViewController: IVocabularyListView {
     }
     
     func showRefreshError() {
-        
+        refreshControl.endRefreshing()
+        JLToast.makeText("Failed to refresh words list", duration: JLToastDelay.ShortDelay).show()
     }
     
     func showLoadError() {

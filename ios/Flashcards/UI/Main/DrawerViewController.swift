@@ -8,6 +8,7 @@
 
 import UIKit
 import Haneke
+import JLToast
 
 class DrawerViewController: UIViewController {
 
@@ -101,12 +102,12 @@ extension DrawerViewController: IDrawerView {
     }
     
     func notifyLanguageSwitchError() {
-        
+        JLToast.makeText("Failed to switch language", duration: JLToastDelay.ShortDelay).show()
     }
     
     
     func notifyUserDataUpdateError() {
-        
+        JLToast.makeText("Failed to update user info", duration: JLToastDelay.ShortDelay).show()
     }
     
     func showListProgress() {
