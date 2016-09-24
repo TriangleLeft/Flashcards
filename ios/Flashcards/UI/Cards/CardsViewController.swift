@@ -53,7 +53,6 @@ class CardsViewController: UIViewController {
         
         presenter.onBindWithIView(self)
         presenter.onCreate()
-        
     }
     
     func onRestartClick() {

@@ -8,6 +8,7 @@
 
 #import <FlashcardsCore.h>
 #import "GsonResponseSerializer.h"
+#import "FlashcardsError.h"
 
 @implementation GsonResponseSerializer {
     ComGoogleGsonGson *_gson;
@@ -28,10 +29,14 @@
 
     if ([self validateResponse:(NSHTTPURLResponse *)response data:data error:error]) {
         NSString * json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"Reponse: %@", json);
-        responseObject = [_gson fromJsonWithNSString:json withIOSClass:_class];
+        @try {
+            responseObject = [_gson fromJsonWithNSString:json withIOSClass:_class];
+        }
+        @catch (NSException * exception) {
+            *error = [NSError errorWithDomain:FlashcardsErrorDomain code:FlashcardsConversionError userInfo:nil];
+        }
     } else {
-        NSLog(@"Validation failed");
+        *error = [NSError errorWithDomain:FlashcardsErrorDomain code:FlashcardsConversionError userInfo:nil];
     }
     
     

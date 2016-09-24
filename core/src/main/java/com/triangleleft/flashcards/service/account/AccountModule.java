@@ -17,7 +17,7 @@ public interface AccountModule {
 
     Optional<UserData> getUserData();
 
-    void setUserData(UserData data);
+    void setUserData(@Nullable UserData data);
 
     boolean shouldRememberUser();
 

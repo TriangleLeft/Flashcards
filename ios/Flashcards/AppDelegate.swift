@@ -50,10 +50,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
         JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
         
+        RxPluginsRxJavaHooks.setOnError(RxOnErrorClosure())
+        
         changeRootViewController(buildLoginViewController(), animated: false)
         
         window!.makeKeyAndVisible()
         return true
+    }
+    
+    class RxOnErrorClosure : NSObject, RxFunctionsAction1 {
+        func callWithId(t: AnyObject!) {
+            if (t is ConversionException) {
+                AppDelegate.sharedAppDelegate().navigateToLogin()
+            } else {
+                fatalError("Unhandled Rx exception \(t)")
+            }
+        }
     }
     
     func buildLoginViewController() -> UIViewController {
@@ -96,6 +108,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
         navController.navigationBar.tintColor = UIColor.whiteColor()
         return navController
+    }
+    
+    func navigateToLogin() {
+        accountModule?.setUserDataWithUserData(nil)
+        accountModule?.setUserIdWithNSString(nil)
+        let loginVC = buildLoginViewController()
+        changeRootViewController(loginVC, animated: true)
     }
     
     func changeRootViewController(controller:UIViewController!, animated:Bool) {

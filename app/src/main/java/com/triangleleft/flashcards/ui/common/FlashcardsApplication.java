@@ -1,5 +1,10 @@
 package com.triangleleft.flashcards.ui.common;
 
+import android.app.Application;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.widget.Toast;
+
 import com.facebook.stetho.Stetho;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.di.ApplicationComponent;
@@ -13,13 +18,7 @@ import com.triangleleft.flashcards.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.app.Application;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
-
-import rx.plugins.RxJavaErrorHandler;
-import rx.plugins.RxJavaPlugins;
+import rx.plugins.RxJavaHooks;
 import timber.log.Timber;
 
 public class FlashcardsApplication extends Application implements FlashcardsNavigator {
@@ -41,16 +40,13 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
         component = buildComponent();
         Timber.plant(new Timber.DebugTree());
         Stetho.initializeWithDefaults(this);
-        RxJavaPlugins.getInstance().registerErrorHandler(new RxJavaErrorHandler() {
-            @Override
-            public void handleError(Throwable e) {
-                logger.error("RxError", e);
-                // ConversionException would usually mean that we've got dead cookies
-                // (Duolingo would send html page with 200 code)
-                // So let's try to send user to login
-                if (e instanceof ConversionException) {
-                    navigateToLogin();
-                }
+        RxJavaHooks.setOnError(throwable -> {
+            logger.error("RxError", throwable);
+            // ConversionException would usually mean that we've got dead cookies
+            // (Duolingo would send html page with 200 code)
+            // So let's try to send user to login
+            if (throwable instanceof ConversionException) {
+                navigateToLogin();
             }
         });
         Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> logger.error("Uncaught exception", ex));

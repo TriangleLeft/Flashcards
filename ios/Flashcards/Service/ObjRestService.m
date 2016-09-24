@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "GsonResponseSerializer.h"
 #import "IOSClass.h"
+#import "FlashcardsError.h"
 
 typedef void(^RxSubscriberHandler)(RxSubscriber *subscriber);
 
@@ -122,7 +123,12 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
             if (!error) {
                 [subscriber onNextWithId:responseObject];
             } else {
-                [subscriber onErrorWithNSException: [NetworkException new]];
+                if ([error.domain isEqualToString:FlashcardsErrorDomain] && error.code == FlashcardsConversionError) {
+                    [subscriber onErrorWithNSException: [ConversionException new]];
+                } else {
+                    [subscriber onErrorWithNSException: [NetworkException new]];
+                }
+                
             }
             [subscriber onCompleted];
         }] resume];
