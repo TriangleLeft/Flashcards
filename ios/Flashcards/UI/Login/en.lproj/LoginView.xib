@@ -94,10 +94,22 @@
                                 <action selector="onLoginChanged:" destination="-1" eventType="editingChanged" id="t2G-jJ-BLu"/>
                             </connections>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
+                            <rect key="frame" x="265" y="295" width="38" height="30"/>
+                            <state key="normal" title="Login"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_button"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="onLoginClick:" destination="-1" eventType="touchUpInside" id="iFH-WJ-eHf"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dfc-ah-4rS" secondAttribute="bottom" constant="16" id="3Tx-hA-66x"/>
                         <constraint firstAttribute="trailing" secondItem="pbS-sQ-BzF" secondAttribute="trailing" constant="16" id="5oO-tU-7ts"/>
+                        <constraint firstItem="dfc-ah-4rS" firstAttribute="centerX" secondItem="fcO-vb-HG3" secondAttribute="centerX" id="AG3-rf-RsZ"/>
                         <constraint firstItem="fHL-Rd-z6M" firstAttribute="top" secondItem="6ea-Fl-He5" secondAttribute="bottom" constant="8" id="Aqf-dv-bWa"/>
                         <constraint firstItem="fHL-Rd-z6M" firstAttribute="leading" secondItem="fcO-vb-HG3" secondAttribute="leading" constant="16" id="Ed2-lV-0xi"/>
                         <constraint firstItem="6ea-Fl-He5" firstAttribute="top" secondItem="Ehs-Yq-emM" secondAttribute="bottom" constant="16" id="Fsi-jl-8Pz"/>
@@ -124,20 +136,9 @@
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfc-ah-4rS">
-                    <rect key="frame" x="281" y="441" width="38" height="30"/>
-                    <state key="normal" title="Login"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="login_button"/>
-                    </userDefinedRuntimeAttributes>
-                    <connections>
-                        <action selector="onLoginClick:" destination="-1" eventType="touchUpInside" id="iFH-WJ-eHf"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="0.1294117719" green="0.58823531870000001" blue="0.9529411793" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstItem="fcO-vb-HG3" firstAttribute="bottom" secondItem="dfc-ah-4rS" secondAttribute="bottom" id="2Hb-fu-asg"/>
                 <constraint firstItem="oaN-my-EP0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="2fx-N7-xuS"/>
                 <constraint firstItem="fcO-vb-HG3" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="5hs-mx-FMC">
                     <variation key="widthClass=regular" constant="128"/>
@@ -147,7 +148,6 @@
                 <constraint firstAttribute="trailing" secondItem="fcO-vb-HG3" secondAttribute="trailing" constant="16" id="efn-ll-7aR">
                     <variation key="widthClass=regular" constant="128"/>
                 </constraint>
-                <constraint firstItem="fcO-vb-HG3" firstAttribute="centerX" secondItem="dfc-ah-4rS" secondAttribute="centerX" id="jYc-O2-XGU"/>
                 <constraint firstItem="fcO-vb-HG3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="uoH-yX-zll"/>
             </constraints>
             <point key="canvasLocation" x="339" y="305"/>

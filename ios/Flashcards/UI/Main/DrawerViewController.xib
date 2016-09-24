@@ -45,7 +45,6 @@
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ueI-bi-f3t">
                     <rect key="frame" x="560" y="32" width="24" height="24"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="24" id="3xz-qQ-C3H"/>
                         <constraint firstAttribute="height" constant="24" id="8P4-Q0-LOE"/>
