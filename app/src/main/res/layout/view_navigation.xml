@@ -35,6 +35,17 @@
                 android:text="@string/placeholder"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
+            <ImageButton
+                android:id="@+id/drawer_button_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_settings"
+                android:layout_alignTop="@+id/drawer_user_avatar"
+                android:tint="@color/textColorSecondary"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
             <View
                 android:id="@+id/drawer_divider"
                 android:layout_width="match_parent"
