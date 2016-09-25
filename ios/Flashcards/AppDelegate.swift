@@ -54,6 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         changeRootViewController(buildLoginViewController(), animated: false)
         
+        let paths = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        print(paths[0])
+        
         window!.makeKeyAndVisible()
         return true
     }
