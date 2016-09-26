@@ -70,15 +70,23 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     public void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
+        getFlashcardsApplication().getRefWatcher().watch(this);
         if (isRemoving() || !getActivity().isChangingConfigurations()) {
+            // We are leaving this screen, notify presenter
             getPresenter().onDestroy();
+            // Component and presenter should be GCed
+            getFlashcardsApplication().getRefWatcher().watch(getComponent());
+            getFlashcardsApplication().getRefWatcher().watch(getPresenter());
         } else {
             getApplicationComponent().componentManager().saveComponent(getClass(), getComponent());
         }
     }
 
+    protected FlashcardsApplication getFlashcardsApplication() {
+        return (FlashcardsApplication) getActivity().getApplication();
+    }
     protected ApplicationComponent getApplicationComponent() {
-        return ((FlashcardsApplication) getActivity().getApplication()).getComponent();
+        return getFlashcardsApplication().getComponent();
     }
 
     protected Component getComponent() {

@@ -1,4 +1,9 @@
-package com.triangleleft.flashcards.ui.main;
+package com.triangleleft.flashcards.ui.main.drawer;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.settings.Language;
+import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
+import com.triangleleft.flashcards.ui.common.OnItemClickListener;
 
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -9,10 +14,6 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
-import com.triangleleft.flashcards.ui.common.OnItemClickListener;
 
 public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
 
@@ -41,19 +42,13 @@ public class DrawerLanguageViewHolder extends RecyclerView.ViewHolder {
         badgeView.setText(itemView.getResources().getString(R.string.language_level, language.getLevel()));
 
         boolean isSelected = language.isCurrentLearning();
-        if (isSelected) {
-            nameView.setTypeface(null, Typeface.BOLD);
-            badgeView.setTypeface(null, Typeface.BOLD);
-            nameView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark));
-            badgeView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark));
-            iconView.setAlpha(1f);
-        } else {
-            nameView.setTypeface(null, Typeface.NORMAL);
-            badgeView.setTypeface(null, Typeface.NORMAL);
-            nameView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.textColorSecondary));
-            badgeView.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.textColorSecondary));
-            iconView.setAlpha(0.5f);
-        }
+        int typeface = isSelected ? Typeface.BOLD : Typeface.NORMAL;
+        int color = isSelected ? R.color.colorPrimaryDark : R.color.textColorSecondary;
+
+        nameView.setTypeface(null, typeface);
+        badgeView.setTypeface(null, typeface);
+        nameView.setTextColor(ContextCompat.getColor(itemView.getContext(), color));
+        badgeView.setTextColor(ContextCompat.getColor(itemView.getContext(), color));
 
         itemView.invalidate();
     }

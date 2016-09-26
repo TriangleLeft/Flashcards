@@ -29,7 +29,7 @@
         android:layout_below="@+id/appbar"
         android:clipChildren="false">
 
-        <com.triangleleft.flashcards.ui.common.NavigationView
+        <com.triangleleft.flashcards.ui.main.drawer.NavigationView
             android:id="@+id/navigation_view"
             android:layout_width="@dimen/drawer_width"
             android:layout_height="match_parent" />

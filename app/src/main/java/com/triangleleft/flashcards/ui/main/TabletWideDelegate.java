@@ -4,7 +4,7 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.DrawableUtils;
-import com.triangleleft.flashcards.ui.common.NavigationView;
+import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
 

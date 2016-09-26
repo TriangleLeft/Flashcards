@@ -64,6 +64,9 @@ apply from: '../dependencies.gradle'
 dependencies {
     compile project(":core")
 
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$LEAKCANARY_VERSION"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
