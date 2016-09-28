@@ -13,40 +13,85 @@ import CoreData
 class IOSVocabularyWordsRepository: NSObject, VocabularyWordsRepository {
     
     func getWordsWithNSString(uiLanguageId: String!, withNSString learningLanguageId: String!) -> JavaUtilList! {
-        //var words = [NSManagedObject]()
+        let managedContext = AppDelegate.sharedAppDelegate().managedObjectContext
+        let fetchRequest = NSFetchRequest(entityName: "VocabularyWordDao")
+        let words = JavaUtilArrayList()
+        fetchRequest.predicate = NSPredicate(format: "(uiLanguage == %@) AND (learningLanguage = %@)", uiLanguageId, learningLanguageId)
         
+        do {
+            if let results = try managedContext.executeFetchRequest(fetchRequest) as? [VocabularyWordDao] {
+                for result in results {
+                    words.addWithId(result.toVocabularyWord())
+                }
+            }
+        } catch {
+            NSLog("Failed to retrieve words")
+        }
         
-        return JavaUtilArrayList();
+        return words
     }
     
     func putWordsWithJavaUtilList(words: JavaUtilList!) {
-        let iterator = words.iterator()
+        if words.isEmpty() {
+            return;
+        }
         let managedContext = AppDelegate.sharedAppDelegate().managedObjectContext
+        
         managedContext.performBlock {
-            // TODO: Need to delete old one first
+            // Need to delete old one first
+            let word:VocabularyWord = words.getWithInt(0) as! VocabularyWord
+            let uiLanguageId = word.getUiLanguage()
+            let learningLanguageId = word.getLearningLanguage()
+            
+            
+            let fetchRequest = NSFetchRequest(entityName: "VocabularyWordDao")
+            fetchRequest.predicate = NSPredicate(format: "(uiLanguage == %@) AND (learningLanguage = %@)", uiLanguageId, learningLanguageId)
+            fetchRequest.includesPropertyValues = false
+            
+            do {
+                if let results = try managedContext.executeFetchRequest(fetchRequest) as? [NSManagedObject] {
+                    for result in results {
+                        managedContext.deleteObject(result)
+                    }
+                    // No need to save it, as it would be done after we add items
+                }
+            } catch {
+                NSLog("Failed to clear previous data")
+            }
+            let iterator = words.iterator()
             while iterator.hasNext() {
                 let word:VocabularyWord = iterator.next() as! VocabularyWord
                 let entityWord = NSEntityDescription.entityForName("VocabularyWordDao", inManagedObjectContext: managedContext)
-                let newWord = NSManagedObject(entity: entityWord!, insertIntoManagedObjectContext: managedContext)
+                let newWord = VocabularyWordDao(entity: entityWord!, insertIntoManagedObjectContext: managedContext)
                 
                 if (word.getGender().isPresent()) {
-                    newWord.setValue(word.getGender().get(), forKey: "gender")
+                    newWord.gender = word.getGender().get() as? String
                 }
                 if (word.getPos().isPresent()) {
-                    newWord.setValue(word.getPos().get(), forKey: "pos")
+                    newWord.pos = word.getPos().get() as? String
                 }
-                newWord.setValue(word.getWord(), forKey: "wordString")
-                newWord.setValue(word.getNormalizedWord(), forKey: "normalizedString")
-                newWord.setValue(Int(word.getStrength()), forKey: "strength")
-                newWord.setValue(word.getUiLanguage(), forKey: "uiLanguage")
-                newWord.setValue(word.getLearningLanguage(), forKey: "learningLanguage")
+                newWord.wordString = word.getWord()
+                newWord.normalizedString = word.getNormalizedWord()
+                newWord.strength = word.getStrength()
+                newWord.uiLanguage = word.getUiLanguage()
+                newWord.learningLanguage = word.getLearningLanguage()
                 
-                do {
-                    try managedContext.save()
-                } catch {
-                    NSLog("Failed to save words into DB")
+                newWord.translations = Set<VocabularyWordTranslationDao>()
+                let translationIterator = word.getTranslations().iterator()
+                while translationIterator.hasNext() {
+                    let translation = translationIterator.next() as! String
+                    let entityTranslation = NSEntityDescription.entityForName("VocabularyWordTranslationDao", inManagedObjectContext: managedContext)
+                    let newTranslation = VocabularyWordTranslationDao(entity: entityTranslation!, insertIntoManagedObjectContext: managedContext)
+                    
+                    newTranslation.translation = translation
+                    newTranslation.translates = newWord
+                    
+                    newWord.translations!.insert(newTranslation)
                 }
+                
             }
+            
+            AppDelegate.sharedAppDelegate().saveContext()
         }
     }
 }

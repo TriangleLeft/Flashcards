@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
-    <entity name="VocabularyWordDao" syncable="YES">
+    <entity name="VocabularyWordDao" representedClassName="VocabularyWordDao" syncable="YES">
         <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="learningLanguage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="normalizedString" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pos" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="strength" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="strength" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="uiLanguage" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="wordString" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="VocabularyWordTranslationDao" inverseName="translates" inverseEntity="VocabularyWordTranslationDao" syncable="YES"/>
+        <relationship name="translations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="VocabularyWordTranslationDao" inverseName="translates" inverseEntity="VocabularyWordTranslationDao" syncable="YES"/>
     </entity>
-    <entity name="VocabularyWordTranslationDao" syncable="YES">
-        <attribute name="normalizedString" optional="YES" attributeType="String" syncable="YES"/>
+    <entity name="VocabularyWordTranslationDao" representedClassName=".VocabularyWordTranslationDao" syncable="YES">
         <attribute name="translation" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="translates" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="VocabularyWordDao" inverseName="translations" inverseEntity="VocabularyWordDao" syncable="YES"/>
     </entity>
     <elements>
-        <element name="VocabularyWordDao" positionX="-389" positionY="-39" width="128" height="163"/>
-        <element name="VocabularyWordTranslationDao" positionX="-11" positionY="36" width="128" height="88"/>
+        <element name="VocabularyWordDao" positionX="-389" positionY="-39" width="128" height="165"/>
+        <element name="VocabularyWordTranslationDao" positionX="-11" positionY="36" width="128" height="73"/>
     </elements>
 </model>
