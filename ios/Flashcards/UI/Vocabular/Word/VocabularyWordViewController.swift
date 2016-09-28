@@ -10,13 +10,9 @@ import UIKit
 
 class VocabularyWordViewController: UIViewController {
     
-    @IBOutlet weak var wordGroup: UIView!
-    @IBOutlet weak var strengthGroup: UIView!
-    @IBOutlet weak var translationGroup: UIView!
-    @IBOutlet weak var genderGroup: UIView!
-    @IBOutlet weak var posGroup: UIView!
-
+    @IBOutlet weak var contentGroup: UIView!
     
+    @IBOutlet weak var voiceButton: UIButton!
     @IBOutlet weak var strengthView: VocabularyStrengthView!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var posLabel: UILabel!
@@ -50,11 +46,7 @@ class VocabularyWordViewController: UIViewController {
 
 extension VocabularyWordViewController: IVocabularyWordView {
     func showWordWithVocabularyWord(word: VocabularyWord!) {
-        wordGroup.hidden = false
-        strengthGroup.hidden = false
-        translationGroup.hidden = false
-        genderGroup.hidden = false
-        posGroup.hidden = false
+        contentGroup.hidden = false
         
         // We expected that there is always word to show
         wordLabel.text = word.getWord()
@@ -67,10 +59,6 @@ extension VocabularyWordViewController: IVocabularyWordView {
     }
     
     func showEmpty() {
-        wordGroup.hidden = true
-        strengthGroup.hidden = true
-        translationGroup.hidden = true
-        genderGroup.hidden = true
-        posGroup.hidden = true
+        contentGroup.hidden = true
     }
 }
