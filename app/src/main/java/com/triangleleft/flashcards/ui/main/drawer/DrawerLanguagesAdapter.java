@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.main;
+package com.triangleleft.flashcards.ui.main.drawer;
 
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.settings.Language;

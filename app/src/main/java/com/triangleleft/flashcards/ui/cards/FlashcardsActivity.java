@@ -11,6 +11,7 @@ import com.triangleleft.flashcards.util.SimpleAnimatorListener;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,13 +61,13 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     private SparseBooleanArray revealedCards = new SparseBooleanArray();
     private int cx = -1;
     private int cy = -1;
+    private AsyncTask<Void, Void, Void> execute;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcards);
         ButterKnife.bind(this);
-
 
         if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             rootLayout.setVisibility(View.INVISIBLE);

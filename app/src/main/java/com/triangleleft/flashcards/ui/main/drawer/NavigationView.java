@@ -1,11 +1,11 @@
-package com.triangleleft.flashcards.ui.common;
+package com.triangleleft.flashcards.ui.main.drawer;
 
 import com.pnikosis.materialishprogress.ProgressWheel;
 import com.squareup.picasso.Picasso;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.main.MainPageComponent;
 import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.ui.main.DrawerLanguagesAdapter;
+import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.main.DrawerPresenter;
 import com.triangleleft.flashcards.ui.main.IDrawerView;
 import com.triangleleft.flashcards.ui.main.SettingsActivity;

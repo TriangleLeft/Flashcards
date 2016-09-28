@@ -63,7 +63,7 @@ dependencies {
     We don't need it for actual jar, only for ios translation.
     */
     j2objcTranslationClosure files('libs/slf4j-simple-1.7.21-sources.jar')
-    testCompile project(":slf4j-simple")
+    //testCompile project(":slf4j-simple")
 
     // Only annotations are used
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
@@ -96,24 +96,6 @@ j2objcConfig {
     translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
     translateArgs "--prefixes", "src/main/resources/prefixes.properties"
   //  translateArgs "--dead-code-report", "usage.txt"
-    //xcodeProjectDir '../ios/Flashcards'  //  suggested directory name
-    //xcodeTargetsIos 'Flashcards' //, 'FlashcardsTests'
 
     finalConfigure()
 }
-//
-//j2objcPodspec.doLast {
-//    println('Modifying generated podspecs to be able to run pod install')
-//    [getPodspecDebug(), getPodspecRelease()].asList().each {
-//        File podspec = it
-//
-//        String text = podspec.text.replace(
-//                "Pod::Spec.new do |spec|",
-//                '''Pod::Spec.new do |spec|
-//  spec.authors = 'authors'
-//  spec.license = 'license'
-//  spec.homepage = 'homepage'
-//  spec.source = { :git => 'https://github.com/TriangleLeft/Flashcards.git' }''')
-//        podspec.write(text)
-//    }
-//}

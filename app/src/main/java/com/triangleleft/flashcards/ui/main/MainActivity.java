@@ -8,7 +8,7 @@ import com.triangleleft.flashcards.di.main.MainPageComponent;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.common.NavigationView;
+import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;

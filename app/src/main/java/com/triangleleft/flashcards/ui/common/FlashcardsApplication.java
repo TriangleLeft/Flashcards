@@ -1,11 +1,8 @@
 package com.triangleleft.flashcards.ui.common;
 
-import android.app.Application;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
-
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.ApplicationModule;
@@ -18,6 +15,10 @@ import com.triangleleft.flashcards.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.app.Application;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+
 import rx.plugins.RxJavaHooks;
 import timber.log.Timber;
 
@@ -27,15 +28,17 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
 
     protected static FlashcardsApplication debugInstance;
     private ApplicationComponent component;
-
-    public static void showDebugToast(String text) {
-        Toast.makeText(debugInstance, text, Toast.LENGTH_LONG).show();
-    }
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        debugInstance = this;
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
         component = buildComponent();
         Timber.plant(new Timber.DebugTree());
@@ -72,5 +75,9 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    public RefWatcher getRefWatcher() {
+        return refWatcher;
     }
 }

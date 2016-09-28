@@ -67,15 +67,25 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     protected void onDestroy() {
         logger.debug("onDestroy() called");
         super.onDestroy();
+        // Activity instance should be GCed
+        getFlashcardsApplication().getRefWatcher().watch(this);
         if (!isChangingConfigurations()) {
+            // We are leaving this screen, notify presenter
             getPresenter().onDestroy();
+            // Component and presenter should be GCed
+            getFlashcardsApplication().getRefWatcher().watch(getComponent());
+            getFlashcardsApplication().getRefWatcher().watch(getPresenter());
         } else {
             getApplicationComponent().componentManager().saveComponent(getClass(), getComponent());
         }
     }
 
+    protected final FlashcardsApplication getFlashcardsApplication() {
+        return (FlashcardsApplication) getApplication();
+    }
+
     protected ApplicationComponent getApplicationComponent() {
-        return ((FlashcardsApplication) getApplication()).getComponent();
+        return getFlashcardsApplication().getComponent();
     }
 
     public Component getComponent() {

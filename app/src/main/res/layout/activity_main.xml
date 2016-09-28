@@ -59,7 +59,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
 
-    <com.triangleleft.flashcards.ui.common.NavigationView
+    <com.triangleleft.flashcards.ui.main.drawer.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
