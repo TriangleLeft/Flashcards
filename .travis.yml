@@ -2,8 +2,6 @@ branches:
   only:
   - master
 language: android
-env:
-    - NODE_VERSION=0.12
 jdk:
   - oraclejdk8
 android:
@@ -18,12 +16,12 @@ before_install:
     - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
     - export JAVA_HOME=$JAVA8_HOME
+    - export NODE_VERSION=0.12
     - chmod +x gradlew
     - echo "sdk.dir=$ANDROID_HOME" > local.properties
 
 install:
   - nvm install $NODE_VERSION
-  - npm install
   - nvm use $NODE_VERSION
 
 script:
