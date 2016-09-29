@@ -24,7 +24,7 @@ install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
   - npm config set registry http://registry.npmjs.org/
-  - npm install appium
+  - npm install -g appium || true
 
 script:
     # make normal build
