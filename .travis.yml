@@ -1,6 +1,11 @@
 branches:
   only:
   - master
+env:
+    global:
+        - ANDROID_ABI=armeabi-v7a
+        - ANDROID_TAG=google_apis
+        - EMULATOR_API_LEVEL=23
 language: android
 jdk:
   - oraclejdk8
@@ -13,6 +18,7 @@ android:
         - android-24
         - extra-android-m2repository
         - extra-android-support
+        - sys-img-armeabi-v7a-google_apis-$EMULATOR_API_LEVEL
 before_install:
     - export JAVA7_HOME=/usr/lib/jvm/java-7-oracle
     - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle
@@ -35,13 +41,13 @@ install:
 
 script:
     # make android build
-    - ./gradlew :app:assembleRelease jacocoTestReport
+    - ./gradlew :app:assembleRelease :app:test :app:jacocoTestReport
     # upload coverage results
     - bash <(curl -s https://codecov.io/bash)
     # make android build for appium
     - ./gradlew :app:assembleAppium
     # build and start simulator
-    - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a -s 480x800
+    - echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
     - emulator -avd test -no-skin -no-audio -no-window &
     - android-wait-for-emulator
     - adb shell input keyevent 82 &
