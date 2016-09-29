@@ -66,6 +66,7 @@ dependencies {
 
     debugCompile "com.squareup.leakcanary:leakcanary-android:$LEAKCANARY_VERSION"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+    appiumCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
