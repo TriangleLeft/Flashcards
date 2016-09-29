@@ -9,7 +9,8 @@ buildscript {
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
         classpath 'com.squareup.sqldelight:gradle-plugin:0.4.3'
-        classpath files('../j2objc-gradle/build/libs/j2objc-gradle-0.6.1-hack.jar')
+        classpath "gradle.plugin.com.github.j2objccontrib.j2objcgradle:j2objc-gradle:0.6.0-alpha"
+        //classpath files('../j2objc-gradle/build/libs/j2objc-gradle-0.6.1-hack.jar')
     }
     System.properties['com.android.build.gradle.overrideVersionCheck'] = 'true'
 }
