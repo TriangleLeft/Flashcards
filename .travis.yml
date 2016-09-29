@@ -28,12 +28,12 @@ before_install:
     - echo "sdk.dir=$ANDROID_HOME" > local.properties
 
 install:
-    - J2OBJC_ROOT=~/j2objcDist
-    - mkdir -p $J2OBJC_ROOT; pushd $J2OBJC_ROOT
-    - curl -L https://github.com/google/j2objc/releases/download/1.1/j2objc-1.1.zip > j2objc-1.1.zip
-    - unzip j2objc-1.1.zip; popd
-    - echo j2objc.home=$J2OBJC_ROOT/j2objc-1.1 >> local.properties
-    - echo j2objc.translateOnlyMode=true >> local.properties
+    #- J2OBJC_ROOT=~/j2objcDist
+    #- mkdir -p $J2OBJC_ROOT; pushd $J2OBJC_ROOT
+    #- curl -L https://github.com/google/j2objc/releases/download/1.1/j2objc-1.1.zip > j2objc-1.1.zip
+    #- unzip j2objc-1.1.zip; popd
+    #- echo j2objc.home=$J2OBJC_ROOT/j2objc-1.1 >> local.properties
+    #- echo j2objc.translateOnlyMode=true >> local.properties
     - nvm install $NODE_VERSION
     - nvm use $NODE_VERSION
     - npm config set registry http://registry.npmjs.org/
