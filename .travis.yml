@@ -2,6 +2,8 @@ branches:
   only:
   - master
 language: android
+node_js:
+  - "0.12"
 jdk:
   - oraclejdk8
 android:
