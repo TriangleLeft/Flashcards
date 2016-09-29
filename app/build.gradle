@@ -68,6 +68,8 @@ dependencies {
     appiumCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
+    compile 'io.reactivex:rxjava:1.1.8'
+
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
