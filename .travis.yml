@@ -32,8 +32,10 @@ script:
 #    - adb shell input keyevent 82 &
     # start appium test
 #    - ./gradlew :appium:androidTest
-    npm install appium
-    appium &
+    - npm install appium
+    - appium &
+    - sleep 10
+
 
 after_script:
   #
