@@ -80,7 +80,7 @@ public class AppiumRule implements TestRule {
     private void before() throws MalformedURLException {
         String platform = System.getProperty(PLATFORM_KEY);
         if (TextUtils.isEmpty(platform)) {
-            platform = PLATFORM_IOS;
+            platform = PLATFORM_ANDROID;
             //throw new IllegalArgumentException("Platform key (" + PLATFORM_KEY + ") was not set!");
         }
         URL remoteURL = new URL(remoteAddress);
@@ -117,5 +117,19 @@ public class AppiumRule implements TestRule {
             }
         }, description);
     }
+
+    public void withNativeDriver(AppirumDriverRunnable<AppiumAndroidDriver> androidBlock,
+                                 AppirumDriverRunnable<AppiumIOSDriver> iosBlock) {
+        if (driver instanceof AppiumAndroidDriver) {
+            androidBlock.run((AppiumAndroidDriver) driver);
+        } else if (driver instanceof AppiumIOSDriver) {
+            iosBlock.run((AppiumIOSDriver) driver);
+        }
+    }
+
+    public interface AppirumDriverRunnable<T> {
+        void run(T driver);
+    }
+
 
 }

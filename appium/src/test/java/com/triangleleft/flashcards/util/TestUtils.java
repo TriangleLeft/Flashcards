@@ -114,9 +114,15 @@ public class TestUtils {
         appium.enqueue(RestService.PATH_USERDATA, userdata);
         LoginPage loginPage = appium.getApp().loginPage();
         loginPage.setLogin("login");
-        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         loginPage.setPassword("passw");
-        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         loginPage.login();
     }
 
