@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'net.ltgt.apt'
-apply plugin: 'com.github.j2objccontrib.j2objcgradle'
+//apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 apply plugin: 'jacoco'
 apply from: '../dependencies.gradle'
 
@@ -46,7 +46,7 @@ dependencies {
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 
     compile files('libs/rxjava-1.1.8.jar')
-    j2objcTranslation files('libs/rxjava-1.1.8-sources.jar')
+    //j2objcTranslation files('libs/rxjava-1.1.8-sources.jar')
     compile 'com.annimon:stream:1.0.9'
     compile "com.android.support:support-annotations:$SUPPORT_VERSION"
 
@@ -62,8 +62,8 @@ dependencies {
     of original lib and api with StaticLoggerBinder from slf4-simple
     We don't need it for actual jar, only for ios translation.
     */
-    j2objcTranslationClosure files('libs/slf4j-simple-1.7.21-sources.jar')
-    //testCompile project(":slf4j-simple")
+    //j2objcTranslationClosure files('libs/slf4j-simple-1.7.21-sources.jar')
+    testCompile project(":slf4j-simple")
 
     // Only annotations are used
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
@@ -83,19 +83,19 @@ dependencies {
 
 }
 
-j2objcConfig {
-    testPattern {
-        // j2objc-gradle plugin can't differentiate between tests and simple classes
-        exclude '**/RxJavaTestRule.java'
-    }
-    j2objcVersion "1.1"
-    autoConfigureDeps true
-    supportedArchs = ['ios_i386', 'ios_x86_64'] //ios_x86_64
-
-    generatedSourceDirs "build/generated/source/apt/main"
-    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
-    translateArgs "--prefixes", "src/main/resources/prefixes.properties"
-  //  translateArgs "--dead-code-report", "usage.txt"
-
-    finalConfigure()
-}
+//j2objcConfig {
+//    testPattern {
+//        // j2objc-gradle plugin can't differentiate between tests and simple classes
+//        exclude '**/RxJavaTestRule.java'
+//    }
+//    j2objcVersion "1.1"
+//    autoConfigureDeps true
+//    supportedArchs = ['ios_i386', 'ios_x86_64'] //ios_x86_64
+//
+//    generatedSourceDirs "build/generated/source/apt/main"
+//    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
+//    translateArgs "--prefixes", "src/main/resources/prefixes.properties"
+//  //  translateArgs "--dead-code-report", "usage.txt"
+//
+//    finalConfigure()
+//}
