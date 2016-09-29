@@ -26,8 +26,7 @@ install:
     - mkdir -p $J2OBJC_ROOT; pushd $J2OBJC_ROOT
     - curl -L https://github.com/google/j2objc/releases/download/1.1/j2objc-1.1.zip > j2objc-1.1.zip
     - unzip j2objc-1.1.zip; popd
-    - sed -i '' '/j2objc.home/d' /home/travis/build/TriangleLeft/Flashcards/local.properties
-    - echo j2objc.home=$J2OBJC_ROOT/j2objc-1.1 >> /home/travis/build/TriangleLeft/Flashcards/local.properties
+    - echo j2objc.home=$J2OBJC_ROOT/j2objc-1.1 >> local.properties
     - nvm install $NODE_VERSION
     - nvm use $NODE_VERSION
     - npm config set registry http://registry.npmjs.org/
