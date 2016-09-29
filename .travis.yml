@@ -27,7 +27,7 @@ install:
     - curl -L https://github.com/google/j2objc/releases/download/1.1/j2objc-1.1.zip > j2objc-1.1.zip
     - unzip j2objc-1.1.zip; popd
     - echo j2objc.home=$J2OBJC_ROOT/j2objc-1.1 >> local.properties
-    - echo translateOnlyMode=true >> local.properties
+    - echo j2objc.translateOnlyMode=true >> local.properties
     - nvm install $NODE_VERSION
     - nvm use $NODE_VERSION
     - npm config set registry http://registry.npmjs.org/
