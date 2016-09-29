@@ -23,6 +23,8 @@ before_install:
 install:
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
+  - npm config set registry http://registry.npmjs.org/
+  - npm install appium
 
 script:
     # make normal build
@@ -38,7 +40,6 @@ script:
 #    - adb shell input keyevent 82 &
     # start appium test
 #    - ./gradlew :appium:androidTest
-    #- npm install appium
     - appium &
     - sleep 10
 
