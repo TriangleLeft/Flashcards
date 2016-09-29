@@ -2,8 +2,8 @@ branches:
   only:
   - master
 language: android
-node_js:
-  - "0.12"
+env:
+    - NODE_VERSION=0.12
 jdk:
   - oraclejdk8
 android:
@@ -20,6 +20,12 @@ before_install:
     - export JAVA_HOME=$JAVA8_HOME
     - chmod +x gradlew
     - echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+install:
+  - nvm install $NODE_VERSION
+  - npm install
+  - nvm use $NODE_VERSION
+
 script:
     # make normal build
 #    - ./gradlew build jacocoTestReport
