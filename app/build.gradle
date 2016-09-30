@@ -68,6 +68,7 @@ dependencies {
     appiumCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
+    // TODO: use same artifact we use in core
     compile 'io.reactivex:rxjava:1.1.8'
 
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
