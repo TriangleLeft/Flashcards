@@ -8,10 +8,10 @@ target 'Flashcards' do
   # Pods for Flashcards
   pod 'AFNetworking', '~> 3.0'
   pod 'AFNetworkActivityLogger', git: 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', branch: '3_0_0'
-  pod 'DrawerController', '~> 1.1'
+  pod 'DrawerController', '~> 2.0.0'
   pod 'Koloda', '~> 3.1.2'
   pod 'IQKeyboardManagerSwift'
-  pod 'HanekeSwift'
+  pod 'HanekeSwift', git: 'https://github.com/Haneke/HanekeSwift.git', branch: 'feature/swift-2.3'
   #pod 'Toast-Swift', '~> 2.0.0'
   pod 'JLToast', '~> 1.4'
  
@@ -19,4 +19,9 @@ end
 
 post_install do |installer|
     `find Pods -regex 'Pods/pop.*\\.h' -print0 | xargs -0 sed -i '' 's/\\(<\\)pop\\/\\(.*\\)\\(>\\)/\\"\\2\\"/'`
+    installer.pods_project.targets.each do |target|
+        target.build_configurations.each do |config|
+            config.build_settings['SWIFT_VERSION'] = '2.3'
+        end
+    end
 end

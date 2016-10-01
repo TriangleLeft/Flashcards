@@ -86,7 +86,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let drawer = DrawerController(centerViewController: mainVC, leftDrawerViewController: drawerVC)
         drawer.openDrawerGestureModeMask = .BezelPanningCenterView
         drawer.closeDrawerGestureModeMask = .PanningCenterView
-        drawer.centerHiddenInteractionMode = .CloseDrawer
+        // add custom .CloseDrawer
+        drawer.centerHiddenInteractionMode = .NavigationBarOnly
         drawer.showsShadows = false
         drawer.shouldStretchDrawer = false
         
@@ -124,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        let snapshot:UIView = self.window!.snapshotViewAfterScreenUpdates(true)
+        let snapshot:UIView = self.window!.snapshotViewAfterScreenUpdates(true)!
         controller.view.addSubview(snapshot)
         
         self.window!.rootViewController = controller;
