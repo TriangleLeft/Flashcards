@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.common;
 
+import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -19,6 +20,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import io.fabric.sdk.android.Fabric;
 import rx.plugins.RxJavaHooks;
 import timber.log.Timber;
 
@@ -38,6 +40,7 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
             // You should not init your app in this process.
             return;
         }
+        Fabric.with(this, new Crashlytics());
         refWatcher = LeakCanary.install(this);
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
         component = buildComponent();
@@ -52,7 +55,6 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
                 navigateToLogin();
             }
         });
-        Thread.setDefaultUncaughtExceptionHandler((thread, ex) -> logger.error("Uncaught exception", ex));
     }
 
     @NonNull

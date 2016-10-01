@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.squareup.sqldelight'
-
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 24
@@ -21,17 +21,16 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            testCoverageEnabled true
         }
         debug {
             testCoverageEnabled true
         }
         appium {
             applicationIdSuffix ".appium"
-
-            initWith debug
+            testCoverageEnabled true
+            initWith release
             // This is an address to
             buildConfigField "String", "REST_SERVICE_URL", "\"http://10.0.2.2:8080\""
             buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"http://10.0.2.2:8080\""
@@ -66,7 +65,11 @@ dependencies {
 
     debugCompile "com.squareup.leakcanary:leakcanary-android:$LEAKCANARY_VERSION"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+    appiumCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+
+    // TODO: use same artifact we use in core
+    compile 'io.reactivex:rxjava:1.1.8'
 
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
@@ -119,6 +122,10 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.romainguy:ViewServer:017c01cd51'
     compile 'me.grantland:autofittextview:0.2.1'
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.4@aar') {
+        transitive = true;
+    }
 
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"

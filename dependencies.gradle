@@ -17,4 +17,4 @@ ext.STETHO_VERSION = '1.3.1'
 ext.AUTOVALUE_VERSION = '1.2'
 
 // https://github.com/square/leakcanary
-ext.LEAKCANARY_VERSION = '1.4'
+ext.LEAKCANARY_VERSION = '1.5'

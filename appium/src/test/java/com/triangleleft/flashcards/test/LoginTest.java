@@ -63,7 +63,10 @@ public class LoginTest {
         assertThat(loginPage.loginError, hasText("Wrong login"));
         // change login
         loginPage.setLogin("newLogin");
-        //appium.getDriver().hideKeyboard();
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         // Error should be hidden
         assertNotVisible(appium, loginPage.loginError);
     }
@@ -77,7 +80,10 @@ public class LoginTest {
         // Check password error is shown
         assertThat(loginPage.passwordError, hasText("Wrong password"));
         loginPage.setPassword("newPassw");
-        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         // Error should be hidden
         assertNotVisible(appium, loginPage.passwordError);
     }
@@ -98,9 +104,15 @@ public class LoginTest {
 
     private void login(String login, String password) {
         loginPage.setLogin(login);
-        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         loginPage.setPassword(password);
-        appium.getDriver().getKeyboard().sendKeys(Keys.RETURN);
+        appium.withNativeDriver(
+                driver -> driver.navigate().back(),
+                driver -> driver.getKeyboard().pressKey(Keys.ENTER)
+        );
         loginPage.login();
     }
 

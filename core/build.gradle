@@ -95,7 +95,7 @@ j2objcConfig {
     generatedSourceDirs "build/generated/source/apt/main"
     translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
     translateArgs "--prefixes", "src/main/resources/prefixes.properties"
-  //  translateArgs "--dead-code-report", "usage.txt"
+    //  translateArgs "--dead-code-report", "usage.txt"
 
     finalConfigure()
 }

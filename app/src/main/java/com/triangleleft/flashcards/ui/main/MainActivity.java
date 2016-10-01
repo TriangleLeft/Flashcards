@@ -135,6 +135,7 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @OnClick(R.id.button_flashcards)
     public void onFlashcardsClick(View view) {
+
         Intent intent = new Intent(this, FlashcardsActivity.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             int[] location = new int[2];
@@ -148,6 +149,5 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
         } else {
             startActivity(intent);
         }
-
     }
 }
