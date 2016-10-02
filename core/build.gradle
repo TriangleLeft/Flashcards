@@ -45,7 +45,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 
-    compile 'com.annimon:stream:1.0.9'
+    compile "com.annimon:stream:$STREAM_VERSION"
     compile "com.android.support:support-annotations:$SUPPORT_VERSION"
 
     // use api as provided-only, we don't need it in jar

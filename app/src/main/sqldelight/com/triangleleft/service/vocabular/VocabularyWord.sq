@@ -17,7 +17,7 @@ SELECT
     a.*,
     b.translation
 FROM vocabulary_word a
-JOIN vocabulary_word_translation b ON a._id == b.word_id
+LEFT JOIN vocabulary_word_translation b ON a._id == b.word_id
 WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
 
 delete_words:
