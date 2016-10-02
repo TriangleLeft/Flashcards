@@ -1,15 +1,14 @@
 package com.triangleleft.flashcards.service.vocabular;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import java.util.List;
 
-import rx.Observable;
-
 @FunctionsAreNonnullByDefault
 public interface VocabularyModule {
 
-    Observable<List<VocabularyWord>> loadVocabularyWords();
+    void loadVocabularyWords(Observer<List<VocabularyWord>> observer);
 
-    Observable<List<VocabularyWord>> refreshVocabularyWords();
+    void refreshVocabularyWords(Observer<List<VocabularyWord>> observer);
 }

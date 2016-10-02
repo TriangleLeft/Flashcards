@@ -1,12 +1,13 @@
 package com.triangleleft.flashcards.service.cards;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import rx.Observable;
+
 
 @FunctionsAreNonnullByDefault
 public interface FlashcardsModule {
 
-    Observable<FlashcardTestData> getFlashcards();
+    void getFlashcards(Observer<FlashcardTestData> observer);
 
     void postResult(FlashcardTestResult results);
 }

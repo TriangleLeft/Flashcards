@@ -10,6 +10,7 @@ import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -36,12 +37,12 @@ public interface RestService {
     Observable<LoginResponseModel> login(@Body LoginRequestController controller);
 
     @GET(PATH_VOCABULARY)
-    Observable<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
+    Call<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
 
     @GET(PATH_FLASHCARDS)
-    Observable<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,
-                                                        @Query(QUERY_ALLOW_PARTIAL_DECK) boolean alwPartialDeck,
-                                                        @Query(QUERY_TIMESTAMP) long timestamp);
+    Call<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,
+                                                  @Query(QUERY_ALLOW_PARTIAL_DECK) boolean alwPartialDeck,
+                                                  @Query(QUERY_TIMESTAMP) long timestamp);
 
     @POST(PATH_FLASHCARDS)
     Observable<Void> postFlashcardResults(@Body FlashcardResultsController model);

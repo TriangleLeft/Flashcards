@@ -45,7 +45,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 
-    compile files('libs/rxjava-1.1.8.jar')
+    compileOnly files('libs/rxjava-1.1.8.jar')
     j2objcTranslation files('libs/rxjava-1.1.8-sources.jar')
     compile 'com.annimon:stream:1.0.9'
     compile "com.android.support:support-annotations:$SUPPORT_VERSION"

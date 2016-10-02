@@ -1,16 +1,18 @@
 package com.triangleleft.flashcards.service.cards.stub;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
@@ -30,9 +32,8 @@ public class StubFlashcardsModule implements FlashcardsModule {
     }
 
     @Override
-    public Observable<FlashcardTestData> getFlashcards() {
-        logger.debug("getFlashcards() called");
-        return Observable.just(testData);
+    public void getFlashcards(Observer<FlashcardTestData> observer) {
+        observer.onNext(testData);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Subscription;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -19,10 +21,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Scheduler;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
-
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
@@ -32,16 +30,16 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 
     private final FlashcardsModule module;
-    private final Scheduler mainThreadScheduler;
+    //private final Scheduler mainThreadScheduler;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
-    private Subscription subscription = Subscriptions.empty();
+    private Subscription subscription = Subscription.EMPTY;
 
     @Inject
-    public FlashcardsPresenter(FlashcardsModule module, Scheduler mainThreadScheduler) {
+    public FlashcardsPresenter(FlashcardsModule module) {
         super(IFlashcardsView.class);
         this.module = module;
-        this.mainThreadScheduler = mainThreadScheduler;
+        //this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -59,23 +57,27 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         applyState(IFlashcardsView::showProgress);
         results.clear();
         subscription.unsubscribe();
-        subscription = module.getFlashcards()
-                .observeOn(mainThreadScheduler)
-                .subscribe(
-                        data -> {
-                            if (data.getWords().size() != 0) {
-                                testData = data;
-                                applyState(view -> view.showWords(data.getWords()));
-                            } else {
-                                // Treat this as error, we expect to always have flashcards
-                                processError(new ServerException("Got no flashcards in response"));
-                            }
-                        },
-                        this::processError
-                );
+        module.getFlashcards(new Observer<FlashcardTestData>() {
+            @Override
+            public void onError(Throwable e) {
+                processError(e);
+            }
+
+            @Override
+            public void onNext(FlashcardTestData data) {
+                if (data.getWords().size() != 0) {
+                    testData = data;
+                    applyState(view -> view.showWords(data.getWords()));
+                } else {
+                    // Treat this as error, we expect to always have flashcards
+                    processError(new ServerException("Got no flashcards in response"));
+                }
+            }
+        });
     }
 
     private void processError(Throwable throwable) {
+        logger.debug("processError() called with: throwable = [{}]", throwable);
         applyState(IFlashcardsView::showError);
     }
 

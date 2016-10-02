@@ -16,19 +16,19 @@
 
 package com.triangleleft.flashcards.service.account;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Mockito.*;
-
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.PersistentStorage;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class SimpleAccountModuleTest {

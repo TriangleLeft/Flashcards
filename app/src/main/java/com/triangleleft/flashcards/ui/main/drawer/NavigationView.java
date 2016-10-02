@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import android.animation.FloatEvaluator;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
@@ -179,5 +180,14 @@ public class NavigationView extends FrameLayout implements IDrawerView {
     @OnClick(R.id.drawer_button_settings)
     public void onSettingsClick() {
         getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
+    }
+
+    @Override
+    public void runOnUiThread(Runnable runnable) {
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            runnable.run();
+        } else {
+            post(runnable);
+        }
     }
 }
