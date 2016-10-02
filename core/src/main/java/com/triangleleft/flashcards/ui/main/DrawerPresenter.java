@@ -2,6 +2,7 @@ package com.triangleleft.flashcards.ui.main;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
@@ -17,9 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Scheduler;
-import rx.Subscription;
-
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
@@ -30,18 +28,14 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
     private final MainPresenter mainPresenter;
     private final AccountModule accountModule;
     private final SettingsModule settingsModule;
-    private final Scheduler scheduler;
     private Optional<Language> currentLanguage = Optional.empty();
-    private Subscription subscription;
 
     @Inject
-    public DrawerPresenter(MainPresenter mainPresenter, AccountModule accountModule, SettingsModule settingsModule,
-                           Scheduler scheduler) {
+    public DrawerPresenter(MainPresenter mainPresenter, AccountModule accountModule, SettingsModule settingsModule) {
         super(IDrawerView.class);
         this.mainPresenter = mainPresenter;
         this.accountModule = accountModule;
         this.settingsModule = settingsModule;
-        this.scheduler = scheduler;
     }
 
     @Override
@@ -52,14 +46,18 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
         // start with cached data, continue with fresh one
         // NOTE: we don't show progress bar while we are doing it, progress bar is shown only for language switch
         // NOTE: we don't want to notify user that we failed to update data
-        // NOTE: we have to materialze/dematerialze because of this:
-        // https://github.com/ReactiveX/RxJava/issues/2887
-        subscription = settingsModule.loadUserData()
-                .startWith(accountModule.getUserData().get())
-                .materialize()
-                .observeOn(scheduler)
-                .<UserData>dematerialize()
-                .subscribe(this::processUserData, this::processUserDataError);
+        processUserData(accountModule.getUserData().get());
+        settingsModule.loadUserData(new Observer<UserData>() {
+            @Override
+            public void onError(Throwable e) {
+                processUserDataError(e);
+            }
+
+            @Override
+            public void onNext(UserData data) {
+                processUserData(data);
+            }
+        });
     }
 
     private void processUserData(UserData data) {
@@ -82,7 +80,6 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        subscription.unsubscribe();
     }
 
     public void onLanguageSelected(final Language language) {
@@ -91,14 +88,20 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
         if (currentLanguage.isPresent() && currentLanguage.get().equals(language)) {
             return;
         }
-        // Cancel previous switch if it's hasn't completed yet
-        subscription.unsubscribe();
         // Show progress bar
         applyState(IDrawerView::showListProgress);
         // Request to switch language
-        subscription = settingsModule.switchLanguage(language)
-                .observeOn(scheduler)
-                .subscribe(nothing -> processLanguageSwitch(language), this::processLanguageSwitchError);
+        settingsModule.switchLanguage(language, new Observer<Void>() {
+            @Override
+            public void onError(Throwable e) {
+                processLanguageSwitchError(e);
+            }
+
+            @Override
+            public void onNext(Void aVoid) {
+                processLanguageSwitch(language);
+            }
+        });
     }
 
     private void processLanguageSwitch(Language currentLanguage) {

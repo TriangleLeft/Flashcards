@@ -19,8 +19,6 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
 
 @Module
 public class ApplicationModule {
@@ -35,12 +33,6 @@ public class ApplicationModule {
     @Provides
     public Context context() {
         return application;
-    }
-
-    @ApplicationScope
-    @Provides
-    public Scheduler mainThreadScheduler() {
-        return AndroidSchedulers.mainThread();
     }
 
     @ApplicationScope

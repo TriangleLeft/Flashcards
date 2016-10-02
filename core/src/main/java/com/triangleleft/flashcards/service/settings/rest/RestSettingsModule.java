@@ -1,17 +1,15 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.SwitchLanguageController;
-import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import javax.inject.Inject;
-
-import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public class RestSettingsModule implements SettingsModule {
@@ -26,16 +24,18 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Observable<UserData> loadUserData() {
-        return service.getUserData(accountModule.getUserId().get())
-                .map(UserDataModel::toUserData)
-                .doOnNext(accountModule::setUserData);
+    public void loadUserData(Observer<UserData> observer) {
+        service.getUserData(accountModule.getUserId().get())
+                .enqueue(model -> {
+                    UserData data = model.toUserData();
+                    observer.onNext(data);
+                }, observer::onError);
     }
 
     @Override
-    public Observable<Void> switchLanguage(Language language) {
-        // We don't care about actual return result
-        return service.switchLanguage(new SwitchLanguageController(language.getId()))
-                .map(data -> null);
+    public void switchLanguage(Language language, Observer<Void> observer) {
+        service.switchLanguage(new SwitchLanguageController(language.getId()))
+                .enqueue(data -> observer.onNext(null), observer::onError);
     }
+
 }

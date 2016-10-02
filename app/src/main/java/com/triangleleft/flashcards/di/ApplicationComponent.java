@@ -14,8 +14,6 @@ import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
 import dagger.Component;
-import rx.Scheduler;
-
 @ApplicationScope
 @Component(modules = {ApplicationModule.class, NetworkModule.class, RestServiceModule.class})
 public interface ApplicationComponent extends IComponent {
@@ -39,8 +37,6 @@ public interface ApplicationComponent extends IComponent {
     TranslationService translationService();
 
     FlashcardsNavigator navigator();
-
-    Scheduler mainThreadScheduler();
 
     FlagImagesProvider flagImagesProvider();
 }

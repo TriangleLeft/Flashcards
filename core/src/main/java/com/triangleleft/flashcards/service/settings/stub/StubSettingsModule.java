@@ -3,16 +3,16 @@ package com.triangleleft.flashcards.service.settings.stub;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import rx.Observable;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
@@ -47,17 +47,16 @@ public class StubSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Observable<UserData> loadUserData() {
-        return Observable.just(getCurrentUserData().get())
-            .delay(DELAY, TimeUnit.MILLISECONDS);
+    public void loadUserData(Observer<UserData> observer) {
+        observer.onNext(getCurrentUserData().get());
     }
 
     @Override
-    public Observable<Void> switchLanguage(Language language) {
+    public void switchLanguage(Language language, Observer<Void> observer) {
         languages = Stream.of(languages)
-            .map(stub -> stub.withCurrentLearning(stub.getId().equals(language.getId())))
-            .sortBy(Language::getId)
-            .collect(Collectors.toList());
-        return Observable.just((Void) null).delay(DELAY, TimeUnit.MILLISECONDS);
+                .map(stub -> stub.withCurrentLearning(stub.getId().equals(language.getId())))
+                .sortBy(Language::getId)
+                .collect(Collectors.toList());
+        observer.onNext(null);
     }
 }

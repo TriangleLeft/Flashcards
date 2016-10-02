@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.login;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -17,9 +18,6 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import rx.Scheduler;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -28,9 +26,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private static final Logger logger = LoggerFactory.getLogger(LoginPresenter.class);
 
     private final LoginModule loginModule;
-    private final Scheduler mainThreadScheduler;
     private final AccountModule accountModule;
-    private Subscription subscription = Subscriptions.empty();
     private String login = "";
     private String password = "";
     private boolean rememberUser = false;
@@ -38,12 +34,10 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private boolean hasPasswordError;
 
     @Inject
-    public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
-                          Scheduler mainThreadScheduler) {
+    public LoginPresenter(AccountModule accountModule, LoginModule loginModule) {
         super(ILoginView.class);
         this.accountModule = accountModule;
         this.loginModule = loginModule;
-        this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -72,7 +66,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        subscription.unsubscribe();
+
     }
 
     public void onLoginChanged(@NonNull String newLogin) {
@@ -106,31 +100,34 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     public void onLoginClick() {
         logger.debug("onLoginClick() called");
         getView().showProgress();
-        subscription = loginModule.login(login, password)
-                .observeOn(mainThreadScheduler)
-                .subscribe(nothing -> getView().advance(), this::handleError);
+        loginModule.login(login, password, new Observer<Void>() {
+            @Override
+            public void onError(Throwable error) {
+                if (error instanceof LoginException) {
+                    hasLoginError = true;
+                    getView().setLoginErrorVisible(true);
+                } else if (error instanceof PasswordException) {
+                    hasPasswordError = true;
+                    getView().setPasswordErrorVisible(true);
+                } else if (error instanceof NetworkException) {
+                    getView().notifyNetworkError();
+                } else {
+                    getView().notifyGenericError();
+                }
+                getView().showContent();
+            }
+
+            @Override
+            public void onNext(Void aVoid) {
+                getView().advance();
+            }
+        });
     }
 
     public void onRememberCheck(boolean checked) {
         logger.debug("onRememberCheck() called with: checked = [{}]", checked);
         rememberUser = checked;
         accountModule.setRememberUser(checked);
-    }
-
-    private void handleError(Throwable error) {
-        logger.debug("handleError() called with: error = [{}]", error);
-        if (error instanceof LoginException) {
-            hasLoginError = true;
-            getView().setLoginErrorVisible(true);
-        } else if (error instanceof PasswordException) {
-            hasPasswordError = true;
-            getView().setPasswordErrorVisible(true);
-        } else if (error instanceof NetworkException) {
-            getView().notifyNetworkError();
-        } else {
-            getView().notifyGenericError();
-        }
-        getView().showContent();
     }
 
 }

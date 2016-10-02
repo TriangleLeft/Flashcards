@@ -68,9 +68,6 @@ dependencies {
     appiumCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
 
-    // TODO: use same artifact we use in core
-    compile 'io.reactivex:rxjava:1.1.8'
-
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
@@ -92,14 +89,6 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:retrofit-mock:$RETROFIT_VERSION"
 
-    // We have to exclude all rx dependencies as we are using custom one
-    // though probably we shouldn't use jar lib and use jitpack instead
-    compile("com.squareup.retrofit2:adapter-rxjava:$RETROFIT_VERSION") {
-        exclude group: 'io.reactivex', module: 'rxjava'
-    }
-    compile('io.reactivex:rxandroid:1.2.0') {
-        exclude group: 'io.reactivex', module: 'rxjava'
-    }
     compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
     compile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
     compile "com.facebook.stetho:stetho:$STETHO_VERSION"

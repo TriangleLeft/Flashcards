@@ -1,12 +1,13 @@
 package com.triangleleft.flashcards.service.login.stub;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import rx.Observable;
 
 import javax.inject.Inject;
 
@@ -22,13 +23,13 @@ public class StubLoginModule implements LoginModule {
     }
 
     @Override
-    public Observable<Void> login(String login, String password) {
+    public void login(String login, String password, Observer<Void> observer) {
         if (!LOGIN.equals(login)) {
-            return Observable.error(new LoginException());
+            observer.onError(new LoginException());
         } else if (!PASSWORD.equals(password)) {
-            return Observable.error(new PasswordException());
+            observer.onError(new PasswordException());
         } else {
-            return Observable.just(null);
+            observer.onNext(null);
         }
     }
 }

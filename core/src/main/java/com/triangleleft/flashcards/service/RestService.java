@@ -15,7 +15,6 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import rx.Observable;
 
 
 @FunctionsAreNonnullByDefault
@@ -34,7 +33,7 @@ public interface RestService {
 
 
     @POST(PATH_LOGIN)
-    Observable<LoginResponseModel> login(@Body LoginRequestController controller);
+    Call<LoginResponseModel> login(@Body LoginRequestController controller);
 
     @GET(PATH_VOCABULARY)
     Call<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
@@ -48,10 +47,10 @@ public interface RestService {
     Call<Void> postFlashcardResults(@Body FlashcardResultsController model);
 
     @POST(PATH_SWITCH_LANGUAGE)
-    Observable<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
+    Call<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
 
     @GET(PATH_USERDATA)
-    Observable<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);
+    Call<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);
 
 
 }

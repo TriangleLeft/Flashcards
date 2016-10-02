@@ -1,11 +1,10 @@
 package com.triangleleft.flashcards.service.login;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public interface LoginModule {
 
-    Observable<Void> login(String login, String password);
+    void login(String login, String password, Observer<Void> observer);
 }

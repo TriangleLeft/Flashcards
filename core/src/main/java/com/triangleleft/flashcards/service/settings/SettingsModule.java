@@ -1,13 +1,12 @@
 package com.triangleleft.flashcards.service.settings;
 
+import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public interface SettingsModule {
 
-    Observable<UserData> loadUserData();
+    void loadUserData(Observer<UserData> observer);
 
-    Observable<Void> switchLanguage(Language language);
+    void switchLanguage(Language language, Observer<Void> observer);
 }

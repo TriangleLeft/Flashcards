@@ -8,7 +8,6 @@ import com.triangleleft.assertdialog.AssertDialog;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerApplicationComponent;
-import com.triangleleft.flashcards.service.common.exception.ConversionException;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
@@ -21,7 +20,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import io.fabric.sdk.android.Fabric;
-import rx.plugins.RxJavaHooks;
 import timber.log.Timber;
 
 public class FlashcardsApplication extends Application implements FlashcardsNavigator {
@@ -46,15 +44,6 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
         component = buildComponent();
         Timber.plant(new Timber.DebugTree());
         Stetho.initializeWithDefaults(this);
-        RxJavaHooks.setOnError(throwable -> {
-            logger.error("RxError", throwable);
-            // ConversionException would usually mean that we've got dead cookies
-            // (Duolingo would send html page with 200 code)
-            // So let's try to send user to login
-            if (throwable instanceof ConversionException) {
-                navigateToLogin();
-            }
-        });
     }
 
     @NonNull

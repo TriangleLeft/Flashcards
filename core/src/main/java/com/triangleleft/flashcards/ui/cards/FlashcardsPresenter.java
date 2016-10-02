@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.ui.cards;
 
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.Observer;
-import com.triangleleft.flashcards.Subscription;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -33,7 +32,6 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     //private final Scheduler mainThreadScheduler;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
-    private Subscription subscription = Subscription.EMPTY;
 
     @Inject
     public FlashcardsPresenter(FlashcardsModule module) {
@@ -50,13 +48,11 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        subscription.unsubscribe();
     }
 
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        subscription.unsubscribe();
         module.getFlashcards(new Observer<FlashcardTestData>() {
             @Override
             public void onError(Throwable e) {
