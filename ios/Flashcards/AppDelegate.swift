@@ -76,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func buildMainViewController() -> UIViewController {
         let mainPresenter = MainPresenter(accountModule: accountModule)
-        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withRxScheduler: MainThreadScheduler())
+        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter)
         let wordPresenter = VocabularyWordPresenter()
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
         
@@ -95,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func buildCardsViewController() -> UIViewController {
-        let presenter = FlashcardsPresenter(flashcardsModule: flashcardsModule, withRxScheduler: MainThreadScheduler())
+        let presenter = FlashcardsPresenter(flashcardsModule: flashcardsModule)
         let cardsController:CardsViewController = CardsViewController(presenter)
         let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
         navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
@@ -247,6 +247,19 @@ extension UITextField {
         }
         last.returnKeyType = .Done
         last.addTarget(last, action: #selector(UIResponder.resignFirstResponder), forControlEvents: .EditingDidEndOnExit)
+    }
+}
+
+extension UIViewController : IUIThreadRunnable {
+    public func runOnUiThreadWithJavaLangRunnable(runnable: JavaLangRunnable!) {
+        if (NSThread.isMainThread()) {
+            runnable.run()
+        } else {
+            dispatch_async(dispatch_get_main_queue(),{
+                runnable.run()
+                
+            })
+        }
     }
 }
 

@@ -8,10 +8,8 @@ import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
-import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.SafeCallback;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,8 +20,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
-
-import retrofit2.Call;
 
 @FunctionsAreNonnullByDefault
 public class RestVocabularyModule implements VocabularyModule {
@@ -110,19 +106,13 @@ public class RestVocabularyModule implements VocabularyModule {
 
         @Override
         public void run() {
-            service.getVocabularyList(System.currentTimeMillis()).enqueue(new SafeCallback<VocabularyResponseModel>() {
-                @Override
-                public void onResult(VocabularyResponseModel result) {
-                    List<VocabularyWord> words = result.toVocabularyData().getWords();
-                    observer.onNext(words);
-                    executor.execute(() -> provider.putWords(words));
-                }
-
-                @Override
-                public void onFailure(Call<VocabularyResponseModel> call, Throwable t) {
-                    observer.onError(t);
-                }
-            });
+            service.getVocabularyList(System.currentTimeMillis()).enqueue(result -> {
+                        List<VocabularyWord> words = result.toVocabularyData().getWords();
+                        observer.onNext(words);
+                        executor.execute(() -> provider.putWords(words));
+                    },
+                    observer::onError
+            );
 //                    .map(VocabularyResponseModel::toVocabularyData)
 //                    .map(VocabularyData::getWords)
 //                    .flatMapIterable(list -> list) // split list of item into stream of items

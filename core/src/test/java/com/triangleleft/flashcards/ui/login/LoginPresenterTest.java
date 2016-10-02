@@ -10,6 +10,7 @@ import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.service.settings.UserData;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -23,8 +24,13 @@ import rx.schedulers.Schedulers;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@Ignore
 @RunWith(JUnit4.class)
 public class LoginPresenterTest {
 

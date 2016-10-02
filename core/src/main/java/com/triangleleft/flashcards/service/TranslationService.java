@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.service;
 
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.service;
 
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResponseModel;
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResultsController;
 import com.triangleleft.flashcards.service.login.rest.LoginRequestController;
@@ -10,7 +11,6 @@ import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -45,7 +45,7 @@ public interface RestService {
                                                   @Query(QUERY_TIMESTAMP) long timestamp);
 
     @POST(PATH_FLASHCARDS)
-    Observable<Void> postFlashcardResults(@Body FlashcardResultsController model);
+    Call<Void> postFlashcardResults(@Body FlashcardResultsController model);
 
     @POST(PATH_SWITCH_LANGUAGE)
     Observable<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);

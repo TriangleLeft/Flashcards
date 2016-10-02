@@ -8,6 +8,7 @@
 
 #import "ObjRestService.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/AFURLResponseSerialization.h>
 #import "GsonResponseSerializer.h"
 #import "IOSClass.h"
 #import "FlashcardsError.h"
@@ -25,8 +26,8 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
 @interface OnSubscribeClosure : NSObject <RxObservable_OnSubscribe>
 @property (nonatomic, copy) RxSubscriberHandler handler;
 @end
-@implementation OnSubscribeClosure
 
+@implementation OnSubscribeClosure
 
 -(instancetype)initWithClosure:(RxSubscriberHandler)closure {
     _handler = closure;
@@ -36,6 +37,48 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
 - (void)callWithId:(id)t {
     RxSubscriber* subsriber = (RxSubscriber*)t;
     _handler(subsriber);
+}
+
+@end
+
+@interface AFCall : NSObject<Call>
+@property (strong, nonatomic) NSURLRequest *request;
+@property (strong, nonatomic) AFHTTPResponseSerializer *serializer;
+@end
+
+@implementation AFCall
+
+-(instancetype)initWithRequest:(NSURLRequest *)request serializer:(AFHTTPResponseSerializer *)serializer {
+    _request = request;
+    _serializer = serializer;
+    
+    return self;
+}
+
+- (void)enqueueWithAction:(id<Action>)onData
+               withAction:(id<Action>)onError {
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager new];
+    if (_serializer) {
+        manager.responseSerializer = _serializer;
+    }
+    
+    [[manager dataTaskWithRequest:_request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (!error) {
+            [onData callWithId:responseObject];
+        } else {
+            if ([error.domain isEqualToString:FlashcardsErrorDomain] && error.code == FlashcardsConversionError) {
+                [onError callWithId: [ConversionException new]];
+            } else {
+                [onError callWithId:[NetworkException new]];
+                }
+            
+        }
+    }] resume];
+}
+
+- (void)cancel {
+    
 }
 
 @end
@@ -61,11 +104,11 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
     return [self observableWithRequest:req responseModelClass:LoginResponseModel_class_()];
 }
 
-- (RxObservable *)getVocabularyListWithLong:(jlong)timestamp {
+- (id<Call>)getVocabularyListWithLong:(jlong)timestamp {
     NSString* timestampString = [NSString stringWithFormat:@"%lld", timestamp];
     NSArray<NSURLQueryItem *> *params = @[[[NSURLQueryItem alloc] initWithName:[RestService QUERY_TIMESTAMP] value:timestampString]];
     NSURLRequest *req = [self requestWithMethod:@"GET" url:[self urlWithPath:[RestService PATH_VOCABULARY] queryParams:params]];
-    return [self observableWithRequest:req responseModelClass:VocabularyResponseModel_class_()];
+    return [[AFCall alloc] initWithRequest:req serializer:[[GsonResponseSerializer alloc] initWithClass:VocabularyResponseModel_class_() gson:_gson]];
 
 }
 
@@ -110,6 +153,7 @@ NSString* const TranslationServiceUrl = @"https://d2.duolingo.com";
     NSURLRequest *req = [self requestWithMethod:@"GET" url:components.URL];
     return [self observableWithRequest:req responseModelClass:WordTranslationModel_class_()];
 }
+
 
 - (RxObservable *)observableWithRequest:(NSURLRequest *)request responseModelClass:(IOSClass *)clazz {
     RxObservable* observable = [RxObservable createWithRxObservable_OnSubscribe:[[OnSubscribeClosure alloc] initWithClosure:^(RxSubscriber *subscriber) {
