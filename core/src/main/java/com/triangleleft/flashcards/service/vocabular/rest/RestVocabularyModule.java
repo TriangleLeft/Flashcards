@@ -25,6 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static com.annimon.stream.Collectors.joining;
 import static com.annimon.stream.Collectors.toList;
@@ -32,33 +33,35 @@ import static com.annimon.stream.Collectors.toList;
 @FunctionsAreNonnullByDefault
 public class RestVocabularyModule implements VocabularyModule {
 
+    public static final String MAIN_EXECUTOR = "mainExecutor";
     private static final Logger logger = LoggerFactory.getLogger(RestVocabularyModule.class);
     private final RestService service;
     private final AccountModule accountModule;
     private final VocabularyWordsRepository provider;
     private final TranslationService translationService;
-    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final Executor mainExecutor;
 
     @Inject
     public RestVocabularyModule(RestService service, TranslationService translationService, AccountModule accountModule,
-                                VocabularyWordsRepository provider) {
+                                VocabularyWordsRepository provider, @Named(MAIN_EXECUTOR) Executor mainExecutor) {
         this.service = service;
         this.translationService = translationService;
         this.accountModule = accountModule;
         this.provider = provider;
+        this.mainExecutor = mainExecutor;
     }
 
     @Override
     public void loadVocabularyWords(Observer<List<VocabularyWord>> observer) {
         logger.debug("loadVocabularyWords()");
-        executor.execute(new GetCachedDataTask(observer));
-        executor.execute(new LoadWordsTask(observer));
+        mainExecutor.execute(new GetCachedDataTask(observer));
+        mainExecutor.execute(new LoadWordsTask(observer));
     }
 
     @Override
     public void refreshVocabularyWords(Observer<List<VocabularyWord>> observer) {
         logger.debug("refreshVocabularyWords()");
-        executor.execute(new LoadWordsTask(observer));
+        mainExecutor.execute(new LoadWordsTask(observer));
     }
 
     private class GetCachedDataTask implements Runnable {
@@ -92,6 +95,7 @@ public class RestVocabularyModule implements VocabularyModule {
 
         @Override
         public void run() {
+            logger.debug("LoadWordsTask run() called");
             service.getVocabularyList(System.currentTimeMillis()).enqueue(model -> {
                         List<VocabularyWord> words = model.toVocabularyData().getWords();
                         // Prepare executor
@@ -119,7 +123,8 @@ public class RestVocabularyModule implements VocabularyModule {
                         // Sort them by normalized words, otherwise all letters with diacritics would be placed at the end
                         Collections.sort(result, (o1, o2) -> o1.getNormalizedWord().compareTo(o2.getNormalizedWord()));
                         observer.onNext(result);
-                        executor.execute(() -> provider.putWords(result));
+                        mainExecutor.execute(() -> provider.putWords(result));
+                        logger.debug("LoadWordsTask run() returned list of size: [{}]", result.size());
                     },
                     observer::onError
             );

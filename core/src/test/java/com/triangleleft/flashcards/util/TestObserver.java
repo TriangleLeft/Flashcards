@@ -3,16 +3,19 @@ package com.triangleleft.flashcards.util;
 import com.triangleleft.flashcards.Observer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 public class TestObserver<T> implements Observer<T> {
 
-    private final List<T> data = new ArrayList<>();
-    private final List<Throwable> throwables = new ArrayList<>();
+    private final List<T> data = Collections.synchronizedList(new ArrayList<>());
+    private final List<Throwable> throwables = Collections.synchronizedList(new ArrayList<>());
 
     public TestObserver() {
 
@@ -44,5 +47,23 @@ public class TestObserver<T> implements Observer<T> {
     public void assertError(Throwable throwable) {
         assertOnErrorCalled();
         assertThat(throwables.get(0), equalTo(throwable));
+    }
+
+    public List<T> getOnNextEvents() {
+        return data;
+    }
+
+    public void awaitValueCount(int valueCount, long duration, TimeUnit unit) {
+        // quick and dirty
+        long currentTime = System.currentTimeMillis();
+        long endTime = currentTime + unit.toMillis(duration);
+        while (data.size() < valueCount && currentTime <= endTime) {
+            // placebo
+            Thread.yield();
+            currentTime = System.currentTimeMillis();
+        }
+        if (data.size() < valueCount) {
+            fail("Await timed out");
+        }
     }
 }
