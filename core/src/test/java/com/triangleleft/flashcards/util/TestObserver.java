@@ -2,58 +2,47 @@ package com.triangleleft.flashcards.util;
 
 import com.triangleleft.flashcards.Observer;
 
-import org.junit.Assert;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThat;
 
 public class TestObserver<T> implements Observer<T> {
 
-    private final T data;
-    private final Throwable throwable;
-    boolean onErrorCalled;
-    boolean onNextCalled;
+    private final List<T> data = new ArrayList<>();
+    private final List<Throwable> throwables = new ArrayList<>();
 
-    public static <T> TestObserver<T> expecting(T data) {
-        return new TestObserver<>(data, null);
-    }
+    public TestObserver() {
 
-    public static <T> TestObserver<T> expecting(Throwable throwable) {
-        return new TestObserver<>(null, throwable);
-    }
-
-    private TestObserver(T data, Throwable throwable) {
-        this.data = data;
-        this.throwable = throwable;
     }
 
     @Override
     public void onError(Throwable throwable) {
-        onErrorCalled = true;
-        if (this.throwable != null) {
-            assertThat(throwable, equalTo(this.throwable));
-        } else {
-            fail("Got unexpected onError call with " + throwable);
-        }
+        throwables.add(throwable);
     }
 
     @Override
     public void onNext(T data) {
-        onNextCalled = true;
-        if (this.data != null) {
-            Assert.assertThat(data, equalTo(this.data));
-        } else {
-            fail("Got unexpected onNext call with " + data);
-        }
+        this.data.add(data);
     }
 
     public void assertOnNextCalled() {
-        Assert.assertThat(onNextCalled, equalTo(true));
+        assertThat("onNext was not called", data.size(), greaterThan(0));
     }
 
     public void assertOnErrorCalled() {
-        Assert.assertThat(onErrorCalled, equalTo(true));
+        assertThat("onError was not called", throwables.size(), greaterThan(0));
     }
 
+    public void assertValue(T data) {
+        assertOnNextCalled();
+        assertThat(this.data.get(0), equalTo(data));
+    }
+
+    public void assertError(Throwable throwable) {
+        assertOnErrorCalled();
+        assertThat(throwables.get(0), equalTo(throwable));
+    }
 }

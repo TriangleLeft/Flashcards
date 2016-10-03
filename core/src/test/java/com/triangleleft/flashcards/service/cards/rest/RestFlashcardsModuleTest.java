@@ -63,10 +63,10 @@ public class RestFlashcardsModuleTest {
         when(model.toTestData()).thenReturn(mockData);
         when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(CallUtils.just(model));
 
-        TestObserver<FlashcardTestData> observer = TestObserver.expecting(mockData);
+        TestObserver<FlashcardTestData> observer = new TestObserver<>();
         module.getFlashcards(observer);
 
-        observer.assertOnNextCalled();
+        observer.assertValue(mockData);
     }
 
     @Test

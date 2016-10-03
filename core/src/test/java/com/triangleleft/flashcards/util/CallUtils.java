@@ -19,7 +19,7 @@ public class CallUtils {
         };
     }
 
-    public static <T> Call<T> just(Throwable throwable) {
+    public static <T> Call<T> error(Throwable throwable) {
         return new Call<T>() {
             @Override
             public void enqueue(Action<T> onData, Action<Throwable> onError) {
