@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.cards;
 
+import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -25,7 +26,6 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
@@ -52,9 +52,11 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void onLoadFlashcardsWouldStartLoadingFlashcards() {
+        when(module.getFlashcards()).thenReturn(Calls.empty());
+
         presenter.onLoadFlashcards();
 
-        verify(module).getFlashcards(any(Observer.class));
+        verify(module).getFlashcards();
     }
 
 //    @Test
@@ -74,10 +76,12 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void onCreateWouldStartLoadingFlashcards() {
+        when(module.getFlashcards()).thenReturn(Calls.empty());
+
         presenter.onCreate();
         presenter.onBind(view);
 
-        verify(module).getFlashcards(any(Observer.class));
+        verify(module).getFlashcards();
         verify(view).showProgress();
     }
 
@@ -93,10 +97,7 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void onFlashcardsLoadErrorWouldShowError() {
-        doAnswer(invocation -> {
-            observerCaptor.getValue().onError(new ServerException());
-            return null;
-        }).when(module).getFlashcards(observerCaptor.capture());
+        when(module.getFlashcards()).thenReturn(Calls.error(new ServerException()));
 
         presenter.onCreate();
         presenter.onBind(view);
@@ -168,9 +169,6 @@ public class FlashcardsPresenterTest {
         when(data.getUiLanguage()).thenReturn(UI_LANG);
         when(data.getLearningLanguage()).thenReturn(LEARN_LANG);
         when(data.getWords()).thenReturn(words);
-        doAnswer(invocation -> {
-            observerCaptor.getValue().onNext(data);
-            return null;
-        }).when(module).getFlashcards(observerCaptor.capture());
+        when(module.getFlashcards()).thenReturn(Calls.just(data));
     }
 }

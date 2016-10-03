@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Call;
+import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -26,16 +27,11 @@ public class RestFlashcardsModule implements FlashcardsModule {
     }
 
     @Override
-    public void getFlashcards(Observer<FlashcardTestData> observer) {
+    public Call<FlashcardTestData> getFlashcards() {
         logger.debug("getFlashcards() called");
         // TODO: consider moving flashcard count constant to settings
-        service.getFlashcardData(FLASHCARDS_COUNT, true, System.currentTimeMillis())
-                .enqueue(result -> {
-                            FlashcardTestData data = result.toTestData();
-                            observer.onNext(data);
-                        },
-                        observer::onError
-                );
+        return Calls.map(service.getFlashcardData(FLASHCARDS_COUNT, true, System.currentTimeMillis()),
+                FlashcardResponseModel::toTestData);
     }
 
     @Override

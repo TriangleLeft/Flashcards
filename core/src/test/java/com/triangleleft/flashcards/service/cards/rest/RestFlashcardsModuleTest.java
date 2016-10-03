@@ -16,13 +16,14 @@
 
 package com.triangleleft.flashcards.service.cards.rest;
 
+import com.triangleleft.flashcards.Actions;
+import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
-import com.triangleleft.flashcards.util.CallUtils;
-import com.triangleleft.flashcards.util.TestObserver;
+import com.triangleleft.flashcards.util.TestAction;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,12 +62,12 @@ public class RestFlashcardsModuleTest {
         FlashcardResponseModel model = mock(FlashcardResponseModel.class);
         FlashcardTestData mockData = FlashcardTestData.create("ui", "learn", Collections.emptyList());
         when(model.toTestData()).thenReturn(mockData);
-        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(CallUtils.just(model));
+        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(Calls.just(model));
 
-        TestObserver<FlashcardTestData> observer = new TestObserver<>();
-        module.getFlashcards(observer);
+        TestAction<FlashcardTestData> action = new TestAction<>();
+        module.getFlashcards().enqueue(action, Actions.empty());
 
-        observer.assertValue(mockData);
+        action.assertValue(mockData);
     }
 
     @Test
@@ -76,7 +77,7 @@ public class RestFlashcardsModuleTest {
                 FlashcardWordResult.create(FlashcardWord.create("word2", "translation2", "id2"), false)
         );
         FlashcardTestResult result = FlashcardTestResult.create("ui", "learn", results);
-        when(service.postFlashcardResults(any())).thenReturn(CallUtils.just(null));
+        when(service.postFlashcardResults(any())).thenReturn(Calls.just(null));
 
         module.postResult(result);
 

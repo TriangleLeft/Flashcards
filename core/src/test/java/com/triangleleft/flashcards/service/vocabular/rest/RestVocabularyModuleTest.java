@@ -17,6 +17,7 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -26,7 +27,6 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.WordTranslationModel;
-import com.triangleleft.flashcards.util.CallUtils;
 import com.triangleleft.flashcards.util.TestObserver;
 import com.triangleleft.flashcards.util.TestUtils;
 
@@ -136,7 +136,7 @@ public class RestVocabularyModuleTest {
         WordTranslationModel model = new WordTranslationModel();
         model.put(word, translations);
         when(translationService.getTranslation(LEARN_LANG, UI_LANG, "[\"" + word + "\"]"))
-                .thenReturn(CallUtils.just(model));
+                .thenReturn(Calls.just(model));
     }
 
     private VocabularyWord makeWord(String word, String translation) {
@@ -150,6 +150,6 @@ public class RestVocabularyModuleTest {
         VocabularyData data = VocabularyData.create(words, UI_LANG, LEARN_LANG);
         VocabularyResponseModel model = Mockito.mock(VocabularyResponseModel.class);
         when(model.toVocabularyData()).thenReturn(data);
-        when(service.getVocabularyList(Mockito.anyLong())).thenReturn(CallUtils.just(model));
+        when(service.getVocabularyList(Mockito.anyLong())).thenReturn(Calls.just(model));
     }
 }

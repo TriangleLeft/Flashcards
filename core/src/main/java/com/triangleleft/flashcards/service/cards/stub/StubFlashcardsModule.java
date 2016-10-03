@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.service.cards.stub;
 
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Action;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
@@ -32,8 +33,18 @@ public class StubFlashcardsModule implements FlashcardsModule {
     }
 
     @Override
-    public void getFlashcards(Observer<FlashcardTestData> observer) {
-        observer.onNext(testData);
+    public Call<FlashcardTestData> getFlashcards() {
+        return new Call<FlashcardTestData>() {
+            @Override
+            public void enqueue(Action<FlashcardTestData> onData, Action<Throwable> onError) {
+                onData.call(testData);
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        };
     }
 
     @Override

@@ -1,7 +1,8 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Call;
+import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -31,6 +32,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private final FlashcardsModule module;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
+    private Call<FlashcardTestData> call = Calls.empty();
 
     @Inject
     public FlashcardsPresenter(FlashcardsModule module) {
@@ -46,28 +48,22 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
+        call.cancel();
     }
 
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        module.getFlashcards(new Observer<FlashcardTestData>() {
-            @Override
-            public void onError(Throwable e) {
-                processError(e);
+        call = module.getFlashcards();
+        call.enqueue(data -> {
+            if (data.getWords().size() != 0) {
+                testData = data;
+                applyState(view -> view.showWords(data.getWords()));
+            } else {
+                // Treat this as error, we expect to always have flashcards
+                processError(new ServerException("Got no flashcards in response"));
             }
-
-            @Override
-            public void onNext(FlashcardTestData data) {
-                if (data.getWords().size() != 0) {
-                    testData = data;
-                    applyState(view -> view.showWords(data.getWords()));
-                } else {
-                    // Treat this as error, we expect to always have flashcards
-                    processError(new ServerException("Got no flashcards in response"));
-                }
-            }
-        });
+        }, this::processError);
     }
 
     private void processError(Throwable throwable) {
