@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.cards;
 
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
@@ -22,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -36,6 +38,8 @@ public class FlashcardsPresenterTest {
 
     @Mock
     FlashcardsModule module;
+    @Mock
+    Call<FlashcardTestData> mockCall;
     @Captor
     ArgumentCaptor<List<FlashcardWord>> listCaptor;
     @Captor
@@ -59,20 +63,21 @@ public class FlashcardsPresenterTest {
         verify(module).getFlashcards();
     }
 
-//    @Test
-//    public void onDestroyWouldUnsubscribe() {
-//        AtomicBoolean unsubscribed = new AtomicBoolean(false);
-//        // Create empty observable to notify us when it's unsubscribed from
-//        Observable<FlashcardTestData> observable = Observable.empty();
-//        observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
-//        when(module.getFlashcards()).thenReturn(observable);
-//
-//        // Simulate list load
-//        presenter.onLoadFlashcards();
-//        presenter.onDestroy();
-//
-//        assertTrue(unsubscribed.get());
-//    }
+    @Test
+    public void onDestroyWouldCancel() {
+        AtomicBoolean unsubscribed = new AtomicBoolean(false);
+        doAnswer(invocation -> {
+            unsubscribed.set(true);
+            return true;
+        }).when(mockCall).cancel();
+        when(module.getFlashcards()).thenReturn(mockCall);
+
+        // Simulate list load
+        presenter.onLoadFlashcards();
+        presenter.onDestroy();
+
+        assertThat(unsubscribed.get(), equalTo(true));
+    }
 
     @Test
     public void onCreateWouldStartLoadingFlashcards() {
