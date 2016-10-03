@@ -29,7 +29,6 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 
     private final FlashcardsModule module;
-    //private final Scheduler mainThreadScheduler;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
 
@@ -37,7 +36,6 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     public FlashcardsPresenter(FlashcardsModule module) {
         super(IFlashcardsView.class);
         this.module = module;
-        //this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -100,9 +98,5 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         } else {
             applyState(view -> view.showResultErrors(wrongWords));
         }
-    }
-
-    interface State {
-        void apply();
     }
 }

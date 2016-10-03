@@ -36,7 +36,6 @@ public abstract class AbstractPresenter<View extends IView>
                     Utils.checkState(method.getReturnType().equals(Void.TYPE),
                             "Trying to invoke non-void view method: " + method);
                     View localView = view;
-                    // TODO: we do it on the caller thread and we probably don't want to do that on android, right?
                     if (localView != null) {
                         invokeMethod(localView, method, args);
                     } else if (!destroyed) {
