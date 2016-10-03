@@ -4,6 +4,11 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'io.fabric'
 
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
@@ -18,11 +23,21 @@ android {
         buildConfigField "String", "REST_SERVICE_URL", "\"https://www.duolingo.com\""
         buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"https://d2.duolingo.com\""
         testInstrumentationRunner "com.triangleleft.flashcards.MockTestRunner"
+
+        signingConfigs {
+            release {
+                storeFile file('keystore/flashcards.jks')
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storePassword keystoreProperties['storePassword']
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             testCoverageEnabled false
