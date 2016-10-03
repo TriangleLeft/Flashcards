@@ -2,8 +2,9 @@ package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.account.AccountModule;
+import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -30,25 +31,18 @@ public class StubVocabularyModule implements VocabularyModule {
         this.provider = provider;
     }
 
-//    @Override
-//    public Observable<List<VocabularyWord>> loadVocabularyWords() {
-//        Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
-//
-//        UserData userData = accountModule.getUserData().get();
-//        observable.startWith(provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId()));
-//
-//        return observable;
-//    }
-//
-//    @Override
-//    public Observable<List<VocabularyWord>> refreshVocabularyWords() {
-//        UserData userData = accountModule.getUserData().get();
-//
-//        return Observable.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
-//            .subscribeOn(Schedulers.io())
-//            .doOnNext(this::updateCache)
-//            .map(VocabularyData::getWords);
-//    }
+    @Override
+    public Call<List<VocabularyWord>> loadVocabularyWords() {
+        return refreshVocabularyWords();
+    }
+
+    @Override
+    public Call<List<VocabularyWord>> refreshVocabularyWords() {
+        UserData userData = accountModule.getUserData().get();
+
+        return Call.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
+                .map(VocabularyData::getWords);
+    }
 
     private void updateCache(VocabularyData data) {
         List<VocabularyWord> words = Stream.of(data.getWords())
@@ -74,13 +68,4 @@ public class StubVocabularyModule implements VocabularyModule {
         return VocabularyData.create(list, uiLanguage, learningLanguage);
     }
 
-    @Override
-    public void loadVocabularyWords(Observer<List<VocabularyWord>> observer) {
-
-    }
-
-    @Override
-    public void refreshVocabularyWords(Observer<List<VocabularyWord>> observer) {
-
-    }
 }

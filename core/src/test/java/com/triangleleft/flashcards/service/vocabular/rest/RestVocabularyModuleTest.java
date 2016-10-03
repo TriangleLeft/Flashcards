@@ -80,7 +80,7 @@ public class RestVocabularyModuleTest {
         addTranslation(WORD, Collections.singletonList(TRANSLATION));
 
         TestObserver<List<VocabularyWord>> observer = new TestObserver<>();
-        module.loadVocabularyWords(observer);
+        module.loadVocabularyWords().enqueue(observer);
 
         List<VocabularyWord> first = observer.getOnNextEvents().get(0);
         assertThat(first, contains(cachedWord));
@@ -95,7 +95,7 @@ public class RestVocabularyModuleTest {
         addTranslation(WORD, null);
 
         TestObserver<List<VocabularyWord>> observer = new TestObserver<>();
-        module.loadVocabularyWords(observer);
+        module.loadVocabularyWords().enqueue(observer);
 
         VocabularyWord word = observer.getOnNextEvents().get(0).get(0);
         assertThat(word.getTranslations(), equalTo(Collections.emptyList()));
@@ -109,7 +109,7 @@ public class RestVocabularyModuleTest {
         addTranslation(WORD, Collections.singletonList(TRANSLATION));
 
         TestObserver<List<VocabularyWord>> observer = new TestObserver<>();
-        module.loadVocabularyWords(observer);
+        module.loadVocabularyWords().enqueue(observer);
 
         List<VocabularyWord> live = observer.getOnNextEvents().get(0);
         assertThat(live, contains(liveWord));
@@ -121,7 +121,7 @@ public class RestVocabularyModuleTest {
         addTranslation(WORD, Collections.singletonList(TRANSLATION));
 
         TestObserver<List<VocabularyWord>> observer = new TestObserver<>();
-        module.loadVocabularyWords(observer);
+        module.loadVocabularyWords().enqueue(observer);
 
         List<VocabularyWord> result = observer.getOnNextEvents().get(0);
         VocabularyWord word = result.get(0);

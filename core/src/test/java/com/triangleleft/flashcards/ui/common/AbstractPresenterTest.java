@@ -4,7 +4,6 @@ import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-@Ignore
 @RunWith(JUnit4.class)
 public class AbstractPresenterTest {
 

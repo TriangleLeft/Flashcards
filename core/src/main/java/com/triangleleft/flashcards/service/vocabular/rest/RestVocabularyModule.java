@@ -1,7 +1,10 @@
 package com.triangleleft.flashcards.service.vocabular.rest;
 
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Action;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Observers;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -52,16 +55,36 @@ public class RestVocabularyModule implements VocabularyModule {
     }
 
     @Override
-    public void loadVocabularyWords(Observer<List<VocabularyWord>> observer) {
+    public Call<List<VocabularyWord>> loadVocabularyWords() {
         logger.debug("loadVocabularyWords()");
-        mainExecutor.execute(new GetCachedDataTask(observer));
-        mainExecutor.execute(new LoadWordsTask(observer));
+        return new Call<List<VocabularyWord>>() {
+            @Override
+            public void enqueue(Action<List<VocabularyWord>> onData, Action<Throwable> onError) {
+                mainExecutor.execute(new GetCachedDataTask(Observers.from(onData, onError)));
+                mainExecutor.execute(new LoadWordsTask(Observers.from(onData, onError)));
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        };
     }
 
     @Override
-    public void refreshVocabularyWords(Observer<List<VocabularyWord>> observer) {
+    public Call<List<VocabularyWord>> refreshVocabularyWords() {
         logger.debug("refreshVocabularyWords()");
-        mainExecutor.execute(new LoadWordsTask(observer));
+        return new Call<List<VocabularyWord>>() {
+            @Override
+            public void enqueue(Action<List<VocabularyWord>> onData, Action<Throwable> onError) {
+                mainExecutor.execute(new LoadWordsTask(Observers.from(onData, onError)));
+            }
+
+            @Override
+            public void cancel() {
+
+            }
+        };
     }
 
     private class GetCachedDataTask implements Runnable {

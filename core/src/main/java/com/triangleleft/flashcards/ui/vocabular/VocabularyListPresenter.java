@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.FragmentScope;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -27,11 +27,10 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     private final VocabularyModule vocabularyModule;
     private final VocabularyNavigator navigator;
-    //private final Scheduler mainThreadScheduler;
-    // private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
     private List<VocabularyWord> vocabularyList = Collections.emptyList();
     private boolean hasRefreshError;
+    private Call<List<VocabularyWord>> call = Call.empty();
 
     @Inject
     public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
@@ -39,7 +38,6 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         super(IVocabularyListView.class, executor);
         this.vocabularyModule = vocabularyModule;
         this.navigator = navigator;
-        //this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -59,7 +57,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        //subscription.unsubscribe();
+        call.cancel();
     }
 
     public void onWordSelected(int position) {
@@ -76,37 +74,16 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         vocabularyList.clear();
         // Reset position
         selectedPosition = NO_POSITION;
-        //subscription.unsubscribe();
-        // NOTE: we have to materialze/dematerialze because of this:
-        // https://github.com/ReactiveX/RxJava/issues/2887
-        vocabularyModule.loadVocabularyWords(new Observer<List<VocabularyWord>>() {
-            @Override
-            public void onError(Throwable e) {
-                processLoadError(e);
-            }
-
-            @Override
-            public void onNext(List<VocabularyWord> vocabularyWords) {
-                processData(vocabularyWords);
-            }
-        });
+        call = vocabularyModule.loadVocabularyWords();
+        call.enqueue(this::processData, this::processLoadError);
     }
 
     public void onRefreshList() {
         logger.debug("onRefreshList()");
         // NOTE: we cancel request every time we swipe refresh, not sure it's a good idea
-        // subscription.unsubscribe();
-        vocabularyModule.refreshVocabularyWords(new Observer<List<VocabularyWord>>() {
-            @Override
-            public void onError(Throwable e) {
-                processRefreshError(e);
-            }
-
-            @Override
-            public void onNext(List<VocabularyWord> vocabularyWords) {
-                processData(vocabularyWords);
-            }
-        });
+        call.cancel();
+        call = vocabularyModule.refreshVocabularyWords();
+        call.enqueue(this::processData, this::processRefreshError);
     }
 
     private void processData(List<VocabularyWord> list) {

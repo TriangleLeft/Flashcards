@@ -2,11 +2,11 @@ package com.triangleleft.flashcards.ui.main;
 
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.account.AccountModule;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-@Ignore
 @RunWith(JUnit4.class)
 public class MainPresenterTest {
 
@@ -33,6 +32,7 @@ public class MainPresenterTest {
         MockitoAnnotations.initMocks(this);
         presenter = new MainPresenter(accountModule, Runnable::run);
         when(accountModule.getUserData()).thenReturn(Optional.of(userData));
+        when(userData.getCurrentLearningLanguage()).thenReturn(Optional.empty());
     }
 
     @Test
@@ -41,6 +41,17 @@ public class MainPresenterTest {
         presenter.onBind(view);
 
         verify(view).showList();
+    }
+
+    @Test
+    public void currentLearningLanguageTitle() {
+        Language stubLanguage = Language.create("", "title", 1, true, true);
+        when(userData.getCurrentLearningLanguage()).thenReturn(Optional.of(stubLanguage));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+
+        verify(view).setTitle("title");
     }
 
     @Test

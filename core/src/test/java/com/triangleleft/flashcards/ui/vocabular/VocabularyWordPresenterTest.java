@@ -20,7 +20,6 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,7 +28,6 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-@Ignore
 @RunWith(JUnit4.class)
 public class VocabularyWordPresenterTest {
 
