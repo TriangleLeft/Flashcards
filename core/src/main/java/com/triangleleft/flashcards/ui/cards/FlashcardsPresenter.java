@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.ui.cards;
 
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.Call;
-import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -18,8 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static com.annimon.stream.Collectors.toList;
 
@@ -32,11 +33,11 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private final FlashcardsModule module;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
-    private Call<FlashcardTestData> call = Calls.empty();
+    private Call<FlashcardTestData> call = Call.empty();
 
     @Inject
-    public FlashcardsPresenter(FlashcardsModule module) {
-        super(IFlashcardsView.class);
+    public FlashcardsPresenter(FlashcardsModule module, @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IFlashcardsView.class, executor);
         this.module = module;
     }
 

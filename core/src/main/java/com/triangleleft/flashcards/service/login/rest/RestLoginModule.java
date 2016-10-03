@@ -1,11 +1,11 @@
 package com.triangleleft.flashcards.service.login.rest;
 
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Action;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
-import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -30,28 +30,30 @@ public class RestLoginModule implements LoginModule {
     }
 
     @Override
-    public void login(String login, String password, Observer<Void> observer) {
+    public Call<Object> login(String login, String password) {
         accountModule.setLogin(login);
-        service.login(new LoginRequestController(login, password))
-                .enqueue(model -> {
+        Call<LoginResponseModel> call = service.login(new LoginRequestController(login, password));
+        return new Call<Object>() {
+            @Override
+            public void enqueue(Action<Object> onData, Action<Throwable> onError) {
+                call.enqueue(model -> {
                     if (model.isSuccess()) {
                         accountModule.setUserId(model.getUserId());
-                        settingsModule.loadUserData(new Observer<UserData>() {
-                            @Override
-                            public void onError(Throwable e) {
-                                observer.onError(e);
-                            }
-
-                            @Override
-                            public void onNext(UserData data) {
-                                accountModule.setUserData(data);
-                                observer.onNext(null);
-                            }
-                        });
+                        settingsModule.loadUserData().enqueue(data -> {
+                            accountModule.setUserData(data);
+                            onData.call(new Object());
+                        }, onError::call);
                     } else {
-                        observer.onError(model.getError());
+                        onError.call(model.getError());
                     }
-                }, observer::onError);
+                }, onError::call);
+            }
+
+            @Override
+            public void cancel() {
+                call.cancel();
+            }
+        };
     }
 
 

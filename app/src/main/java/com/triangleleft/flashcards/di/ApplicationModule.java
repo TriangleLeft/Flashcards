@@ -14,9 +14,12 @@ import com.triangleleft.flashcards.ui.common.ComponentManager;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
 import com.triangleleft.flashcards.ui.common.SharedPreferencesPersistentStorage;
+import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -39,6 +42,25 @@ public class ApplicationModule {
     @Named(RestVocabularyModule.MAIN_EXECUTOR)
     public Executor singleThreadExecutor() {
         return Executors.newSingleThreadExecutor();
+    }
+
+    @ApplicationScope
+    @Provides
+    @Named(AbstractPresenter.VIEW_EXECUTOR)
+    public Executor uiThreadExecutor(Handler handler) {
+        return command -> {
+            if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+                command.run();
+            } else {
+                handler.post(command);
+            }
+        };
+    }
+
+    @ApplicationScope
+    @Provides
+    public Handler mainThreadHandler() {
+        return new Handler(Looper.getMainLooper());
     }
 
     @ApplicationScope

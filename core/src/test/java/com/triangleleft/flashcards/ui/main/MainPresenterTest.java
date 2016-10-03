@@ -13,10 +13,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @Ignore
 @RunWith(JUnit4.class)
@@ -34,7 +31,7 @@ public class MainPresenterTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new MainPresenter(accountModule);
+        presenter = new MainPresenter(accountModule, Runnable::run);
         when(accountModule.getUserData()).thenReturn(Optional.of(userData));
     }
 

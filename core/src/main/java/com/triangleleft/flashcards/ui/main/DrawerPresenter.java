@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.ui.main;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
@@ -15,8 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import static com.annimon.stream.Collectors.toList;
 
@@ -31,8 +32,9 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
     private Optional<Language> currentLanguage = Optional.empty();
 
     @Inject
-    public DrawerPresenter(MainPresenter mainPresenter, AccountModule accountModule, SettingsModule settingsModule) {
-        super(IDrawerView.class);
+    public DrawerPresenter(MainPresenter mainPresenter, AccountModule accountModule, SettingsModule settingsModule,
+                           @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IDrawerView.class, executor);
         this.mainPresenter = mainPresenter;
         this.accountModule = accountModule;
         this.settingsModule = settingsModule;
@@ -47,17 +49,7 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
         // NOTE: we don't show progress bar while we are doing it, progress bar is shown only for language switch
         // NOTE: we don't want to notify user that we failed to update data
         processUserData(accountModule.getUserData().get());
-        settingsModule.loadUserData(new Observer<UserData>() {
-            @Override
-            public void onError(Throwable e) {
-                processUserDataError(e);
-            }
-
-            @Override
-            public void onNext(UserData data) {
-                processUserData(data);
-            }
-        });
+        settingsModule.loadUserData().enqueue(this::processUserData, this::processUserDataError);
     }
 
     private void processUserData(UserData data) {
@@ -91,17 +83,8 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
         // Show progress bar
         applyState(IDrawerView::showListProgress);
         // Request to switch language
-        settingsModule.switchLanguage(language, new Observer<Void>() {
-            @Override
-            public void onError(Throwable e) {
-                processLanguageSwitchError(e);
-            }
-
-            @Override
-            public void onNext(Void aVoid) {
-                processLanguageSwitch(language);
-            }
-        });
+        settingsModule.switchLanguage(language)
+                .enqueue(data -> processLanguageSwitch(language), this::processLanguageSwitchError);
     }
 
     private void processLanguageSwitch(Language currentLanguage) {

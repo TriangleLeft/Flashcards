@@ -1,6 +1,6 @@
 package com.triangleleft.flashcards.ui.login;
 
-import com.triangleleft.flashcards.Observer;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 
 @FunctionsAreNonnullByDefault
@@ -32,10 +35,12 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private boolean rememberUser = false;
     private boolean hasLoginError;
     private boolean hasPasswordError;
+    private Call<Object> call = Call.empty();
 
     @Inject
-    public LoginPresenter(AccountModule accountModule, LoginModule loginModule) {
-        super(ILoginView.class);
+    public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
+                          @Named(VIEW_EXECUTOR) Executor executor) {
+        super(ILoginView.class, executor);
         this.accountModule = accountModule;
         this.loginModule = loginModule;
     }
@@ -66,7 +71,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-
+        call.cancel();
     }
 
     public void onLoginChanged(@NonNull String newLogin) {
@@ -100,28 +105,23 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     public void onLoginClick() {
         logger.debug("onLoginClick() called");
         getView().showProgress();
-        loginModule.login(login, password, new Observer<Void>() {
-            @Override
-            public void onError(Throwable error) {
-                if (error instanceof LoginException) {
-                    hasLoginError = true;
-                    getView().setLoginErrorVisible(true);
-                } else if (error instanceof PasswordException) {
-                    hasPasswordError = true;
-                    getView().setPasswordErrorVisible(true);
-                } else if (error instanceof NetworkException) {
-                    getView().notifyNetworkError();
-                } else {
-                    getView().notifyGenericError();
-                }
-                getView().showContent();
-            }
-
-            @Override
-            public void onNext(Void aVoid) {
-                getView().advance();
-            }
-        });
+        call = loginModule.login(login, password);
+        call.enqueue(
+                data -> getView().advance(),
+                error -> {
+                    if (error instanceof LoginException) {
+                        hasLoginError = true;
+                        getView().setLoginErrorVisible(true);
+                    } else if (error instanceof PasswordException) {
+                        hasPasswordError = true;
+                        getView().setPasswordErrorVisible(true);
+                    } else if (error instanceof NetworkException) {
+                        getView().notifyNetworkError();
+                    } else {
+                        getView().notifyGenericError();
+                    }
+                    getView().showContent();
+                });
     }
 
     public void onRememberCheck(boolean checked) {

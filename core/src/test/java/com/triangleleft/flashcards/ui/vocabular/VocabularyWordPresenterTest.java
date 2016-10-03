@@ -27,8 +27,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @Ignore
 @RunWith(JUnit4.class)
@@ -41,7 +40,7 @@ public class VocabularyWordPresenterTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new VocabularyWordPresenter();
+        presenter = new VocabularyWordPresenter(Runnable::run);
     }
 
     @Test

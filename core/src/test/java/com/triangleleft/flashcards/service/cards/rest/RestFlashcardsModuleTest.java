@@ -17,7 +17,7 @@
 package com.triangleleft.flashcards.service.cards.rest;
 
 import com.triangleleft.flashcards.Actions;
-import com.triangleleft.flashcards.Calls;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -62,7 +62,7 @@ public class RestFlashcardsModuleTest {
         FlashcardResponseModel model = mock(FlashcardResponseModel.class);
         FlashcardTestData mockData = FlashcardTestData.create("ui", "learn", Collections.emptyList());
         when(model.toTestData()).thenReturn(mockData);
-        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(Calls.just(model));
+        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(Call.just(model));
 
         TestAction<FlashcardTestData> action = new TestAction<>();
         module.getFlashcards().enqueue(action, Actions.empty());
@@ -77,7 +77,7 @@ public class RestFlashcardsModuleTest {
                 FlashcardWordResult.create(FlashcardWord.create("word2", "translation2", "id2"), false)
         );
         FlashcardTestResult result = FlashcardTestResult.create("ui", "learn", results);
-        when(service.postFlashcardResults(any())).thenReturn(Calls.just(null));
+        when(service.postFlashcardResults(any())).thenReturn(Call.just(null));
 
         module.postResult(result);
 

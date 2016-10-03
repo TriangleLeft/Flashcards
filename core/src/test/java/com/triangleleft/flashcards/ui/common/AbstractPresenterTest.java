@@ -16,9 +16,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @Ignore
 @RunWith(JUnit4.class)
@@ -93,7 +91,7 @@ public class AbstractPresenterTest {
     private class TestPresenter extends AbstractPresenter<ITestView> {
 
         public TestPresenter() {
-            super(ITestView.class);
+            super(ITestView.class, Runnable::run);
         }
 
         void testMethod() {

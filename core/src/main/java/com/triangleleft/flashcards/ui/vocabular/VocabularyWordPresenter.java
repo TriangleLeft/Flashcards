@@ -6,15 +6,18 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope
 public class VocabularyWordPresenter extends AbstractPresenter<IVocabularyWordView> {
 
     @Inject
-    public VocabularyWordPresenter() {
-        super(IVocabularyWordView.class);
+    public VocabularyWordPresenter(@Named(VIEW_EXECUTOR) Executor executor) {
+        super(IVocabularyWordView.class, executor);
     }
 
     public void showWord(Optional<VocabularyWord> word) {

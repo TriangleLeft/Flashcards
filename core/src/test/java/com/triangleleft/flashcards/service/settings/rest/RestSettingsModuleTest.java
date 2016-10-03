@@ -17,7 +17,7 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.Calls;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
@@ -64,10 +64,10 @@ public class RestSettingsModuleTest {
         UserDataModel model = mock(UserDataModel.class);
         UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
         when(model.toUserData()).thenReturn(userData);
-        when(service.getUserData("id")).thenReturn(Calls.just(model));
+        when(service.getUserData("id")).thenReturn(Call.just(model));
 
         TestObserver<UserData> observer = new TestObserver<>();
-        module.loadUserData(observer);
+        module.loadUserData().enqueue(observer);
 
         observer.assertValue(userData);
     }
@@ -75,10 +75,10 @@ public class RestSettingsModuleTest {
     @Test
     public void switchLanguage() {
         Language language = Language.create("id", "lang", 0, true, true);
-        when(service.switchLanguage(any(SwitchLanguageController.class))).thenReturn(Calls.just(null));
+        when(service.switchLanguage(any(SwitchLanguageController.class))).thenReturn(Call.just(null));
 
-        TestObserver<Void> observer = new TestObserver<>();
-        module.switchLanguage(language, observer);
+        TestObserver<Object> observer = new TestObserver<>();
+        module.switchLanguage(language).enqueue(observer);
 
         observer.assertOnNextCalled();
     }

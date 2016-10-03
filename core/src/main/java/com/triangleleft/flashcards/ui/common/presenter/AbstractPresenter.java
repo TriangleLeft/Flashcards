@@ -16,18 +16,23 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 public abstract class AbstractPresenter<View extends IView>
         implements IPresenter<View> {
 
+    public static final String VIEW_EXECUTOR = "viewExecutor";
+
     private static final Logger logger = LoggerFactory.getLogger(AbstractPresenter.class);
     private final View viewState;
     private final List<Map.Entry<Method, Object[]>> viewCalls = new ArrayList<>();
+    private final Executor executor;
     private volatile View view;
     private boolean destroyed = false;
     private State<View> currentState;
 
-    public AbstractPresenter(Class<View> viewClass) {
+    public AbstractPresenter(Class<View> viewClass, Executor executor) {
+        this.executor = executor;
         viewState = viewClass.cast(Proxy.newProxyInstance(viewClass.getClassLoader(),
                 new Class<?>[]{viewClass}, (proxy, method, args) -> {
                     if (method.getName().equals("toString") && (args == null || args.length == 0)) {
@@ -79,7 +84,7 @@ public abstract class AbstractPresenter<View extends IView>
     }
 
     private void invokeMethod(View target, Method method, Object[] args) {
-        target.runOnUiThread(() -> {
+        executor.execute(() -> {
             try {
                 method.invoke(target, args);
             } catch (IllegalAccessException e) {
@@ -88,7 +93,6 @@ public abstract class AbstractPresenter<View extends IView>
                 throw new RuntimeException(e);
             }
         });
-
     }
 
     @CallSuper
@@ -114,7 +118,9 @@ public abstract class AbstractPresenter<View extends IView>
         // Apply state only if we have view bound
         // Otherwise it would get called when view is bound
         if (localView != null) {
-            localView.runOnUiThread(() -> currentState.apply(localView));
+            executor.execute(() -> {
+                currentState.apply(localView);
+            });
         }
     }
 

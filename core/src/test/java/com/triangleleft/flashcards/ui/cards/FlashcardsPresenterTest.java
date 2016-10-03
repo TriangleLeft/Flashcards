@@ -1,7 +1,6 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import com.triangleleft.flashcards.Call;
-import com.triangleleft.flashcards.Calls;
 import com.triangleleft.flashcards.Observer;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -9,7 +8,6 @@ import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
-import com.triangleleft.flashcards.util.TestUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,19 +42,20 @@ public class FlashcardsPresenterTest {
     ArgumentCaptor<List<FlashcardWord>> listCaptor;
     @Captor
     ArgumentCaptor<Observer<FlashcardTestData>> observerCaptor;
+    @Mock
+    IFlashcardsView view;
 
-    private IFlashcardsView view = TestUtils.mockViewForClass(IFlashcardsView.class);
     private FlashcardsPresenter presenter;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new FlashcardsPresenter(module);
+        presenter = new FlashcardsPresenter(module, Runnable::run);
     }
 
     @Test
     public void onLoadFlashcardsWouldStartLoadingFlashcards() {
-        when(module.getFlashcards()).thenReturn(Calls.empty());
+        when(module.getFlashcards()).thenReturn(Call.empty());
 
         presenter.onLoadFlashcards();
 
@@ -81,7 +80,7 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void onCreateWouldStartLoadingFlashcards() {
-        when(module.getFlashcards()).thenReturn(Calls.empty());
+        when(module.getFlashcards()).thenReturn(Call.empty());
 
         presenter.onCreate();
         presenter.onBind(view);
@@ -102,7 +101,7 @@ public class FlashcardsPresenterTest {
 
     @Test
     public void onFlashcardsLoadErrorWouldShowError() {
-        when(module.getFlashcards()).thenReturn(Calls.error(new ServerException()));
+        when(module.getFlashcards()).thenReturn(Call.error(new ServerException()));
 
         presenter.onCreate();
         presenter.onBind(view);
@@ -174,6 +173,6 @@ public class FlashcardsPresenterTest {
         when(data.getUiLanguage()).thenReturn(UI_LANG);
         when(data.getLearningLanguage()).thenReturn(LEARN_LANG);
         when(data.getWords()).thenReturn(words);
-        when(module.getFlashcards()).thenReturn(Calls.just(data));
+        when(module.getFlashcards()).thenReturn(Call.just(data));
     }
 }

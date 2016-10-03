@@ -13,8 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope
@@ -32,8 +34,9 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     private boolean hasRefreshError;
 
     @Inject
-    public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator) {
-        super(IVocabularyListView.class);
+    public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
+                                   @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IVocabularyListView.class, executor);
         this.vocabularyModule = vocabularyModule;
         this.navigator = navigator;
         //this.mainThreadScheduler = mainThreadScheduler;

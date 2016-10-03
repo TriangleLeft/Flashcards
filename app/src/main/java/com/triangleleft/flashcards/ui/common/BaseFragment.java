@@ -4,7 +4,6 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.IComponent;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
-import com.triangleleft.flashcards.ui.common.view.IUIThreadRunnable;
 import com.triangleleft.flashcards.ui.common.view.IView;
 
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import android.support.v4.app.Fragment;
 import javax.inject.Inject;
 
 public abstract class BaseFragment<Component extends IComponent, View extends IView,
-        Presenter extends IPresenter<View>> extends Fragment implements IUIThreadRunnable {
+        Presenter extends IPresenter<View>> extends Fragment {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseFragment.class);
 
@@ -101,9 +100,4 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     }
 
     protected abstract View getMvpView();
-
-    @Override
-    public void runOnUiThread(Runnable runnable) {
-        getActivity().runOnUiThread(runnable);
-    }
 }

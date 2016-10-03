@@ -1,15 +1,25 @@
 package com.triangleleft.flashcards.ui.main;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.account.AccountModule;
+import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 
-import org.junit.Ignore;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-@Ignore
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.mockito.Mockito.*;
+
 @RunWith(JUnit4.class)
 public class DrawerPresenterTest {
 
@@ -24,30 +34,31 @@ public class DrawerPresenterTest {
     @Mock
     UserData userData;
     private DrawerPresenter presenter;
-//
-//    @Before
-//    public void before() {
-//        MockitoAnnotations.initMocks(this);
-//
-//        presenter = new DrawerPresenter(mainPresenter, accountModule, settingsModule, Schedulers.immediate());
-//        when(userData.getCurrentLearningLanguage()).thenReturn(Optional.empty());
-//        when(accountModule.getUserData()).thenReturn(Optional.of(userData));
-//        when(settingsModule.loadUserData()).thenReturn(Observable.empty());
-//    }
-//
-//    @Test
-//    public void onlyLearningLanguagesAreUsed() {
-//        Language learningLanguage = Language.create("id", "name", 3, true, false);
-//        Language otherLanguage = Language.create("id2", "name2", 2, false, false);
-//        UserData data = prepareUserData(otherLanguage, learningLanguage, learningLanguage);
-//        when(accountModule.getUserData()).thenReturn(Optional.of(data));
-//
-//        presenter.onCreate();
-//        presenter.onBind(view);
-//
-//        verify(view).showUserData(any(), any(), eq(Arrays.asList(learningLanguage, learningLanguage)));
-//    }
-//
+
+    @Before
+    public void before() {
+        MockitoAnnotations.initMocks(this);
+
+        presenter = new DrawerPresenter(mainPresenter, accountModule, settingsModule, Runnable::run);
+        when(userData.getCurrentLearningLanguage()).thenReturn(Optional.empty());
+        when(accountModule.getUserData()).thenReturn(Optional.of(userData));
+        when(settingsModule.loadUserData()).thenReturn(Call.empty());
+    }
+
+
+    @Test
+    public void onlyLearningLanguagesAreUsed() {
+        Language learningLanguage = Language.create("id", "name", 3, true, false);
+        Language otherLanguage = Language.create("id2", "name2", 2, false, false);
+        UserData data = prepareUserData(otherLanguage, learningLanguage, learningLanguage);
+        when(accountModule.getUserData()).thenReturn(Optional.of(data));
+
+        presenter.onCreate();
+        presenter.onBind(view);
+
+        verify(view).showUserData(any(), any(), eq(Arrays.asList(learningLanguage, learningLanguage)));
+    }
+
 //    @Test
 //    public void onLanguageSelected() {
 //        List<Language> languages = prepareLanguages("user", "avatar");
@@ -102,20 +113,20 @@ public class DrawerPresenterTest {
 //
 //        verify(view).notifyLanguageSwitchError();
 //    }
-//
-//    private List<Language> prepareLanguages(String userName, String avatar) {
-//        Language language = Language.create("id", "lang", 1, true, false);
-//        when(settingsModule.switchLanguage(language)).thenReturn(Observable.just(null));
-//        List<Language> result = Collections.singletonList(language);
-//
-//        // Same language, but with isCurrentlyLearning
-//        language = Language.create("id", "lang", 1, true, true);
-//        UserData data = UserData.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
-//        when(settingsModule.loadUserData()).thenReturn(Observable.just(data));
-//        return result;
-//    }
-//
-//    private UserData prepareUserData(Language... languages) {
-//        return UserData.create(Arrays.asList(languages), "", "", "", "");
-//    }
+
+    private List<Language> prepareLanguages(String userName, String avatar) {
+        Language language = Language.create("id", "lang", 1, true, false);
+        when(settingsModule.switchLanguage(language)).thenReturn(Call.just(new Object()));
+        List<Language> result = Collections.singletonList(language);
+
+        // Same language, but with isCurrentlyLearning
+        language = Language.create("id", "lang", 1, true, true);
+        UserData data = UserData.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
+        when(settingsModule.loadUserData()).thenReturn(Call.just(data));
+        return result;
+    }
+
+    private UserData prepareUserData(Language... languages) {
+        return UserData.create(Arrays.asList(languages), "", "", "", "");
+    }
 }
