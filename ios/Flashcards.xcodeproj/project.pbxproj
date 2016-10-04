@@ -734,6 +734,7 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -777,6 +778,7 @@
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
