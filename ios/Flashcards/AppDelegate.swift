@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var loginModule: LoginModule?
     var vocabularyModule: VocabularyModule?
     var flashcardsModule: FlashcardsModule?
+    var mainThreadExecutor: MainThreadExecutor?
     
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -39,18 +40,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let restService = ObjRestService(gson: gson)
         
+        mainThreadExecutor = MainThreadExecutor()
         accountModule = SimpleAccountModule(persistentStorage: storage)
         settingsModule = RestSettingsModule(restService: restService, withAccountModule: accountModule)
         loginModule = RestLoginModule(restService: restService, withSettingsModule: settingsModule, withAccountModule: accountModule)
-        vocabularyModule = RestVocabularyModule(restService: restService, withTranslationService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository)
+        vocabularyModule = RestVocabularyModule(restService: restService, withTranslationService: restService, withAccountModule: accountModule, withVocabularyWordsRepository: wordRepository, withJavaUtilConcurrentExecutor: JavaUtilConcurrentExecutors.newCachedThreadPool())
         //vocabularyModule = StubVocabularyModule(accountModule: accountModule, withVocabularyWordsRepository: wordRepository)
         flashcardsModule = RestFlashcardsModule(restService: restService)
         //flashcardsModule = StubFlashcardsModule()
-        
-        // We can't use unsafe as it's broken on 32-bit systems (something with one of the fields being not aligned)
-        JavaLangSystem.setPropertyWithNSString("rx.unsafe-disable", withNSString: "true")
-        
-        RxPluginsRxJavaHooks.setOnError(RxOnErrorClosure())
         
         changeRootViewController(buildLoginViewController(), animated: false)
         
@@ -61,32 +58,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    class RxOnErrorClosure : NSObject, RxFunctionsAction1 {
-        func callWithId(t: AnyObject!) {
-            if (t is ConversionException) {
-                AppDelegate.sharedAppDelegate().navigateToLogin()
-            }
-        }
-    }
-    
     func buildLoginViewController() -> UIViewController {
-        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withRxScheduler: RxSchedulersSchedulers_immediate())
+        let presenter = LoginPresenter(accountModule: accountModule, withLoginModule: loginModule, withJavaUtilConcurrentExecutor: mainThreadExecutor)
         return LoginViewController(presenter: presenter)
     }
     
     func buildMainViewController() -> UIViewController {
-        let mainPresenter = MainPresenter(accountModule: accountModule)
-        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter)
-        let wordPresenter = VocabularyWordPresenter()
+        let mainPresenter = MainPresenter(accountModule: accountModule, withJavaUtilConcurrentExecutor: mainThreadExecutor)
+        let listPrenseter = VocabularyListPresenter(vocabularyModule: vocabularyModule, withVocabularyNavigator: mainPresenter, withJavaUtilConcurrentExecutor: mainThreadExecutor)
+        let wordPresenter = VocabularyWordPresenter(javaUtilConcurrentExecutor: mainThreadExecutor)
         let mainVC = MainViewController(mainPresenter, listPrensenter: listPrenseter, wordPresenter: wordPresenter)
         
-        let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withRxScheduler: MainThreadScheduler())
+        let drawerPresenter = DrawerPresenter(mainPresenter: mainPresenter, withAccountModule: accountModule, withSettingsModule: settingsModule, withJavaUtilConcurrentExecutor: mainThreadExecutor)
         let drawerVC = DrawerViewController(presenter: drawerPresenter)
         
         let drawer = DrawerController(centerViewController: mainVC, leftDrawerViewController: drawerVC)
         drawer.openDrawerGestureModeMask = .BezelPanningCenterView
         drawer.closeDrawerGestureModeMask = .PanningCenterView
-        // add custom .CloseDrawer
+        // TODO: add custom .CloseDrawer
         drawer.centerHiddenInteractionMode = .NavigationBarOnly
         drawer.showsShadows = false
         drawer.shouldStretchDrawer = false
@@ -95,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func buildCardsViewController() -> UIViewController {
-        let presenter = FlashcardsPresenter(flashcardsModule: flashcardsModule)
+        let presenter = FlashcardsPresenter(flashcardsModule: flashcardsModule, withJavaUtilConcurrentExecutor: mainThreadExecutor)
         let cardsController:CardsViewController = CardsViewController(presenter)
         let navCardsController:UINavigationController = UINavigationController(rootViewController: cardsController)
         navCardsController.navigationBar.barTintColor = UIColor.flashcardsPrimary()
@@ -247,19 +236,6 @@ extension UITextField {
         }
         last.returnKeyType = .Done
         last.addTarget(last, action: #selector(UIResponder.resignFirstResponder), forControlEvents: .EditingDidEndOnExit)
-    }
-}
-
-extension UIViewController : IUIThreadRunnable {
-    public func runOnUiThreadWithJavaLangRunnable(runnable: JavaLangRunnable!) {
-        if (NSThread.isMainThread()) {
-            runnable.run()
-        } else {
-            dispatch_async(dispatch_get_main_queue(),{
-                runnable.run()
-                
-            })
-        }
     }
 }
 

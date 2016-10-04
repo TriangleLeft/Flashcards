@@ -110,7 +110,6 @@ public class RestVocabularyModule implements VocabularyModule {
 
     private class LoadWordsTask implements Runnable {
         private final Observer<List<VocabularyWord>> observer;
-        public static final int WORDS_PER_GROUP = 10;
 
         public LoadWordsTask(Observer<List<VocabularyWord>> observer) {
             this.observer = observer;
@@ -121,36 +120,52 @@ public class RestVocabularyModule implements VocabularyModule {
             logger.debug("LoadWordsTask run() called");
             service.getVocabularyList(System.currentTimeMillis()).enqueue(model -> {
                         List<VocabularyWord> words = model.toVocabularyData().getWords();
-                        // Prepare executor
-                        ExecutorService executor =
-                                Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-                        ExecutorCompletionService<List<VocabularyWord>> completionService =
-                                new ExecutorCompletionService<>(executor);
-                        // Split words into groups of predefined size
-                        // We do this in order to mimic normal user behavior (and because there is a limit to how long URL can be)
-                        List<List<VocabularyWord>> groups =
-                                Stream.of(words).slidingWindow(WORDS_PER_GROUP, WORDS_PER_GROUP).collect(toList());
-                        // Submit them to executor
-                        for (List<VocabularyWord> group : groups) {
-                            completionService.submit(() -> translate(group));
-                        }
-                        List<VocabularyWord> result = new ArrayList<>();
-                        // Collect results
-                        for (int i = 0; i < groups.size(); i++) {
-                            try {
-                                result.addAll(completionService.take().get());
-                            } catch (InterruptedException | ExecutionException e) {
-                                logger.error("Failed to translated group of words", e);
-                            }
-                        }
-                        // Sort them by normalized words, otherwise all letters with diacritics would be placed at the end
-                        Collections.sort(result, (o1, o2) -> o1.getNormalizedWord().compareTo(o2.getNormalizedWord()));
-                        observer.onNext(result);
-                        mainExecutor.execute(() -> provider.putWords(result));
-                        logger.debug("LoadWordsTask run() returned list of size: [{}]", result.size());
+                        mainExecutor.execute(new TranslateWordsTask(words, observer));
                     },
                     observer::onError
             );
+        }
+    }
+
+    private class TranslateWordsTask implements Runnable {
+
+        private static final int WORDS_PER_GROUP = 10;
+        private final List<VocabularyWord> words;
+        private final Observer<List<VocabularyWord>> observer;
+
+        public TranslateWordsTask(List<VocabularyWord> words, Observer<List<VocabularyWord>> observer) {
+            this.words = words;
+            this.observer = observer;
+        }
+
+        public void run() {
+            // Prepare executor
+            ExecutorService executor =
+                    Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+            ExecutorCompletionService<List<VocabularyWord>> completionService =
+                    new ExecutorCompletionService<>(executor);
+            // Split words into groups of predefined size
+            // We do this in order to mimic normal user behavior (and because there is a limit to how long URL can be)
+            List<List<VocabularyWord>> groups =
+                    Stream.of(words).slidingWindow(WORDS_PER_GROUP, WORDS_PER_GROUP).collect(toList());
+            // Submit them to executor
+            for (List<VocabularyWord> group : groups) {
+                completionService.submit(() -> translate(group));
+            }
+            List<VocabularyWord> wordsList = new ArrayList<>();
+            // Collect results
+            for (int i = 0; i < groups.size(); i++) {
+                try {
+                    wordsList.addAll(completionService.take().get());
+                } catch (InterruptedException | ExecutionException e) {
+                    logger.error("Failed to translated group of words", e);
+                }
+            }
+            // Sort them by normalized words, otherwise all letters with diacritics would be placed at the end
+            Collections.sort(wordsList, (o1, o2) -> o1.getNormalizedWord().compareTo(o2.getNormalizedWord()));
+            observer.onNext(wordsList);
+            mainExecutor.execute(() -> provider.putWords(wordsList));
+            logger.debug("LoadWordsTask run() returned list of size: [{}]", wordsList.size());
         }
     }
 
@@ -161,7 +176,7 @@ public class RestVocabularyModule implements VocabularyModule {
                 .collect(joining(","));
         query = "[" + query + "]";
         CountDownLatch latch = new CountDownLatch(1);
-        List<VocabularyWord> result = new ArrayList<>();
+        final List<VocabularyWord> wordsList = new ArrayList<>();
         translationService.getTranslation(words.get(0).getLearningLanguage(), words.get(0).getUiLanguage(), query)
                 .enqueue(model -> {
                     for (VocabularyWord word : words) {
@@ -169,7 +184,7 @@ public class RestVocabularyModule implements VocabularyModule {
                         if (strings == null) {
                             strings = Collections.emptyList();
                         }
-                        result.add(word.withTranslations(strings));
+                        wordsList.add(word.withTranslations(strings));
                     }
                     latch.countDown();
                 }, throwable -> {
@@ -180,6 +195,6 @@ public class RestVocabularyModule implements VocabularyModule {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return result;
+        return wordsList;
     }
 }
