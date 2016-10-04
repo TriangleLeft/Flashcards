@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.service.rest;
 
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -8,6 +9,8 @@ import com.triangleleft.flashcards.service.login.rest.LoginRequestController;
 import com.triangleleft.flashcards.service.login.rest.LoginResponseModel;
 import com.triangleleft.flashcards.service.login.rest.RestLoginModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
+import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.util.TestObserver;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,10 +20,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -37,6 +36,7 @@ public class RestLoginModuleTest {
     SettingsModule settingsModule;
     @Mock
     AccountModule accountModule;
+
     private RestLoginModule module;
 
     @Before
@@ -48,15 +48,18 @@ public class RestLoginModuleTest {
     @Test
     public void successfulLogin() {
         LoginResponseModel model = mock(LoginResponseModel.class);
+        UserData mockUserData = mock(UserData.class);
         when(model.isSuccess()).thenReturn(true);
         when(model.getUserId()).thenReturn("id");
-        when(service.login(any(LoginRequestController.class))).thenReturn(Observable.just(model));
-        when(settingsModule.loadUserData()).thenReturn(Observable.just(null));
+        when(service.login(any(LoginRequestController.class))).thenReturn(Call.just(model));
+        when(settingsModule.loadUserData()).thenReturn(Call.just(mockUserData));
 
-        doLogin();
+        TestObserver<Object> observer = new TestObserver<>();
+        module.login(LOGIN, PASS).enqueue(observer);
 
-        verify(settingsModule).loadUserData();
+        verify(accountModule).setUserData(mockUserData);
         verify(accountModule).setUserId("id");
+        observer.assertOnNextCalled();
     }
 
     @Test
@@ -65,47 +68,46 @@ public class RestLoginModuleTest {
         LoginResponseModel model = mock(LoginResponseModel.class);
         when(model.isSuccess()).thenReturn(false);
         when(model.getError()).thenReturn(exception);
-        when(service.login(any(LoginRequestController.class))).thenReturn(Observable.just(model));
+        when(service.login(any(LoginRequestController.class))).thenReturn(Call.just(model));
 
-        TestSubscriber<Void> subscriber = doLogin();
+        TestObserver<Object> observer = new TestObserver<>();
+        module.login(LOGIN, PASS).enqueue(observer);
 
-        subscriber.assertError(exception);
+        observer.assertError(exception);
     }
 
     @Test
     public void loginHttpException() {
-        ServerException exception = new ServerException(new Throwable());
-        when(service.login(any(LoginRequestController.class))).thenReturn(Observable.error(exception));
+        ServerException exception = new ServerException();
+        when(service.login(any(LoginRequestController.class))).thenReturn(Call.error(exception));
 
-        TestSubscriber<Void> subscriber = doLogin();
+        TestObserver<Object> observer = new TestObserver<>();
+        module.login(LOGIN, PASS).enqueue(observer);
 
-        subscriber.assertError(ServerException.class);
+        observer.assertError(exception);
     }
 
     @Test
     public void loginIOException() {
         NetworkException exception = new NetworkException(new IOException());
-        when(service.login(any(LoginRequestController.class))).thenReturn(Observable.error(exception));
+        when(service.login(any(LoginRequestController.class))).thenReturn(Call.error(exception));
 
-        TestSubscriber<Void> subscriber = doLogin();
+        TestObserver<Object> observer = new TestObserver<>();
+        module.login(LOGIN, PASS).enqueue(observer);
 
-        subscriber.assertError(NetworkException.class);
+        observer.assertError(exception);
     }
 
     @Test
     public void loginIsRemembered() {
-        when(service.login(any(LoginRequestController.class))).thenReturn(Observable.empty());
+        when(service.login(any(LoginRequestController.class))).thenReturn(Call.error(new Throwable()));
 
-        doLogin();
+        TestObserver<Object> observer = new TestObserver<>();
+        module.login(LOGIN, PASS).enqueue(observer);
 
         verify(accountModule).setLogin(LOGIN);
     }
 
-    private TestSubscriber<Void> doLogin() {
-        TestSubscriber<Void> subscriber = TestSubscriber.create();
-        module.login(LOGIN, PASS).subscribe(subscriber);
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
-        return subscriber;
-    }
+
 
 }

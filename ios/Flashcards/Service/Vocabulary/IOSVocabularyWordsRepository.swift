@@ -18,6 +18,10 @@ class IOSVocabularyWordsRepository: NSObject, VocabularyWordsRepository {
         let words = JavaUtilArrayList()
         fetchRequest.predicate = NSPredicate(format: "(uiLanguage == %@) AND (learningLanguage = %@)", uiLanguageId, learningLanguageId)
         
+        let sortDescriptor = NSSortDescriptor(key: "normalizedString", ascending: true)
+        let sortDescriptors = [sortDescriptor]
+        fetchRequest.sortDescriptors = sortDescriptors
+        
         do {
             if let results = try managedContext.executeFetchRequest(fetchRequest) as? [VocabularyWordDao] {
                 for result in results {

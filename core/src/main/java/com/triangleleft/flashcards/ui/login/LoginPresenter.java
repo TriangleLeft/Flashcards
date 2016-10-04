@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.login;
 
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
@@ -15,11 +16,11 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
-import javax.inject.Inject;
+import java.util.concurrent.Executor;
 
-import rx.Scheduler;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import javax.inject.Inject;
+import javax.inject.Named;
+
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -28,22 +29,20 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private static final Logger logger = LoggerFactory.getLogger(LoginPresenter.class);
 
     private final LoginModule loginModule;
-    private final Scheduler mainThreadScheduler;
     private final AccountModule accountModule;
-    private Subscription subscription = Subscriptions.empty();
     private String login = "";
     private String password = "";
     private boolean rememberUser = false;
     private boolean hasLoginError;
     private boolean hasPasswordError;
+    private Call<Object> call = Call.empty();
 
     @Inject
     public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
-                          Scheduler mainThreadScheduler) {
-        super(ILoginView.class);
+                          @Named(VIEW_EXECUTOR) Executor executor) {
+        super(ILoginView.class, executor);
         this.accountModule = accountModule;
         this.loginModule = loginModule;
-        this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        subscription.unsubscribe();
+        call.cancel();
     }
 
     public void onLoginChanged(@NonNull String newLogin) {
@@ -106,31 +105,29 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     public void onLoginClick() {
         logger.debug("onLoginClick() called");
         getView().showProgress();
-        subscription = loginModule.login(login, password)
-                .observeOn(mainThreadScheduler)
-                .subscribe(nothing -> getView().advance(), this::handleError);
+        call = loginModule.login(login, password);
+        call.enqueue(
+                data -> getView().advance(),
+                error -> {
+                    if (error instanceof LoginException) {
+                        hasLoginError = true;
+                        getView().setLoginErrorVisible(true);
+                    } else if (error instanceof PasswordException) {
+                        hasPasswordError = true;
+                        getView().setPasswordErrorVisible(true);
+                    } else if (error instanceof NetworkException) {
+                        getView().notifyNetworkError();
+                    } else {
+                        getView().notifyGenericError();
+                    }
+                    getView().showContent();
+                });
     }
 
     public void onRememberCheck(boolean checked) {
         logger.debug("onRememberCheck() called with: checked = [{}]", checked);
         rememberUser = checked;
         accountModule.setRememberUser(checked);
-    }
-
-    private void handleError(Throwable error) {
-        logger.debug("handleError() called with: error = [{}]", error);
-        if (error instanceof LoginException) {
-            hasLoginError = true;
-            getView().setLoginErrorVisible(true);
-        } else if (error instanceof PasswordException) {
-            hasPasswordError = true;
-            getView().setPasswordErrorVisible(true);
-        } else if (error instanceof NetworkException) {
-            getView().notifyNetworkError();
-        } else {
-            getView().notifyGenericError();
-        }
-        getView().showContent();
     }
 
 }

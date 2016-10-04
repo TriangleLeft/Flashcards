@@ -1,16 +1,22 @@
 package com.triangleleft.flashcards.service.vocabular;
 
-import android.database.sqlite.SQLiteDatabase;
-
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.service.vocabular.VocabularyWordModel;
 import com.triangleleft.service.vocabular.VocabularyWordTranslationModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import android.database.sqlite.SQLiteDatabase;
+
 import java.util.List;
+
 import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
+
+    private static final Logger logger = LoggerFactory.getLogger(DbVocabularyWordsRepository.class);
 
     private final SQLiteDatabase database;
 
@@ -26,6 +32,7 @@ public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
 
     @Override
     public void putWords(List<VocabularyWord> words) {
+        logger.debug("putWords() called with list of size = [{}]", words.size());
         // TODO: do we want to clear cache in case for some reason we no longer have words?
         if (words.isEmpty()) {
             return;

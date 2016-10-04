@@ -100,5 +100,4 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     }
 
     protected abstract View getMvpView();
-
 }

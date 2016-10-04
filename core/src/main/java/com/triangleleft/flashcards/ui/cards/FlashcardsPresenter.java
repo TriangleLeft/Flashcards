@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
@@ -16,12 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
-
-import rx.Scheduler;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import javax.inject.Named;
 
 import static com.annimon.stream.Collectors.toList;
 
@@ -32,16 +31,14 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 
     private final FlashcardsModule module;
-    private final Scheduler mainThreadScheduler;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
-    private Subscription subscription = Subscriptions.empty();
+    private Call<FlashcardTestData> call = Call.empty();
 
     @Inject
-    public FlashcardsPresenter(FlashcardsModule module, Scheduler mainThreadScheduler) {
-        super(IFlashcardsView.class);
+    public FlashcardsPresenter(FlashcardsModule module, @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IFlashcardsView.class, executor);
         this.module = module;
-        this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -52,30 +49,26 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        subscription.unsubscribe();
+        call.cancel();
     }
 
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        subscription.unsubscribe();
-        subscription = module.getFlashcards()
-                .observeOn(mainThreadScheduler)
-                .subscribe(
-                        data -> {
-                            if (data.getWords().size() != 0) {
-                                testData = data;
-                                applyState(view -> view.showWords(data.getWords()));
-                            } else {
-                                // Treat this as error, we expect to always have flashcards
-                                processError(new ServerException("Got no flashcards in response"));
-                            }
-                        },
-                        this::processError
-                );
+        call = module.getFlashcards();
+        call.enqueue(data -> {
+            if (data.getWords().size() != 0) {
+                testData = data;
+                applyState(view -> view.showWords(data.getWords()));
+            } else {
+                // Treat this as error, we expect to always have flashcards
+                processError(new ServerException("Got no flashcards in response"));
+            }
+        }, this::processError);
     }
 
     private void processError(Throwable throwable) {
+        logger.debug("processError() called with: throwable = [{}]", throwable);
         applyState(IFlashcardsView::showError);
     }
 
@@ -102,9 +95,5 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         } else {
             applyState(view -> view.showResultErrors(wrongWords));
         }
-    }
-
-    interface State {
-        void apply();
     }
 }

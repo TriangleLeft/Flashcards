@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.FragmentScope;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -12,12 +13,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
-
-import rx.Scheduler;
-import rx.Subscription;
-import rx.subscriptions.Subscriptions;
+import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope
@@ -28,19 +27,17 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
 
     private final VocabularyModule vocabularyModule;
     private final VocabularyNavigator navigator;
-    private final Scheduler mainThreadScheduler;
-    private Subscription subscription = Subscriptions.empty();
     private int selectedPosition = NO_POSITION;
     private List<VocabularyWord> vocabularyList = Collections.emptyList();
     private boolean hasRefreshError;
+    private Call<List<VocabularyWord>> call = Call.empty();
 
     @Inject
     public VocabularyListPresenter(VocabularyModule vocabularyModule, VocabularyNavigator navigator,
-        Scheduler mainThreadScheduler) {
-        super(IVocabularyListView.class);
+                                   @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IVocabularyListView.class, executor);
         this.vocabularyModule = vocabularyModule;
         this.navigator = navigator;
-        this.mainThreadScheduler = mainThreadScheduler;
     }
 
     @Override
@@ -60,7 +57,7 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        subscription.unsubscribe();
+        call.cancel();
     }
 
     public void onWordSelected(int position) {
@@ -77,26 +74,20 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
         vocabularyList.clear();
         // Reset position
         selectedPosition = NO_POSITION;
-        subscription.unsubscribe();
-        // NOTE: we have to materialze/dematerialze because of this:
-        // https://github.com/ReactiveX/RxJava/issues/2887
-        subscription = vocabularyModule.loadVocabularyWords()
-                .materialize()
-                .observeOn(mainThreadScheduler)
-                .<List<VocabularyWord>>dematerialize()
-                .subscribe(this::processData, this::processLoadError);
+        call = vocabularyModule.loadVocabularyWords();
+        call.enqueue(this::processData, this::processLoadError);
     }
 
     public void onRefreshList() {
         logger.debug("onRefreshList()");
         // NOTE: we cancel request every time we swipe refresh, not sure it's a good idea
-        subscription.unsubscribe();
-        subscription = vocabularyModule.refreshVocabularyWords()
-                .observeOn(mainThreadScheduler)
-                .subscribe(this::processData, this::processRefreshError);
+        call.cancel();
+        call = vocabularyModule.refreshVocabularyWords();
+        call.enqueue(this::processData, this::processRefreshError);
     }
 
     private void processData(List<VocabularyWord> list) {
+        logger.debug("processData() called with list of size = [{}]", list.size());
         vocabularyList = list;
         hasRefreshError = false;
         if (list.isEmpty()) {
@@ -118,11 +109,13 @@ public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListVi
     }
 
     private void processRefreshError(Throwable error) {
+        logger.error("processRefreshError() called with: error = [{}]", error);
         hasRefreshError = true;
         getView().showRefreshError();
     }
 
     private void processLoadError(Throwable error) {
+        logger.error("processLoadError() called with: error = [{}]", error);
         if (vocabularyList.isEmpty()) {
             applyState(IVocabularyListView::showLoadError);
         } else {

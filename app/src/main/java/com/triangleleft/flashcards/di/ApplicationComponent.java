@@ -11,11 +11,14 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.common.ComponentManager;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
+import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.PersistentStorage;
 
-import dagger.Component;
-import rx.Scheduler;
+import java.util.concurrent.Executor;
 
+import javax.inject.Named;
+
+import dagger.Component;
 @ApplicationScope
 @Component(modules = {ApplicationModule.class, NetworkModule.class, RestServiceModule.class})
 public interface ApplicationComponent extends IComponent {
@@ -40,7 +43,8 @@ public interface ApplicationComponent extends IComponent {
 
     FlashcardsNavigator navigator();
 
-    Scheduler mainThreadScheduler();
-
     FlagImagesProvider flagImagesProvider();
+
+    @Named(AbstractPresenter.VIEW_EXECUTOR)
+    Executor uiThreadExecutor();
 }

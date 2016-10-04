@@ -16,7 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
+import java.util.concurrent.Executor;
+
 import javax.inject.Inject;
+import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -29,8 +32,8 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     private Optional<VocabularyWord> currentWord = Optional.empty();
 
     @Inject
-    public MainPresenter(AccountModule accountModule) {
-        super(IMainView.class);
+    public MainPresenter(AccountModule accountModule, @Named(VIEW_EXECUTOR) Executor executor) {
+        super(IMainView.class, executor);
         this.accountModule = accountModule;
     }
 

@@ -1,6 +1,7 @@
 package com.triangleleft.flashcards.ui.login;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.common.exception.NetworkException;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
@@ -18,11 +19,8 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
@@ -33,14 +31,15 @@ public class LoginPresenterTest {
     @Mock
     LoginModule loginModule;
     @Mock
+    Call<Object> mockCall;
+    @Mock
     ILoginView view;
-
     private LoginPresenter presenter;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new LoginPresenter(accountModule, loginModule, Schedulers.immediate());
+        presenter = new LoginPresenter(accountModule, loginModule, Runnable::run);
         // By default, we need to login
         when(accountModule.shouldRememberUser()).thenReturn(false);
         when(accountModule.getLogin()).thenReturn(Optional.empty());
@@ -80,7 +79,7 @@ public class LoginPresenterTest {
     @Test
     public void loginClickWouldShowProgress() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.empty());
+        when(loginModule.login(anyString(), anyString())).thenReturn(Call.empty());
 
         presenter.onLoginClick();
 
@@ -90,7 +89,7 @@ public class LoginPresenterTest {
     @Test
     public void loginClickWouldAdvanceOnSuccess() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.just(null));
+        when(loginModule.login(anyString(), anyString())).thenReturn(Call.just(new Object()));
 
         presenter.onLoginClick();
 
@@ -128,7 +127,7 @@ public class LoginPresenterTest {
     @Test
     public void handleLoginError() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new LoginException()));
+        when(loginModule.login(anyString(), anyString())).thenReturn(Call.error(new LoginException()));
 
         presenter.onLoginClick();
         verify(view).setLoginErrorVisible(true);
@@ -137,7 +136,7 @@ public class LoginPresenterTest {
     @Test
     public void handlePasswordError() {
         initPresenter();
-        when(loginModule.login(anyString(), anyString())).thenReturn(Observable.error(new PasswordException()));
+        when(loginModule.login(anyString(), anyString())).thenReturn(Call.error(new PasswordException()));
 
         presenter.onLoginClick();
         verify(view).setPasswordErrorVisible(true);
@@ -147,7 +146,7 @@ public class LoginPresenterTest {
     public void handleNetworkError() {
         initPresenter();
         when(loginModule.login(anyString(), anyString()))
-                .thenReturn(Observable.error(new NetworkException(new Throwable())));
+                .thenReturn(Call.error(new NetworkException()));
 
         presenter.onLoginClick();
         verify(view).notifyNetworkError();
@@ -157,24 +156,26 @@ public class LoginPresenterTest {
     public void handleGenericError() {
         initPresenter();
         when(loginModule.login(anyString(), anyString()))
-                .thenReturn(Observable.error(new ServerException(new Throwable())));
+                .thenReturn(Call.error(new ServerException()));
 
         presenter.onLoginClick();
         verify(view).notifyGenericError();
     }
 
     @Test
-    public void onDestroyWouldUnsubscribe() {
+    public void onDestroyWouldCancel() {
         initPresenter();
-        AtomicBoolean unsubscribed = new AtomicBoolean(false);
-        Observable<Void> observable = Observable.empty();
-        observable = observable.doOnUnsubscribe(() -> unsubscribed.set(true));
-        when(loginModule.login(anyString(), anyString())).thenReturn(observable);
+        AtomicBoolean canceled = new AtomicBoolean(false);
+        doAnswer(invocation -> {
+            canceled.set(true);
+            return null;
+        }).when(mockCall).cancel();
+        when(loginModule.login(anyString(), anyString())).thenReturn(mockCall);
 
         presenter.onLoginClick();
         presenter.onDestroy();
 
-        assertTrue(unsubscribed.get());
+        assertThat(canceled.get(), is(true));
     }
 
     private void initPresenter() {

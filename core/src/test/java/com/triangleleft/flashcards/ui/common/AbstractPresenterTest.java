@@ -1,9 +1,8 @@
 package com.triangleleft.flashcards.ui.common;
 
-import static org.mockito.Mockito.*;
-
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -15,7 +14,8 @@ import org.mockito.Captor;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class AbstractPresenterTest {
@@ -89,7 +89,7 @@ public class AbstractPresenterTest {
     private class TestPresenter extends AbstractPresenter<ITestView> {
 
         public TestPresenter() {
-            super(ITestView.class);
+            super(ITestView.class, Runnable::run);
         }
 
         void testMethod() {

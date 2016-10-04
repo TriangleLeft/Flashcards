@@ -17,12 +17,14 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
 import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.SwitchLanguageController;
 import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
+import com.triangleleft.flashcards.util.TestObserver;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -34,15 +36,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.observers.TestSubscriber;
-
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class RestSettingsModuleTest {
@@ -69,27 +64,22 @@ public class RestSettingsModuleTest {
         UserDataModel model = mock(UserDataModel.class);
         UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
         when(model.toUserData()).thenReturn(userData);
-        when(service.getUserData("id")).thenReturn(Observable.just(model));
+        when(service.getUserData("id")).thenReturn(Call.just(model));
 
-        TestSubscriber<UserData> subscriber = TestSubscriber.create();
-        module.loadUserData().subscribe(subscriber);
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+        TestObserver<UserData> observer = new TestObserver<>();
+        module.loadUserData().enqueue(observer);
 
-        subscriber.assertValue(userData);
-        verify(accountModule).setUserData(userData);
+        observer.assertValue(userData);
     }
 
     @Test
     public void switchLanguage() {
         Language language = Language.create("id", "lang", 0, true, true);
-        when(service.switchLanguage(any(SwitchLanguageController.class)))
-                .thenReturn(Observable.just(null));
+        when(service.switchLanguage(any(SwitchLanguageController.class))).thenReturn(Call.just(null));
 
-        TestSubscriber<Void> subscriber = TestSubscriber.create();
-        module.switchLanguage(language).subscribe(subscriber);
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
+        TestObserver<Object> observer = new TestObserver<>();
+        module.switchLanguage(language).enqueue(observer);
 
-        subscriber.assertNoErrors();
-        subscriber.assertValue(null);
+        observer.assertOnNextCalled();
     }
 }

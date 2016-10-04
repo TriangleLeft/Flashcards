@@ -24,7 +24,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import rx.schedulers.Schedulers;
 
 @Module
 public class NetworkModule {
@@ -48,7 +47,7 @@ public class NetworkModule {
         return new Retrofit.Builder()
                 .baseUrl(url)
                 .client(client)
-                .addCallAdapterFactory(new FlashcardsCallAdapterFactory(Schedulers.io()))
+                .addCallAdapterFactory(new FlashcardsCallAdapterFactory())
                 .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
     }
 

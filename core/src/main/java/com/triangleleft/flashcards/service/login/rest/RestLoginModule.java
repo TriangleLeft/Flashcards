@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.service.login.rest;
 
+import com.triangleleft.flashcards.Action;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.login.LoginModule;
@@ -10,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-
-import rx.Observable;
 
 @FunctionsAreNonnullByDefault
 public class RestLoginModule implements LoginModule {
@@ -30,21 +30,31 @@ public class RestLoginModule implements LoginModule {
     }
 
     @Override
-    public Observable<Void> login(String login, String password) {
+    public Call<Object> login(String login, String password) {
         accountModule.setLogin(login);
-        return service.login(new LoginRequestController(login, password))
-                .flatMap(this::processModel);
+        Call<LoginResponseModel> call = service.login(new LoginRequestController(login, password));
+        return new Call<Object>() {
+            @Override
+            public void enqueue(Action<Object> onData, Action<Throwable> onError) {
+                call.enqueue(model -> {
+                    if (model.isSuccess()) {
+                        accountModule.setUserId(model.getUserId());
+                        settingsModule.loadUserData().enqueue(data -> {
+                            accountModule.setUserData(data);
+                            onData.call(new Object());
+                        }, onError::call);
+                    } else {
+                        onError.call(model.getError());
+                    }
+                }, onError::call);
+            }
+
+            @Override
+            public void cancel() {
+                call.cancel();
+            }
+        };
     }
 
-    private Observable<Void> processModel(LoginResponseModel model) {
-        logger.debug("processModel called with [{}]", model);
-        if (model.isSuccess()) {
-            accountModule.setUserId(model.getUserId());
-            return settingsModule.loadUserData()
-                    .map(data -> null);
-        } else {
-            return Observable.error(model.getError());
-        }
-    }
 
 }

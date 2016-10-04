@@ -1,9 +1,8 @@
 package com.triangleleft.flashcards.service.vocabular.stub;
 
-import static com.annimon.stream.Collectors.toList;
-
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
@@ -11,13 +10,14 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import javax.inject.Inject;
+
+import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 public class StubVocabularyModule implements VocabularyModule {
@@ -32,23 +32,16 @@ public class StubVocabularyModule implements VocabularyModule {
     }
 
     @Override
-    public Observable<List<VocabularyWord>> loadVocabularyWords() {
-        Observable<List<VocabularyWord>> observable = refreshVocabularyWords();
-
-        UserData userData = accountModule.getUserData().get();
-        observable.startWith(provider.getWords(userData.getUiLanguageId(), userData.getLearningLanguageId()));
-
-        return observable;
+    public Call<List<VocabularyWord>> loadVocabularyWords() {
+        return refreshVocabularyWords();
     }
 
     @Override
-    public Observable<List<VocabularyWord>> refreshVocabularyWords() {
+    public Call<List<VocabularyWord>> refreshVocabularyWords() {
         UserData userData = accountModule.getUserData().get();
 
-        return Observable.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
-            .subscribeOn(Schedulers.io())
-            .doOnNext(this::updateCache)
-            .map(VocabularyData::getWords);
+        return Call.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
+                .map(VocabularyData::getWords);
     }
 
     private void updateCache(VocabularyData data) {
@@ -74,4 +67,5 @@ public class StubVocabularyModule implements VocabularyModule {
         }
         return VocabularyData.create(list, uiLanguage, learningLanguage);
     }
+
 }

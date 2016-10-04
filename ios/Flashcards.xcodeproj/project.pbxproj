@@ -13,7 +13,6 @@
 		8F0DF3E61D96BAAE0007D4FD /* FlashcardsError.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F0DF3E41D96BAAE0007D4FD /* FlashcardsError.m */; };
 		8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED861D6CA57200DCFDA7 /* VocabularyWordViewController.swift */; };
 		8F284DB61D9203E700BD087F /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
-		8F284DB71D9203E700BD087F /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
 		8F284DB81D9203E700BD087F /* NibLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */; };
 		8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
 		8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
@@ -99,7 +98,8 @@
 		8FE2EE7F1D9C4BB80009100A /* VocabularyWordDao.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE2EE771D9C4BB80009100A /* VocabularyWordDao.swift */; };
 		8FE6B5491D6B1BBC00532B3C /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FE6B54B1D6B1BBC00532B3C /* LoginView.xib */; };
 		8FE6B54D1D6B1EA400532B3C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */; };
-		8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */; };
+		8FEF82EC1DA3356A0098BE38 /* MainThreadExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF82EB1DA3356A0098BE38 /* MainThreadExecutor.swift */; };
+		8FEF82ED1DA3356A0098BE38 /* MainThreadExecutor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF82EB1DA3356A0098BE38 /* MainThreadExecutor.swift */; };
 		8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFE91531D7628400079B37E /* CardsViewController.swift */; };
 		8FFE91561D76285F0079B37E /* CardsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FFE91551D76285F0079B37E /* CardsView.xib */; };
 		BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */; };
@@ -188,7 +188,7 @@
 		8FE2EE771D9C4BB80009100A /* VocabularyWordDao.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyWordDao.swift; sourceTree = "<group>"; };
 		8FE6B54A1D6B1BBC00532B3C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LoginView.xib; sourceTree = "<group>"; };
 		8FE6B54C1D6B1EA400532B3C /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadScheduler.swift; sourceTree = "<group>"; };
+		8FEF82EB1DA3356A0098BE38 /* MainThreadExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadExecutor.swift; sourceTree = "<group>"; };
 		8FFE91531D7628400079B37E /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		8FFE91551D76285F0079B37E /* CardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -238,9 +238,9 @@
 		8F29281B1D61FDC1007B1CCF /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8FF2E65A1D6F3CA100E6649D /* MainThreadScheduler.swift */,
 				8FE1B97C1D74391800482A66 /* UIColor+Hex.swift */,
 				8F99DFF11D7719C9006F8847 /* NibLoadingView.swift */,
+				8FEF82EB1DA3356A0098BE38 /* MainThreadExecutor.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -640,7 +640,6 @@
 			files = (
 				8F284DB51D9203E700BD087F /* VocabularyWordViewController.swift in Sources */,
 				8F284DB61D9203E700BD087F /* FlashcardView.swift in Sources */,
-				8F284DB71D9203E700BD087F /* MainThreadScheduler.swift in Sources */,
 				8F284DB81D9203E700BD087F /* NibLoadingView.swift in Sources */,
 				8F284DB91D9203E700BD087F /* CardsViewController.swift in Sources */,
 				8F284DBA1D9203E700BD087F /* VocabularyListTableViewCell.swift in Sources */,
@@ -663,6 +662,7 @@
 				8F284DC61D9203E700BD087F /* MainViewController.swift in Sources */,
 				8F284DC71D9203E700BD087F /* IOSVocabularyWordsRepository.swift in Sources */,
 				8F284DC81D9203E700BD087F /* DrawerViewController.swift in Sources */,
+				8FEF82ED1DA3356A0098BE38 /* MainThreadExecutor.swift in Sources */,
 				8FE2EE7B1D9C4BB80009100A /* VocabularyWordTranslationDao.swift in Sources */,
 				8F284DC91D9203E700BD087F /* AppDelegate.swift in Sources */,
 			);
@@ -674,7 +674,6 @@
 			files = (
 				8FB1ED881D6CA57200DCFDA7 /* VocabularyWordViewController.swift in Sources */,
 				8FD30A671D76FAE5007C31BD /* FlashcardView.swift in Sources */,
-				8FF2E65B1D6F3CA100E6649D /* MainThreadScheduler.swift in Sources */,
 				8F99DFF21D7719C9006F8847 /* NibLoadingView.swift in Sources */,
 				8FFE91541D7628400079B37E /* CardsViewController.swift in Sources */,
 				8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */,
@@ -697,6 +696,7 @@
 				8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */,
 				8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */,
 				8F92DCAA1D70A39E00959DC3 /* DrawerViewController.swift in Sources */,
+				8FEF82EC1DA3356A0098BE38 /* MainThreadExecutor.swift in Sources */,
 				8FE2EE7A1D9C4BB80009100A /* VocabularyWordTranslationDao.swift in Sources */,
 				8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */,
 			);
@@ -734,6 +734,7 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -777,6 +778,7 @@
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

@@ -16,19 +16,15 @@
 
 package com.triangleleft.flashcards.service.cards.rest;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Matchers.anyBoolean;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.*;
-
+import com.triangleleft.flashcards.Actions;
+import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
+import com.triangleleft.flashcards.util.TestAction;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,14 +32,17 @@ import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-import rx.Observable;
-import rx.observers.TestSubscriber;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.mockito.Matchers.anyBoolean;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class RestFlashcardsModuleTest {
@@ -63,28 +62,27 @@ public class RestFlashcardsModuleTest {
         FlashcardResponseModel model = mock(FlashcardResponseModel.class);
         FlashcardTestData mockData = FlashcardTestData.create("ui", "learn", Collections.emptyList());
         when(model.toTestData()).thenReturn(mockData);
-        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(Observable.just(model));
+        when(service.getFlashcardData(anyInt(), anyBoolean(), anyLong())).thenReturn(Call.just(model));
 
-        TestSubscriber<FlashcardTestData> subscriber = TestSubscriber.create();
-        module.getFlashcards().subscribe(subscriber);
+        TestAction<FlashcardTestData> action = new TestAction<>();
+        module.getFlashcards().enqueue(action, Actions.empty());
 
-        subscriber.awaitTerminalEvent(5, TimeUnit.SECONDS);
-        subscriber.assertValue(mockData);
+        action.assertValue(mockData);
     }
 
     @Test
     public void postResults() {
         List<FlashcardWordResult> results = Arrays.asList(
-            FlashcardWordResult.create(FlashcardWord.create("word", "translation", "id"), true),
-            FlashcardWordResult.create(FlashcardWord.create("word2", "translation2", "id2"), false)
+                FlashcardWordResult.create(FlashcardWord.create("word", "translation", "id"), true),
+                FlashcardWordResult.create(FlashcardWord.create("word2", "translation2", "id2"), false)
         );
         FlashcardTestResult result = FlashcardTestResult.create("ui", "learn", results);
-        when(service.postFlashcardResults(any())).thenReturn(Observable.empty());
+        when(service.postFlashcardResults(any())).thenReturn(Call.just(null));
 
         module.postResult(result);
 
         ArgumentCaptor<FlashcardResultsController> captor = ArgumentCaptor
-            .forClass(FlashcardResultsController.class);
+                .forClass(FlashcardResultsController.class);
         // Check that post is called
         verify(service).postFlashcardResults(captor.capture());
         FlashcardResultsController controller = captor.getValue();

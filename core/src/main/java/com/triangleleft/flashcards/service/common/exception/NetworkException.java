@@ -20,4 +20,8 @@ public class NetworkException extends RuntimeException {
     public NetworkException(Throwable e) {
         super(e);
     }
+
+    public NetworkException() {
+        super();
+    }
 }

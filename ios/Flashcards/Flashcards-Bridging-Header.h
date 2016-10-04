@@ -3,10 +3,11 @@
 //
 
 #import <JreEmulation.h>
-//#import "java/util/concurrent/ThreadPoolExecutor.h"
-//#import "java/util/concurrent/Executor.h"
-//#import "java/util/concurrent/ExecutorService.h"
-//#import "java/util/concurrent/ScheduledExecutorService.h"
+#import "java/lang/Runnable.h"
+#import "java/util/concurrent/Executor.h"
+#import "java/util/concurrent/Executors.h"
+#import "java/util/List.h"
+#import "java/util/ArrayList.h"
 #import "java/util/concurrent/TimeUnit.h"
 #import "java/lang/System.h"
 #import "ObjRestService.h"

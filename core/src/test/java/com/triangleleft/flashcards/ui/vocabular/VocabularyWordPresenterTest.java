@@ -16,18 +16,17 @@
 
 package com.triangleleft.flashcards.ui.vocabular;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class VocabularyWordPresenterTest {
@@ -39,7 +38,7 @@ public class VocabularyWordPresenterTest {
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        presenter = new VocabularyWordPresenter();
+        presenter = new VocabularyWordPresenter(Runnable::run);
     }
 
     @Test
