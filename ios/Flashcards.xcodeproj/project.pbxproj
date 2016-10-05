@@ -83,6 +83,7 @@
 		8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
 		8FD30A671D76FAE5007C31BD /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
 		8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
+		8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */; };
 		8FD6AF021D940A8800A88A47 /* VocabularyListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */; };
 		8FD6AF031D940A8D00A88A47 /* VocabularyListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */; };
 		8FD8E9661D670E6800EB3F76 /* ObjRestService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FD8E9651D670E6800EB3F76 /* ObjRestService.m */; };
@@ -177,6 +178,7 @@
 		8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListTableViewCell.xib; sourceTree = "<group>"; };
 		8FD30A661D76FAE5007C31BD /* FlashcardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 		8FD30A681D76FAFB007C31BD /* FlashcardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashcardView.xib; sourceTree = "<group>"; };
+		8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8FD6AF011D940A8800A88A47 /* VocabularyListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListView.xib; sourceTree = "<group>"; };
 		8FD8E9641D670E6800EB3F76 /* ObjRestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjRestService.h; sourceTree = "<group>"; };
 		8FD8E9651D670E6800EB3F76 /* ObjRestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjRestService.m; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */,
 				8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */,
 				8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */,
 				8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */,
@@ -410,6 +413,7 @@
 		BFD909537CED0AC6073FED4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */,
 				8F488B841D653E1B00A1B99B /* libjre_emul.a */,
 				1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */,
 			);

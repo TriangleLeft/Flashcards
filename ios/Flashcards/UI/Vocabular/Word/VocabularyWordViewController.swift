@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VocabularyWordViewController: UIViewController {
     
@@ -19,6 +20,8 @@ class VocabularyWordViewController: UIViewController {
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var translationLabel: UILabel!
     let presenter:VocabularyWordPresenter;
+    let voiceUrl = "https://d7mj4aqfscim2.cloudfront.net/tts/%@/token/%@"
+    var player:AVPlayer?
     
     init(_ presenter:VocabularyWordPresenter) {
         self.presenter = presenter;
@@ -42,6 +45,11 @@ class VocabularyWordViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         presenter.onRebindWithIView(self);
     }
+
+    @IBAction func onVoiceClick(sender: AnyObject) {
+        player?.seekToTime(kCMTimeZero)
+        player?.play()
+    }
 }
 
 extension VocabularyWordViewController: IVocabularyWordView {
@@ -56,6 +64,13 @@ extension VocabularyWordViewController: IVocabularyWordView {
         translationLabel.text = word.getTranslations().isEmpty() ? "N/A" : word.getTranslations().getWithInt(0) as! String;
         posLabel.text = (word.getPos().orElseWithId("N/A") as! String)
         genderLabel.text = (word.getGender().orElseWithId("N/A") as! String)
+        
+        let urlString = String(format: voiceUrl, word.getLearningLanguage(), word.getNormalizedWord())
+        if let url = NSURL(string: urlString) {
+            let playerItem:AVPlayerItem = AVPlayerItem(URL: url)
+            player = AVPlayer(playerItem: playerItem)
+        }
+
     }
     
     func showEmpty() {
