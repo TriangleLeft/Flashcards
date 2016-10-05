@@ -40,6 +40,7 @@ To run UI tests for iOS: (broken as of 04.10.16 due to XCode 8 update)
 * start iOS simulator
 * build and install appium varion of app using XCode
 * run appium tests (`./gradlew :appium:iosTest`)
+
 ## Bulding and running
 
 To build Android version:
