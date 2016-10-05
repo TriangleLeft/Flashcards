@@ -139,12 +139,10 @@ extension CardsViewController: UITableViewDataSource, UITableViewDelegate {
 extension CardsViewController: FlashcardViewDelegate {
     
     func onRightClicked(word: FlashcardWord?) {
-        presenter.onWordRightWithFlashcardWord(word)
         kolodaView.swipe(.Right)
     }
     
     func onWrongClicked(word: FlashcardWord?) {
-        presenter.onWordWrongWithFlashcardWord(word)
         kolodaView.swipe(.Left)
         
     }
