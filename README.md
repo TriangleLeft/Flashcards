@@ -8,4 +8,4 @@ If you don't have one but want to preview app use the following one: appiumtest/
 
 |Android|iOS|
 |---|---|
-|![AndroidList](media/android/list.png)|[!iOSList](media/ios/list.png)|
+|![AndroidList](media/android/list.png)|![iOSList](media/ios/list.png)|
