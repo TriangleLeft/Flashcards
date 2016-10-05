@@ -6,6 +6,7 @@ ext.RETROFIT_VERSION = '2.0.2'
 ext.OKHTTP_VERSION = '3.4.1'
 ext.DEXMAKER_VERSION = '1.4'
 ext.MOCKITO_VERSION = '1.10.19'
+ext.SLF4J_VERSION = '1.7.21'
 
 // https://github.com/franmontiel/PersistentCookieJar
 ext.PCJ_VERSION = 'v1.0.0'

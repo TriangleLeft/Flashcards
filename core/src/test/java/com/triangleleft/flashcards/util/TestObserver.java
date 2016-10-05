@@ -2,6 +2,8 @@ package com.triangleleft.flashcards.util;
 
 import com.triangleleft.flashcards.Observer;
 
+import org.junit.Ignore;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+@Ignore
 public class TestObserver<T> implements Observer<T> {
 
     private final List<T> data = Collections.synchronizedList(new ArrayList<>());

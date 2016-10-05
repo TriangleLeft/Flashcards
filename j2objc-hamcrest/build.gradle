@@ -1,15 +1,20 @@
-//apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 apply plugin: 'java'
+apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 apply from: '../dependencies.gradle'
 
 dependencies {
-    compile "org.hamcrest:hamcrest-all:$HAMCREST_VERSION"
-    //j2objcTranslation 'org.hamcrest:hamcrest-all:1.3:sources'
+    j2objcTranslation "org.hamcrest:hamcrest-core:$HAMCREST_VERSION:sources"
+    j2objcTranslation "org.hamcrest:hamcrest-library:$HAMCREST_VERSION:sources"
 }
 
-//j2objcConfig {
-//    j2objcVersion "1.1"
-//
-//    testMinExpectedTests 0
-//    finalConfigure()
-//}
+j2objcConfig {
+    j2objcVersion "1.1"
+    autoConfigureDeps true
+    supportedArchs = ['ios_i386', 'ios_x86_64']
+
+    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
+    testMinExpectedTests 0
+
+
+    finalConfigure()
+}
