@@ -37,7 +37,7 @@ define IMAGE_CONTENTS_BODY
 endef
 export IMAGE_CONTENTS_BODY
 
-IMAGES_DIR = ../app/build/generated/res/pngs/debug
+IMAGES_DIR = ../app/build/generated/res/pngs/release
 IMAGES_DIR1X = $(IMAGES_DIR)/drawable-mdpi
 IMAGES_DIR2X = $(IMAGES_DIR)/drawable-xhdpi
 IMAGES_DIR3X = $(IMAGES_DIR)/drawable-xxhdpi
