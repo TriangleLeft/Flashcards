@@ -133,9 +133,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 		8F041F871D7343F600E4D68E /* DrawerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewCell.swift; sourceTree = "<group>"; };
 		8F041F881D7343F600E4D68E /* DrawerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewCell.xib; sourceTree = "<group>"; };
 		8F0DF3E01D96B83F0007D4FD /* FlashcardsError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashcardsError.h; sourceTree = "<group>"; };
@@ -194,6 +192,8 @@
 		8FEF82EB1DA3356A0098BE38 /* MainThreadExecutor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainThreadExecutor.swift; sourceTree = "<group>"; };
 		8FFE91531D7628400079B37E /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		8FFE91551D76285F0079B37E /* CardsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardsView.xib; sourceTree = "<group>"; };
+		A21E938245183FD675698A39 /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
+		AF3F164D3D4462CAD2DD76F5 /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,8 +403,8 @@
 		B13338B283C3A5B893AEF959 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */,
-				00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */,
+				A21E938245183FD675698A39 /* Pods-Flashcards.debug.xcconfig */,
+				AF3F164D3D4462CAD2DD76F5 /* Pods-Flashcards.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -740,7 +740,6 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -782,7 +781,6 @@
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -909,7 +907,7 @@
 		};
 		8F8A0CE51D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = A21E938245183FD675698A39 /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -945,7 +943,7 @@
 		};
 		8F8A0CE61D61D0E00038DFAB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = AF3F164D3D4462CAD2DD76F5 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
