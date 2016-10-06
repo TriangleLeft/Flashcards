@@ -1,1 +1,2 @@
-./gradlew :core:clean :core:j2objcBuild && cd core && make && make -f assets.mk && cd ..
+# Clean old files, generate pngs from vectors, build ObjC library, package framework, package images
+./gradlew :core:clean :app:processReleaseResources :core:j2objcBuild && cd core && make && make -f assets.mk && cd ..
