@@ -7,7 +7,10 @@ apply plugin: 'io.fabric'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+def hasKeystore = keystorePropertiesFile.exists()
+if (hasKeystore) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
 
 android {
     compileSdkVersion 24
@@ -24,12 +27,14 @@ android {
         buildConfigField "String", "TRANSLATION_SERVICE_URL", "\"https://d2.duolingo.com\""
         testInstrumentationRunner "com.triangleleft.flashcards.MockTestRunner"
 
-        signingConfigs {
-            release {
-                storeFile file('keystore/flashcards.jks')
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storePassword keystoreProperties['storePassword']
+        if (hasKeystore) {
+            signingConfigs {
+                release {
+                    storeFile file(keystoreProperties['keyPath'])
+                    keyAlias keystoreProperties['keyAlias']
+                    keyPassword keystoreProperties['keyPassword']
+                    storePassword keystoreProperties['storePassword']
+                }
             }
         }
     }
@@ -37,7 +42,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            if (hasKeystore) {
+                signingConfig signingConfigs.release
+            }
         }
         debug {
             testCoverageEnabled false

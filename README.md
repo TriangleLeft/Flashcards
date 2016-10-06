@@ -42,9 +42,20 @@ To run UI tests for iOS: (broken as of 04.10.16 due to XCode 8 update)
 * run appium tests (`./gradlew :appium:iosTest`)
 
 ## Bulding and running
+* Download and unpack j2objc-1.1
+* Add following line to your local.properties: `j2objc.home=<path_to_unpacked_j2objc>`
+* Create symlink to your unpacked j2objc: `ln -s <path_to_unpacked_j2objc ~/Library/j2objc`. This is the directory XCode expects it to be. (Alternatively your can manually update targets and set user-defined setting there)
+* If you want to assemble release version of Android App create `keystore.properties` file with following contents
+```
+keyPath=<path_to_your_key>
+keyAlias=<key_alias>
+keyPassword=<key_password>
+storePassword=<key_store_password>
+```
+* Add `JAVA7_HOME` - path to JDK7 to your environment variables (this is needed for Retrolambda)
 
 To build Android version:
-* `./gradlew assembleRelease`
+* `./gradlew assembleDebug`
 
 To build iOS version
 * `./build_framework.sh`
