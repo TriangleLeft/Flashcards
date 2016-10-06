@@ -10,7 +10,7 @@ target 'Flashcards' do
   pod 'AFNetworkActivityLogger', git: 'https://github.com/AFNetworking/AFNetworkActivityLogger.git', branch: '3_0_0'
   pod 'DrawerController', '~> 2.0.0'
   pod 'Koloda', '~> 3.1.2'
-  pod 'IQKeyboardManagerSwift'
+  pod 'IQKeyboardManagerSwift', '4.0.5'
   pod 'HanekeSwift', git: 'https://github.com/Haneke/HanekeSwift.git', branch: 'feature/swift-2.3'
   #pod 'Toast-Swift', '~> 2.0.0'
   pod 'JLToast', '~> 1.4'

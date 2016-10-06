@@ -51,6 +51,13 @@
 		8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
 		8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */; };
 		8F3DF5A41D6C7BF10005C9C3 /* VocabularyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */; };
+		8F74B27A1DA68D6200E8C3A4 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2771DA68D6200E8C3A4 /* JavaxInject.framework */; };
+		8F74B27B1DA68D6200E8C3A4 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2781DA68D6200E8C3A4 /* JRE.framework */; };
+		8F74B27C1DA68D6200E8C3A4 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2791DA68D6200E8C3A4 /* JSR305.framework */; };
+		8F74B27D1DA68DD900E8C3A4 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2771DA68D6200E8C3A4 /* JavaxInject.framework */; };
+		8F74B27E1DA68DD900E8C3A4 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2781DA68D6200E8C3A4 /* JRE.framework */; };
+		8F74B27F1DA68DD900E8C3A4 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F74B2791DA68D6200E8C3A4 /* JSR305.framework */; };
+		8F74B2801DA68DE100E8C3A4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */; };
 		8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
 		8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */; };
 		8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD61D61D0E00038DFAB /* Main.storyboard */; };
@@ -75,12 +82,6 @@
 		8FB1ED891D6CA57200DCFDA7 /* VocabularyWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */; };
 		8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
 		8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
-		8FCEB86A1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */; };
-		8FCEB86B1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */; };
-		8FCEB86C1DA54461007CCCD9 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8681DA54461007CCCD9 /* JRE.framework */; };
-		8FCEB86D1DA54461007CCCD9 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8681DA54461007CCCD9 /* JRE.framework */; };
-		8FCEB86E1DA54461007CCCD9 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8691DA54461007CCCD9 /* JSR305.framework */; };
-		8FCEB86F1DA54461007CCCD9 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8691DA54461007CCCD9 /* JSR305.framework */; };
 		8FD30A671D76FAE5007C31BD /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
 		8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
 		8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */; };
@@ -132,9 +133,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
+		00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.release.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.release.xcconfig"; sourceTree = "<group>"; };
 		1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcards.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
+		5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flashcards.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flashcards/Pods-Flashcards.debug.xcconfig"; sourceTree = "<group>"; };
 		8F041F871D7343F600E4D68E /* DrawerViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawerViewCell.swift; sourceTree = "<group>"; };
 		8F041F881D7343F600E4D68E /* DrawerViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DrawerViewCell.xib; sourceTree = "<group>"; };
 		8F0DF3E01D96B83F0007D4FD /* FlashcardsError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashcardsError.h; sourceTree = "<group>"; };
@@ -148,6 +149,9 @@
 		8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VocabularyListViewController.swift; path = ../VocabularyListViewController.swift; sourceTree = "<group>"; };
 		8F488B841D653E1B00A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = "../../j2objc/jre_emul/build/Debug-iphoneos/libjre_emul.a"; sourceTree = "<group>"; };
+		8F74B2771DA68D6200E8C3A4 /* JavaxInject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaxInject.framework; path = ../../../../Library/Frameworks/JavaxInject.framework; sourceTree = "<group>"; };
+		8F74B2781DA68D6200E8C3A4 /* JRE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JRE.framework; path = ../../../../Library/Frameworks/JRE.framework; sourceTree = "<group>"; };
+		8F74B2791DA68D6200E8C3A4 /* JSR305.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSR305.framework; path = ../../../../Library/Frameworks/JSR305.framework; sourceTree = "<group>"; };
 		8F8A0CCF1D61D0DF0038DFAB /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -173,9 +177,6 @@
 		8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyWordView.xib; sourceTree = "<group>"; };
 		8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyListTableViewCell.swift; sourceTree = "<group>"; };
 		8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListTableViewCell.xib; sourceTree = "<group>"; };
-		8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaxInject.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JavaxInject.framework"; sourceTree = "<group>"; };
-		8FCEB8681DA54461007CCCD9 /* JRE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JRE.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JRE.framework"; sourceTree = "<group>"; };
-		8FCEB8691DA54461007CCCD9 /* JSR305.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSR305.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JSR305.framework"; sourceTree = "<group>"; };
 		8FD30A661D76FAE5007C31BD /* FlashcardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 		8FD30A681D76FAFB007C31BD /* FlashcardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashcardView.xib; sourceTree = "<group>"; };
 		8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -200,9 +201,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FCEB86D1DA54461007CCCD9 /* JRE.framework in Frameworks */,
-				8FCEB86F1DA54461007CCCD9 /* JSR305.framework in Frameworks */,
-				8FCEB86B1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */,
+				8F74B2801DA68DE100E8C3A4 /* AVFoundation.framework in Frameworks */,
+				8F74B27D1DA68DD900E8C3A4 /* JavaxInject.framework in Frameworks */,
+				8F74B27E1DA68DD900E8C3A4 /* JRE.framework in Frameworks */,
+				8F74B27F1DA68DD900E8C3A4 /* JSR305.framework in Frameworks */,
 				8F284DCC1D9203E700BD087F /* libz.tbd in Frameworks */,
 				8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */,
 			);
@@ -212,12 +214,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F74B27A1DA68D6200E8C3A4 /* JavaxInject.framework in Frameworks */,
+				8F74B27B1DA68D6200E8C3A4 /* JRE.framework in Frameworks */,
+				8F74B27C1DA68D6200E8C3A4 /* JSR305.framework in Frameworks */,
 				8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */,
 				8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */,
-				8FCEB86E1DA54461007CCCD9 /* JSR305.framework in Frameworks */,
-				8FCEB86C1DA54461007CCCD9 /* JRE.framework in Frameworks */,
 				8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */,
-				8FCEB86A1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */,
 				BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,9 +312,6 @@
 			children = (
 				8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */,
 				8FB1EA091D67AED400545EB7 /* prefixes.properties */,
-				8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */,
-				8FCEB8681DA54461007CCCD9 /* JRE.framework */,
-				8FCEB8691DA54461007CCCD9 /* JSR305.framework */,
 				8F9714C01D66516200C388AA /* FlashcardsCore.framework */,
 				8F2928241D6203BD007B1CCF /* libz.tbd */,
 				8F8A0CD11D61D0DF0038DFAB /* Flashcards */,
@@ -404,8 +403,8 @@
 		B13338B283C3A5B893AEF959 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */,
-				1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */,
+				5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */,
+				00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -413,6 +412,9 @@
 		BFD909537CED0AC6073FED4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8F74B2771DA68D6200E8C3A4 /* JavaxInject.framework */,
+				8F74B2781DA68D6200E8C3A4 /* JRE.framework */,
+				8F74B2791DA68D6200E8C3A4 /* JSR305.framework */,
 				8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */,
 				8F488B841D653E1B00A1B99B /* libjre_emul.a */,
 				1CDE037361B76FD6AF770885 /* Pods_Flashcards.framework */,
@@ -738,7 +740,7 @@
 /* Begin XCBuildConfiguration section */
 		8F284DE41D9203E700BD087F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -746,8 +748,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
-					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
+					../core/build,
+					"$(J2OBJC_HOME)/frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -761,7 +764,7 @@
 				);
 				INFOPLIST_FILE = "Info-Appium.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				J2OBJC_HOME = "~/Library/j2objc/";
+				J2OBJC_HOME = "~/Library/j2objc";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
@@ -779,7 +782,7 @@
 		};
 		8F284DE51D9203E700BD087F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -787,8 +790,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
-					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
+					../core/build,
+					"$(J2OBJC_HOME)/frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -802,7 +806,7 @@
 				);
 				INFOPLIST_FILE = "Info-Appium.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				J2OBJC_HOME = "~/Library/j2objc/";
+				J2OBJC_HOME = "~/Library/j2objc";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
@@ -905,7 +909,7 @@
 		};
 		8F8A0CE51D61D0E00038DFAB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47C49E92E4EC0E8D14FF730E /* Pods-Flashcards.debug.xcconfig */;
+			baseConfigurationReference = 5CC1AB278BC0D561948AA57C /* Pods-Flashcards.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -913,9 +917,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					../core/build,
 					"$(J2OBJC_HOME)/frameworks",
-					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -924,7 +928,7 @@
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				J2OBJC_HOME = "~/Library/j2objc/";
+				J2OBJC_HOME = "~/Library/j2objc";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
@@ -941,7 +945,7 @@
 		};
 		8F8A0CE61D61D0E00038DFAB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1008AD1EEEC5D2676CC72F93 /* Pods-Flashcards.release.xcconfig */;
+			baseConfigurationReference = 00F8CE12B2170FE820F362F6 /* Pods-Flashcards.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -949,9 +953,9 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					../core/build,
 					"$(J2OBJC_HOME)/frameworks",
-					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -960,7 +964,7 @@
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				J2OBJC_HOME = "~/Library/j2objc/";
+				J2OBJC_HOME = "~/Library/j2objc";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
