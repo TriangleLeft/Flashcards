@@ -40,8 +40,8 @@ import org.mockito.MockitoAnnotations;
 import java.util.Collections;
 import java.util.List;
 
+import static com.triangleleft.flashcards.util.TestUtils.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

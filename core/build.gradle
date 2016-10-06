@@ -76,7 +76,6 @@ dependencies {
 
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     testCompile project(':j2objc-slf4j-simple')
-    compile "org.hamcrest:hamcrest-library:$HAMCREST_VERSION"
     testCompile "junit:junit:$JUNIT_VERSION"
 
 }

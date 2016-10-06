@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.triangleleft.flashcards.util.TestUtils.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -144,7 +144,8 @@ public class FlashcardsPresenterTest {
 
         FlashcardWordResult rightResult = FlashcardWordResult.create(rightWord, true);
         FlashcardWordResult wrongResult = FlashcardWordResult.create(wrongWord, false);
-        assertThat(result.getWordResults(), containsInAnyOrder(rightResult, wrongResult));
+        assertThat(result.getWordResults(), contains(rightResult));
+        assertThat(result.getWordResults(), contains(wrongResult));
     }
 
     @Test
@@ -159,7 +160,7 @@ public class FlashcardsPresenterTest {
 
         verify(view).showResultErrors(listCaptor.capture());
         List<FlashcardWord> list = listCaptor.getValue();
-        assertThat(list, containsInAnyOrder(wrongWord));
+        assertThat(list, contains(wrongWord));
     }
 
     @Test

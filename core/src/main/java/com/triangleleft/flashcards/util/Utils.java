@@ -2,13 +2,11 @@ package com.triangleleft.flashcards.util;
 
 import com.google.gson.GsonBuilder;
 
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
+//import org.hamcrest.collection.IsIterableContainingInAnyOrder;
 
 public class Utils {
 
-    Matcher<Iterable<?>> contains = Matchers.contains(new Object());
-
+    //IsIterableContainingInAnyOrder whatever = new IsIterableContainingInAnyOrder<Void>(null);
 
     private Utils() {
         GsonBuilder builder = null;

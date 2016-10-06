@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -35,11 +35,11 @@ public class TestObserver<T> implements Observer<T> {
     }
 
     public void assertOnNextCalled() {
-        assertThat("onNext was not called", data.size(), greaterThan(0));
+        assertThat("onNext was not called", data.size() > 0, is(true));
     }
 
     public void assertOnErrorCalled() {
-        assertThat("onError was not called", throwables.size(), greaterThan(0));
+        assertThat("onError was not called", throwables.size() > 0, is(true));
     }
 
     public void assertValue(T data) {

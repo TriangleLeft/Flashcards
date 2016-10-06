@@ -31,11 +31,8 @@
 		8F284DC71D9203E700BD087F /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
 		8F284DC81D9203E700BD087F /* DrawerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F92DCA81D70A39E00959DC3 /* DrawerViewController.swift */; };
 		8F284DC91D9203E700BD087F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
-		8F284DCB1D9203E700BD087F /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F488B841D653E1B00A1B99B /* libjre_emul.a */; };
 		8F284DCC1D9203E700BD087F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
 		8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F9714C01D66516200C388AA /* FlashcardsCore.framework */; };
-		8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
-		8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
 		8F284DD21D9203E700BD087F /* VocabularyWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */; };
 		8F284DD31D9203E700BD087F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDE1D61D0E00038DFAB /* LaunchScreen.storyboard */; };
 		8F284DD41D9203E700BD087F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CDC1D61D0E00038DFAB /* Assets.xcassets */; };
@@ -52,11 +49,8 @@
 		8F29281D1D61FDD6007B1CCF /* PersistentStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29281C1D61FDD6007B1CCF /* PersistentStorage.swift */; };
 		8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928241D6203BD007B1CCF /* libz.tbd */; };
 		8F29282D1D620632007B1CCF /* IOSVocabularyWordsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */; };
-		8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F2928321D620CDB007B1CCF /* libjavax_inject.a */; };
 		8F3DF59F1D6C7A1B0005C9C3 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */; };
 		8F3DF5A41D6C7BF10005C9C3 /* VocabularyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */; };
-		8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F488B841D653E1B00A1B99B /* libjre_emul.a */; };
-		8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F7E3D451D6661A0004B2D7D /* libjsr305.a */; };
 		8F8A0CD31D61D0DF0038DFAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */; };
 		8F8A0CD51D61D0DF0038DFAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */; };
 		8F8A0CD81D61D0E00038DFAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A0CD61D61D0E00038DFAB /* Main.storyboard */; };
@@ -81,6 +75,12 @@
 		8FB1ED891D6CA57200DCFDA7 /* VocabularyWordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */; };
 		8FB1ED8C1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */; };
 		8FB1ED8D1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */; };
+		8FCEB86A1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */; };
+		8FCEB86B1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */; };
+		8FCEB86C1DA54461007CCCD9 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8681DA54461007CCCD9 /* JRE.framework */; };
+		8FCEB86D1DA54461007CCCD9 /* JRE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8681DA54461007CCCD9 /* JRE.framework */; };
+		8FCEB86E1DA54461007CCCD9 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8691DA54461007CCCD9 /* JSR305.framework */; };
+		8FCEB86F1DA54461007CCCD9 /* JSR305.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FCEB8691DA54461007CCCD9 /* JSR305.framework */; };
 		8FD30A671D76FAE5007C31BD /* FlashcardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD30A661D76FAE5007C31BD /* FlashcardView.swift */; };
 		8FD30A691D76FAFB007C31BD /* FlashcardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8FD30A681D76FAFB007C31BD /* FlashcardView.xib */; };
 		8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */; };
@@ -145,12 +145,9 @@
 		8F2928241D6203BD007B1CCF /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		8F29282C1D620632007B1CCF /* IOSVocabularyWordsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOSVocabularyWordsRepository.swift; sourceTree = "<group>"; };
 		8F29282E1D620BFA007B1CCF /* Flashcards-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flashcards-Bridging-Header.h"; sourceTree = "<group>"; };
-		8F2928321D620CDB007B1CCF /* libjavax_inject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjavax_inject.a; path = "../../../Library/j2objc-1.1/lib/libjavax_inject.a"; sourceTree = "<group>"; };
 		8F3DF59D1D6C7A1B0005C9C3 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		8F3DF5A21D6C7BF10005C9C3 /* VocabularyListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VocabularyListViewController.swift; path = ../VocabularyListViewController.swift; sourceTree = "<group>"; };
-		8F488B741D65361000A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = ../../j2objc/jre_emul/build_result/libjre_emul.a; sourceTree = "<group>"; };
 		8F488B841D653E1B00A1B99B /* libjre_emul.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjre_emul.a; path = "../../j2objc/jre_emul/build/Debug-iphoneos/libjre_emul.a"; sourceTree = "<group>"; };
-		8F7E3D451D6661A0004B2D7D /* libjsr305.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjsr305.a; path = ../../j2objc/jsr305/build_result/libjsr305.a; sourceTree = "<group>"; };
 		8F8A0CCF1D61D0DF0038DFAB /* Flashcards.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcards.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F8A0CD21D61D0DF0038DFAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F8A0CD41D61D0DF0038DFAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +173,9 @@
 		8FB1ED871D6CA57200DCFDA7 /* VocabularyWordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyWordView.xib; sourceTree = "<group>"; };
 		8FB1ED8A1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VocabularyListTableViewCell.swift; sourceTree = "<group>"; };
 		8FB1ED8B1D6CAD3C00DCFDA7 /* VocabularyListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VocabularyListTableViewCell.xib; sourceTree = "<group>"; };
+		8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaxInject.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JavaxInject.framework"; sourceTree = "<group>"; };
+		8FCEB8681DA54461007CCCD9 /* JRE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JRE.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JRE.framework"; sourceTree = "<group>"; };
+		8FCEB8691DA54461007CCCD9 /* JSR305.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSR305.framework; path = "../../../Library/j2objc-1.1-copy/frameworks/JSR305.framework"; sourceTree = "<group>"; };
 		8FD30A661D76FAE5007C31BD /* FlashcardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashcardView.swift; sourceTree = "<group>"; };
 		8FD30A681D76FAFB007C31BD /* FlashcardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FlashcardView.xib; sourceTree = "<group>"; };
 		8FD37CA81DA4761B00FD1574 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -200,11 +200,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F284DCB1D9203E700BD087F /* libjre_emul.a in Frameworks */,
+				8FCEB86D1DA54461007CCCD9 /* JRE.framework in Frameworks */,
+				8FCEB86F1DA54461007CCCD9 /* JSR305.framework in Frameworks */,
+				8FCEB86B1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */,
 				8F284DCC1D9203E700BD087F /* libz.tbd in Frameworks */,
 				8F284DCD1D9203E700BD087F /* FlashcardsCore.framework in Frameworks */,
-				8F284DCE1D9203E700BD087F /* libjavax_inject.a in Frameworks */,
-				8F284DCF1D9203E700BD087F /* libjsr305.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,11 +213,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FD37CA91DA4761B00FD1574 /* AVFoundation.framework in Frameworks */,
-				8F488B851D653E1B00A1B99B /* libjre_emul.a in Frameworks */,
 				8F2928251D6203BD007B1CCF /* libz.tbd in Frameworks */,
+				8FCEB86E1DA54461007CCCD9 /* JSR305.framework in Frameworks */,
+				8FCEB86C1DA54461007CCCD9 /* JRE.framework in Frameworks */,
 				8F9714C11D66516200C388AA /* FlashcardsCore.framework in Frameworks */,
-				8F2928331D620CDB007B1CCF /* libjavax_inject.a in Frameworks */,
-				8F7E3D461D6661A0004B2D7D /* libjsr305.a in Frameworks */,
+				8FCEB86A1DA54461007CCCD9 /* JavaxInject.framework in Frameworks */,
 				BC439F0DE7850A7F7FD1FFE1 /* Pods_Flashcards.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -310,11 +310,11 @@
 			children = (
 				8FB1EA0D1D67C35000545EB7 /* simplelogger.properties */,
 				8FB1EA091D67AED400545EB7 /* prefixes.properties */,
+				8FCEB8671DA54461007CCCD9 /* JavaxInject.framework */,
+				8FCEB8681DA54461007CCCD9 /* JRE.framework */,
+				8FCEB8691DA54461007CCCD9 /* JSR305.framework */,
 				8F9714C01D66516200C388AA /* FlashcardsCore.framework */,
 				8F2928241D6203BD007B1CCF /* libz.tbd */,
-				8F488B741D65361000A1B99B /* libjre_emul.a */,
-				8F7E3D451D6661A0004B2D7D /* libjsr305.a */,
-				8F2928321D620CDB007B1CCF /* libjavax_inject.a */,
 				8F8A0CD11D61D0DF0038DFAB /* Flashcards */,
 				8F8A0CD01D61D0DF0038DFAB /* Products */,
 				B13338B283C3A5B893AEF959 /* Pods */,
@@ -747,6 +747,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -755,18 +756,14 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+					"$(J2OBJC_HOME)/include",
+					"$(PROJECT_DIR)/../core/build/FlashcardsCore.framework/Headers",
 				);
 				INFOPLIST_FILE = "Info-Appium.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				J2OBJC_HOME = "~/Library/j2objc/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -791,6 +788,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -799,18 +797,14 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+					"$(J2OBJC_HOME)/include",
+					"$(PROJECT_DIR)/../core/build/FlashcardsCore.framework/Headers",
 				);
 				INFOPLIST_FILE = "Info-Appium.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				J2OBJC_HOME = "~/Library/j2objc/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -920,21 +914,19 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					"$(J2OBJC_HOME)/frameworks",
+					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+					"$(J2OBJC_HOME)/include",
+					"$(PROJECT_DIR)/../core/build/FlashcardsCore.framework/Headers",
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				J2OBJC_HOME = "~/Library/j2objc/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -958,21 +950,19 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build,
+					"$(J2OBJC_HOME)/frameworks",
+					"$(USER_LIBRARY_DIR)/j2objc-1.1-copy/frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/aleksey.kurnosenko/Library/j2objc-1.1/include",
-					/Users/aleksey.kurnosenko/Documents/Flashcards/core/build/FlashcardsCore.framework/Headers,
+					"$(J2OBJC_HOME)/include",
+					"$(PROJECT_DIR)/../core/build/FlashcardsCore.framework/Headers",
 				);
 				INFOPLIST_FILE = Flashcards/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				J2OBJC_HOME = "~/Library/j2objc/";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/Users/aleksey.kurnosenko/Documents/j2objc/jre_emul/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/inject/javax_inject/build_result,
-					/Users/aleksey.kurnosenko/Documents/j2objc/jsr305/build_result,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

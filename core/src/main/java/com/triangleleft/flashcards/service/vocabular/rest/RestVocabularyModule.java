@@ -164,7 +164,7 @@ public class RestVocabularyModule implements VocabularyModule {
             // Sort them by normalized words, otherwise all letters with diacritics would be placed at the end
             Collections.sort(wordsList, (o1, o2) -> o1.getNormalizedWord().compareTo(o2.getNormalizedWord()));
             observer.onNext(wordsList);
-            mainExecutor.execute(() -> provider.putWords(wordsList));
+            provider.putWords(wordsList);
             logger.debug("LoadWordsTask run() returned list of size: [{}]", wordsList.size());
         }
     }

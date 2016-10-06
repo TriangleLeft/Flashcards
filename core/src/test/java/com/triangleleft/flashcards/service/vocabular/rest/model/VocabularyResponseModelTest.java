@@ -27,11 +27,9 @@ import org.junit.runners.JUnit4;
 
 import java.util.Collections;
 
+import static com.triangleleft.flashcards.util.TestUtils.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.core.IsEqual.equalTo;
-
-//import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 
 @RunWith(JUnit4.class)
 public class VocabularyResponseModelTest {
