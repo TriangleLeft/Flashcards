@@ -169,7 +169,8 @@ public class NavigationView extends FrameLayout implements IDrawerView {
 
     @Override
     public void notifyUserDataUpdateError() {
-        Toast.makeText(getContext(), R.string.drawer_userdata_update_error, Toast.LENGTH_SHORT).show();
+        // TODO: toasts look stupid, either show status, or remove completely
+        //Toast.makeText(getContext(), R.string.drawer_userdata_update_error, Toast.LENGTH_SHORT).show();
     }
 
     public void resetScroll() {
