@@ -11,12 +11,12 @@ import com.triangleleft.flashcards.util.SimpleAnimatorListener;
 
 import android.animation.Animator;
 import android.annotation.TargetApi;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
@@ -61,7 +61,6 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     private SparseBooleanArray revealedCards = new SparseBooleanArray();
     private int cx = -1;
     private int cy = -1;
-    private AsyncTask<Void, Void, Void> execute;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -228,6 +227,21 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
         ResultErrorWordsAdapter adapter = new ResultErrorWordsAdapter(wordList);
         resultErrorList.setAdapter(adapter);
         buttonContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showOfflineModeDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.flashcard_error)
+                .setMessage(R.string.flashcard_dialog_offline)
+                .setPositiveButton(R.string.flashcard_dialog_yes, (dialog, which) -> {
+                    getPresenter().onOfflineModeAccept();
+                })
+                .setNegativeButton(R.string.flashcard_dialog_no, (dialog, which) -> {
+                    getPresenter().onOfflineModeDecline();
+                })
+                .setOnCancelListener(dialog -> getPresenter().onOfflineModeDecline())
+                .show();
     }
 
     @OnClick({R.id.button_retry, R.id.flashcard_button_restart})

@@ -34,6 +34,8 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
     private Call<FlashcardTestData> call = Call.empty();
+    private boolean offlineModeWasProposed = false;
+    private boolean offlineMode = false;
 
     @Inject
     public FlashcardsPresenter(FlashcardsModule module, @Named(VIEW_EXECUTOR) Executor executor) {
@@ -55,7 +57,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        call = module.getFlashcards();
+        call = offlineMode ? module.getLocalFlashcards() : module.getFlashcards();
         call.enqueue(data -> {
             if (data.getWords().size() != 0) {
                 testData = data;
@@ -69,7 +71,15 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private void processError(Throwable throwable) {
         logger.debug("processError() called with: throwable = [{}]", throwable);
-        applyState(IFlashcardsView::showError);
+        // In case we have exception (usually - no internet), ask user whether he wants to start
+        // offline test
+        if (!offlineModeWasProposed) {
+            offlineModeWasProposed = true;
+            applyState(IFlashcardsView::showOfflineModeDialog);
+        } else {
+            // User decided not to, show error as usual
+            applyState(IFlashcardsView::showError);
+        }
     }
 
     public void onWordRight(FlashcardWord word) {
@@ -84,8 +94,10 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     public void onCardsDepleted() {
         logger.debug("onCardsDepleted() called");
-        module.postResult(
-                FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
+        if (!offlineMode) {
+            module.postResult(
+                    FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
+        }
         List<FlashcardWord> wrongWords = Stream.of(results)
                 .filterNot(FlashcardWordResult::isCorrect)
                 .map(FlashcardWordResult::getWord)
@@ -95,5 +107,18 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
         } else {
             applyState(view -> view.showResultErrors(wrongWords));
         }
+    }
+
+    public void onOfflineModeAccept() {
+        // User has accepted to start flashcards in offline mode
+        offlineMode = true;
+        // Reload flashcards
+        onLoadFlashcards();
+    }
+
+    public void onOfflineModeDecline() {
+        offlineMode = false;
+        // Show error state
+        applyState(IFlashcardsView::showError);
     }
 }

@@ -48,6 +48,11 @@ public class StubFlashcardsModule implements FlashcardsModule {
     }
 
     @Override
+    public Call<FlashcardTestData> getLocalFlashcards() {
+        return null;
+    }
+
+    @Override
     public void postResult(FlashcardTestResult results) {
         logger.debug("postResult() called with: results = [{}]", results);
     }
