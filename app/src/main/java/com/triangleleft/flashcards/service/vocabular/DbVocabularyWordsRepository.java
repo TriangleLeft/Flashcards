@@ -17,12 +17,17 @@ import javax.inject.Inject;
 public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
 
     private static final Logger logger = LoggerFactory.getLogger(DbVocabularyWordsRepository.class);
-
+    private final VocabularyWordModel.Delete_words deleteWords;
+    private final VocabularyWordModel.Insert_word insertWord;
+    private final VocabularyWordTranslationModel.Insert_translation insertTranslation;
     private final SQLiteDatabase database;
 
     @Inject
     public DbVocabularyWordsRepository(VocabularySQLiteOpenHelper helper) {
         database = helper.getWritableDatabase();
+        deleteWords = new VocabularyWordModel.Delete_words(database);
+        insertWord = new VocabularyWordModel.Insert_word(database);
+        insertTranslation = new VocabularyWordTranslationModel.Insert_translation(database);
     }
 
     @Override
@@ -42,23 +47,21 @@ public class DbVocabularyWordsRepository implements VocabularyWordsRepository {
         String learningLanguageId = words.get(0).getLearningLanguage();
         database.beginTransaction();
         try {
-            database.execSQL(VocabularyWordModel.DELETE_WORDS, new String[]{uiLanguageId, learningLanguageId});
+            deleteWords.bind(uiLanguageId, learningLanguageId);
             for (VocabularyWord word : words) {
-                long id = database.insert(VocabularyWordModel.TABLE_NAME, null, VocabularyWordDao.FACTORY.marshal()
-                        .uiLanguage(word.getUiLanguage())
-                        .learningLanguage(word.getLearningLanguage())
-                        .word_string(word.getWord())
-                        .normalized_string(word.getNormalizedWord())
-                    .gender(word.getGender().orElse(null))
-                    .pos(word.getPos().orElse(null))
-                        .strength(word.getStrength())
-                        .asContentValues());
+                insertWord.bind(
+                        word.getWord(),
+                        word.getNormalizedWord(),
+                        word.getPos().orElse(null),
+                        word.getGender().orElse(null),
+                        word.getStrength(),
+                        word.getUiLanguage(),
+                        word.getLearningLanguage()
+                );
+                long id = insertWord.program.executeInsert();
                 for (String translation : word.getTranslations()) {
-                    database.insert(VocabularyWordTranslationModel.TABLE_NAME, null,
-                            VocabularWordTranslationDao.FACTORY.marshal()
-                                    .word_id(id)
-                                    .translation(translation)
-                                    .asContentValues());
+                    insertTranslation.bind(id, translation);
+                    insertTranslation.program.executeInsert();
                 }
             }
             database.setTransactionSuccessful();
