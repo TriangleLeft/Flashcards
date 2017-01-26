@@ -16,4 +16,6 @@ public interface IMainView extends IView {
 
     void reloadList();
 
+    void showFlashcardsDialog();
+
 }

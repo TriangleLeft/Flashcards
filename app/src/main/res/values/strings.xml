@@ -50,5 +50,13 @@
     <string name="logout">Logout</string>
     <string name="vocabulary_word_not_available">N/A</string>
 
+    <!-- Flashcards settings dialog -->
+    <string name="review_flashcards">Review flashcards</string>
+    <string name="start">Start</string>
+    <string name="cancel">Cancel</string>
+    <string name="number_of_words">Number of words</string>
+    <string name="learning_direction">Learning direction</string>
+    <string name="direction">%1$s ➔ %2$s</string>
+
 
 </resources>

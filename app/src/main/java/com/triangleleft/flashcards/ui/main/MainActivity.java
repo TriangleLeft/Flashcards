@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -119,6 +119,21 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     }
 
     @Override
+    public void showFlashcardsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.review_flashcards);
+        // Create custom view with presenter?
+        builder.setView(R.layout.view_flashcards_seetings);
+        builder.setPositiveButton(R.string.start, (dialog, which) -> {
+                    startActivity(new Intent(this, FlashcardsActivity.class));
+                    dialog.dismiss();
+                }
+        );
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+        builder.show();
+    }
+
+    @Override
     public void showWord(@NonNull Optional<VocabularyWord> word) {
         logger.debug("showWord() called with: word = [{}]", word);
         delegate.showWord(word);
@@ -136,18 +151,20 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
     @OnClick(R.id.button_flashcards)
     public void onFlashcardsClick(View view) {
 
-        Intent intent = new Intent(this, FlashcardsActivity.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int[] location = new int[2];
-            view.getLocationOnScreen(location);
-            int cx = location[0] + view.getWidth() / 2;
-            int cy = location[1] + view.getHeight() / 2;
-            intent.putExtra(FlashcardsActivity.REVEAL_X, cx);
-            intent.putExtra(FlashcardsActivity.REVEAL_Y, cy);
-            startActivity(intent);
-            overridePendingTransition(-1, -1);
-        } else {
-            startActivity(intent);
-        }
+
+        showFlashcardsDialog();
+//        Intent intent = new Intent(this, FlashcardsActivity.class);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            int[] location = new int[2];
+//            view.getLocationOnScreen(location);
+//            int cx = location[0] + view.getWidth() / 2;
+//            int cy = location[1] + view.getHeight() / 2;
+//            intent.putExtra(FlashcardsActivity.REVEAL_X, cx);
+//            intent.putExtra(FlashcardsActivity.REVEAL_Y, cy);
+//            startActivity(intent);
+//            overridePendingTransition(-1, -1);
+//        } else {
+//            startActivity(intent);
+//        }
     }
 }
