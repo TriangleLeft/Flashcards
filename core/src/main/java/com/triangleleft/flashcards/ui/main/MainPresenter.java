@@ -30,6 +30,7 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
     private Page currentPage;
     private String title;
     private Optional<VocabularyWord> currentWord = Optional.empty();
+    private boolean isSettingsDialogShown;
 
     @Inject
     public MainPresenter(AccountModule accountModule, @Named(VIEW_EXECUTOR) Executor executor) {
@@ -60,6 +61,9 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
                 throw new IllegalStateException("Unknown state " + currentPage);
         }
         view.setTitle(title);
+        if (isSettingsDialogShown) {
+            view.showFlashcardsDialog();
+        }
     }
 
     @Override
@@ -86,6 +90,10 @@ public class MainPresenter extends AbstractPresenter<IMainView> implements Vocab
         title = currentLanguage.getName();
         getView().setTitle(title);
         getView().reloadList();
+    }
+
+    public void setSettingsDialogShown(boolean isShown) {
+        isSettingsDialogShown = isShown;
     }
 
     private enum Page {
