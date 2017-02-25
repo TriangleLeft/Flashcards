@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.ui.cards;
 import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
-import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
@@ -31,8 +30,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 
-    private final FlashcardsModule flashcardsModule;
-    private final AccountModule accountModule;
+    private final FlashcardsModule module;
     private FlashcardTestData testData;
     private List<FlashcardWordResult> results = new ArrayList<>();
     private Call<FlashcardTestData> call = Call.empty();
@@ -40,11 +38,9 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     private boolean offlineMode = false;
 
     @Inject
-    public FlashcardsPresenter(FlashcardsModule flashcardsModule, AccountModule accountModule,
-                               @Named(VIEW_EXECUTOR) Executor executor) {
+    public FlashcardsPresenter(FlashcardsModule module, @Named(VIEW_EXECUTOR) Executor executor) {
         super(IFlashcardsView.class, executor);
-        this.flashcardsModule = flashcardsModule;
-        this.accountModule = accountModule;
+        this.module = module;
     }
 
     @Override
@@ -61,11 +57,11 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        call = offlineMode ? flashcardsModule.getLocalFlashcards() : flashcardsModule.getFlashcards();
+        call = offlineMode ? module.getLocalFlashcards() : module.getFlashcards();
         call.enqueue(data -> {
             if (data.getWords().size() != 0) {
                 testData = data;
-                applyState(view -> view.showWords(data.getWords(), accountModule.getWordsReviewDirection()));
+                applyState(view -> view.showWords(data.getWords()));
             } else {
                 // Treat this as error, we expect to always have flashcards
                 processError(new ServerException("Got no flashcards in response"));
@@ -99,7 +95,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView> {
     public void onCardsDepleted() {
         logger.debug("onCardsDepleted() called");
         if (!offlineMode) {
-            flashcardsModule.postResult(
+            module.postResult(
                     FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
         }
         List<FlashcardWord> wrongWords = Stream.of(results)

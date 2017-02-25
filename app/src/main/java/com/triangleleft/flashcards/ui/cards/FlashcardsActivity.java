@@ -5,7 +5,6 @@ import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.cards.CardsComponent;
 import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.SimpleAnimatorListener;
@@ -23,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.ViewTreeObserver;
 import android.widget.ViewFlipper;
 
 import java.util.List;
@@ -68,26 +68,26 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
         setContentView(R.layout.activity_flashcards);
         ButterKnife.bind(this);
 
-//        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            rootLayout.setVisibility(View.INVISIBLE);
-//
-//            cx = getIntent().getIntExtra(REVEAL_X, 0);
-//            cy = getIntent().getIntExtra(REVEAL_Y, 0);
-//
-//            ViewTreeObserver viewTreeObserver = rootLayout.getViewTreeObserver();
-//
-//            if (viewTreeObserver.isAlive()) {
-//                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//                    @Override
-//                    public void onGlobalLayout() {
-//                        circularRevealActivity(rootLayout, cx, cy, true);
-//
-//                        rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                    }
-//                });
-//            }
-//
-//        }
+        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            rootLayout.setVisibility(View.INVISIBLE);
+
+            cx = getIntent().getIntExtra(REVEAL_X, 0);
+            cy = getIntent().getIntExtra(REVEAL_Y, 0);
+
+            ViewTreeObserver viewTreeObserver = rootLayout.getViewTreeObserver();
+
+            if (viewTreeObserver.isAlive()) {
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        circularRevealActivity(rootLayout, cx, cy, true);
+
+                        rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    }
+                });
+            }
+
+        }
 
         adapter = new SwipeDeckAdapter(new FlashcardView.IFlashcardListener() {
             @Override
@@ -191,12 +191,12 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     }
 
     @Override
-    public void showWords(List<FlashcardWord> wordList, ReviewDirection direction) {
+    public void showWords(List<FlashcardWord> wordList) {
         viewFlipper.setDisplayedChild(CARDS);
         new Handler().post(() -> {
             revealedCards.clear();
             swipeDeck.setAdapterIndex(0);
-            adapter.setData(wordList, direction);
+            adapter.setData(wordList);
         });
 
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -14,49 +14,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="8dp"
-        android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/flashcards_settings_words_amount"
-            android:layout_width="16dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="99"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            android:text="99" />
 
-        <android.support.v7.widget.AppCompatSeekBar
-            android:id="@+id/flashcards_settings_seekbar"
+        <SeekBar
+            android:id="@+id/seekBar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:max="99"
-            android:progress="45" />
+            android:progress="45"/>
 
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center_vertical"
         android:text="@string/learning_direction" />
 
+
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:checkedButton="@+id/flashcards_settings_direction_forward">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/flashcards_settings_direction_forward"
+        <RadioButton
+            android:id="@+id/radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="DE ➔ EN" />
 
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/flashcards_settings_direction_backward"
+        <RadioButton
+            android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

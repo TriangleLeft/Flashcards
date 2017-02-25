@@ -1,10 +1,9 @@
 package com.triangleleft.flashcards.service.account;
 
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-import com.triangleleft.flashcards.service.settings.UserData;
-
 import android.support.annotation.Nullable;
+
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.service.settings.UserData;
 
 public interface AccountModule {
 
@@ -24,13 +23,4 @@ public interface AccountModule {
 
     void setRememberUser(boolean rememberUser);
 
-    void setWordsAmount(int wordsAmount);
-
-    int getWordsAmount();
-
-    void setWordsReviewDirection(ReviewDirection direction);
-
-    ReviewDirection getWordsReviewDirection();
 }
-
-

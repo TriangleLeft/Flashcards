@@ -1,12 +1,5 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -15,6 +8,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,17 +82,9 @@ public class FlashcardView extends FrameLayout {
     }
 
 
-    public void showFlashcard(FlashcardWord word, ReviewDirection reviewDirection) {
-        switch (reviewDirection) {
-            case FORWARD:
-                wordView.setText(word.getWord());
-                translationView.setText(word.getTranslation());
-                break;
-            case BACKWARD:
-                wordView.setText(word.getTranslation());
-                translationView.setText(word.getWord());
-                break;
-        }
+    public void showFlashcard(FlashcardWord word) {
+        wordView.setText(word.getWord());
+        translationView.setText(word.getTranslation());
         answerBlock.clearAnimation();
         buttonBlock.clearAnimation();
         wordView.clearAnimation();

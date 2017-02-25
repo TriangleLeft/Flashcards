@@ -30,6 +30,7 @@ import static com.annimon.stream.Collectors.toList;
 public class RestFlashcardsModule implements FlashcardsModule {
 
     private static final Logger logger = LoggerFactory.getLogger(RestFlashcardsModule.class);
+    private static final int FLASHCARDS_COUNT = 15;
 
     private final RestService service;
     private final AccountModule accountModule;
@@ -47,7 +48,8 @@ public class RestFlashcardsModule implements FlashcardsModule {
     @Override
     public Call<FlashcardTestData> getFlashcards() {
         logger.debug("getFlashcards() called");
-        return service.getFlashcardData(accountModule.getWordsAmount(), true, System.currentTimeMillis())
+        // TODO: consider moving flashcard count constant to settings
+        return service.getFlashcardData(FLASHCARDS_COUNT, true, System.currentTimeMillis())
                 .map(FlashcardResponseModel::toTestData);
     }
 
@@ -65,7 +67,7 @@ public class RestFlashcardsModule implements FlashcardsModule {
                     List<FlashcardWord> flashcardWords = Stream.of(words)
                             .filterNot(word -> word.getTranslations().isEmpty())
                             .filter(word -> TextUtils.hasText(word.getTranslations().get(0)))
-                            .limit(accountModule.getWordsAmount())
+                            .limit(FLASHCARDS_COUNT)
                             .map(word -> FlashcardWord
                                     .create(word.getWord(), word.getTranslations().get(0), "fakeId"))
                             .collect(toList());

@@ -56,7 +56,7 @@
     <string name="cancel">Cancel</string>
     <string name="number_of_words">Number of words</string>
     <string name="learning_direction">Learning direction</string>
-    <string name="direction">%1$s -> %2$s</string>
+    <string name="direction">%1$s ➔ %2$s</string>
 
 
 </resources>

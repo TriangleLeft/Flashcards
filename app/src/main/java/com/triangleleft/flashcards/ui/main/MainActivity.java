@@ -19,6 +19,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -119,19 +120,17 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @Override
     public void showFlashcardsDialog() {
-        // Create custom dialog class with presenter?
-        FlashcardSettingsDialog settingsDialog = new FlashcardSettingsDialog(this, (dialog, which) -> {
-            switch (which) {
-                case FlashcardSettingsDialog.BUTTON_POSITIVE:
-                    Intent intent = new Intent(this, FlashcardsActivity.class);
-                    startActivity(intent);
-                    break;
-                default:
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.review_flashcards);
+        // Create custom view with presenter?
+        builder.setView(R.layout.view_flashcards_seetings);
+        builder.setPositiveButton(R.string.start, (dialog, which) -> {
+                    startActivity(new Intent(this, FlashcardsActivity.class));
                     dialog.dismiss();
-                    getPresenter().setSettingsDialogShown(false);
-            }
-        });
-        settingsDialog.show();
+                }
+        );
+        builder.setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss());
+        builder.show();
     }
 
     @Override
@@ -151,8 +150,9 @@ public class MainActivity extends BaseActivity<MainPageComponent, IMainView, Mai
 
     @OnClick(R.id.button_flashcards)
     public void onFlashcardsClick(View view) {
+
+
         showFlashcardsDialog();
-        getPresenter().setSettingsDialogShown(true);
 //        Intent intent = new Intent(this, FlashcardsActivity.class);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            int[] location = new int[2];

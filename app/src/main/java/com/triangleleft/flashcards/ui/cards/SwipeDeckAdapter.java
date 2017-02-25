@@ -1,7 +1,6 @@
 package com.triangleleft.flashcards.ui.cards;
 
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,13 @@ public class SwipeDeckAdapter extends BaseAdapter {
 
     private final FlashcardView.IFlashcardListener listener;
     private List<FlashcardWord> words = Collections.emptyList();
-    private ReviewDirection reviewDirection;
 
     public SwipeDeckAdapter(FlashcardView.IFlashcardListener listener) {
         this.listener = listener;
     }
 
-    public void setData(List<FlashcardWord> words, ReviewDirection direction) {
+    public void setData(List<FlashcardWord> words) {
         this.words = words;
-        this.reviewDirection = direction;
         notifyDataSetChanged();
     }
 
@@ -51,7 +48,7 @@ public class SwipeDeckAdapter extends BaseAdapter {
             view.setListener(listener);
         }
 
-        view.showFlashcard(getItem(position), reviewDirection);
+        view.showFlashcard(getItem(position));
         return view;
     }
 

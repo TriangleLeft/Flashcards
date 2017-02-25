@@ -1,33 +1,25 @@
 package com.triangleleft.flashcards.service.account;
 
+import android.support.annotation.Nullable;
+
 import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.util.PersistentStorage;
-
-import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
 public class SimpleAccountModule implements AccountModule {
 
-    // TODO: this is getting out of hand, ideally it should be streamlined like get/set with default values
     private static final String KEY_USER_ID = "SimpleAccountModule::userId";
     private static final String KEY_LOGIN = "SimpleAccountModule::login";
     private static final String KEY_REMEMBER_USER = "SimpleAccountModule::rememberUser";
     private static final String KEY_USERDATA = "SimpleAccountModule::userData";
-    private static final String KEY_WORDS_AMOUNT = "SimpleAccountModule::wordsAmount";
-    private static final String KEY_REVIEW_DIRECTION = "SimpleAccountModule::reviewDirection";
     private static final boolean DEFAULT_REMEMBER_USER = false;
-    private static final int DEFAULT_FLASHCARDS_COUNT = 15;
-    private static final ReviewDirection DEFAULT_REVIEW_DIRECTION = ReviewDirection.FORWARD;
     private final PersistentStorage storage;
     private String userId;
     private String login;
     private UserData userData;
     private Boolean rememberUser;
-    private Integer wordsAmount;
-    private ReviewDirection reviewDirection;
 
     @Inject
     public SimpleAccountModule(PersistentStorage storage) {
@@ -85,36 +77,8 @@ public class SimpleAccountModule implements AccountModule {
     @Override
     public boolean shouldRememberUser() {
         if (rememberUser == null) {
-            rememberUser = storage.get(KEY_REMEMBER_USER, Boolean.class, DEFAULT_REMEMBER_USER);
+            rememberUser = storage.get(KEY_REMEMBER_USER, Boolean.class);
         }
-        return rememberUser;
-    }
-
-    @Override
-    public void setWordsAmount(int wordsAmount) {
-        this.wordsAmount = wordsAmount;
-        storage.put(KEY_WORDS_AMOUNT, wordsAmount);
-    }
-
-    @Override
-    public int getWordsAmount() {
-        if (wordsAmount == null) {
-            wordsAmount = storage.get(KEY_WORDS_AMOUNT, Integer.class, DEFAULT_FLASHCARDS_COUNT);
-        }
-        return wordsAmount;
-    }
-
-    @Override
-    public void setWordsReviewDirection(ReviewDirection direction) {
-        reviewDirection = direction;
-        storage.put(KEY_REVIEW_DIRECTION, direction);
-    }
-
-    @Override
-    public ReviewDirection getWordsReviewDirection() {
-        if (reviewDirection == null) {
-            reviewDirection = storage.get(KEY_REVIEW_DIRECTION, ReviewDirection.class, DEFAULT_REVIEW_DIRECTION);
-        }
-        return reviewDirection;
+        return rememberUser == null ? DEFAULT_REMEMBER_USER : rememberUser;
     }
 }
