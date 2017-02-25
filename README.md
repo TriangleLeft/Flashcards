@@ -19,6 +19,8 @@ Packaging into framework is done by custom makefile (core/Makefile)
 This app uses vector graphics only, so they too are shared between Android and iOS.
 As I am targeting API 16, during build of Android app, aapt generates multiple png images for each dpi. For iOS we need only three types: 1x (mdpi), 2x (xhdpi), 3x (xxhdpi). They are packaged into .assets file (core/assets.mk) that is included into XCode project.
 
+You can read full overview in my reddit post: https://www.reddit.com/r/androiddev/comments/566la7/example_crossplatform_app_using_j2objc/
+
 ## Tests
 All unit tests within "core" module are also translated to ObjC and run automatically during building of framework. (to make sure that translated code also works as expected)
 
