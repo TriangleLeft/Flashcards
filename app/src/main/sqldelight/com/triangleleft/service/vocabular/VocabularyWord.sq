@@ -1,15 +1,12 @@
 CREATE TABLE vocabulary_word (
-    _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    word_string TEXT NOT NULL,
-    normalized_string TEXT NOT NULL,
-    pos TEXT NULL,
-    gender TEXT NULL,
-    strength INTEGER NOT NULL,
-    uiLanguage TEXT NOT NULL,
-    learningLanguage TEXT NOT NULL
-
-
-
+  _id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  word_string TEXT NOT NULL,
+  normalized_string TEXT NOT NULL,
+  pos TEXT NULL,
+  gender TEXT NULL,
+  strength INTEGER NOT NULL,
+  uiLanguage TEXT NOT NULL,
+  learningLanguage TEXT NOT NULL
 );
 
 create_index:
@@ -23,13 +20,9 @@ FROM vocabulary_word a
 LEFT JOIN vocabulary_word_translation b ON a._id == b.word_id
 WHERE a.uiLanguage = ? AND a.learningLanguage = ?;
 
-insert_word:
-INSERT INTO vocabulary_word(word_string, normalized_string, pos, gender, strength, uiLanguage, learningLanguage)
-VALUES (?, ?, ?, ?, ?, ?, ?);
-
-delete_all:
-DELETE FROM vocabulary_word;
-
 delete_words:
 DELETE FROM vocabulary_word
 WHERE uiLanguage = ? AND learningLanguage = ?;
+
+delete_all:
+DELETE FROM vocabulary_word;

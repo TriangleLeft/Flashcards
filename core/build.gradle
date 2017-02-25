@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'net.ltgt.apt'
+apply plugin: 'com.github.j2objccontrib.j2objcgradle'
 apply plugin: 'jacoco'
 apply from: '../dependencies.gradle'
 
@@ -49,6 +50,18 @@ dependencies {
 
     // use api as provided-only, we don't need it in jar
     compileOnly "org.slf4j:slf4j-api:$SLF4J_VERSION"
+    /* For translation, use our custom slf4j-simple
+    j2objc works only with java files, but in slf4j api sources, there is a StaticLoggerBinder class
+    that is stripped during packaging. (they need it to compile classes, but in runtime they want
+    for actual implementation to be used instead).
+    The thing is, j2objc doesn't know about this, so if we tell it to translate slf4j-api sources
+    it would generate translation for this fake class.
+    So, in order to circumvent this, I've made a custom version of slf4j-simple that is a mash-up
+    of original lib and api with StaticLoggerBinder from slf4-simple
+    We don't need it for actual jar, only for ios translation.
+    */
+    // TODO: use jitpack instead
+    j2objcTranslationClosure files('libs/slf4j-simple-1.7.21-sources.jar')
 
     // Only annotations are used
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
@@ -62,6 +75,24 @@ dependencies {
     apt 'com.gabrielittner.auto.value:auto-value-with:1.0.0-rc1'
 
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+    testCompile project(':j2objc-slf4j-simple')
     testCompile "junit:junit:$JUNIT_VERSION"
 
+}
+
+j2objcConfig {
+    testPattern {
+        // j2objc-gradle plugin can't differentiate between tests and simple classes
+        exclude '**/RxJavaTestRule.java'
+    }
+    j2objcVersion "1.1"
+    autoConfigureDeps true
+    supportedArchs = ['ios_i386', 'ios_x86_64'] //ios_x86_64
+
+    generatedSourceDirs "build/generated/source/apt/main"
+    translateArgs "-source", "1.8", "--doc-comments", "--swift-friendly"
+    translateArgs "--prefixes", "src/main/resources/prefixes.properties"
+    //  translateArgs "--dead-code-report", "usage.txt"
+
+    finalConfigure()
 }

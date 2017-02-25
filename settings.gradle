@@ -1,1 +1,1 @@
-include ':app', ':core', ':appium', ':mockservice'
+include ':app', ':core', ':appium', ':j2objc-slf4j-simple', ':mockservice'
