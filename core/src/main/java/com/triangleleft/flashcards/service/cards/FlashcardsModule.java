@@ -9,7 +9,5 @@ public interface FlashcardsModule {
 
     Call<FlashcardTestData> getFlashcards();
 
-    Call<FlashcardTestData> getLocalFlashcards();
-
     void postResult(FlashcardTestResult results);
 }

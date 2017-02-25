@@ -27,7 +27,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static com.triangleleft.flashcards.util.TestUtils.contains;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class FlashcardsPresenterTest {
@@ -102,13 +105,13 @@ public class FlashcardsPresenterTest {
     }
 
     @Test
-    public void onFlashcardsLoadErrorWouldShowDialog() {
+    public void onFlashcardsLoadErrorWouldShowError() {
         when(module.getFlashcards()).thenReturn(Call.error(new ServerException()));
 
         presenter.onCreate();
         presenter.onBind(view);
 
-        verify(view).showOfflineModeDialog();
+        verify(view).showError();
     }
 
     @Test
@@ -118,32 +121,7 @@ public class FlashcardsPresenterTest {
         presenter.onCreate();
         presenter.onBind(view);
 
-        verify(view).showOfflineModeDialog();
-    }
-
-    @Test
-    public void decliningOfflineModeWouldShowError() {
-        when(module.getFlashcards()).thenReturn(Call.error(new ServerException()));
-
-        presenter.onCreate();
-        presenter.onBind(view);
-        presenter.onOfflineModeDecline();
-
         verify(view).showError();
-    }
-
-    @Test
-    public void acceptingOfflineModeWouldStartOfflineTest() {
-        when(module.getFlashcards()).thenReturn(Call.error(new ServerException()));
-        List<FlashcardWord> localList = Collections.singletonList(mock(FlashcardWord.class));
-        Call<FlashcardTestData> data = buildTestData(localList);
-        when(module.getLocalFlashcards()).thenReturn(data);
-
-        presenter.onCreate();
-        presenter.onBind(view);
-        presenter.onOfflineModeAccept();
-
-        verify(view).showWords(localList);
     }
 
     @Test
@@ -196,16 +174,11 @@ public class FlashcardsPresenterTest {
         verify(view).showResultsNoErrors();
     }
 
-    private Call<FlashcardTestData> buildTestData(List<FlashcardWord> words) {
+    private void prepareTestData(List<FlashcardWord> words) {
         FlashcardTestData data = mock(FlashcardTestData.class);
         when(data.getUiLanguage()).thenReturn(UI_LANG);
         when(data.getLearningLanguage()).thenReturn(LEARN_LANG);
         when(data.getWords()).thenReturn(words);
-        return Call.just(data);
-    }
-
-    private void prepareTestData(List<FlashcardWord> words) {
-        Call<FlashcardTestData> data = buildTestData(words);
-        when(module.getFlashcards()).thenReturn(data);
+        when(module.getFlashcards()).thenReturn(Call.just(data));
     }
 }

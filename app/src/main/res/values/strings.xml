@@ -29,9 +29,6 @@
     <string name="flashcard_button_right">I was right</string>
     <string name="flashcard_button_show_answer">Show answer</string>
     <string name="flashcard_error">Failed to load flashcards</string>
-    <string name="flashcard_dialog_offline">Do you want to start in offline mode?</string>
-    <string name="flashcard_dialog_yes">Yes</string>
-    <string name="flashcard_dialog_no">No</string>
 
     <!-- Vocabulary word -->
     <string name="word_translation">Translation</string>

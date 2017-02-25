@@ -19,12 +19,10 @@ package com.triangleleft.flashcards.service.cards.rest;
 import com.triangleleft.flashcards.Actions;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
-import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
 import com.triangleleft.flashcards.util.TestAction;
 
 import org.junit.Before;
@@ -51,16 +49,12 @@ public class RestFlashcardsModuleTest {
 
     @Mock
     RestService service;
-    @Mock
-    AccountModule accountModule;
-    @Mock
-    VocabularyWordsRepository wordsRepository;
     private RestFlashcardsModule module;
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        module = new RestFlashcardsModule(service, accountModule, wordsRepository);
+        module = new RestFlashcardsModule(service);
     }
 
     @Test

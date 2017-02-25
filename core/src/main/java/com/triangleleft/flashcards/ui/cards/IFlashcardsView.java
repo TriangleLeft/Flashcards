@@ -16,6 +16,4 @@ public interface IFlashcardsView extends IView {
     void showResultsNoErrors();
 
     void showResultErrors(List<FlashcardWord> wordList);
-
-    void showOfflineModeDialog();
 }
