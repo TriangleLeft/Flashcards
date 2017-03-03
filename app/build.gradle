@@ -14,7 +14,7 @@ if (hasKeystore) {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.triangleleft.flashcards"
@@ -114,6 +114,11 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
     compile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
     compile "com.facebook.stetho:stetho:$STETHO_VERSION"
+
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    // Cause I like to live dangerously
+    compile 'com.github.JakeWharton.RxBinding:rxbinding:master-SNAPSHOT'
+
 
     //compile 'com.daprlabs.aaron:cardstack:0.3.0'
     compile('com.github.lekz112:SwipeDeck2:preview_layout-SNAPSHOT') {

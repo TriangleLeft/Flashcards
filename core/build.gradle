@@ -41,6 +41,8 @@ check.dependsOn jacocoTestReport
 
 dependencies {
 
+    compile "io.reactivex.rxjava2:rxjava:2.0.6"
+
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 

@@ -1,5 +1,6 @@
 package com.triangleleft.flashcards.ui.login;
 
+import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -16,10 +17,15 @@ import org.slf4j.LoggerFactory;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import io.reactivex.disposables.Disposable;
 
 
 @FunctionsAreNonnullByDefault
@@ -36,6 +42,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     private boolean hasLoginError;
     private boolean hasPasswordError;
     private Call<Object> call = Call.empty();
+    private List<Disposable> disposables = new ArrayList<>();
 
     @Inject
     public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
@@ -69,29 +76,30 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     }
 
     @Override
+    public synchronized void onRebind(ILoginView view) {
+        super.onRebind(view);
+        withDisposables(
+                view.logins().subscribe(this::onLoginChanged),
+                view.passwords().subscribe(this::onPasswordChanged),
+                view.rememberUsers().subscribe(this::onRememberCheck),
+                view.loginClicks().subscribe(click -> onLoginClick())
+        );
+    }
+
+    @Override
+    public void onUnbind() {
+        super.onUnbind();
+        Stream.of(disposables).forEach(Disposable::dispose);
+    }
+
+    private void withDisposables(Disposable... disposables) {
+        this.disposables.addAll(Arrays.asList(disposables));
+    }
+
+    @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
         call.cancel();
-    }
-
-    public void onLoginChanged(@NonNull String newLogin) {
-        logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
-        if (TextUtils.notEquals(login, newLogin)) {
-            login = newLogin;
-            hasLoginError = false;
-            getView().setLoginErrorVisible(hasLoginError);
-            updateLoginButton();
-        }
-    }
-
-    public void onPasswordChanged(@NonNull String newPassword) {
-        logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
-        if (TextUtils.notEquals(password, newPassword)) {
-            password = newPassword;
-            hasPasswordError = false;
-            getView().setPasswordErrorVisible(hasPasswordError);
-            updateLoginButton();
-        }
     }
 
     private void updateLoginButton() {
@@ -102,7 +110,7 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
         }
     }
 
-    public void onLoginClick() {
+    private void onLoginClick() {
         logger.debug("onLoginClick() called");
         getView().showProgress();
         call = loginModule.login(login, password);
@@ -124,7 +132,24 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
                 });
     }
 
-    public void onRememberCheck(boolean checked) {
+
+    private void onLoginChanged(@NonNull String newLogin) {
+        logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
+        login = newLogin;
+        hasLoginError = false;
+        getView().setLoginErrorVisible(hasLoginError);
+        updateLoginButton();
+    }
+
+    private void onPasswordChanged(@NonNull String newPassword) {
+        logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
+        password = newPassword;
+        hasPasswordError = false;
+        getView().setPasswordErrorVisible(hasPasswordError);
+        updateLoginButton();
+    }
+
+    private void onRememberCheck(boolean checked) {
         logger.debug("onRememberCheck() called with: checked = [{}]", checked);
         rememberUser = checked;
         accountModule.setRememberUser(checked);

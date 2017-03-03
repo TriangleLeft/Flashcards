@@ -61,13 +61,12 @@
                             android:textColorHint="@color/textColorDisabledInverse"
                             app:errorEnabled="true">
 
-                            <com.triangleleft.flashcards.ui.common.CustomEditText
+                            <android.support.design.widget.TextInputEditText
                                 android:id="@+id/login_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textEmailAddress"
                                 android:maxLines="1"
-                                android:singleLine="true"
                                 android:imeOptions="actionNext"
                                 android:textColor="@color/textColorPrimaryInverse" />
                         </android.support.design.widget.TextInputLayout>
@@ -80,13 +79,12 @@
                             android:textColorHint="@color/textColorDisabledInverse"
                             app:errorEnabled="true">
 
-                            <com.triangleleft.flashcards.ui.common.CustomEditText
+                            <android.support.design.widget.TextInputEditText
                                 android:id="@+id/login_password"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"
                                 android:maxLines="1"
-                                android:singleLine="true"
                                 android:imeOptions="actionDone"
                                 android:textColor="@color/textColorPrimaryInverse" />
                         </android.support.design.widget.TextInputLayout>

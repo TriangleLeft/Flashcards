@@ -4,6 +4,8 @@ import com.triangleleft.flashcards.ui.common.view.IView;
 
 import android.support.annotation.Nullable;
 
+import io.reactivex.Observable;
+
 /**
  * View interface for login screen.
  */
@@ -22,6 +24,14 @@ public interface ILoginView extends IView {
     void showProgress();
 
     void showContent();
+
+    Observable<String> logins();
+
+    Observable<String> passwords();
+
+    Observable<Boolean> rememberUsers();
+
+    Observable<Object> loginClicks();
 
     /**
      * Advance to next screen.

@@ -1,10 +1,12 @@
 package com.triangleleft.flashcards.ui.common;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.triangleleft.assertdialog.AssertDialog;
+import com.triangleleft.flashcards.BuildConfig;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerApplicationComponent;
@@ -38,7 +40,8 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
             // You should not init your app in this process.
             return;
         }
-        Fabric.with(this, new Crashlytics());
+        CrashlyticsCore core = new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build();
+        Fabric.with(this, new Crashlytics.Builder().core(core).build());
         refWatcher = LeakCanary.install(this);
         AssertDialog.init(AssertDialog.AssertMode.DIALOG, getApplicationContext());
         component = buildComponent();

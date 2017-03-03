@@ -1,10 +1,12 @@
 package com.triangleleft.flashcards.ui.login;
 
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent;
 import com.triangleleft.flashcards.di.login.LoginActivityComponent;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.common.CustomEditText;
 import com.triangleleft.flashcards.ui.main.MainActivity;
 
 import org.slf4j.Logger;
@@ -30,7 +32,7 @@ import android.widget.ViewFlipper;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import io.reactivex.Observable;
 
 /**
  * A login screen that offers login via email/password.
@@ -43,11 +45,11 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     private static final int PROGRESS = 1;
 
     @Bind(R.id.login_email)
-    CustomEditText loginView;
+    EditText loginView;
     @Bind(R.id.login_email_layout)
     TextInputLayout loginLayoutView;
     @Bind(R.id.login_password)
-    CustomEditText passwordView;
+    EditText passwordView;
     @Bind(R.id.login_password_layout)
     TextInputLayout passwordLayoutView;
     @Bind(R.id.view_flipper)
@@ -66,9 +68,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        loginView.setOnTextChangedListener(newText -> getPresenter().onLoginChanged(newText));
-        passwordView.setOnTextChangedListener(newText -> getPresenter().onPasswordChanged(newText));
 
         setupUI(container);
     }
@@ -108,12 +107,12 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     public void setLogin(@Nullable String login) {
         logger.debug("setLogin() called with: login = [{}]", login);
-        loginView.replaceText(login);
+        loginView.setText(login);
     }
 
     @Override
     public void setPassword(@Nullable String password) {
-        passwordView.replaceText(password);
+        passwordView.setText(password);
     }
 
     @Override
@@ -124,17 +123,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     public void setPasswordErrorVisible(boolean visible) {
         passwordLayoutView.setError(visible ? getString(R.string.wrong_password) : null);
-    }
-
-    @OnClick(R.id.login_switch)
-    public void onCheckboxClick() {
-        getPresenter().onRememberCheck(rememberSwitch.isChecked());
-    }
-
-    @OnClick(R.id.login_button)
-    protected void onLoginClick() {
-        logger.debug("onLoginClick() called");
-        getPresenter().onLoginClick();
     }
 
     @Override
@@ -164,6 +152,28 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         } else if (passwordView.getError() != null) {
             passwordView.requestFocus();
         }
+    }
+
+    @Override
+    public Observable<String> logins() {
+        return RxTextView.textChanges(loginView)
+                .map(String::valueOf);
+    }
+
+    @Override
+    public Observable<String> passwords() {
+        return RxTextView.textChanges(passwordView)
+                .map(String::valueOf);
+    }
+
+    @Override
+    public Observable<Boolean> rememberUsers() {
+        return RxCompoundButton.checkedChanges(rememberSwitch);
+    }
+
+    @Override
+    public Observable<Object> loginClicks() {
+        return RxView.clicks(loginButton);
     }
 
     @Override
