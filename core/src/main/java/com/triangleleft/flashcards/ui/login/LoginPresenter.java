@@ -1,31 +1,24 @@
 package com.triangleleft.flashcards.ui.login;
 
-import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
-import com.triangleleft.flashcards.service.common.exception.NetworkException;
 import com.triangleleft.flashcards.service.login.LoginModule;
 import com.triangleleft.flashcards.service.login.exception.LoginException;
 import com.triangleleft.flashcards.service.login.exception.PasswordException;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.TextUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import io.reactivex.disposables.Disposable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 @FunctionsAreNonnullByDefault
@@ -36,13 +29,10 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
 
     private final LoginModule loginModule;
     private final AccountModule accountModule;
-    private String login = "";
-    private String password = "";
-    private boolean rememberUser = false;
-    private boolean hasLoginError;
-    private boolean hasPasswordError;
-    private Call<Object> call = Call.empty();
-    private List<Disposable> disposables = new ArrayList<>();
+
+    private CompositeDisposable disposable = new CompositeDisposable();
+
+    private LoginViewState viewState;
 
     @Inject
     public LoginPresenter(AccountModule accountModule, LoginModule loginModule,
@@ -55,104 +45,80 @@ public class LoginPresenter extends AbstractPresenter<ILoginView> {
     @Override
     public void onCreate() {
         logger.debug("onCreate() called");
-        login = accountModule.getLogin().orElse("");
-        rememberUser = accountModule.shouldRememberUser();
+        String login = accountModule.getLogin().orElse("");
+        boolean rememberUser = accountModule.shouldRememberUser();
+
+        LoginViewState.Builder builder = LoginViewState.builder()
+                .login(login)
+                .password("")
+                .hasLoginError(false)
+                .hasPasswordError(false)
+                .loginButtonEnabled(false)
+                .genericError("")
+                .shouldRememberUser(rememberUser);
+
         // If we are already logged, and we have saved user data, advance immediately
         if (rememberUser && accountModule.getUserData().isPresent() && accountModule.getUserId().isPresent()) {
-            getView().advance();
+            builder.page(LoginViewState.Page.SUCCESS);
+        } else {
+            builder.page(LoginViewState.Page.CONTENT);
         }
+
+        viewState = builder.build();
     }
 
     @Override
     public void onBind(ILoginView view) {
         super.onBind(view);
-        // FIXME: What about showing progress or content?
-        view.setLogin(login);
-        view.setPassword(password);
-        view.setRememberUser(rememberUser);
-        view.setLoginErrorVisible(hasLoginError);
-        view.setPasswordErrorVisible(hasPasswordError);
-        updateLoginButton();
+        // Get view bundle?
+
+        view.render(viewState);
     }
 
     @Override
     public synchronized void onRebind(ILoginView view) {
         super.onRebind(view);
-        withDisposables(
-                view.logins().subscribe(this::onLoginChanged),
-                view.passwords().subscribe(this::onPasswordChanged),
-                view.rememberUsers().subscribe(this::onRememberCheck),
-                view.loginClicks().subscribe(click -> onLoginClick())
-        );
+
+        ObservableTransformer<LoginEvent, ViewAction<LoginViewState>> loginEventTransformer = events -> events
+                .flatMap(event -> loginModule.login(event.login(), event.password())
+                        .map(ignored -> LoginViewActions.success())
+                        .onErrorReturn(error -> {
+                            if (error instanceof LoginException) {
+                                return LoginViewActions.loginError();
+                            } else if (error instanceof PasswordException) {
+                                return LoginViewActions.passwordError();
+                            } else {
+                                logger.error("login error", error);
+                                return LoginViewActions.genericError("error message");
+                            }
+                        })
+                        .startWith(LoginViewActions.progress()));
+
+        disposable.addAll(
+                Observable.merge(
+                        view.logins().map(LoginViewActions::setLogin),
+                        view.passwords().map(LoginViewActions::setPassword),
+                        view.rememberUserChecks().map(LoginViewActions::setRemememberUser),
+                        view.loginEvents().compose(loginEventTransformer))
+                        .scan(viewState, (viewState, viewAction) -> viewAction.reduce(viewState))
+                        .distinctUntilChanged()
+                        .subscribe(viewState -> {
+                            // Update current view state
+                            this.viewState = viewState;
+                            getView().render(viewState);
+                        }, error -> {
+                            logger.error("log", error);
+                        }));
     }
 
     @Override
     public void onUnbind() {
         super.onUnbind();
-        Stream.of(disposables).forEach(Disposable::dispose);
-    }
-
-    private void withDisposables(Disposable... disposables) {
-        this.disposables.addAll(Arrays.asList(disposables));
+        disposable.dispose();
     }
 
     @Override
     public void onDestroy() {
         logger.debug("onDestroy() called");
-        call.cancel();
     }
-
-    private void updateLoginButton() {
-        if (TextUtils.hasText(login) && TextUtils.hasText(password)) {
-            getView().setLoginButtonEnabled(true);
-        } else {
-            getView().setLoginButtonEnabled(false);
-        }
-    }
-
-    private void onLoginClick() {
-        logger.debug("onLoginClick() called");
-        getView().showProgress();
-        call = loginModule.login(login, password);
-        call.enqueue(
-                data -> getView().advance(),
-                error -> {
-                    if (error instanceof LoginException) {
-                        hasLoginError = true;
-                        getView().setLoginErrorVisible(true);
-                    } else if (error instanceof PasswordException) {
-                        hasPasswordError = true;
-                        getView().setPasswordErrorVisible(true);
-                    } else if (error instanceof NetworkException) {
-                        getView().notifyNetworkError();
-                    } else {
-                        getView().notifyGenericError();
-                    }
-                    getView().showContent();
-                });
-    }
-
-
-    private void onLoginChanged(@NonNull String newLogin) {
-        logger.debug("onLoginChanged() called with: newLogin = [{}]", newLogin);
-        login = newLogin;
-        hasLoginError = false;
-        getView().setLoginErrorVisible(hasLoginError);
-        updateLoginButton();
-    }
-
-    private void onPasswordChanged(@NonNull String newPassword) {
-        logger.debug("onPasswordChanged() called with: newPassword = [{}]", newPassword);
-        password = newPassword;
-        hasPasswordError = false;
-        getView().setPasswordErrorVisible(hasPasswordError);
-        updateLoginButton();
-    }
-
-    private void onRememberCheck(boolean checked) {
-        logger.debug("onRememberCheck() called with: checked = [{}]", checked);
-        rememberUser = checked;
-        accountModule.setRememberUser(checked);
-    }
-
 }

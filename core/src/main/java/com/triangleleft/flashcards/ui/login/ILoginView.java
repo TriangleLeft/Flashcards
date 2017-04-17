@@ -2,8 +2,6 @@ package com.triangleleft.flashcards.ui.login;
 
 import com.triangleleft.flashcards.ui.common.view.IView;
 
-import android.support.annotation.Nullable;
-
 import io.reactivex.Observable;
 
 /**
@@ -11,36 +9,13 @@ import io.reactivex.Observable;
  */
 public interface ILoginView extends IView {
 
-    void setLoginButtonEnabled(boolean enabled);
-
-    void setLogin(@Nullable String login);
-
-    void setPassword(@Nullable String password);
-
-    void setLoginErrorVisible(boolean visible);
-
-    void setPasswordErrorVisible(boolean visible);
-
-    void showProgress();
-
-    void showContent();
+    void render(LoginViewState viewState);
 
     Observable<String> logins();
 
     Observable<String> passwords();
 
-    Observable<Boolean> rememberUsers();
+    Observable<Boolean> rememberUserChecks();
 
-    Observable<Object> loginClicks();
-
-    /**
-     * Advance to next screen.
-     */
-    void advance();
-
-    void setRememberUser(boolean rememberUser);
-
-    void notifyGenericError();
-
-    void notifyNetworkError();
+    Observable<LoginEvent> loginEvents();
 }

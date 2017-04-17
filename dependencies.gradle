@@ -15,7 +15,7 @@ ext.PCJ_VERSION = 'v1.0.0'
 ext.STETHO_VERSION = '1.3.1'
 
 // https://github.com/google/auto/blob/master/value/userguide/index.md
-ext.AUTOVALUE_VERSION = '1.2'
+ext.AUTOVALUE_VERSION = '1.4.1'
 
 // https://github.com/square/leakcanary
 ext.LEAKCANARY_VERSION = '1.5'

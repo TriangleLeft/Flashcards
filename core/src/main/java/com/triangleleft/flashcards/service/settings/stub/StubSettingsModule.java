@@ -12,8 +12,11 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 @FunctionsAreNonnullByDefault
 public class StubSettingsModule implements SettingsModule {
@@ -47,8 +50,9 @@ public class StubSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Call<UserData> loadUserData() {
-        return Call.just(getCurrentUserData().get());
+    public Observable<UserData> loadUserData() {
+        return Observable.just(getCurrentUserData().get())
+                .delay(DELAY, TimeUnit.MILLISECONDS);
     }
 
     @Override

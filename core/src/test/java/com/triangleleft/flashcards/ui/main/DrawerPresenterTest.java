@@ -42,7 +42,7 @@ public class DrawerPresenterTest {
         presenter = new DrawerPresenter(mainPresenter, accountModule, settingsModule, Runnable::run);
         when(userData.getCurrentLearningLanguage()).thenReturn(Optional.empty());
         when(accountModule.getUserData()).thenReturn(Optional.of(userData));
-        when(settingsModule.loadUserData()).thenReturn(Call.empty());
+        //when(settingsModule.loadUserData()).thenReturn(Call.empty());
     }
 
 
@@ -122,7 +122,7 @@ public class DrawerPresenterTest {
         // Same language, but with isCurrentlyLearning
         language = Language.create("id", "lang", 1, true, true);
         UserData data = UserData.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
-        when(settingsModule.loadUserData()).thenReturn(Call.just(data));
+        // when(settingsModule.loadUserData()).thenReturn(Call.just(data));
         return result;
     }
 

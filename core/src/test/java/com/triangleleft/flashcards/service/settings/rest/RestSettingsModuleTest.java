@@ -16,14 +16,11 @@
 
 package com.triangleleft.flashcards.service.settings.rest;
 
-import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
-import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.settings.rest.model.SwitchLanguageController;
-import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.util.TestObserver;
 
 import org.junit.Before;
@@ -34,8 +31,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 
@@ -58,19 +53,19 @@ public class RestSettingsModuleTest {
         module = new RestSettingsModule(service, accountModule);
     }
 
-    @Test
-    public void loadUserData() {
-        when(accountModule.getUserId()).thenReturn(Optional.of("id"));
-        UserDataModel model = mock(UserDataModel.class);
-        UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
-        when(model.toUserData()).thenReturn(userData);
-        when(service.getUserData("id")).thenReturn(Call.just(model));
-
-        TestObserver<UserData> observer = new TestObserver<>();
-        module.loadUserData().enqueue(observer);
-
-        observer.assertValue(userData);
-    }
+//    @Test
+//    public void loadUserData() {
+//        when(accountModule.getUserId()).thenReturn(Optional.of("id"));
+//        UserDataModel model = mock(UserDataModel.class);
+//        UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
+//        when(model.toUserData()).thenReturn(userData);
+//        when(service.getUserData("id")).thenReturn(Call.just(model));
+//
+//        TestObserver<UserData> observer = new TestObserver<>();
+//        module.loadUserData().enqueue(observer);
+//
+//        observer.assertValue(userData);
+//    }
 
     @Test
     public void switchLanguage() {

@@ -1,10 +1,11 @@
 package com.triangleleft.flashcards.service.login;
 
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import io.reactivex.Observable;
 
 @FunctionsAreNonnullByDefault
 public interface LoginModule {
 
-    Call<Object> login(String login, String password);
+    Observable<Object> login(String login, String password);
 }

@@ -19,6 +19,8 @@ import java.util.concurrent.Executor;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import io.reactivex.Scheduler;
+
 import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
@@ -30,6 +32,7 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
     private final AccountModule accountModule;
     private final SettingsModule settingsModule;
     private Optional<Language> currentLanguage = Optional.empty();
+    private Scheduler scheduler;
 
     @Inject
     public DrawerPresenter(MainPresenter mainPresenter, AccountModule accountModule, SettingsModule settingsModule,
@@ -48,8 +51,15 @@ public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
         // start with cached data, continue with fresh one
         // NOTE: we don't show progress bar while we are doing it, progress bar is shown only for language switch
         // NOTE: we don't want to notify user that we failed to update data
-        processUserData(accountModule.getUserData().get());
-        settingsModule.loadUserData().enqueue(this::processUserData, this::processUserDataError);
+        // NOTE: we have to materialze/dematerialze because of this:
+        // https://github.com/ReactiveX/RxJava/issues/2887
+        // TODO: dispose
+        settingsModule.loadUserData()
+                .startWith(accountModule.getUserData().get())
+                .materialize()
+                //       .observeOn(scheduler)
+                .<UserData>dematerialize()
+                .subscribe(this::processUserData, this::processUserDataError);
     }
 
     private void processUserData(UserData data) {

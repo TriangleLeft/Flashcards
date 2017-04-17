@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import butterknife.Bind;
@@ -60,6 +59,8 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     SwitchCompat rememberSwitch;
     @Bind(R.id.login_container)
     View container;
+
+    private LoginViewState.Page currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,30 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     }
 
     @Override
-    public void setLoginButtonEnabled(boolean enabled) {
+    public void render(LoginViewState viewState) {
+        setLogin(viewState.login());
+        setPassword(viewState.password());
+        setLoginErrorVisible(viewState.hasLoginError());
+        setPasswordErrorVisible(viewState.hasPasswordError());
+        setRememberUser(viewState.shouldRememberUser());
+        setLoginButtonEnabled(viewState.loginButtonEnabled());
+        if (currentPage != viewState.page()) {
+            currentPage = viewState.page();
+            switch (viewState.page()) {
+                case PROGRESS:
+                    showProgress();
+                    break;
+                case CONTENT:
+                    showContent();
+                    break;
+                case SUCCESS:
+                    advance();
+                    break;
+            }
+        }
+    }
+
+    private void setLoginButtonEnabled(boolean enabled) {
         logger.debug("setLoginButtonEnabled() called with: enabled = [{}]", enabled);
         loginButton.setEnabled(enabled);
         if (enabled) {
@@ -104,29 +128,29 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         }
     }
 
-    @Override
-    public void setLogin(@Nullable String login) {
+    private void setLogin(@Nullable String login) {
         logger.debug("setLogin() called with: login = [{}]", login);
-        loginView.setText(login);
+        if (!loginView.getText().toString().equals(login)) {
+            loginView.setText(login);
+        }
     }
 
-    @Override
-    public void setPassword(@Nullable String password) {
-        passwordView.setText(password);
+    private void setPassword(@Nullable String password) {
+        logger.debug("setPassword() called with: password = [{}]", password);
+        if (!passwordView.getText().toString().equals(password)) {
+            passwordView.setText(password);
+        }
     }
 
-    @Override
-    public void setLoginErrorVisible(boolean visible) {
+    private void setLoginErrorVisible(boolean visible) {
         loginLayoutView.setError(visible ? getString(R.string.wrong_login) : null);
     }
 
-    @Override
-    public void setPasswordErrorVisible(boolean visible) {
+    private void setPasswordErrorVisible(boolean visible) {
         passwordLayoutView.setError(visible ? getString(R.string.wrong_password) : null);
     }
 
-    @Override
-    public void advance() {
+    private void advance() {
         logger.debug("advance() called");
         finish();
         Intent intent = new Intent(this, MainActivity.class);
@@ -134,18 +158,16 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         overridePendingTransition(0, 0);
     }
 
-    @Override
-    public void setRememberUser(boolean rememberUser) {
+
+    private void setRememberUser(boolean rememberUser) {
         rememberSwitch.setChecked(rememberUser);
     }
 
-    @Override
-    public void showProgress() {
+    private void showProgress() {
         flipperView.setDisplayedChild(PROGRESS);
     }
 
-    @Override
-    public void showContent() {
+    private void showContent() {
         flipperView.setDisplayedChild(CONTENT);
         if (loginView.getError() != null) {
             loginView.requestFocus();
@@ -157,33 +179,30 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
     @Override
     public Observable<String> logins() {
         return RxTextView.textChanges(loginView)
+                .doOnNext(ww -> {
+                    int q = 1;
+                })
                 .map(String::valueOf);
     }
 
     @Override
     public Observable<String> passwords() {
         return RxTextView.textChanges(passwordView)
+                .doOnNext(ww -> {
+                    int q = 1;
+                })
                 .map(String::valueOf);
     }
 
     @Override
-    public Observable<Boolean> rememberUsers() {
+    public Observable<Boolean> rememberUserChecks() {
         return RxCompoundButton.checkedChanges(rememberSwitch);
     }
 
     @Override
-    public Observable<Object> loginClicks() {
-        return RxView.clicks(loginButton);
-    }
-
-    @Override
-    public void notifyGenericError() {
-        Toast.makeText(this, R.string.login_generic_error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void notifyNetworkError() {
-        Toast.makeText(this, R.string.login_network_error, Toast.LENGTH_SHORT).show();
+    public Observable<LoginEvent> loginEvents() {
+        return RxView.clicks(loginButton)
+                .map(ignored -> LoginEvent.create(loginView.getText().toString(), passwordView.getText().toString()));
     }
 
     public void hideKeyboard() {

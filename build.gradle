@@ -6,9 +6,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
-        classpath "net.ltgt.gradle:gradle-apt-plugin:0.6"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.10"
         classpath 'com.squareup.sqldelight:gradle-plugin:0.5.1'
         classpath "gradle.plugin.com.github.j2objccontrib.j2objcgradle:j2objc-gradle:0.6.0-alpha"
         classpath 'io.fabric.tools:gradle:1.+'

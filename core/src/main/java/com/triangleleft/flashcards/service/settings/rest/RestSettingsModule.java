@@ -12,6 +12,8 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+
 @FunctionsAreNonnullByDefault
 public class RestSettingsModule implements SettingsModule {
 
@@ -25,9 +27,10 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Call<UserData> loadUserData() {
+    public Observable<UserData> loadUserData() {
         return service.getUserData(accountModule.getUserId().get())
-                .map(UserDataModel::toUserData);
+                .map(UserDataModel::toUserData)
+                .doOnNext(accountModule::setUserData);
     }
 
     @Override

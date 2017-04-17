@@ -11,6 +11,7 @@ import com.triangleleft.flashcards.service.settings.rest.model.UserDataModel;
 import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyResponseModel;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
+import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -33,7 +34,7 @@ public interface RestService {
 
 
     @POST(PATH_LOGIN)
-    Call<LoginResponseModel> login(@Body LoginRequestController controller);
+    Observable<LoginResponseModel> login(@Body LoginRequestController controller);
 
     @GET(PATH_VOCABULARY)
     Call<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
@@ -50,7 +51,7 @@ public interface RestService {
     Call<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
 
     @GET(PATH_USERDATA)
-    Call<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);
+    Observable<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);
 
 
 }

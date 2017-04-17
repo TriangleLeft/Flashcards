@@ -50,16 +50,16 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     protected abstract void inject();
 
     @Override
-    protected void onResume() {
-        logger.debug("onResume() called");
-        super.onResume();
+    protected void onStart() {
+        logger.debug("onStart() called");
+        super.onStart();
         getPresenter().onRebind(getMvpView());
     }
 
     @Override
-    protected void onPause() {
-        logger.debug("onPause() called");
-        super.onPause();
+    protected void onStop() {
+        logger.debug("onStop() called");
+        super.onStop();
         getPresenter().onUnbind();
     }
 
