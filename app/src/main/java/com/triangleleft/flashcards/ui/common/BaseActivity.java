@@ -1,24 +1,26 @@
 package com.triangleleft.flashcards.ui.common;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.IComponent;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
+import com.triangleleft.flashcards.ui.login.ViewState;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-
 import javax.inject.Inject;
 
-public abstract class BaseActivity<Component extends IComponent, View extends IView,
-        Presenter extends IPresenter<View>> extends AppCompatActivity {
+public abstract class BaseActivity<Component extends IComponent, View extends IView, VS extends ViewState,
+        Presenter extends IPresenter<View, VS>> extends AppCompatActivity {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
+    private static final String KEY_VIEWSTATE = "BaseActivity::keyViewstate";
 
     private Component component;
 
@@ -32,18 +34,27 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
 
         Optional<Component> restoredComponent =
                 getApplicationComponent().componentManager().restoreComponent(getClass());
-        this.component = restoredComponent.orElse(buildComponent());
+        this.component = restoredComponent.orElseGet(this::buildComponent);
 
         inject();
         // If we didn't had restored component, it's a new one, run presenter's onCreate
+        // So... if it's first launch after process death, we have no presenter, but we could have saved instance state
         if (!restoredComponent.isPresent()) {
-            getPresenter().onCreate();
+            Optional<VS> viewState;
+            if (savedInstanceState != null) {
+                viewState = Optional.ofNullable((VS) savedInstanceState.getSerializable(KEY_VIEWSTATE));
+            } else {
+                viewState = Optional.empty();
+            }
+            getPresenter().onCreate(viewState);
+
         }
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        // TODO: Remove this
         getPresenter().onBind(getMvpView());
     }
 
@@ -54,6 +65,12 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         logger.debug("onStart() called");
         super.onStart();
         getPresenter().onRebind(getMvpView());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(KEY_VIEWSTATE, getPresenter().getViewState());
     }
 
     @Override

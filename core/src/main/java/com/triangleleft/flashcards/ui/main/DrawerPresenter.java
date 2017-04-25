@@ -8,6 +8,7 @@ import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
-public class DrawerPresenter extends AbstractPresenter<IDrawerView> {
+public class DrawerPresenter extends AbstractPresenter<IDrawerView, ViewState> {
 
     private static final Logger logger = LoggerFactory.getLogger(DrawerPresenter.class);
     private final MainPresenter mainPresenter;

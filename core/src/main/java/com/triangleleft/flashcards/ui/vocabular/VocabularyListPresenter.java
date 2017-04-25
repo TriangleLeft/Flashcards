@@ -6,6 +6,7 @@ import com.triangleleft.flashcards.di.scope.FragmentScope;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @FragmentScope
-public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListView> {
+public class VocabularyListPresenter extends AbstractPresenter<IVocabularyListView, ViewState> {
 
     public static final int NO_POSITION = -1;
     private static final Logger logger = LoggerFactory.getLogger(VocabularyListPresenter.class);

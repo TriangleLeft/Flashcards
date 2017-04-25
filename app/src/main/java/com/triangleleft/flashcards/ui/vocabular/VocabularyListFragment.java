@@ -1,18 +1,5 @@
 package com.triangleleft.flashcards.ui.vocabular;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.di.main.MainPageComponent;
-import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent;
-import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.common.BaseFragment;
-import com.triangleleft.flashcards.ui.common.OnItemClickListener;
-import com.triangleleft.flashcards.ui.main.MainActivity;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ViewFlipper;
 
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.main.MainPageComponent;
+import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent;
+import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.common.BaseFragment;
+import com.triangleleft.flashcards.ui.common.OnItemClickListener;
+import com.triangleleft.flashcards.ui.login.ViewState;
+import com.triangleleft.flashcards.ui.main.MainActivity;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
 
 @FunctionsAreNonnullByDefault
 public class VocabularyListFragment
-        extends BaseFragment<VocabularyListComponent, IVocabularyListView, VocabularyListPresenter>
+        extends BaseFragment<VocabularyListComponent, IVocabularyListView, ViewState, VocabularyListPresenter>
         implements IVocabularyListView {
 
     private static final Logger logger = LoggerFactory.getLogger(VocabularyListFragment.class);
@@ -54,6 +55,10 @@ public class VocabularyListFragment
     private OnItemClickListener<VocabularyViewHolder> itemClickListener;
     private boolean twoPane;
 
+    public String getA() {
+        return "test";
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class VocabularyListFragment
                 inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_vocabular_list, container, false);
         ButterKnife.bind(this, view);
+
+        String params = getA() + "tost" + getA() + "asd" + getA();
 
         twoPane = getResources().getBoolean(R.bool.two_panes);
         vocabularyAdapter = new VocabularyAdapter(twoPane);

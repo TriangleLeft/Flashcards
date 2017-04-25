@@ -1,15 +1,5 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.daprlabs.aaron.swipedeck.SwipeDeck;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.di.cards.CardsComponent;
-import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-import com.triangleleft.flashcards.util.SimpleAnimatorListener;
-
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -25,6 +15,17 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.ViewFlipper;
 
+import com.daprlabs.aaron.swipedeck.SwipeDeck;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.cards.CardsComponent;
+import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+import com.triangleleft.flashcards.service.cards.ReviewDirection;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.ui.login.ViewState;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+import com.triangleleft.flashcards.util.SimpleAnimatorListener;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -33,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @FunctionsAreNonnullByDefault
-public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, FlashcardsPresenter> implements
+public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, ViewState, FlashcardsPresenter> implements
         IFlashcardsView {
 
     private static final int PROGRESS = 0;

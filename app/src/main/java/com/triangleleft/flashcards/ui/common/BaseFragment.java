@@ -1,23 +1,24 @@
 package com.triangleleft.flashcards.ui.common;
 
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.di.ApplicationComponent;
-import com.triangleleft.flashcards.di.IComponent;
-import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
-import com.triangleleft.flashcards.ui.common.view.IView;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.di.ApplicationComponent;
+import com.triangleleft.flashcards.di.IComponent;
+import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
+import com.triangleleft.flashcards.ui.common.view.IView;
+import com.triangleleft.flashcards.ui.login.ViewState;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 
-public abstract class BaseFragment<Component extends IComponent, View extends IView,
-        Presenter extends IPresenter<View>> extends Fragment {
+public abstract class BaseFragment<Component extends IComponent, View extends IView, VS extends ViewState,
+        Presenter extends IPresenter<View, VS>> extends Fragment {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseFragment.class);
 

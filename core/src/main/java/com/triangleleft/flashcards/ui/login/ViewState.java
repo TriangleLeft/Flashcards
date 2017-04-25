@@ -1,4 +1,6 @@
 package com.triangleleft.flashcards.ui.login;
 
-public interface ViewState {
+import java.io.Serializable;
+
+public interface ViewState extends Serializable {
 }

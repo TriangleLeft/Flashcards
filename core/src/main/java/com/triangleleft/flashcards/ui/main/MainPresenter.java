@@ -1,5 +1,7 @@
 package com.triangleleft.flashcards.ui.main;
 
+import android.support.annotation.NonNull;
+
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
@@ -7,14 +9,13 @@ import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executor;
 
@@ -23,7 +24,7 @@ import javax.inject.Named;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
-public class MainPresenter extends AbstractPresenter<IMainView> implements VocabularyNavigator {
+public class MainPresenter extends AbstractPresenter<IMainView, ViewState> implements VocabularyNavigator {
 
     private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
     private final AccountModule accountModule;

@@ -1,13 +1,15 @@
 package com.triangleleft.flashcards.ui.common.presenter;
 
+import android.support.annotation.CallSuper;
+import android.support.annotation.UiThread;
+
+import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.ui.common.view.IView;
+import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.support.annotation.CallSuper;
-import android.support.annotation.UiThread;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -18,8 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public abstract class AbstractPresenter<View extends IView>
-        implements IPresenter<View> {
+public abstract class AbstractPresenter<View extends IView, VS extends ViewState>
+        implements IPresenter<View, VS> {
 
     public static final String VIEW_EXECUTOR = "viewExecutor";
 
@@ -57,6 +59,16 @@ public abstract class AbstractPresenter<View extends IView>
 
     @Override
     public void onCreate() {
+    }
+
+    @Override
+    public void onCreate(Optional<VS> savedViewState) {
+
+    }
+
+    @Override
+    public VS getViewState() {
+        return null;
     }
 
     @UiThread

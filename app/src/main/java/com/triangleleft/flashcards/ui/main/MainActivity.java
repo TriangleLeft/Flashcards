@@ -1,19 +1,5 @@
 package com.triangleleft.flashcards.ui.main;
 
-import com.android.debug.hv.ViewServer;
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.di.main.DaggerMainPageComponent;
-import com.triangleleft.flashcards.di.main.MainPageComponent;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,12 +8,27 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.android.debug.hv.ViewServer;
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.main.DaggerMainPageComponent;
+import com.triangleleft.flashcards.di.main.MainPageComponent;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.cards.FlashcardsActivity;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.ui.login.ViewState;
+import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
+import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 @FunctionsAreNonnullByDefault
-public class MainActivity extends BaseActivity<MainPageComponent, IMainView, MainPresenter> implements IMainView {
+public class MainActivity extends BaseActivity<MainPageComponent, IMainView, ViewState, MainPresenter> implements IMainView {
 
     private static final Logger logger = LoggerFactory.getLogger(MainActivity.class);
     private static final String FRAGMENTS_TAG = "android:support:fragments";

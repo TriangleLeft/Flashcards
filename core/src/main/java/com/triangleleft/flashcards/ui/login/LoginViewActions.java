@@ -2,9 +2,15 @@ package com.triangleleft.flashcards.ui.login;
 
 import com.triangleleft.flashcards.util.TextUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class LoginViewActions {
 
+    private final static Logger logger = LoggerFactory.getLogger(LoginViewActions.class.getSimpleName());
+
     public static ViewAction<LoginViewState> setLogin(final String login) {
+        logger.debug("setLogin {}", login);
         return state -> state.asBuilder()
                 .login(login)
                 .loginButtonEnabled(isLoginButtonEnabled(login, state.password()))
@@ -12,6 +18,7 @@ public abstract class LoginViewActions {
     }
 
     public static ViewAction<LoginViewState> setPassword(final String password) {
+        logger.debug("setPassword {}", password);
         return state -> state.asBuilder()
                 .password(password)
                 .loginButtonEnabled(isLoginButtonEnabled(state.login(), password))
@@ -19,10 +26,11 @@ public abstract class LoginViewActions {
     }
 
     private static boolean isLoginButtonEnabled(String login, String password) {
+        logger.debug("isLoginButtonEnabled: {} {}", login, password);
         return TextUtils.hasText(login) && TextUtils.hasText(password);
     }
 
-    public static ViewAction<LoginViewState> setRemememberUser(boolean rememberUser) {
+    public static ViewAction<LoginViewState> setRememberUser(boolean rememberUser) {
         return state -> state.asBuilder().shouldRememberUser(rememberUser).build();
     }
 

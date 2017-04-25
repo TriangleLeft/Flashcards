@@ -1,17 +1,5 @@
 package com.triangleleft.flashcards.ui.login;
 
-import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxCompoundButton;
-import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent;
-import com.triangleleft.flashcards.di.login.LoginActivityComponent;
-import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.main.MainActivity;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +17,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ViewFlipper;
 
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxCompoundButton;
+import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent;
+import com.triangleleft.flashcards.di.login.LoginActivityComponent;
+import com.triangleleft.flashcards.ui.common.BaseActivity;
+import com.triangleleft.flashcards.ui.main.MainActivity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.reactivex.Observable;
@@ -36,7 +36,7 @@ import io.reactivex.Observable;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginView, LoginPresenter>
+public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginView, LoginViewState, LoginPresenter>
         implements ILoginView {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginActivity.class);
@@ -96,6 +96,7 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @Override
     public void render(LoginViewState viewState) {
+        logger.debug("render() called with {}", viewState);
         setLogin(viewState.login());
         setPassword(viewState.password());
         setLoginErrorVisible(viewState.hasLoginError());
@@ -158,7 +159,6 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
         overridePendingTransition(0, 0);
     }
 
-
     private void setRememberUser(boolean rememberUser) {
         rememberSwitch.setChecked(rememberUser);
     }
@@ -178,20 +178,12 @@ public class LoginActivity extends BaseActivity<LoginActivityComponent, ILoginVi
 
     @Override
     public Observable<String> logins() {
-        return RxTextView.textChanges(loginView)
-                .doOnNext(ww -> {
-                    int q = 1;
-                })
-                .map(String::valueOf);
+        return RxTextView.textChanges(loginView).map(String::valueOf);
     }
 
     @Override
     public Observable<String> passwords() {
-        return RxTextView.textChanges(passwordView)
-                .doOnNext(ww -> {
-                    int q = 1;
-                })
-                .map(String::valueOf);
+        return RxTextView.textChanges(passwordView).map(String::valueOf);
     }
 
     @Override
