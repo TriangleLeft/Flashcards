@@ -40,11 +40,9 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         // If we didn't had restored component, it's a new one, run presenter's onCreate
         // So... if it's first launch after process death, we have no presenter, but we could have saved instance state
         if (!restoredComponent.isPresent()) {
-            Optional<VS> viewState;
+            VS viewState = null;
             if (savedInstanceState != null) {
-                viewState = Optional.ofNullable((VS) savedInstanceState.getSerializable(KEY_VIEWSTATE));
-            } else {
-                viewState = Optional.empty();
+                viewState = (VS) savedInstanceState.getSerializable(KEY_VIEWSTATE);
             }
             getPresenter().onCreate(viewState);
 

@@ -2,7 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.squareup.sqldelight'
 apply plugin: 'io.fabric'
-
+apply plugin: "kotlin-android"
+apply plugin: 'kotlin-kapt'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -70,11 +71,8 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
     }
     sourceSets {
-        main {
-            res.srcDirs = [
-                    'src/main/res'
-            ]
-        }
+        main.res.srcDirs = ['src/main/res']
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -144,6 +142,7 @@ dependencies {
 
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    kapt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
     // Needed for annotations
     provided "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
     annotationProcessor "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
@@ -168,4 +167,21 @@ dependencies {
 
     testCompile "junit:junit:$JUNIT_VERSION"
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
+}
+
+// Kotlin class was not visible to jave code
+// possibly caused by retrolamda
+// https://groups.google.com/forum/#!topic/adt-dev/LvlkgNlTvtA
+
+afterEvaluate { project ->
+    project.tasks.findAll {
+        it.name.startsWith('compile') && it.name.endsWith('DebugTestJava')
+    }.each { Task task ->
+        task.dependsOn copyKotlinToTest
+    }
+}
+
+task copyKotlinToTest(type: Copy) {
+    from new File(buildDir, 'tmp/kotlin-classes/debug')
+    into new File(buildDir, 'tmp/kotlin-classes/debugTest')
 }

@@ -1,9 +1,9 @@
 package com.triangleleft.flashcards.ui.common.presenter;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
-import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.ui.common.view.IView;
 import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.Utils;
@@ -62,7 +62,7 @@ public abstract class AbstractPresenter<View extends IView, VS extends ViewState
     }
 
     @Override
-    public void onCreate(Optional<VS> savedViewState) {
+    public void onCreate(@Nullable VS savedViewState) {
 
     }
 

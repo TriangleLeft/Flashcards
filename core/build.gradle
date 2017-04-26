@@ -4,6 +4,7 @@ apply plugin: 'net.ltgt.apt'
 apply plugin: 'jacoco'
 apply plugin: 'idea'
 apply from: '../dependencies.gradle'
+apply plugin: "kotlin"
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -42,6 +43,7 @@ check.dependsOn jacocoTestReport
 
 dependencies {
 
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2"
     compile "io.reactivex.rxjava2:rxjava:2.0.6"
 
     compile 'com.google.code.gson:gson:2.4'
