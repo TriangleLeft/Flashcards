@@ -6,7 +6,6 @@ import com.triangleleft.flashcards.service.login.LoginModule
 import com.triangleleft.flashcards.service.login.exception.LoginException
 import com.triangleleft.flashcards.service.login.exception.PasswordException
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
-import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +17,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 
-@FunctionsAreNonnullByDefault
 @ActivityScope
 class LoginPresenter @Inject
 constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
@@ -89,7 +87,7 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
     private val loginEventTransformer: ObservableTransformer<LoginEvent, ViewAction<LoginViewState>>
         get() = ObservableTransformer { upstream ->
             upstream.flatMap { event ->
-                loginModule.login(event.login(), event.password())
+                loginModule.login(event.login, event.password)
                         .map { _ -> LoginViewActions.success() }
                         .onErrorReturn {
                             when (it) {

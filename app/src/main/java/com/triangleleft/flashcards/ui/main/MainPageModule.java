@@ -12,6 +12,7 @@ public class MainPageModule {
     @ActivityScope
     @Provides
     public VocabularyNavigator vocabularNavigator(MainPresenter presenter) {
-        return presenter;
+        // FIXME: null VocabularyNavigator
+        return null;
     }
 }

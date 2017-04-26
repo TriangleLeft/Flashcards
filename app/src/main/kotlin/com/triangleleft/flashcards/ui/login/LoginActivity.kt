@@ -154,8 +154,6 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
     override fun logins(): Observable<String> {
         return RxTextView.textChanges(loginView).map { it.toString() }
-                .doOnSubscribe { logger.debug("subscribed") }
-                .doOnDispose { logger.debug("dispose") }
     }
 
     override fun passwords(): Observable<String> {
@@ -168,7 +166,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
     override fun loginEvents(): Observable<LoginEvent> {
         return RxView.clicks(loginButton)
-                .map { LoginEvent.create(loginView.text.toString(), passwordView.text.toString()) }
+                .map { LoginEvent(loginView.text.toString(), passwordView.text.toString()) }
     }
 
     fun hideKeyboard() {
