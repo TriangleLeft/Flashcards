@@ -44,4 +44,8 @@ object VocabularyListViewActions {
         return ViewAction { state -> state.copy(isRefreshing = true) }
     }
 
+    fun scrollPosition(scrollY: Int): ViewAction<VocabularyListViewState> {
+        return ViewAction { state -> state.copy(scrollPosition = scrollY) }
+    }
+
 }

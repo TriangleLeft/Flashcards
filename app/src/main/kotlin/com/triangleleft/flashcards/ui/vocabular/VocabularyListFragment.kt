@@ -13,8 +13,9 @@ import android.widget.Button
 import android.widget.ViewFlipper
 import butterknife.Bind
 import butterknife.ButterKnife
-import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
-import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.support.v4.widget.refreshes
+import com.jakewharton.rxbinding2.support.v7.widget.scrollStateChanges
+import com.jakewharton.rxbinding2.view.clicks
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent
 import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent
@@ -107,6 +108,8 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
                 }
             }
         }
+        // FIXME: always snaps =(
+        vocabList.scrollToPosition(state.scrollPosition)
         swipeRefresh.isRefreshing = state.isRefreshing
         if (state.hasRefreshError) {
             Snackbar.make(vocabList, R.string.vocabulary_list_refresh_error, Snackbar.LENGTH_LONG)
@@ -127,15 +130,19 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         }
     }
 
-    override fun refreshes(): Observable<Any> {
-        return RxSwipeRefreshLayout.refreshes(swipeRefresh).share()
+    override fun refreshes(): Observable<Unit> {
+        return swipeRefresh.refreshes()
     }
 
     override fun wordSelections(): Observable<VocabularyWordSelectEvent> {
         return wordSelections
     }
 
-    override fun loadListRetires(): Observable<Any> {
-        return RxView.clicks(retryLoadButton)
+    override fun loadListRetires(): Observable<Unit> {
+        return retryLoadButton.clicks()
+    }
+
+    override fun listScrolls(): Observable<Int> {
+        return vocabList.scrollStateChanges().filter { it == RecyclerView.SCROLL_STATE_IDLE }.map { (vocabList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() }
     }
 }

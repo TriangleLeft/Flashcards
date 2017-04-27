@@ -7,11 +7,13 @@ interface IVocabularyListView : IView {
 
     fun render(state: VocabularyListViewState)
 
-    fun refreshes(): Observable<Any>
+    fun refreshes(): Observable<Unit>
 
     fun wordSelections(): Observable<VocabularyWordSelectEvent>
 
     // Can't we reuse refereshes here?
-    fun loadListRetires(): Observable<Any>
+    fun loadListRetires(): Observable<Unit>
+
+    fun listScrolls(): Observable<Int>
 
 }
