@@ -21,8 +21,8 @@ import com.triangleleft.flashcards.di.cards.CardsComponent;
 import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.ReviewDirection;
+import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
-import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.SimpleAnimatorListener;
 

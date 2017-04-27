@@ -32,9 +32,8 @@ public class RestLoginModule implements LoginModule {
     @Override
     public Observable<Object> login(String login, String password) {
         accountModule.setLogin(login);
-        return Observable.error(new RuntimeException());
-        //service.login(new LoginRequestController(login, password))
-        //      .flatMap(this::processModel);
+        return service.login(new LoginRequestController(login, password))
+                .flatMap(this::processModel);
     }
 
     private Observable<Void> processModel(LoginResponseModel model) {

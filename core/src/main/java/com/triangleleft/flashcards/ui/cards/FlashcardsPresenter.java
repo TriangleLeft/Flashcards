@@ -10,8 +10,8 @@ import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
 import com.triangleleft.flashcards.service.common.exception.ServerException;
+import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
-import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import org.slf4j.Logger;

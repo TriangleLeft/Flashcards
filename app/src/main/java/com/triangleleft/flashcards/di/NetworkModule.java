@@ -1,10 +1,11 @@
 package com.triangleleft.flashcards.di;
 
-import com.google.gson.Gson;
+import android.content.Context;
 
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.google.gson.Gson;
 import com.triangleleft.flashcards.BuildConfig;
 import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.NetworkDelayInterceptor;
@@ -13,17 +14,17 @@ import com.triangleleft.flashcards.service.TranslationService;
 import com.triangleleft.flashcards.service.adapter.FlashcardsCallAdapterFactory;
 import com.triangleleft.flashcards.service.converter.CustomGsonConverterFactory;
 
-import android.content.Context;
-
 import java.util.concurrent.TimeUnit;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 @Module
 public class NetworkModule {
@@ -31,24 +32,23 @@ public class NetworkModule {
 
     @ApplicationScope
     @Provides
-    public RestService restService(OkHttpClient client, Gson gson) {
-        return retrofit(HttpUrl.parse(BuildConfig.REST_SERVICE_URL), client, gson).create(RestService.class);
+    public RestService restService(Retrofit.Builder retrofit) {
+        return retrofit.baseUrl(HttpUrl.parse(BuildConfig.REST_SERVICE_URL)).build().create(RestService.class);
     }
 
     @ApplicationScope
     @Provides
-    public TranslationService translationService(OkHttpClient client, Gson gson) {
-        return retrofit(HttpUrl.parse(BuildConfig.TRANSLATION_SERVICE_URL), client, gson)
-                .create(TranslationService.class);
+    public TranslationService translationService(Retrofit.Builder retrofit) {
+        return retrofit.baseUrl(HttpUrl.parse(BuildConfig.REST_SERVICE_URL)).build().create(TranslationService.class);
     }
 
-
-    private Retrofit retrofit(HttpUrl url, OkHttpClient client, Gson gson) {
+    @Provides
+    public Retrofit.Builder retrofit(OkHttpClient client, Gson gson) {
         return new Retrofit.Builder()
-                .baseUrl(url)
                 .client(client)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addCallAdapterFactory(new FlashcardsCallAdapterFactory())
-                .addConverterFactory(CustomGsonConverterFactory.create(gson)).build();
+                .addConverterFactory(CustomGsonConverterFactory.create(gson));
     }
 
     @ApplicationScope

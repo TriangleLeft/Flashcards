@@ -1,11 +1,5 @@
 package com.triangleleft.flashcards.ui.main;
 
-import com.annimon.stream.Optional;
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
-
 import android.animation.ValueAnimator;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -18,6 +12,12 @@ import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+
+import com.annimon.stream.Optional;
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
+import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -79,7 +79,7 @@ import butterknife.ButterKnife;
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularyListFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
+                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
                     .commitNow();
         } else {
             showFragment(vocabularListFragment);
@@ -154,7 +154,7 @@ import butterknife.ButterKnife;
     private void initPages() {
         // Try to get re-created fragments
         vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
-                .findFragmentByTag(VocabularyListFragment.TAG);
+                .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
         vocabularyWordFragment =
                 (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
     }

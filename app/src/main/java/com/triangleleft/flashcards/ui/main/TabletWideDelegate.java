@@ -1,5 +1,11 @@
 package com.triangleleft.flashcards.ui.main;
 
+import android.graphics.drawable.Drawable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
@@ -7,12 +13,6 @@ import com.triangleleft.flashcards.ui.common.DrawableUtils;
 import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
-
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.SlidingPaneLayout;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -98,12 +98,12 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     private void initPages() {
         // Try to get re-created fragments
         vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
-            .findFragmentByTag(VocabularyListFragment.TAG);
+                .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularyListFragment();
             getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.TAG)
+                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
                 .commitNow();
         } else {
             getSupportFragmentManager()

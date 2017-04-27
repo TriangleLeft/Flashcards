@@ -5,9 +5,11 @@ import com.triangleleft.flashcards.service.account.AccountModule
 import com.triangleleft.flashcards.service.login.LoginModule
 import com.triangleleft.flashcards.service.login.exception.LoginException
 import com.triangleleft.flashcards.service.login.exception.PasswordException
+import com.triangleleft.flashcards.ui.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -20,7 +22,8 @@ import javax.inject.Named
 @ActivityScope
 class LoginPresenter @Inject
 constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
-            @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor)
+            @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor,
+            @Named(AbstractPresenter.UI_SCHEDULER) private val uiScheduler: Scheduler)
     : AbstractPresenter<ILoginView, LoginViewState>(ILoginView::class.java, executor) {
 
     companion object {
@@ -44,13 +47,29 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
 
         val initialState = savedViewState ?: initialState
 
+        val loginTransformer = ObservableTransformer<LoginEvent, ViewAction<LoginViewState>> { upstream ->
+            upstream.flatMap { (login, password) ->
+                loginModule.login(login, password)
+                        .map { _ -> LoginViewActions.success() }
+                        .onErrorReturn {
+                            when (it) {
+                                is LoginException -> LoginViewActions.loginError()
+                                is PasswordException -> LoginViewActions.passwordError()
+                                else -> LoginViewActions.genericError("TODO: error message")
+                            }
+                        }
+                        .startWith(LoginViewActions.progress())
+            }
+        }
+
         Observable.merge(
                 logins.map { LoginViewActions.setLogin(it) },
                 passwords.map { LoginViewActions.setPassword(it) },
                 rememberUserChecks.map { LoginViewActions.setRememberUser(it) },
-                loginEvents.compose(loginEventTransformer))
+                loginEvents.compose(loginTransformer))
                 .scan(initialState) { viewState, viewAction -> viewAction.reduce(viewState) }
                 .distinctUntilChanged()
+                .observeOn(uiScheduler)
                 .subscribe { state ->
                     logger.debug("onNext() {}", state)
                     viewStates.onNext(state)
@@ -83,22 +102,6 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
     override fun onDestroy() {
         logger.debug("onDestroy() called")
     }
-
-    private val loginEventTransformer: ObservableTransformer<LoginEvent, ViewAction<LoginViewState>>
-        get() = ObservableTransformer { upstream ->
-            upstream.flatMap { event ->
-                loginModule.login(event.login, event.password)
-                        .map { _ -> LoginViewActions.success() }
-                        .onErrorReturn {
-                            when (it) {
-                                is LoginException -> LoginViewActions.loginError()
-                                is PasswordException -> LoginViewActions.passwordError()
-                                else -> LoginViewActions.genericError("TODO: error message")
-                            }
-                        }
-                        .startWith { LoginViewActions.progress() }
-            }
-        }
 
     // If we are already logged, and we have saved user data, advance immediately
     private val initialState: LoginViewState

@@ -19,8 +19,10 @@ import java.util.concurrent.Executor;
 import javax.inject.Named;
 
 import dagger.Component;
+import io.reactivex.Scheduler;
+
 @ApplicationScope
-@Component(modules = {ApplicationModule.class, NetworkModule.class, RestServiceModule.class})
+@Component(modules = {ApplicationModule.class, NetworkModule.class, StubServiceModule.class})
 public interface ApplicationComponent extends IComponent {
 
     LoginModule loginModule();
@@ -44,6 +46,9 @@ public interface ApplicationComponent extends IComponent {
     FlashcardsNavigator navigator();
 
     FlagImagesProvider flagImagesProvider();
+
+    @Named(AbstractPresenter.UI_SCHEDULER)
+    Scheduler uiScheduler();
 
     @Named(AbstractPresenter.VIEW_EXECUTOR)
     Executor uiThreadExecutor();

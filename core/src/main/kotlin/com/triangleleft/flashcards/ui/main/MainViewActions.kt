@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.main
 
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
-import com.triangleleft.flashcards.ui.login.ViewAction
+import com.triangleleft.flashcards.ui.ViewAction
 
 object MainViewActions {
 

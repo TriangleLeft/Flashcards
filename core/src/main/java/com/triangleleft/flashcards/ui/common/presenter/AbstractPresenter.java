@@ -4,8 +4,8 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
+import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.view.IView;
-import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.util.Utils;
 
 import org.slf4j.Logger;
@@ -24,6 +24,7 @@ public abstract class AbstractPresenter<View extends IView, VS extends ViewState
         implements IPresenter<View, VS> {
 
     public static final String VIEW_EXECUTOR = "viewExecutor";
+    public static final String UI_SCHEDULER = "uiScheduler";
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractPresenter.class);
     private final View viewState;

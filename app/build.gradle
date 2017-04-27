@@ -107,14 +107,16 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:retrofit-mock:$RETROFIT_VERSION"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
 
     compile "com.squareup.okhttp3:logging-interceptor:$OKHTTP_VERSION"
     compile "com.facebook.stetho:stetho-okhttp3:$STETHO_VERSION"
     compile "com.facebook.stetho:stetho:$STETHO_VERSION"
 
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    // Cause I like to live dangerously
-    compile 'com.github.JakeWharton.RxBinding:rxbinding:master-SNAPSHOT'
+
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
 
 
     //compile 'com.daprlabs.aaron:cardstack:0.3.0'

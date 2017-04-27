@@ -1,7 +1,7 @@
 package com.triangleleft.flashcards.ui.main
 
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
-import com.triangleleft.flashcards.ui.login.ViewState
+import com.triangleleft.flashcards.ui.ViewState
 
 data class MainViewState(val title: String, val flashcardsDialogIsShown: Boolean, val page: Page) : ViewState {
 

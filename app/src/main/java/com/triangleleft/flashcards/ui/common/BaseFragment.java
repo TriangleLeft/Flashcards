@@ -8,9 +8,10 @@ import android.support.v4.app.Fragment;
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.IComponent;
+import com.triangleleft.flashcards.ui.FlashcardsApplication;
+import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.presenter.IPresenter;
 import com.triangleleft.flashcards.ui.common.view.IView;
-import com.triangleleft.flashcards.ui.login.ViewState;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

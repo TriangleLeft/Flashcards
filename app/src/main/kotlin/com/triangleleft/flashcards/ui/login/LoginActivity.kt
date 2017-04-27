@@ -85,12 +85,24 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
         setPasswordErrorVisible(viewState.hasPasswordError)
         setRememberUser(viewState.shouldRememberUser)
         setLoginButtonEnabled(viewState.loginButtonEnabled)
-        if (currentPage !== viewState.page) {
+        if (currentPage != viewState.page) {
             currentPage = viewState.page
             when (viewState.page) {
-                LoginViewState.Page.PROGRESS -> showProgress()
-                LoginViewState.Page.CONTENT -> showContent()
-                LoginViewState.Page.SUCCESS -> advance()
+                LoginViewState.Page.PROGRESS -> flipperView.displayedChild = PROGRESS
+                LoginViewState.Page.CONTENT -> {
+                    flipperView.displayedChild = CONTENT
+                    if (loginView.error != null) {
+                        loginView.requestFocus()
+                    } else if (passwordView.error != null) {
+                        passwordView.requestFocus()
+                    }
+                }
+                LoginViewState.Page.SUCCESS -> {
+                    finish()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
+                }
             }
         }
     }
@@ -129,28 +141,13 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
     private fun advance() {
         logger.debug("advance() called")
-        finish()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        overridePendingTransition(0, 0)
+
     }
 
     private fun setRememberUser(rememberUser: Boolean) {
         rememberSwitch.isChecked = rememberUser
     }
 
-    private fun showProgress() {
-        flipperView.displayedChild = PROGRESS
-    }
-
-    private fun showContent() {
-        flipperView.displayedChild = CONTENT
-        if (loginView.error != null) {
-            loginView.requestFocus()
-        } else if (passwordView.error != null) {
-            passwordView.requestFocus()
-        }
-    }
 
     override fun logins(): Observable<String> {
         return RxTextView.textChanges(loginView).map { it.toString() }

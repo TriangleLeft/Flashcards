@@ -5,6 +5,7 @@ import com.triangleleft.flashcards.service.account.AccountModule
 import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
+import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -17,13 +18,13 @@ import javax.inject.Named
 @ActivityScope
 class MainPresenter @Inject
 constructor(accountModule: AccountModule, @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor)
-    : AbstractPresenter<IMainView, MainViewState>(IMainView::class.java, executor) {
+    : AbstractPresenter<IMainView, MainViewState>(IMainView::class.java, executor), VocabularyNavigator {
+
 
     private val wordClicks = PublishSubject.create<VocabularyWord>()
     private val backPresses = PublishSubject.create<Any>()
     private val viewStates = BehaviorSubject.create<MainViewState>()
     private var disposable = CompositeDisposable()
-
     private val initialState: MainViewState
 
     init {
@@ -45,6 +46,10 @@ constructor(accountModule: AccountModule, @Named(AbstractPresenter.VIEW_EXECUTOR
                 .scan(initialState) { state, action -> action.reduce(state) }
                 .distinctUntilChanged()
                 .subscribe { viewStates.onNext(it) }
+    }
+
+    override fun showWord(word: VocabularyWord) {
+        wordClicks.onNext(word)
     }
 
     override fun onRebind(view: IMainView) {

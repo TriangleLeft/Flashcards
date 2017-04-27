@@ -7,10 +7,11 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
 
-import butterknife.ButterKnife;
 import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.ui.FlashcardsApplication;
 import com.triangleleft.flashcards.ui.common.DrawableUtils;
-import com.triangleleft.flashcards.ui.common.FlashcardsApplication;
+
+import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity {
 

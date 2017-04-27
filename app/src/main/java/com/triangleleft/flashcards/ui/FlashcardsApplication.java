@@ -1,4 +1,8 @@
-package com.triangleleft.flashcards.ui.common;
+package com.triangleleft.flashcards.ui;
+
+import android.app.Application;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -10,16 +14,11 @@ import com.triangleleft.flashcards.BuildConfig;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerApplicationComponent;
-import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.app.Application;
-import android.content.Intent;
-import android.support.annotation.NonNull;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;

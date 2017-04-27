@@ -14,8 +14,8 @@ import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyWordComponent;
 import com.triangleleft.flashcards.di.vocabular.VocabularyWordComponent;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.BaseFragment;
-import com.triangleleft.flashcards.ui.login.ViewState;
 import com.triangleleft.flashcards.ui.main.MainActivity;
 
 import org.slf4j.Logger;

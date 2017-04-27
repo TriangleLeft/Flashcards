@@ -2,7 +2,6 @@ package com.triangleleft.flashcards.service.vocabular.stub;
 
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.UserData;
 import com.triangleleft.flashcards.service.vocabular.VocabularyData;
@@ -16,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 import static com.annimon.stream.Collectors.toList;
 
@@ -32,15 +33,15 @@ public class StubVocabularyModule implements VocabularyModule {
     }
 
     @Override
-    public Call<List<VocabularyWord>> loadVocabularyWords() {
+    public Observable<List<VocabularyWord>> loadVocabularyWords() {
         return refreshVocabularyWords();
     }
 
     @Override
-    public Call<List<VocabularyWord>> refreshVocabularyWords() {
+    public Observable<List<VocabularyWord>> refreshVocabularyWords() {
         UserData userData = accountModule.getUserData().get();
 
-        return Call.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
+        return Observable.just(buildVocabularyData(userData.getUiLanguageId(), userData.getLearningLanguageId()))
                 .map(VocabularyData::getWords);
     }
 

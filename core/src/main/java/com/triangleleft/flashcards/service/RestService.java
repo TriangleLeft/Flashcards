@@ -37,7 +37,7 @@ public interface RestService {
     Observable<LoginResponseModel> login(@Body LoginRequestController controller);
 
     @GET(PATH_VOCABULARY)
-    Call<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
+    Observable<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
 
     @GET(PATH_FLASHCARDS)
     Call<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,

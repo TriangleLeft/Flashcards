@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.login;
+package com.triangleleft.flashcards.ui;
 
 import java.io.Serializable;
 
