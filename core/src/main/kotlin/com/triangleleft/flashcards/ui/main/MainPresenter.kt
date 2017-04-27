@@ -31,8 +31,7 @@ constructor(accountModule: AccountModule, @Named(AbstractPresenter.VIEW_EXECUTOR
         val userData = accountModule.userData.get()
 
         // It's possible that we are using account that doesn't have any languages
-        // TODO: convert to nullable type
-        val title = userData.currentLearningLanguage.map { it.name }.orElse("")
+        val title = userData.currentLearningLanguage?.name ?: ""
 
         initialState = MainViewState(title, false, MainViewState.Page.List)
     }

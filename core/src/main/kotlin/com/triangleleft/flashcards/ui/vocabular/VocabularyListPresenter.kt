@@ -55,7 +55,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
             upstream.flatMap { _ ->
                 vocabularyModule.loadVocabularyWords()
                         .map { VocabularyListViewActions.showList(it) }
-                        .startWith { VocabularyListViewActions.progress() }
+                        .startWith(VocabularyListViewActions.progress())
                         .onErrorReturn { VocabularyListViewActions.error() }
             }
         }

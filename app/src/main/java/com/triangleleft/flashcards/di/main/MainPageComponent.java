@@ -5,7 +5,6 @@ import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.ui.main.DrawerPresenter;
 import com.triangleleft.flashcards.ui.main.FlashcardSettingsDialog;
 import com.triangleleft.flashcards.ui.main.MainActivity;
-import com.triangleleft.flashcards.ui.main.MainPageModule;
 import com.triangleleft.flashcards.ui.main.MainPresenter;
 import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;

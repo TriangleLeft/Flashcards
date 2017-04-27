@@ -18,7 +18,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class DrawerPresenterTest {
@@ -121,12 +124,12 @@ public class DrawerPresenterTest {
 
         // Same language, but with isCurrentlyLearning
         language = Language.create("id", "lang", 1, true, true);
-        UserData data = UserData.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
+        UserData data = UserData.Companion.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
         // when(settingsModule.loadUserData()).thenReturn(Call.just(data));
         return result;
     }
 
     private UserData prepareUserData(Language... languages) {
-        return UserData.create(Arrays.asList(languages), "", "", "", "");
+        return UserData.Companion.create(Arrays.asList(languages), "", "", "", "");
     }
 }

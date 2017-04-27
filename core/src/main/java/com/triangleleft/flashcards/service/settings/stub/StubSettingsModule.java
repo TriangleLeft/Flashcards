@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.service.settings.stub;
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Optional;
 import com.annimon.stream.Stream;
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.settings.Language;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
@@ -41,7 +40,7 @@ public class StubSettingsModule implements SettingsModule {
     }
 
     private Optional<UserData> getCurrentUserData() {
-        return Optional.of(UserData.create(
+        return Optional.of(new UserData(
             Collections.unmodifiableList(languages),
             avatarUrl,
             userName,
@@ -56,11 +55,11 @@ public class StubSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Call<Object> switchLanguage(Language language) {
+    public Observable<Object> switchLanguage(Language language) {
         languages = Stream.of(languages)
                 .map(stub -> stub.withCurrentLearning(stub.getId().equals(language.getId())))
                 .sortBy(Language::getId)
                 .collect(Collectors.toList());
-        return Call.just(new Object());
+        return Observable.just(new Object());
     }
 }

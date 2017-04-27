@@ -34,13 +34,25 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
         super.onCreate(savedInstanceState);
 
-        Optional<Component> optional = getApplicationComponent().componentManager().restoreComponent(getClass());
-        this.component = optional.orElse(buildComponent());
+        Optional<Component> restoredComponent =
+                getApplicationComponent().componentManager().restoreComponent(getClass());
+        this.component = restoredComponent.orElseGet(this::buildComponent);
 
         inject();
-        if (!optional.isPresent()) {
-            getPresenter().onCreate();
+        if (!restoredComponent.isPresent()) {
+            VS viewState = null;
+            if (savedInstanceState != null) {
+                viewState = (VS) savedInstanceState.getSerializable(getClass().getSimpleName());
+            }
+            getPresenter().onCreate(viewState);
         }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(getClass().getSimpleName(), getPresenter().getViewState());
     }
 
     @Override

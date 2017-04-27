@@ -38,6 +38,17 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
 
     private var disposable = CompositeDisposable()
 
+    // If we are already logged, and we have saved user data, advance immediately
+    private val initialState: LoginViewState
+        get() {
+            val login = accountModule.login.orElse("")
+            val rememberUser = accountModule.shouldRememberUser()
+            val isLogged = rememberUser && accountModule.userData.isPresent && accountModule.userId.isPresent
+            val page = if (isLogged) LoginViewState.Page.SUCCESS else LoginViewState.Page.CONTENT
+
+            return LoginViewState(login, "", false, false, "", false, rememberUser, page)
+        }
+
     override fun getViewState(): LoginViewState {
         return viewStates.value
     }
@@ -65,7 +76,7 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
         Observable.merge(
                 logins.map { LoginViewActions.setLogin(it) },
                 passwords.map { LoginViewActions.setPassword(it) },
-                rememberUserChecks.map { LoginViewActions.setRememberUser(it) },
+                rememberUserChecks.doOnNext { accountModule.setRememberUser(it) }.map { LoginViewActions.setRememberUser(it) },
                 loginEvents.compose(loginTransformer))
                 .scan(initialState) { viewState, viewAction -> viewAction.reduce(viewState) }
                 .distinctUntilChanged()
@@ -102,15 +113,4 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
     override fun onDestroy() {
         logger.debug("onDestroy() called")
     }
-
-    // If we are already logged, and we have saved user data, advance immediately
-    private val initialState: LoginViewState
-        get() {
-            val login = accountModule.login.orElse("")
-            val rememberUser = accountModule.shouldRememberUser()
-            val isLogged = rememberUser && accountModule.userData.isPresent && accountModule.userId.isPresent
-            val page = if (isLogged) LoginViewState.Page.SUCCESS else LoginViewState.Page.CONTENT
-
-            return LoginViewState(login, "", false, false, "", false, rememberUser, page)
-        }
 }

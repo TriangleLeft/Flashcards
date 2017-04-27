@@ -11,7 +11,6 @@ import com.triangleleft.flashcards.di.scope.ApplicationScope;
 import com.triangleleft.flashcards.service.NetworkDelayInterceptor;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.TranslationService;
-import com.triangleleft.flashcards.service.adapter.FlashcardsCallAdapterFactory;
 import com.triangleleft.flashcards.service.converter.CustomGsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
@@ -47,7 +46,6 @@ public class NetworkModule {
         return new Retrofit.Builder()
                 .client(client)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-                .addCallAdapterFactory(new FlashcardsCallAdapterFactory())
                 .addConverterFactory(CustomGsonConverterFactory.create(gson));
     }
 

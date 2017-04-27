@@ -62,7 +62,7 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, View
     public void onLoadFlashcards() {
         applyState(IFlashcardsView::showProgress);
         results.clear();
-        call = offlineMode ? flashcardsModule.getLocalFlashcards() : flashcardsModule.getFlashcards();
+        //call = offlineMode ? flashcardsModule.getLocalFlashcards() : flashcardsModule.getFlashcards();
         call.enqueue(data -> {
             if (data.getWords().size() != 0) {
                 testData = data;

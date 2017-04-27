@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.service.settings.rest;
 
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.RestService;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.Language;
@@ -34,9 +33,10 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Call<Object> switchLanguage(Language language) {
+    public Observable<Object> switchLanguage(Language language) {
+        // We don't care about actual return result
         return service.switchLanguage(new SwitchLanguageController(language.getId()))
-                .map(data -> data);
+                .map(data -> null);
     }
 
 }

@@ -1,6 +1,5 @@
 package com.triangleleft.flashcards.service;
 
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResponseModel;
 import com.triangleleft.flashcards.service.cards.rest.FlashcardResultsController;
 import com.triangleleft.flashcards.service.login.rest.LoginRequestController;
@@ -40,15 +39,15 @@ public interface RestService {
     Observable<VocabularyResponseModel> getVocabularyList(@Query(QUERY_TIMESTAMP) long timestamp);
 
     @GET(PATH_FLASHCARDS)
-    Call<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,
-                                                  @Query(QUERY_ALLOW_PARTIAL_DECK) boolean alwPartialDeck,
-                                                  @Query(QUERY_TIMESTAMP) long timestamp);
+    Observable<FlashcardResponseModel> getFlashcardData(@Query(QUERY_FLASHCARDS_COUNT) int count,
+                                                        @Query(QUERY_ALLOW_PARTIAL_DECK) boolean alwPartialDeck,
+                                                        @Query(QUERY_TIMESTAMP) long timestamp);
 
     @POST(PATH_FLASHCARDS)
-    Call<Void> postFlashcardResults(@Body FlashcardResultsController model);
+    Observable<Void> postFlashcardResults(@Body FlashcardResultsController model);
 
     @POST(PATH_SWITCH_LANGUAGE)
-    Call<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
+    Observable<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
 
     @GET(PATH_USERDATA)
     Observable<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);

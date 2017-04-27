@@ -1,15 +1,16 @@
 package com.triangleleft.flashcards.service.cards;
 
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
+
+import io.reactivex.Observable;
 
 
 @FunctionsAreNonnullByDefault
 public interface FlashcardsModule {
 
-    Call<FlashcardTestData> getFlashcards();
+    Observable<FlashcardTestData> getFlashcards();
 
-    Call<FlashcardTestData> getLocalFlashcards();
+    Observable<FlashcardTestData> getLocalFlashcards();
 
     void postResult(FlashcardTestResult results);
 }

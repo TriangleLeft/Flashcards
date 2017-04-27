@@ -69,7 +69,7 @@ public class RestVocabularyModuleTest {
         MockitoAnnotations.initMocks(this);
         module = new RestVocabularyModule(service, translationService, accountModule, cache, Runnable::run);
         when(accountModule.getUserData()).thenReturn(Optional
-                .of(UserData.create(Collections.emptyList(), "", "", UI_LANG, LEARN_LANG)));
+                .of(UserData.Companion.create(Collections.emptyList(), "", "", UI_LANG, LEARN_LANG)));
     }
 
     @Test

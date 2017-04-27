@@ -12,6 +12,7 @@ import com.annimon.stream.Optional
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.main.DaggerMainPageComponent
 import com.triangleleft.flashcards.di.main.MainPageComponent
+import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity
 import com.triangleleft.flashcards.ui.common.BaseActivity

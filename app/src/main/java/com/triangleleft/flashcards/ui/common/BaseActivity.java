@@ -21,7 +21,6 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         Presenter extends IPresenter<View, VS>> extends AppCompatActivity {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
-    private static final String KEY_VIEWSTATE = "BaseActivity::keyViewstate";
 
     private Component component;
 
@@ -43,10 +42,9 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
         if (!restoredComponent.isPresent()) {
             VS viewState = null;
             if (savedInstanceState != null) {
-                viewState = (VS) savedInstanceState.getSerializable(KEY_VIEWSTATE);
+                viewState = (VS) savedInstanceState.getSerializable(getClass().getSimpleName());
             }
             getPresenter().onCreate(viewState);
-
         }
     }
 
@@ -69,7 +67,7 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(KEY_VIEWSTATE, getPresenter().getViewState());
+        outState.putSerializable(getClass().getSimpleName(), getPresenter().getViewState());
     }
 
     @Override

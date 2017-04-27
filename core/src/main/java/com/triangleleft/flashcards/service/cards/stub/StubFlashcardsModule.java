@@ -1,7 +1,5 @@
 package com.triangleleft.flashcards.service.cards.stub;
 
-import com.triangleleft.flashcards.Action;
-import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
@@ -15,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 @FunctionsAreNonnullByDefault
 public class StubFlashcardsModule implements FlashcardsModule {
@@ -33,27 +33,18 @@ public class StubFlashcardsModule implements FlashcardsModule {
     }
 
     @Override
-    public Call<FlashcardTestData> getFlashcards() {
-        return new Call<FlashcardTestData>() {
-            @Override
-            public void enqueue(Action<FlashcardTestData> onData, Action<Throwable> onError) {
-                onData.call(testData);
-            }
-
-            @Override
-            public void cancel() {
-
-            }
-        };
-    }
-
-    @Override
-    public Call<FlashcardTestData> getLocalFlashcards() {
-        return null;
+    public Observable<FlashcardTestData> getFlashcards() {
+        logger.debug("getFlashcards() called");
+        return Observable.just(testData);
     }
 
     @Override
     public void postResult(FlashcardTestResult results) {
         logger.debug("postResult() called with: results = [{}]", results);
+    }
+
+    @Override
+    public Observable<FlashcardTestData> getLocalFlashcards() {
+        return getFlashcards();
     }
 }
