@@ -22,11 +22,9 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
         Presenter extends IPresenter<View, VS>> extends Fragment {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseFragment.class);
-
-    private Component component;
-
     @Inject
     Presenter presenter;
+    private Component component;
 
     @CallSuper
     @Override
@@ -99,6 +97,7 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     protected FlashcardsApplication getFlashcardsApplication() {
         return (FlashcardsApplication) getActivity().getApplication();
     }
+
     protected ApplicationComponent getApplicationComponent() {
         return getFlashcardsApplication().getComponent();
     }

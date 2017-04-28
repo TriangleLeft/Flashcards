@@ -97,9 +97,9 @@ dependencies {
 
     // We have to exclude timber here, as this lib is jar, and timber is aar, and gradle doesn't
     // allow jar libs to depend on aars: (Error:Module <> depends on one or more Android Libraries but is a jar)
-    compile('com.arcao:slf4j-timber:2.1') {
-        exclude group: 'com.jakewharton.timber', module: 'timber'
-    }
+//    compile('com.arcao:slf4j-timber:2.1') {
+//        exclude group: 'com.jakewharton.timber', module: 'timber'
+    //}
     compile "org.slf4j:slf4j-api:1.7.21"
     compile 'com.jakewharton.timber:timber:4.1.2'
 

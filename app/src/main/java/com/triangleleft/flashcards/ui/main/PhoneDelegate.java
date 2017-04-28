@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
     @Bind(R.id.button_flashcards)
     FloatingActionButton fab;
     private VocabularyWordFragment vocabularyWordFragment;
-    private VocabularyListFragment vocabularListFragment;
+    private VocabularyListFragment vocabularyListFragment;
 
     public PhoneDelegate(MainActivity activity) {
         this.activity = activity;
@@ -75,16 +75,16 @@ import butterknife.ButterKnife;
         hideFragment(vocabularyWordFragment);
         fab.show();
 
-        if (vocabularListFragment == null) {
-            vocabularListFragment = new VocabularyListFragment();
+        if (vocabularyListFragment == null) {
+            vocabularyListFragment = new VocabularyListFragment();
         }
-        if (!vocabularListFragment.isAdded()) {
+        if (!vocabularyListFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
+                    .add(R.id.main_container, vocabularyListFragment, VocabularyListFragment.Companion.getTAG())
                     .commitNow();
         }
 
-        showFragment(vocabularListFragment);
+        showFragment(vocabularyListFragment);
 
         setArrowIndicator(true);
     }
@@ -100,7 +100,7 @@ import butterknife.ButterKnife;
             // Ugh...
             return;
         }
-        hideFragment(vocabularListFragment);
+        hideFragment(vocabularyListFragment);
         fab.hide();
 
         if (vocabularyWordFragment == null) {
@@ -122,12 +122,12 @@ import butterknife.ButterKnife;
         // Check whether we've got some fragments saved
         // NOTE: we actually don't know whether they are attached to proper parents
         // TODO: we can check their ids? or use reflection to get mContainerId (can we also use it to change it?)
-        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
+        vocabularyListFragment = (VocabularyListFragment) getSupportFragmentManager()
                 .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
         // List can be attached only to main_container
         // If needed we would show it later
-        if (vocabularListFragment != null) {
-            getSupportFragmentManager().beginTransaction().remove(vocabularListFragment).commitNow();
+        if (vocabularyListFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(vocabularyListFragment).commitNow();
         }
 
         vocabularyWordFragment =
@@ -168,7 +168,7 @@ import butterknife.ButterKnife;
     @Override
     public void reloadList() {
         showList();
-        vocabularListFragment.getPresenter().onLoadList();
+        vocabularyListFragment.getPresenter().onLoadList();
     }
 
     private void onBackPressed() {

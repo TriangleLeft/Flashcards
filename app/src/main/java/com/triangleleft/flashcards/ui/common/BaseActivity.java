@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public abstract class BaseActivity<Component extends IComponent, View extends IView, VS extends ViewState,
         Presenter extends IPresenter<View, VS>> extends AppCompatActivity {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseActivity.class.getSimpleName());
 
     private Component component;
 

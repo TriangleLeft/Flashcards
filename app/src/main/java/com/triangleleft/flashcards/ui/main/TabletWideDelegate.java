@@ -27,7 +27,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     private VocabularyWordFragment vocabularyWordFragment;
-    private VocabularyListFragment vocabularListFragment;
+    private VocabularyListFragment vocabularyListFragment;
 
     public TabletWideDelegate(MainActivity activity) {
         this.activity = activity;
@@ -49,7 +49,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
             @Override
             public void onPanelClosed(View panel) {
-                // When pannel is closed, clicking it should open it
+                // When panel is closed, clicking it should open it
                 navigationView.setOnOverlayClickListener(view -> slidingPaneLayout.openPane());
             }
         });
@@ -93,24 +93,24 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Override
     public void reloadList() {
-        vocabularListFragment.getPresenter().onLoadList();
+        vocabularyListFragment.getPresenter().onLoadList();
     }
 
     private void initPages() {
         // Try to get re-created fragments
-        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
+        vocabularyListFragment = (VocabularyListFragment) getSupportFragmentManager()
                 .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
-        if (vocabularListFragment == null) {
-            vocabularListFragment = new VocabularyListFragment();
+        if (vocabularyListFragment == null) {
+            vocabularyListFragment = new VocabularyListFragment();
         } else {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .remove(vocabularListFragment)
+                    .remove(vocabularyListFragment)
                     .commitNow();
         }
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
+                .add(R.id.main_container, vocabularyListFragment, VocabularyListFragment.Companion.getTAG())
                 .commitNow();
 
         // Else: fragment was already there, it can be ONLY in main_container, no need to add it
