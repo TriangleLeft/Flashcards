@@ -108,12 +108,12 @@ import butterknife.ButterKnife;
         }
         if (!vocabularyWordFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
+                    .add(R.id.main_container, vocabularyWordFragment, VocabularyWordFragment.Companion.getTAG())
                     .commitNow();
         }
         showFragment(vocabularyWordFragment);
 
-        vocabularyWordFragment.getPresenter().showWord(word);
+        vocabularyWordFragment.getPresenter().showWord(word.orElse(null));
 
         setArrowIndicator(false);
     }
@@ -131,7 +131,8 @@ import butterknife.ButterKnife;
         }
 
         vocabularyWordFragment =
-                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(
+                        VocabularyWordFragment.Companion.getTAG());
         if (vocabularyWordFragment != null) {
             // Word could be attached to another container, so we have to remove it
             getSupportFragmentManager().beginTransaction().remove(vocabularyWordFragment).commitNow();

@@ -78,7 +78,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     @Override
     public void showWord(Optional<VocabularyWord> word) {
         // Word is always show, so just update it's content
-        vocabularyWordFragment.getPresenter().showWord(word);
+        vocabularyWordFragment.getPresenter().showWord(word.orElse(null));
     }
 
     @Override
@@ -116,7 +116,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         // Else: fragment was already there, it can be ONLY in main_container, no need to add it
 
         vocabularyWordFragment =
-                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(
+                        VocabularyWordFragment.Companion.getTAG());
         if (vocabularyWordFragment == null) {
             vocabularyWordFragment = new VocabularyWordFragment();
         } else {
@@ -128,7 +129,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         }
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
+                .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.Companion.getTAG())
                 .commitNow();
 
     }
