@@ -1,15 +1,12 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.annimon.stream.Stream;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.cards.FlashcardTestData;
-import com.triangleleft.flashcards.service.cards.FlashcardTestResult;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
-import com.triangleleft.flashcards.service.common.exception.ServerException;
 import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
@@ -19,12 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-
-import static com.annimon.stream.Collectors.toList;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
@@ -41,9 +34,8 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, View
     private boolean offlineMode = false;
 
     @Inject
-    public FlashcardsPresenter(FlashcardsModule flashcardsModule, AccountModule accountModule,
-                               @Named(VIEW_EXECUTOR) Executor executor) {
-        super(IFlashcardsView.class, executor);
+    public FlashcardsPresenter(FlashcardsModule flashcardsModule, AccountModule accountModule) {
+        super();
         this.flashcardsModule = flashcardsModule;
         this.accountModule = accountModule;
     }
@@ -53,38 +45,32 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, View
         onLoadFlashcards();
     }
 
-    @Override
-    public void onDestroy() {
-        logger.debug("onDestroy() called");
-        call.cancel();
-    }
-
     public void onLoadFlashcards() {
-        applyState(IFlashcardsView::showProgress);
-        results.clear();
-        //call = offlineMode ? flashcardsModule.getLocalFlashcards() : flashcardsModule.getFlashcards();
-        call.enqueue(data -> {
-            if (data.getWords().size() != 0) {
-                testData = data;
-                applyState(view -> view.showWords(data.getWords(), accountModule.getWordsReviewDirection()));
-            } else {
-                // Treat this as error, we expect to always have flashcards
-                processError(new ServerException("Got no flashcards in response"));
-            }
-        }, this::processError);
+//        applyState(IFlashcardsView::showProgress);
+//        results.clear();
+//        //call = offlineMode ? flashcardsModule.getLocalFlashcards() : flashcardsModule.getFlashcards();
+//        call.enqueue(data -> {
+//            if (data.getWords().size() != 0) {
+//                testData = data;
+//                applyState(view -> view.showWords(data.getWords(), accountModule.getWordsReviewDirection()));
+//            } else {
+//                // Treat this as error, we expect to always have flashcards
+//                processError(new ServerException("Got no flashcards in response"));
+//            }
+//        }, this::processError);
     }
 
     private void processError(Throwable throwable) {
-        logger.debug("processError() called with: throwable = [{}]", throwable);
-        // In case we have exception (usually - no internet), ask user whether he wants to start
-        // offline test
-        if (!offlineModeWasProposed) {
-            offlineModeWasProposed = true;
-            applyState(IFlashcardsView::showOfflineModeDialog);
-        } else {
-            // User decided not to, show error as usual
-            applyState(IFlashcardsView::showError);
-        }
+//        logger.debug("processError() called with: throwable = [{}]", throwable);
+//        // In case we have exception (usually - no internet), ask user whether he wants to start
+//        // offline test
+//        if (!offlineModeWasProposed) {
+//            offlineModeWasProposed = true;
+//            applyState(IFlashcardsView::showOfflineModeDialog);
+//        } else {
+//            // User decided not to, show error as usual
+//            applyState(IFlashcardsView::showError);
+//        }
     }
 
     public void onWordRight(FlashcardWord word) {
@@ -99,19 +85,19 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, View
 
     public void onCardsDepleted() {
         logger.debug("onCardsDepleted() called");
-        if (!offlineMode) {
-            flashcardsModule.postResult(
-                    FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
-        }
-        List<FlashcardWord> wrongWords = Stream.of(results)
-                .filterNot(FlashcardWordResult::isCorrect)
-                .map(FlashcardWordResult::getWord)
-                .collect(toList());
-        if (wrongWords.size() == 0) {
-            applyState(IFlashcardsView::showResultsNoErrors);
-        } else {
-            applyState(view -> view.showResultErrors(wrongWords));
-        }
+//        if (!offlineMode) {
+//            flashcardsModule.postResult(
+//                    FlashcardTestResult.create(testData.getUiLanguage(), testData.getLearningLanguage(), results));
+//        }
+//        List<FlashcardWord> wrongWords = Stream.of(results)
+//                .filterNot(FlashcardWordResult::isCorrect)
+//                .map(FlashcardWordResult::getWord)
+//                .collect(toList());
+//        if (wrongWords.size() == 0) {
+//            applyState(IFlashcardsView::showResultsNoErrors);
+//        } else {
+//            applyState(view -> view.showResultErrors(wrongWords));
+//        }
     }
 
     public void onOfflineModeAccept() {
@@ -124,6 +110,6 @@ public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, View
     public void onOfflineModeDecline() {
         offlineMode = false;
         // Show error state
-        applyState(IFlashcardsView::showError);
+//        applyState(IFlashcardsView::showError);
     }
 }

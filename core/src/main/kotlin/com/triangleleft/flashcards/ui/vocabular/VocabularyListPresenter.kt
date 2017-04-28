@@ -10,15 +10,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
-import java.util.concurrent.Executor
 import javax.inject.Inject
-import javax.inject.Named
 
 @FragmentScope
 class VocabularyListPresenter @Inject
-constructor(private val vocabularyModule: VocabularyModule, private val navigator: VocabularyNavigator,
-            @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor)
-    : AbstractPresenter<IVocabularyListView, VocabularyListViewState>(IVocabularyListView::class.java, executor) {
+constructor(private val vocabularyModule: VocabularyModule, private val navigator: VocabularyNavigator)
+    : AbstractPresenter<IVocabularyListView, VocabularyListViewState>() {
 
     companion object {
         private val logger = LoggerFactory.getLogger(VocabularyListPresenter::class.java)

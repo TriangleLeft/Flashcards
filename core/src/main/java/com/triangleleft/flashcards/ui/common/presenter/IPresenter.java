@@ -18,9 +18,9 @@ public interface IPresenter<View extends IView, VS extends ViewState> {
 
     void onUnbind();
 
-    void onDestroy();
-
     View getView();
 
     VS getViewState();
+
+    void onDestroy();
 }

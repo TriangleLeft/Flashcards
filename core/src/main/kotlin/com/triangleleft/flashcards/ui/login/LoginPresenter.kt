@@ -14,7 +14,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
-import java.util.concurrent.Executor
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -22,9 +21,8 @@ import javax.inject.Named
 @ActivityScope
 class LoginPresenter @Inject
 constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
-            @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor,
             @Named(AbstractPresenter.UI_SCHEDULER) private val uiScheduler: Scheduler)
-    : AbstractPresenter<ILoginView, LoginViewState>(ILoginView::class.java, executor) {
+    : AbstractPresenter<ILoginView, LoginViewState>() {
 
     companion object {
         private val logger = LoggerFactory.getLogger(LoginPresenter::class.java)
@@ -108,9 +106,5 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
         super.onUnbind()
 
         disposable.dispose()
-    }
-
-    override fun onDestroy() {
-        logger.debug("onDestroy() called")
     }
 }

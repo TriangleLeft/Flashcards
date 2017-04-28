@@ -11,14 +11,12 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
-import java.util.concurrent.Executor
 import javax.inject.Inject
-import javax.inject.Named
 
 @ActivityScope
 class MainPresenter @Inject
-constructor(accountModule: AccountModule, @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor)
-    : AbstractPresenter<IMainView, MainViewState>(IMainView::class.java, executor), VocabularyNavigator {
+constructor(accountModule: AccountModule)
+    : AbstractPresenter<IMainView, MainViewState>(), VocabularyNavigator {
 
 
     private val wordClicks = PublishSubject.create<VocabularyWord>()

@@ -10,15 +10,13 @@ import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault
 import io.reactivex.Scheduler
 import org.slf4j.LoggerFactory
-import java.util.concurrent.Executor
 import javax.inject.Inject
-import javax.inject.Named
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
 class DrawerPresenter @Inject
-constructor(private val mainPresenter: MainPresenter, private val accountModule: AccountModule, private val settingsModule: SettingsModule,
-            @Named(AbstractPresenter.VIEW_EXECUTOR) executor: Executor) : AbstractPresenter<IDrawerView, ViewState>(IDrawerView::class.java, executor) {
+constructor(private val mainPresenter: MainPresenter, private val accountModule: AccountModule, private val settingsModule: SettingsModule)
+    : AbstractPresenter<IDrawerView, ViewState>() {
 
     var currentLanguage: Language? = null
     private val scheduler: Scheduler? = null
@@ -26,7 +24,7 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
     override fun onCreate() {
         logger.debug("onCreate() called")
         currentLanguage = accountModule.userData.get().currentLearningLanguage
-        applyState { it.showListProgress() }
+        //applyState { it.showListProgress() }
         // start with cached data, continue with fresh one
         // NOTE: we don't show progress bar while we are doing it, progress bar is shown only for language switch
         // NOTE: we don't want to notify user that we failed to update data
@@ -49,17 +47,13 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
             mainPresenter.onLanguageChanged(newCurrentLanguage!!)
         }
         currentLanguage = newCurrentLanguage
-        applyState { view -> view.showUserData(data.username, data.avatar, data.sortedLanguages) }
+        //applyState { view -> view.showUserData(data.username, data.avatar, data.sortedLanguages) }
     }
 
     private fun processUserDataError(throwable: Throwable) {
         logger.debug("processUserDataError() called with: throwable = [{}]", throwable)
         view.notifyUserDataUpdateError()
         // There is no need to show local userdata, as we should've done so with .startWith
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     fun onLanguageSelected(language: Language) {
@@ -69,7 +63,7 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
             return
         }
         // Show progress bar
-        applyState { it.showListProgress() }
+        //applyState { it.showListProgress() }
         // Request to switch language
         settingsModule.switchLanguage(language)
                 .subscribe({ processLanguageSwitch(language) }, { this.processLanguageSwitchError(it) })
