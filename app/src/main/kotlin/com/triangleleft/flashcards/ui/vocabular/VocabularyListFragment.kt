@@ -71,6 +71,10 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         return view
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         ButterKnife.unbind(this)
@@ -109,7 +113,7 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
             }
         }
         // FIXME: always snaps =(
-        vocabList.scrollToPosition(state.scrollPosition)
+        //vocabList.scrollToPosition(state.scrollPosition)
         swipeRefresh.isRefreshing = state.isRefreshing
         if (state.hasRefreshError) {
             Snackbar.make(vocabList, R.string.vocabulary_list_refresh_error, Snackbar.LENGTH_LONG)

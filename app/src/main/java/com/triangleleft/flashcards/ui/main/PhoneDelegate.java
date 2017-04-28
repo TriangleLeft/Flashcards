@@ -24,16 +24,15 @@ import butterknife.ButterKnife;
 
 /*package*/ class PhoneDelegate implements IMainActivityDelegate {
 
+    private final MainActivity activity;
+    private final DrawerArrowDrawable arrowDrawable;
+    private final ActionBarDrawerToggle toggle;
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.button_flashcards)
     FloatingActionButton fab;
-    private final MainActivity activity;
-
-    private final DrawerArrowDrawable arrowDrawable;
-    private final ActionBarDrawerToggle toggle;
     private VocabularyWordFragment vocabularyWordFragment;
     private VocabularyListFragment vocabularListFragment;
 
@@ -78,12 +77,14 @@ import butterknife.ButterKnife;
 
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularyListFragment();
+        }
+        if (!vocabularListFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
                     .commitNow();
-        } else {
-            showFragment(vocabularListFragment);
         }
+
+        showFragment(vocabularListFragment);
 
         setArrowIndicator(true);
     }
@@ -104,15 +105,37 @@ import butterknife.ButterKnife;
 
         if (vocabularyWordFragment == null) {
             vocabularyWordFragment = new VocabularyWordFragment();
+        }
+        if (!vocabularyWordFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
                     .commitNow();
-        } else {
-            showFragment(vocabularyWordFragment);
         }
+        showFragment(vocabularyWordFragment);
+
         vocabularyWordFragment.getPresenter().showWord(word);
 
         setArrowIndicator(false);
+    }
+
+    private void initPages() {
+        // Check whether we've got some fragments saved
+        // NOTE: we actually don't know whether they are attached to proper parents
+        // TODO: we can check their ids? or use reflection to get mContainerId (can we also use it to change it?)
+        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
+                .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
+        // List can be attached only to main_container
+        // If needed we would show it later
+        if (vocabularListFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(vocabularListFragment).commitNow();
+        }
+
+        vocabularyWordFragment =
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+        if (vocabularyWordFragment != null) {
+            // Word could be attached to another container, so we have to remove it
+            getSupportFragmentManager().beginTransaction().remove(vocabularyWordFragment).commitNow();
+        }
     }
 
     private void hideFragment(Fragment fragment) {
@@ -149,14 +172,6 @@ import butterknife.ButterKnife;
 
     private void onBackPressed() {
         activity.onBackPressed();
-    }
-
-    private void initPages() {
-        // Try to get re-created fragments
-        vocabularListFragment = (VocabularyListFragment) getSupportFragmentManager()
-                .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
-        vocabularyWordFragment =
-                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
     }
 
     private void setArrowIndicator(boolean visible) {

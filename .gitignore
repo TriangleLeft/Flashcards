@@ -11,6 +11,7 @@ Thumbs.db
 .idea
 .gradle
 build/
+captures/
 
 # OS X
 *.DS_Store

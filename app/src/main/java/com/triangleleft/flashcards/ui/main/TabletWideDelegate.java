@@ -57,7 +57,7 @@ public class TabletWideDelegate implements IMainActivityDelegate {
         navigationView.setAnimationProgress(isDrawerOpen() ? 0f : 1f);
 
         Drawable drawable = DrawableUtils
-            .getTintedDrawable(activity, R.drawable.ic_menu_black_24dp, R.color.textColorPrimary);
+                .getTintedDrawable(activity, R.drawable.ic_menu_black_24dp, R.color.textColorPrimary);
         toolbar.setNavigationIcon(drawable);
         toolbar.setNavigationOnClickListener(v -> {
             if (slidingPaneLayout.isOpen()) {
@@ -72,11 +72,12 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Override
     public void showList() {
-        // List is already shown
+        // List is always shown
     }
 
     @Override
     public void showWord(Optional<VocabularyWord> word) {
+        // Word is always show, so just update it's content
         vocabularyWordFragment.getPresenter().showWord(word);
     }
 
@@ -101,31 +102,35 @@ public class TabletWideDelegate implements IMainActivityDelegate {
                 .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
         if (vocabularListFragment == null) {
             vocabularListFragment = new VocabularyListFragment();
-            getSupportFragmentManager()
-                .beginTransaction()
-                    .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
-                .commitNow();
         } else {
             getSupportFragmentManager()
-                .beginTransaction()
-                .show(vocabularListFragment)
-                .commitNow();
+                    .beginTransaction()
+                    .remove(vocabularListFragment)
+                    .commitNow();
         }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.main_container, vocabularListFragment, VocabularyListFragment.Companion.getTAG())
+                .commitNow();
+
+        // Else: fragment was already there, it can be ONLY in main_container, no need to add it
 
         vocabularyWordFragment =
-            (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
+                (VocabularyWordFragment) getSupportFragmentManager().findFragmentByTag(VocabularyWordFragment.TAG);
         if (vocabularyWordFragment == null) {
             vocabularyWordFragment = new VocabularyWordFragment();
+        } else {
+            // This fragment could be attach to main_container, so remove it to be safe
             getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(vocabularyWordFragment)
+                    .commitNow();
+        }
+        getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.secondary_container, vocabularyWordFragment, VocabularyWordFragment.TAG)
                 .commitNow();
-        } else {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .show(vocabularyWordFragment)
-                .commitNow();
-        }
+
     }
 
     private FragmentManager getSupportFragmentManager() {

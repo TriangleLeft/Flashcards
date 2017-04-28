@@ -3,7 +3,6 @@ package com.triangleleft.flashcards.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
-import android.view.View
 import butterknife.Bind
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -27,14 +26,12 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
     lateinit var toolbar: Toolbar
     @Bind(R.id.navigation_view)
     lateinit var navigationView: NavigationView
-    @Bind(R.id.main_container)
-    lateinit var mainContainer: View
 
     lateinit var delegate: IMainActivityDelegate
     val backPresses: PublishSubject<Any> = PublishSubject.create<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        savedInstanceState?.putParcelable(FRAGMENTS_TAG, null)
+        //savedInstanceState?.putParcelable(FRAGMENTS_TAG, null)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
