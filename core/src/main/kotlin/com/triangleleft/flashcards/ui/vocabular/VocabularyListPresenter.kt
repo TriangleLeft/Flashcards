@@ -33,7 +33,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
     private val initialState: VocabularyListViewState
 
     init {
-        initialState = VocabularyListViewState(VocabularyListViewState.Page.Progress, false, false, 0)
+        initialState = VocabularyListViewState(VocabularyListViewState.Page.Progress, false, false)
     }
 
     override fun onCreate(savedViewState: VocabularyListViewState?) {
@@ -66,8 +66,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
                 loadListRetries.compose(loadTransformer),
                 // This doOnNext looks ugly
                 wordSelections.doOnNext { navigator.showWord(it.word) }
-                        .map { VocabularyListViewActions.selectWord(it.position) },
-                listScrolls.map { VocabularyListViewActions.scrollPosition(it) })
+                        .map { VocabularyListViewActions.selectWord(it.position) })
                 .scan(state) { state, action -> action.reduce(state) }
                 .distinctUntilChanged()
                 .subscribe { viewStates.onNext(it) }
@@ -83,8 +82,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
         disposable.addAll(
                 viewStates.subscribe { view.render(it) },
                 view.refreshes().subscribe { refreshes.onNext(it) },
-                view.wordSelections().subscribe { wordSelections.onNext(it) },
-                view.listScrolls().subscribe { listScrolls.onNext(it) }
+                view.wordSelections().subscribe { wordSelections.onNext(it) }
         )
     }
 

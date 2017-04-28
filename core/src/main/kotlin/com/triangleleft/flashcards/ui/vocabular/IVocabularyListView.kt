@@ -14,6 +14,4 @@ interface IVocabularyListView : IView {
     // Can't we reuse refereshes here?
     fun loadListRetires(): Observable<Unit>
 
-    fun listScrolls(): Observable<Int>
-
 }

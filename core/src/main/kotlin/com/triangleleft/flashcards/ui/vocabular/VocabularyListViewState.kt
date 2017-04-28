@@ -3,8 +3,7 @@ package com.triangleleft.flashcards.ui.vocabular
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.ViewState
 
-data class VocabularyListViewState(val page: Page, val hasRefreshError: Boolean, val isRefreshing: Boolean,
-                                   val scrollPosition: Int)
+data class VocabularyListViewState(val page: Page, val hasRefreshError: Boolean, val isRefreshing: Boolean)
     : ViewState {
 
     sealed class Page {

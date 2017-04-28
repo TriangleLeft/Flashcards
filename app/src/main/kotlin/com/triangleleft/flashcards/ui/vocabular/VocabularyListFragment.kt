@@ -14,13 +14,11 @@ import android.widget.ViewFlipper
 import butterknife.Bind
 import butterknife.ButterKnife
 import com.jakewharton.rxbinding2.support.v4.widget.refreshes
-import com.jakewharton.rxbinding2.support.v7.widget.scrollStateChanges
 import com.jakewharton.rxbinding2.view.clicks
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent
 import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent
 import com.triangleleft.flashcards.ui.common.BaseFragment
-import com.triangleleft.flashcards.ui.common.OnItemClickListener
 import com.triangleleft.flashcards.ui.main.MainActivity
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -47,8 +45,8 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
     lateinit var swipeRefresh: SwipeRefreshLayout
     @Bind(R.id.vocabulary_list_button_retry)
     lateinit var retryLoadButton: Button
-    lateinit var vocabularyAdapter: VocabularyAdapter
-    private var itemClickListener: OnItemClickListener<VocabularyViewHolder>? = null
+
+    private lateinit var vocabularyAdapter: VocabularyAdapter
     private var twoPane: Boolean = false
 
     private val wordSelections = PublishSubject.create<VocabularyWordSelectEvent>()
@@ -69,10 +67,6 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.green)
 
         return view
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onDestroyView() {
@@ -112,8 +106,6 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
                 }
             }
         }
-        // FIXME: always snaps =(
-        //vocabList.scrollToPosition(state.scrollPosition)
         swipeRefresh.isRefreshing = state.isRefreshing
         if (state.hasRefreshError) {
             Snackbar.make(vocabList, R.string.vocabulary_list_refresh_error, Snackbar.LENGTH_LONG)
@@ -144,9 +136,5 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
 
     override fun loadListRetires(): Observable<Unit> {
         return retryLoadButton.clicks()
-    }
-
-    override fun listScrolls(): Observable<Int> {
-        return vocabList.scrollStateChanges().filter { it == RecyclerView.SCROLL_STATE_IDLE }.map { (vocabList.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() }
     }
 }

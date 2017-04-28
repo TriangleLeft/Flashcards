@@ -30,7 +30,6 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
-        super.onCreate(savedInstanceState);
 
         Optional<Component> restoredComponent =
                 getApplicationComponent().componentManager().restoreComponent(getClass());
@@ -46,6 +45,9 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
             }
             getPresenter().onCreate(viewState);
         }
+
+        // We want components/presenters to be created before fragments are instantiated
+        super.onCreate(savedInstanceState);
     }
 
     @Override
