@@ -37,7 +37,7 @@ public class StubLoginModule implements LoginModule {
         } else if (!PASSWORD.equals(password)) {
             return Observable.error(new PasswordException());
         } else {
-            UserData userData = settingsModule.loadUserData().blockingFirst();
+            UserData userData = settingsModule.userData().blockingFirst();
             accountModule.setUserData(userData);
             accountModule.setLogin(login);
             accountModule.setUserId("fake");

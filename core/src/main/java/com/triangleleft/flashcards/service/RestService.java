@@ -11,6 +11,7 @@ import com.triangleleft.flashcards.service.vocabular.rest.model.VocabularyRespon
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -47,7 +48,7 @@ public interface RestService {
     Observable<Void> postFlashcardResults(@Body FlashcardResultsController model);
 
     @POST(PATH_SWITCH_LANGUAGE)
-    Observable<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
+    Single<LanguageDataModel> switchLanguage(@Body SwitchLanguageController controller);
 
     @GET(PATH_USERDATA)
     Observable<UserDataModel> getUserData(@Query(QUERY_USERID) String userId);

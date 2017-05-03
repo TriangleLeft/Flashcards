@@ -32,7 +32,8 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class RestSettingsModuleTest {
@@ -54,7 +55,7 @@ public class RestSettingsModuleTest {
     }
 
 //    @Test
-//    public void loadUserData() {
+//    public void userData() {
 //        when(accountModule.getUserId()).thenReturn(Optional.of("id"));
 //        UserDataModel model = mock(UserDataModel.class);
 //        UserData userData = UserData.create(Collections.emptyList(), "", "", "", "");
@@ -62,7 +63,7 @@ public class RestSettingsModuleTest {
 //        when(service.getUserData("id")).thenReturn(Call.just(model));
 //
 //        TestObserver<UserData> observer = new TestObserver<>();
-//        module.loadUserData().enqueue(observer);
+//        module.userData().enqueue(observer);
 //
 //        observer.assertValue(userData);
 //    }

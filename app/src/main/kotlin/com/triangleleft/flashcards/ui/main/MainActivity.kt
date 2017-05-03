@@ -15,7 +15,6 @@ import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity
 import com.triangleleft.flashcards.ui.common.BaseActivity
-import com.triangleleft.flashcards.ui.main.drawer.NavigationView
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory

@@ -41,7 +41,7 @@ public class RestLoginModuleTest {
 //        when(model.isSuccess()).thenReturn(true);
 //        when(model.getUserId()).thenReturn("id");
 //        when(service.login(any(LoginRequestController.class))).thenReturn(Call.just(model));
-//        when(settingsModule.loadUserData()).thenReturn(Call.just(mockUserData));
+//        when(settingsModule.userData()).thenReturn(Call.just(mockUserData));
 //
 //        TestObserver<Object> observer = new TestObserver<>();
 //        module.login(LOGIN, PASS).enqueue(observer);

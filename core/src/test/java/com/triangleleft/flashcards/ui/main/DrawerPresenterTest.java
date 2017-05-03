@@ -45,7 +45,7 @@ public class DrawerPresenterTest {
         presenter = new DrawerPresenter(mainPresenter, accountModule, settingsModule, Runnable::run);
         when(userData.getCurrentLearningLanguage()).thenReturn(Optional.empty());
         when(accountModule.getUserData()).thenReturn(Optional.of(userData));
-        //when(settingsModule.loadUserData()).thenReturn(Call.empty());
+        //when(settingsModule.userData()).thenReturn(Call.empty());
     }
 
 
@@ -108,7 +108,7 @@ public class DrawerPresenterTest {
 //    public void onLanguageSelectedUserDataError() {
 //        Language language = mock(Language.class);
 //        when(settingsModule.switchLanguage(language)).thenReturn(Observable.just(null));
-//        when(settingsModule.loadUserData()).thenReturn(Observable.error(new RuntimeException()));
+//        when(settingsModule.userData()).thenReturn(Observable.error(new RuntimeException()));
 //        presenter.onCreate();
 //        presenter.onBind(view);
 //
@@ -125,7 +125,7 @@ public class DrawerPresenterTest {
         // Same language, but with isCurrentlyLearning
         language = Language.create("id", "lang", 1, true, true);
         UserData data = UserData.Companion.create(Collections.singletonList(language), avatar, userName, "ui", "learn");
-        // when(settingsModule.loadUserData()).thenReturn(Call.just(data));
+        // when(settingsModule.userData()).thenReturn(Call.just(data));
         return result;
     }
 

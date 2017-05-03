@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 @FunctionsAreNonnullByDefault
 public interface SettingsModule {
 
-    Observable<UserData> loadUserData();
+    Observable<UserData> userData();
 
     Observable<Object> switchLanguage(Language language);
 }

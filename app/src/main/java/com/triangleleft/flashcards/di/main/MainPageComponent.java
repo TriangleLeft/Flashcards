@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.ui.main.DrawerPresenter;
 import com.triangleleft.flashcards.ui.main.FlashcardSettingsDialog;
 import com.triangleleft.flashcards.ui.main.MainActivity;
 import com.triangleleft.flashcards.ui.main.MainPresenter;
-import com.triangleleft.flashcards.ui.main.drawer.NavigationView;
+import com.triangleleft.flashcards.ui.main.NavigationView;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator;
 
 import dagger.Component;

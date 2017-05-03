@@ -40,7 +40,7 @@ public class RestLoginModule implements LoginModule {
         logger.debug("processModel called with [{}]", model);
         if (model.isSuccess()) {
             accountModule.setUserId(model.getUserId());
-            return settingsModule.loadUserData()
+            return settingsModule.userData()
                     .map(data -> null);
         } else {
             return Observable.error(model.getError());

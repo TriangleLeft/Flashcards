@@ -26,17 +26,29 @@ public class RestSettingsModule implements SettingsModule {
     }
 
     @Override
-    public Observable<UserData> loadUserData() {
+    public Observable<UserData> userData() {
         return service.getUserData(accountModule.getUserId().get())
                 .map(UserDataModel::toUserData)
-                .doOnNext(accountModule::setUserData);
+                .doOnNext(accountModule::setUserData)
+                .startWith(accountModule.getUserData().get());
     }
 
     @Override
     public Observable<Object> switchLanguage(Language language) {
+
+//        // We have successfully switch language
+//        // Update our local userdata
+//        val data = accountModule.userData.get()
+//        // Mark language as "current learning"
+//        val languages = data.languages
+//                .map { language -> language.withCurrentLearning(language.id == currentLanguage.id) }
+//        // Override local userdata
+//        val newData = data.copy(languages = languages, learningLanguageId = currentLanguage.id)
+//        accountModule.setUserData(newData)
+
         // We don't care about actual return result
-        return service.switchLanguage(new SwitchLanguageController(language.getId()))
-                .map(data -> null);
+        return service.switchLanguage(new SwitchLanguageController(language.getId())).toObservable()
+                .map(data -> new Object());
     }
 
 }

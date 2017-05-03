@@ -40,7 +40,7 @@
     <string name="word_part_of_speech">Part of speech</string>
 
     <!-- Navigation drawer -->
-    <string name="language_level">%s lvl</string>
+    <string name="language_level">%d lvl</string>
     <string name="settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
     <string name="drawer_language_switch_error">Failed to switch language</string>

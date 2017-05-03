@@ -25,6 +25,7 @@ import com.triangleleft.flashcards.di.login.LoginActivityComponent
 import com.triangleleft.flashcards.ui.common.BaseActivity
 import com.triangleleft.flashcards.ui.main.MainActivity
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 
 /**
@@ -49,7 +50,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
     @Bind(R.id.login_container)
     lateinit var container: View
 
-    private var currentPage: LoginViewState.Page? = null
+    private val states = PublishSubject.create<LoginViewState>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState)
@@ -59,6 +60,14 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
         ButterKnife.bind(this)
 
         setupUI(container)
+
+        states.map { it.login }.distinctUntilChanged().subscribe { setLogin(it) }
+        states.map { it.password }.distinctUntilChanged().subscribe { setPassword(it) }
+        states.map { it.loginButtonEnabled }.distinctUntilChanged().subscribe { setLoginButtonEnabled(it) }
+        states.map { it.page }.distinctUntilChanged().subscribe { showPage(it) }
+        states.map { it.hasLoginError }.distinctUntilChanged().subscribe { setLoginErrorVisible(it) }
+        states.map { it.hasPasswordError }.distinctUntilChanged().subscribe { setPasswordErrorVisible(it) }
+        states.map { it.shouldRememberUser }.distinctUntilChanged().subscribe { setRememberUser(it) }
     }
 
     override fun inject() {
@@ -79,33 +88,29 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
     override fun render(viewState: LoginViewState) {
         logger.debug("render() called with {}", viewState)
-        setLogin(viewState.login)
-        setPassword(viewState.password)
-        setLoginErrorVisible(viewState.hasLoginError)
-        setPasswordErrorVisible(viewState.hasPasswordError)
-        setRememberUser(viewState.shouldRememberUser)
-        setLoginButtonEnabled(viewState.loginButtonEnabled)
-        if (currentPage != viewState.page) {
-            currentPage = viewState.page
-            when (viewState.page) {
-                LoginViewState.Page.PROGRESS -> flipperView.displayedChild = PROGRESS
-                LoginViewState.Page.CONTENT -> {
-                    flipperView.displayedChild = CONTENT
-                    if (loginView.error != null) {
-                        loginView.requestFocus()
-                    } else if (passwordView.error != null) {
-                        passwordView.requestFocus()
-                    }
+        states.onNext(viewState)
+    }
+
+    private fun showPage(page: LoginViewState.Page) {
+        when (page) {
+            LoginViewState.Page.PROGRESS -> flipperView.displayedChild = PROGRESS
+            LoginViewState.Page.CONTENT -> {
+                flipperView.displayedChild = CONTENT
+                if (loginView.error != null) {
+                    loginView.requestFocus()
+                } else if (passwordView.error != null) {
+                    passwordView.requestFocus()
                 }
-                LoginViewState.Page.SUCCESS -> {
-                    finish()
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    overridePendingTransition(0, 0)
-                }
+            }
+            LoginViewState.Page.SUCCESS -> {
+                finish()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                overridePendingTransition(0, 0)
             }
         }
     }
+
 
     private fun setLoginButtonEnabled(enabled: Boolean) {
         logger.debug("setLoginButtonEnabled() called with: enabled = [{}]", enabled)
@@ -119,16 +124,12 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
     private fun setLogin(login: String?) {
         logger.debug("setLogin() called with: login = [{}]", login)
-        if (loginView.text.toString() != login) {
-            loginView.setText(login)
-        }
+        loginView.setText(login)
     }
 
     private fun setPassword(password: String?) {
         logger.debug("setPassword() called with: password = [{}]", password)
-        if (passwordView.text.toString() != password) {
-            passwordView.setText(password)
-        }
+        passwordView.setText(password)
     }
 
     private fun setLoginErrorVisible(visible: Boolean) {
@@ -139,15 +140,9 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
         passwordLayoutView.error = if (visible) getString(R.string.wrong_password) else null
     }
 
-    private fun advance() {
-        logger.debug("advance() called")
-
-    }
-
     private fun setRememberUser(rememberUser: Boolean) {
         rememberSwitch.isChecked = rememberUser
     }
-
 
     override fun logins(): Observable<String> {
         return RxTextView.textChanges(loginView).map { it.toString() }
