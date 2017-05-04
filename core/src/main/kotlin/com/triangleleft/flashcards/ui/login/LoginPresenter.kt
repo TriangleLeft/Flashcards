@@ -55,13 +55,16 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
     override fun onCreate(savedViewState: LoginViewState?) {
         logger.debug("onCreate() called with savedViewState = [{}]", savedViewState)
 
-        val initialState = savedViewState ?: initialState
+        // So, if we have any savedViewState, use it, but always change to content page
+        // as we don't want to be stuck on progress page
+        val initialState = savedViewState?.copy(page = LoginViewState.Page.CONTENT) ?: initialState
 
         // Transform login button click into login request
         val loginTransformer = ObservableTransformer<LoginClickEvent, ViewAction<LoginViewState>> { upstream ->
             upstream.flatMap { (login, password) ->
                 loginModule.login(login, password)
                         .map { _ -> LoginViewActions.success() }
+                        .startWith(LoginViewActions.progress())
                         .onErrorReturn {
                             when (it) {
                                 is LoginException -> LoginViewActions.loginError()
@@ -69,7 +72,6 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
                                 else -> LoginViewActions.genericError()
                             }
                         }
-                        .startWith(LoginViewActions.progress())
             }
         }
 

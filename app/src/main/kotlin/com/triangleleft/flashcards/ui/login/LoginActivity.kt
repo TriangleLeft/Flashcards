@@ -25,6 +25,7 @@ import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent
 import com.triangleleft.flashcards.di.login.LoginActivityComponent
 import com.triangleleft.flashcards.ui.common.BaseActivity
 import com.triangleleft.flashcards.ui.main.MainActivity
+import com.triangleleft.flashcards.ui.view.setTextIfChanged
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
@@ -129,11 +130,11 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
     }
 
     private fun setLogin(login: String?) {
-        loginView.setText(login)
+        loginView.setTextIfChanged(login)
     }
 
     private fun setPassword(password: String?) {
-        passwordView.setText(password)
+        passwordView.setTextIfChanged(password)
     }
 
     private fun setLoginErrorVisible(visible: Boolean) {

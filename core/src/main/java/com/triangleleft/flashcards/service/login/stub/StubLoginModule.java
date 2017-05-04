@@ -11,6 +11,8 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -35,14 +37,14 @@ public class StubLoginModule implements LoginModule {
         if (!LOGIN.equals(login)) {
             return Observable.error(new LoginException());
         } else if (!PASSWORD.equals(password)) {
-            return Observable.error(new PasswordException());
+            return Observable.error(new PasswordException()).materialize().delay(5, TimeUnit.SECONDS).dematerialize();
         } else {
             UserData userData = settingsModule.userData().blockingFirst();
             accountModule.setUserData(userData);
             accountModule.setLogin(login);
             accountModule.setUserId("fake");
 
-            return Observable.just(new Object());
+            return Observable.just(new Object()).delay(3, TimeUnit.SECONDS);
         }
     }
 }
