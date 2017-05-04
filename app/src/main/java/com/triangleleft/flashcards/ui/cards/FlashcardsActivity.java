@@ -26,12 +26,15 @@ import com.triangleleft.flashcards.ui.common.BaseActivity;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.flashcards.util.SimpleAnimatorListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.BindInt;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.Observable;
 
 @FunctionsAreNonnullByDefault
 public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, ViewState, FlashcardsPresenter> implements
@@ -189,6 +192,17 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     @Override
     protected IFlashcardsView getMvpView() {
         return this;
+    }
+
+    @NotNull
+    @Override
+    public Observable events() {
+        return null;
+    }
+
+    @Override
+    public void render(@NotNull ViewState viewState) {
+
     }
 
     @Override

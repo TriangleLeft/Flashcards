@@ -15,8 +15,10 @@ import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyWordComponent
 import com.triangleleft.flashcards.di.vocabular.VocabularyWordComponent
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.BaseFragment
 import com.triangleleft.flashcards.ui.main.MainActivity
+import io.reactivex.Observable
 import org.slf4j.LoggerFactory
 import java.io.IOException
 
@@ -82,8 +84,8 @@ class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, IVocabulary
         voiceOverPlayer.voice(word!!)
     }
 
-    override fun render(state: VocabularyWordViewState) {
-        val word = state.word
+    override fun render(viewState: VocabularyWordViewState) {
+        val word = viewState.word
         if (word != null) {
             flipper.displayedChild = CONTENT
             this.word = word
@@ -99,6 +101,10 @@ class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, IVocabulary
         } else {
             flipper.displayedChild = EMPTY
         }
+    }
+
+    override fun events(): Observable<ViewEvent> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private class VoiceOverPlayer {

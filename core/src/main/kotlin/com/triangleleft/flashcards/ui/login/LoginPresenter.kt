@@ -22,16 +22,17 @@ import javax.inject.Named
 class LoginPresenter @Inject
 constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
             @Named(AbstractPresenter.UI_SCHEDULER) private val uiScheduler: Scheduler)
-    : AbstractPresenter<ILoginView, LoginViewState>() {
+    : AbstractPresenter<LoginView, LoginViewState>() {
 
     companion object {
         private val logger = LoggerFactory.getLogger(LoginPresenter::class.java)
     }
 
-    private val logins = PublishSubject.create<String>()
-    private val passwords = PublishSubject.create<String>()
-    private val rememberUserChecks = PublishSubject.create<Boolean>()
-    private val loginEvents = PublishSubject.create<LoginEvent>()
+    private val events = PublishSubject.create<LoginViewEvent>()
+//    private val passwords = PublishSubject.create<String>()
+//    private val rememberUserChecks = PublishSubject.create<Boolean>()
+//    private val loginEvents = PublishSubject.create<LoginEvent>()
+
     private val viewStates = BehaviorSubject.create<LoginViewState>()
 
     private var disposable = CompositeDisposable()
@@ -44,7 +45,7 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
             val isLogged = rememberUser && accountModule.userData.isPresent && accountModule.userId.isPresent
             val page = if (isLogged) LoginViewState.Page.SUCCESS else LoginViewState.Page.CONTENT
 
-            return LoginViewState(login, "", false, false, "", false, rememberUser, page)
+            return LoginViewState(login, "", false, false, false, false, rememberUser, page)
         }
 
     override fun getViewState(): LoginViewState {
@@ -56,7 +57,8 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
 
         val initialState = savedViewState ?: initialState
 
-        val loginTransformer = ObservableTransformer<LoginEvent, ViewAction<LoginViewState>> { upstream ->
+        // Transform login button click into login request
+        val loginTransformer = ObservableTransformer<LoginClickEvent, ViewAction<LoginViewState>> { upstream ->
             upstream.flatMap { (login, password) ->
                 loginModule.login(login, password)
                         .map { _ -> LoginViewActions.success() }
@@ -64,41 +66,52 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
                             when (it) {
                                 is LoginException -> LoginViewActions.loginError()
                                 is PasswordException -> LoginViewActions.passwordError()
-                                else -> LoginViewActions.genericError("TODO: error message")
+                                else -> LoginViewActions.genericError()
                             }
                         }
                         .startWith(LoginViewActions.progress())
             }
         }
 
-        Observable.merge(
-                logins.map { LoginViewActions.setLogin(it) },
-                passwords.map { LoginViewActions.setPassword(it) },
-                rememberUserChecks.doOnNext { accountModule.setRememberUser(it) }.map { LoginViewActions.setRememberUser(it) },
-                loginEvents.compose(loginTransformer))
+        // Map each event to appropriate view action
+        val transformer = ObservableTransformer<LoginViewEvent, ViewAction<LoginViewState>> {
+            events ->
+            events.publish { shared ->
+                Observable.merge(
+                        shared.ofType(SetLoginEvent::class.java).map { LoginViewActions.setLogin(it.login) },
+                        shared.ofType(SetPasswordEvent::class.java).map { LoginViewActions.setPassword(it.password) },
+                        shared.ofType(SetRememberUserEvent::class.java)
+                                .doOnNext { accountModule.setRememberUser(it.rememberUser) }
+                                .map { LoginViewActions.setRememberUser(it.rememberUser) },
+                        shared.ofType(LoginClickEvent::class.java).compose(loginTransformer)
+                )
+            }
+        }
+
+        // TODO: Can be moved to base class?
+        events.compose(transformer)
                 .scan(initialState) { viewState, viewAction -> viewAction.reduce(viewState) }
                 .distinctUntilChanged()
                 .observeOn(uiScheduler)
+                .doOnNext { logger.debug("onNext() {}", it) }
                 .subscribe { state ->
-                    logger.debug("onNext() {}", state)
                     viewStates.onNext(state)
                 }
 
+        // Set initial state
         viewStates.onNext(initialState)
     }
 
-    @Synchronized override fun onRebind(view: ILoginView) {
+    @Synchronized override fun onRebind(view: LoginView) {
         super.onRebind(view)
 
+        // TODO: Could be moved to base class?
         disposable = CompositeDisposable()
         // Connect view observables to our publish subjects
         // Connect view to our behavior subject
         disposable.addAll(
                 viewStates.subscribe { view.render(it) },
-                view.logins().subscribe { logins.onNext(it) },
-                view.passwords().subscribe { passwords.onNext(it) },
-                view.rememberUserChecks().subscribe { rememberUserChecks.onNext(it) },
-                view.loginEvents().subscribe { loginEvents.onNext(it) }
+                view.events().subscribe { events.onNext(it) }
         )
     }
 

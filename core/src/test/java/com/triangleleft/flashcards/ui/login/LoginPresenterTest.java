@@ -11,7 +11,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class LoginPresenterTest {
@@ -23,7 +23,7 @@ public class LoginPresenterTest {
     @Mock
     Call<Object> mockCall;
     @Mock
-    ILoginView view;
+    LoginView view;
     private LoginPresenter presenter;
 
     @Before

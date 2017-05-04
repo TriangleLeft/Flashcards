@@ -13,6 +13,7 @@ import com.triangleleft.flashcards.di.main.DaggerMainPageComponent
 import com.triangleleft.flashcards.di.main.MainPageComponent
 import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity
 import com.triangleleft.flashcards.ui.common.BaseActivity
 import io.reactivex.Observable
@@ -118,9 +119,9 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
         //        }
     }
 
-    override fun render(it: MainViewState) {
-        toolbar.title = it.title
-        val page = it.page
+    override fun render(viewState: MainViewState) {
+        toolbar.title = viewState.title
+        val page = viewState.page
         when (page) {
             is MainViewState.Page.List -> delegate.showList()
             is MainViewState.Page.Exit -> finish()
@@ -129,6 +130,10 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
                 delegate.showWord(word)
             }
         }
+    }
+
+    override fun events(): Observable<ViewEvent> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun backPresses(): Observable<Any> {

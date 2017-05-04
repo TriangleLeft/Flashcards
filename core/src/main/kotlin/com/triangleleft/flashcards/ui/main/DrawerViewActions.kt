@@ -5,11 +5,11 @@ import com.triangleleft.flashcards.ui.ViewAction
 
 object DrawerViewActions {
     fun progress(): ViewAction<DrawerViewState> {
-        return ViewAction { state -> state.copy(page = IDrawerView.Page.PROGRESS) }
+        return ViewAction { state -> state.copy(page = DrawerView.Page.PROGRESS) }
     }
 
     fun content(): ViewAction<DrawerViewState> {
-        return ViewAction { state -> state.copy(page = IDrawerView.Page.CONTENT) }
+        return ViewAction { state -> state.copy(page = DrawerView.Page.CONTENT) }
     }
 
     fun error(): ViewAction<DrawerViewState>? {

@@ -18,6 +18,7 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent
 import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.BaseFragment
 import com.triangleleft.flashcards.ui.main.MainActivity
 import io.reactivex.Observable
@@ -86,8 +87,8 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         return this
     }
 
-    override fun render(state: VocabularyListViewState) {
-        val page = state.page
+    override fun render(viewState: VocabularyListViewState) {
+        val page = viewState.page
         when (page) {
             is VocabularyListViewState.Page.Progress -> viewFlipper.displayedChild = PROGRESS
             is VocabularyListViewState.Page.Error -> viewFlipper.displayedChild = ERROR
@@ -106,8 +107,8 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
                 }
             }
         }
-        swipeRefresh.isRefreshing = state.isRefreshing
-        if (state.hasRefreshError) {
+        swipeRefresh.isRefreshing = viewState.isRefreshing
+        if (viewState.hasRefreshError) {
             Snackbar.make(vocabList, R.string.vocabulary_list_refresh_error, Snackbar.LENGTH_LONG)
                     .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                         override fun onShown(transientBottomBar: Snackbar?) {
@@ -124,6 +125,10 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
                         swipeRefresh.isRefreshing = true
                     }.show()
         }
+    }
+
+    override fun events(): Observable<ViewEvent> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun refreshes(): Observable<Unit> {

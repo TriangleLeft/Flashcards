@@ -35,8 +35,8 @@ object LoginViewActions {
         return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, hasPasswordError = true) }
     }
 
-    fun genericError(genericError: String): ViewAction<LoginViewState> {
-        return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, genericError = genericError) }
+    fun genericError(): ViewAction<LoginViewState> {
+        return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, hasGenericError = true) }
     }
 
     fun success(): ViewAction<LoginViewState> {

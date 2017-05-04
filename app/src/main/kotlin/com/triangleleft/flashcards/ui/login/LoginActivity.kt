@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import android.widget.ViewFlipper
 import butterknife.Bind
 import butterknife.ButterKnife
@@ -31,7 +32,7 @@ import org.slf4j.LoggerFactory
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginViewState, LoginPresenter>(), ILoginView {
+class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewState, LoginPresenter>(), LoginView {
 
     @Bind(R.id.login_email)
     lateinit var loginView: EditText
@@ -51,6 +52,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
     lateinit var container: View
 
     private val states = PublishSubject.create<LoginViewState>()
+    private val genericErrorShows = PublishSubject.create<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState)
@@ -68,6 +70,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
         states.map { it.hasLoginError }.distinctUntilChanged().subscribe { setLoginErrorVisible(it) }
         states.map { it.hasPasswordError }.distinctUntilChanged().subscribe { setPasswordErrorVisible(it) }
         states.map { it.shouldRememberUser }.distinctUntilChanged().subscribe { setRememberUser(it) }
+        states.map { it.hasGenericError }.filter { it == true }.subscribe { showGenericError() }
     }
 
     override fun inject() {
@@ -81,14 +84,18 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
                 .build()
     }
 
-    override fun getMvpView(): ILoginView {
-        logger.debug("getMvpView() called")
+    override fun getMvpView(): LoginView {
         return this
     }
 
     override fun render(viewState: LoginViewState) {
         logger.debug("render() called with {}", viewState)
         states.onNext(viewState)
+    }
+
+    private fun showGenericError() {
+        Toast.makeText(this, R.string.login_generic_error, Toast.LENGTH_SHORT).show()
+        genericErrorShows.onNext(Any())
     }
 
     private fun showPage(page: LoginViewState.Page) {
@@ -113,7 +120,6 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
 
 
     private fun setLoginButtonEnabled(enabled: Boolean) {
-        logger.debug("setLoginButtonEnabled() called with: enabled = [{}]", enabled)
         loginButton.isEnabled = enabled
         if (enabled) {
             loginButton.background.colorFilter = null
@@ -123,12 +129,10 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
     }
 
     private fun setLogin(login: String?) {
-        logger.debug("setLogin() called with: login = [{}]", login)
         loginView.setText(login)
     }
 
     private fun setPassword(password: String?) {
-        logger.debug("setPassword() called with: password = [{}]", password)
         passwordView.setText(password)
     }
 
@@ -144,21 +148,15 @@ class LoginActivity : BaseActivity<LoginActivityComponent, ILoginView, LoginView
         rememberSwitch.isChecked = rememberUser
     }
 
-    override fun logins(): Observable<String> {
-        return RxTextView.textChanges(loginView).map { it.toString() }
-    }
-
-    override fun passwords(): Observable<String> {
-        return RxTextView.textChanges(passwordView).map { it.toString() }
-    }
-
-    override fun rememberUserChecks(): Observable<Boolean> {
-        return RxCompoundButton.checkedChanges(rememberSwitch)
-    }
-
-    override fun loginEvents(): Observable<LoginEvent> {
-        return RxView.clicks(loginButton)
-                .map { LoginEvent(loginView.text.toString(), passwordView.text.toString()) }
+    override fun events(): Observable<LoginViewEvent> {
+        return Observable.mergeArray(
+                RxTextView.textChanges(loginView).map { SetLoginEvent(it.toString()) },
+                RxTextView.textChanges(passwordView).map { SetPasswordEvent(it.toString()) },
+                RxView.clicks(loginButton)
+                        .map { LoginClickEvent(loginView.text.toString(), passwordView.text.toString()) },
+                RxCompoundButton.checkedChanges(rememberSwitch).map { SetRememberUserEvent(it) },
+                genericErrorShows.map { GenericErrorShownEvent }
+        )
     }
 
     fun hideKeyboard() {

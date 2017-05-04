@@ -33,7 +33,7 @@ public class DrawerPresenterTest {
     @Mock
     SettingsModule settingsModule;
     @Mock
-    IDrawerView view;
+    DrawerView view;
     @Mock
     UserData userData;
     private DrawerPresenter presenter;

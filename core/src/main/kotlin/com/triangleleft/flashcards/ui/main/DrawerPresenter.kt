@@ -21,7 +21,7 @@ import javax.inject.Inject
 @ActivityScope
 class DrawerPresenter @Inject
 constructor(private val mainPresenter: MainPresenter, private val accountModule: AccountModule, private val settingsModule: SettingsModule)
-    : AbstractPresenter<IDrawerView, ViewState>() {
+    : AbstractPresenter<DrawerView, ViewState>() {
 
     var currentLanguage: Language? = null
     private val scheduler: Scheduler? = null
@@ -32,7 +32,7 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
 
     init {
         val userData = accountModule.userData.get()
-        initialState = DrawerViewState(IDrawerView.Page.CONTENT, userData.username, userData.avatar, userData.sortedLanguages, false)
+        initialState = DrawerViewState(DrawerView.Page.CONTENT, userData.username, userData.avatar, userData.sortedLanguages, false)
     }
 
     override fun onCreate(savedViewState: ViewState?) {
@@ -65,7 +65,7 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
                 .subscribe { viewStates.onNext(it) }
     }
 
-    override fun onRebind(view: IDrawerView) {
+    override fun onRebind(view: DrawerView) {
         super.onRebind(view)
 
         disposable = CompositeDisposable()

@@ -23,13 +23,14 @@ import com.squareup.picasso.Picasso
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.main.MainPageComponent
 import com.triangleleft.flashcards.service.settings.Language
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 
-class NavigationView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs), IDrawerView {
+class NavigationView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs), DrawerView {
 
     @Bind(R.id.drawer_list)
     lateinit var recyclerView: RecyclerView
@@ -95,11 +96,11 @@ class NavigationView(context: Context, attrs: AttributeSet) : FrameLayout(contex
 
         states.map { it.page }.distinctUntilChanged().subscribe {
             when (it) {
-                IDrawerView.Page.PROGRESS -> {
+                DrawerView.Page.PROGRESS -> {
                     recyclerView.visibility = View.INVISIBLE
                     progressWheel.visibility = View.VISIBLE
                 }
-                IDrawerView.Page.CONTENT -> {
+                DrawerView.Page.CONTENT -> {
                     recyclerView.visibility = View.VISIBLE
                     progressWheel.visibility = View.INVISIBLE
                 }
@@ -133,8 +134,12 @@ class NavigationView(context: Context, attrs: AttributeSet) : FrameLayout(contex
         return errorShowCompletes
     }
 
-    override fun render(state: DrawerViewState) {
-        states.onNext(state)
+    override fun render(viewState: DrawerViewState) {
+        states.onNext(viewState)
+    }
+
+    override fun events(): Observable<ViewEvent> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     fun setAnimationProgress(value: Float) {
