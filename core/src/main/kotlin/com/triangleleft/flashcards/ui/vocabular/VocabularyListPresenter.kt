@@ -25,7 +25,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
     private val initialState: VocabularyListViewState
 
     init {
-        initialState = VocabularyListViewState(VocabularyListViewState.Page.Progress, false, false)
+        initialState = VocabularyListViewState(VocabularyListViewState.Page.Progress, 0, false, false)
     }
 
     override fun onCreate(savedViewState: VocabularyListViewState?) {
@@ -80,7 +80,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
         // So, when we are saving viewstate, if current one is content, don't save list
         // but save position
         if (page is VocabularyListViewState.Page.Content) {
-            return state.copy(page = VocabularyListViewState.Page.Content(emptyList(), page.selectedPosition))
+            return state.copy(page = VocabularyListViewState.Page.Content(emptyList()))
         } else {
             return state
         }

@@ -30,7 +30,6 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         logger.debug("onCreate() called with: savedInstanceState = [{}]", savedInstanceState);
-        super.onCreate(savedInstanceState);
 
         Optional<Component> restoredComponent =
                 getApplicationComponent().componentManager().restoreComponent(getClass());
@@ -44,6 +43,7 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
             }
             getPresenter().onCreate(viewState);
         }
+        super.onCreate(savedInstanceState);
     }
 
 

@@ -122,10 +122,14 @@ import butterknife.ButterKnife;
         // Check whether we've got some fragments saved
         // NOTE: we actually don't know whether they are attached to proper parents
         // TODO: we can check their ids? or use reflection to get mContainerId (can we also use it to change it?)
+
         vocabularyListFragment = (VocabularyListFragment) getSupportFragmentManager()
                 .findFragmentByTag(VocabularyListFragment.Companion.getTAG());
         // List can be attached only to main_container
         // If needed we would show it later
+        // FIXME: so, as we remove fragment here, it causes it's presenter to be destroyed, and as a result
+        // state lost
+        // so, we can't do this
         if (vocabularyListFragment != null) {
             getSupportFragmentManager().beginTransaction().remove(vocabularyListFragment).commitNow();
         }

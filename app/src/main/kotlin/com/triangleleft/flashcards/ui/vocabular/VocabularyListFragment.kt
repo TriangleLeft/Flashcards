@@ -96,7 +96,7 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyL
                 if (page.list.isNotEmpty()) {
                     viewFlipper.displayedChild = CONTENT
                     vocabularyAdapter.setData(page.list)
-                    vocabularyAdapter.setSelectedPosition(page.selectedPosition)
+                    vocabularyAdapter.setSelectedPosition(viewState.selectedPosition)
                     // If we are in two pane view, it's first time we show data, and we want to select some valid position
                     // simulate click, in order for second panel to display something
                     // TODO: ??
