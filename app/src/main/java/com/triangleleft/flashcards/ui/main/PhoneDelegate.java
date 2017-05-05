@@ -168,7 +168,8 @@ import butterknife.ButterKnife;
     @Override
     public void reloadList() {
         showList();
-        vocabularyListFragment.getPresenter().onLoadList();
+        // TODO: remove as we would use Rx
+        //vocabularyListFragment.getPresenter().onLoadList();
     }
 
     private void onBackPressed() {

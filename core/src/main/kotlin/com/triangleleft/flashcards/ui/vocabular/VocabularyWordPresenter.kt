@@ -3,6 +3,7 @@ package com.triangleleft.flashcards.ui.vocabular
 import com.triangleleft.flashcards.di.scope.FragmentScope
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.ViewAction
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
@@ -11,7 +12,7 @@ import javax.inject.Inject
 
 @FragmentScope
 class VocabularyWordPresenter @Inject
-constructor() : AbstractPresenter<IVocabularyWordView, VocabularyWordViewState>() {
+constructor() : AbstractPresenter<IVocabularyWordView, VocabularyWordViewState, ViewEvent>() {
 
     private val words = PublishSubject.create<VocabularyWord?>()
     private val viewStates = BehaviorSubject.create<VocabularyWordViewState>()

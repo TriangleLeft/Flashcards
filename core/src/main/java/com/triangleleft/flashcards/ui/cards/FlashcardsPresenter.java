@@ -7,6 +7,7 @@ import com.triangleleft.flashcards.service.cards.FlashcardTestData;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.FlashcardWordResult;
 import com.triangleleft.flashcards.service.cards.FlashcardsModule;
+import com.triangleleft.flashcards.ui.ViewEvent;
 import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
@@ -21,7 +22,7 @@ import javax.inject.Inject;
 
 @FunctionsAreNonnullByDefault
 @ActivityScope
-public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, ViewState> {
+public class FlashcardsPresenter extends AbstractPresenter<IFlashcardsView, ViewState, ViewEvent> {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsPresenter.class);
 

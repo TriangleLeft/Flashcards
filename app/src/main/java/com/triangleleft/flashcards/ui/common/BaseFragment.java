@@ -50,7 +50,7 @@ public abstract class BaseFragment<Component extends IComponent, View extends IV
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(getClass().getSimpleName(), getPresenter().getViewState());
+        outState.putSerializable(getClass().getSimpleName(), getPresenter().getInstanceViewState());
     }
 
     @Override

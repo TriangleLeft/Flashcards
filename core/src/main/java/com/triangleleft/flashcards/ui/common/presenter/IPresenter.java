@@ -20,7 +20,7 @@ public interface IPresenter<View extends IView, VS extends ViewState> {
 
     View getView();
 
-    VS getViewState();
+    VS getInstanceViewState();
 
     void onDestroy();
 }

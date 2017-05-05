@@ -92,7 +92,8 @@ public class TabletWideDelegate implements IMainActivityDelegate {
 
     @Override
     public void reloadList() {
-        vocabularyListFragment.getPresenter().onLoadList();
+        // TODO: remove as we would use Rx
+        //vocabularyListFragment.getPresenter().onLoadList();
     }
 
     private void initPages() {

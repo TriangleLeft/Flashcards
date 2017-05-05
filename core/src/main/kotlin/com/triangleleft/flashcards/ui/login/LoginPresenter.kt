@@ -7,12 +7,10 @@ import com.triangleleft.flashcards.service.login.exception.LoginException
 import com.triangleleft.flashcards.service.login.exception.PasswordException
 import com.triangleleft.flashcards.ui.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
+import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
 import javax.inject.Named
@@ -21,21 +19,12 @@ import javax.inject.Named
 @ActivityScope
 class LoginPresenter @Inject
 constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
-            @Named(AbstractPresenter.UI_SCHEDULER) private val uiScheduler: Scheduler)
-    : AbstractPresenter<LoginView, LoginViewState>() {
+            @Named(AbstractPresenter.UI_SCHEDULER) uiScheduler: Scheduler)
+    : AbstractRxPresenter<LoginView, LoginViewState, LoginViewEvent>(uiScheduler) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(LoginPresenter::class.java)
     }
-
-    private val events = PublishSubject.create<LoginViewEvent>()
-//    private val passwords = PublishSubject.create<String>()
-//    private val rememberUserChecks = PublishSubject.create<Boolean>()
-//    private val loginEvents = PublishSubject.create<LoginEvent>()
-
-    private val viewStates = BehaviorSubject.create<LoginViewState>()
-
-    private var disposable = CompositeDisposable()
 
     // If we are already logged, and we have saved user data, advance immediately
     private val initialState: LoginViewState
@@ -48,16 +37,12 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
             return LoginViewState(login, "", false, false, false, false, rememberUser, page)
         }
 
-    override fun getViewState(): LoginViewState {
-        return viewStates.value
-    }
-
     override fun onCreate(savedViewState: LoginViewState?) {
         logger.debug("onCreate() called with savedViewState = [{}]", savedViewState)
 
         // So, if we have any savedViewState, use it, but always change to content page
         // as we don't want to be stuck on progress page
-        val initialState = savedViewState?.copy(page = LoginViewState.Page.CONTENT) ?: initialState
+        val state = savedViewState?.copy(page = LoginViewState.Page.CONTENT) ?: initialState
 
         // Transform login button click into login request
         val loginTransformer = ObservableTransformer<LoginClickEvent, ViewAction<LoginViewState>> { upstream ->
@@ -90,36 +75,8 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
             }
         }
 
-        // TODO: Can be moved to base class?
-        events.compose(transformer)
-                .scan(initialState) { viewState, viewAction -> viewAction.reduce(viewState) }
-                .distinctUntilChanged()
-                .observeOn(uiScheduler)
-                .doOnNext { logger.debug("onNext() {}", it) }
-                .subscribe { state ->
-                    viewStates.onNext(state)
-                }
-
-        // Set initial state
-        viewStates.onNext(initialState)
+        setup(transformer, state)
     }
 
-    @Synchronized override fun onRebind(view: LoginView) {
-        super.onRebind(view)
 
-        // TODO: Could be moved to base class?
-        disposable = CompositeDisposable()
-        // Connect view observables to our publish subjects
-        // Connect view to our behavior subject
-        disposable.addAll(
-                viewStates.subscribe { view.render(it) },
-                view.events().subscribe { events.onNext(it) }
-        )
-    }
-
-    override fun onUnbind() {
-        super.onUnbind()
-
-        disposable.dispose()
-    }
 }

@@ -4,13 +4,14 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.support.annotation.UiThread;
 
+import com.triangleleft.flashcards.ui.ViewEvent;
 import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.view.IView;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractPresenter<View extends IView, VS extends ViewState>
+public abstract class AbstractPresenter<View extends IView<VS, VE>, VS extends ViewState, VE extends ViewEvent>
         implements IPresenter<View, VS> {
 
     public static final String VIEW_EXECUTOR = "viewExecutor";
@@ -32,7 +33,7 @@ public abstract class AbstractPresenter<View extends IView, VS extends ViewState
     }
 
     @Override
-    public VS getViewState() {
+    public VS getInstanceViewState() {
         return null;
     }
 

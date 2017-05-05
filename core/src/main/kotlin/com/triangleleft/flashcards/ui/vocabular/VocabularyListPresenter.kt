@@ -4,29 +4,24 @@ import com.triangleleft.flashcards.di.scope.FragmentScope
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule
 import com.triangleleft.flashcards.ui.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
+import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.Scheduler
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
+import javax.inject.Named
 
 @FragmentScope
 class VocabularyListPresenter @Inject
-constructor(private val vocabularyModule: VocabularyModule, private val navigator: VocabularyNavigator)
-    : AbstractPresenter<IVocabularyListView, VocabularyListViewState>() {
+constructor(private val vocabularyModule: VocabularyModule, private val navigator: VocabularyNavigator,
+            @Named(AbstractPresenter.UI_SCHEDULER) scheduler: Scheduler)
+    : AbstractRxPresenter<VocabularyListView, VocabularyListViewState, VocabularyListEvent>(scheduler) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(VocabularyListPresenter::class.java)
     }
 
-    var disposable: CompositeDisposable = CompositeDisposable()
-    private val refreshes = PublishSubject.create<Any>()
-    private val wordSelections = PublishSubject.create<VocabularyWordSelectEvent>()
-    private val loadListRetries = PublishSubject.create<Any>()
-    private val listScrolls = PublishSubject.create<Int>()
-    private val viewStates = BehaviorSubject.create<VocabularyListViewState>()
     private val initialState: VocabularyListViewState
 
     init {
@@ -36,7 +31,7 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
     override fun onCreate(savedViewState: VocabularyListViewState?) {
         logger.debug("onCreate() called")
 
-        val state = savedViewState ?: initialState
+        val state = savedViewState?.copy(page = VocabularyListViewState.Page.Progress) ?: initialState
 
         val refreshTransformer = ObservableTransformer<Any, ViewAction<VocabularyListViewState>> {
             upstream ->
@@ -58,48 +53,37 @@ constructor(private val vocabularyModule: VocabularyModule, private val navigato
             }
         }
 
-        Observable.merge(
-                refreshes.compose(refreshTransformer),
-                loadListRetries.compose(loadTransformer),
-                // This doOnNext looks ugly
-                wordSelections.doOnNext { navigator.showWord(it.word) }
-                        .map { VocabularyListViewActions.selectWord(it.position) })
-                .scan(state) { state, action -> action.reduce(state) }
-                .distinctUntilChanged()
-                .subscribe { viewStates.onNext(it) }
+        val wordSelectionTransformer = ObservableTransformer<VocabularyListEvent.WordSelect, ViewAction<VocabularyListViewState>> {
+            upstream ->
+            upstream.doOnNext { navigator.showWord(it.word) }.map { VocabularyListViewActions.selectWord(it.position) }
+        }
 
-        // Start load
-        loadListRetries.onNext(Any())
+        val transformer = ObservableTransformer<VocabularyListEvent, ViewAction<VocabularyListViewState>> {
+            events ->
+            events.publish { shared ->
+                Observable.merge(
+                        shared.ofType(VocabularyListEvent.WordSelect::class.java).compose(wordSelectionTransformer),
+                        shared.ofType(VocabularyListEvent.Refresh::class.java).compose(refreshTransformer),
+                        shared.ofType(VocabularyListEvent.Load::class.java).compose(loadTransformer)
+                )
+            }
+        }
+
+        setup(transformer, state)
+        // Start with load
+        viewEvents().onNext(VocabularyListEvent.Load)
     }
 
-    override fun onRebind(view: IVocabularyListView) {
-        super.onRebind(view)
-
-        disposable = CompositeDisposable()
-        disposable.addAll(
-                viewStates.subscribe { view.render(it) },
-                view.refreshes().subscribe { refreshes.onNext(it) },
-                view.wordSelections().subscribe { wordSelections.onNext(it) }
-        )
-    }
-
-    override fun onUnbind() {
-        super.onUnbind()
-        disposable.dispose()
-    }
-
-    fun onLoadList() {
-        logger.debug("onLoadList() called")
-
-        vocabularyModule.loadVocabularyWords()
-
-    }
-
-    fun onRefreshList() {
-        logger.debug("onRefreshList()")
-
-        vocabularyModule.refreshVocabularyWords()
-
+    override fun getInstanceViewState(): VocabularyListViewState {
+        val state = super.getInstanceViewState()
+        val page = state.page
+        // So, when we are saving viewstate, if current one is content, don't save list
+        // but save position
+        if (page is VocabularyListViewState.Page.Content) {
+            return state.copy(page = VocabularyListViewState.Page.Content(emptyList(), page.selectedPosition))
+        } else {
+            return state
+        }
     }
 }
 

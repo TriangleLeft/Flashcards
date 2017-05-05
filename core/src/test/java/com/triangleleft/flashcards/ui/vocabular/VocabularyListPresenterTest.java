@@ -35,7 +35,7 @@ public class VocabularyListPresenterTest {
     @Mock
     VocabularyNavigator navigator;
     @Mock
-    IVocabularyListView view;
+    VocabularyListView view;
     @Mock
     Call<List<VocabularyWord>> mockCall;
     private VocabularyListPresenter presenter;

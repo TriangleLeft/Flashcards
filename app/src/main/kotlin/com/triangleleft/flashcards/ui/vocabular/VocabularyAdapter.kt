@@ -8,7 +8,7 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import io.reactivex.subjects.PublishSubject
 
 class VocabularyAdapter(private val selectable: Boolean,
-                        private val wordSelections: PublishSubject<VocabularyWordSelectEvent>)
+                        private val wordSelections: PublishSubject<VocabularyListEvent.WordSelect>)
     : RecyclerView.Adapter<VocabularyViewHolder>() {
 
     private val NO_POSITION = -1
@@ -30,7 +30,7 @@ class VocabularyAdapter(private val selectable: Boolean,
         holder.show(word, selectable && position == selectedPosition)
         holder.clicks().subscribe {
             setSelectedPosition(position)
-            wordSelections.onNext(VocabularyWordSelectEvent(word, position))
+            wordSelections.onNext(VocabularyListEvent.WordSelect(word, position))
         }
     }
 

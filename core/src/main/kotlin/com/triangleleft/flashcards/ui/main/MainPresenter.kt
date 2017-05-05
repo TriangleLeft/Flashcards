@@ -4,6 +4,7 @@ import com.triangleleft.flashcards.di.scope.ActivityScope
 import com.triangleleft.flashcards.service.account.AccountModule
 import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
 import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator
 import io.reactivex.Observable
@@ -16,7 +17,7 @@ import javax.inject.Inject
 @ActivityScope
 class MainPresenter @Inject
 constructor(accountModule: AccountModule)
-    : AbstractPresenter<IMainView, MainViewState>(), VocabularyNavigator {
+    : AbstractPresenter<IMainView, MainViewState, ViewEvent>(), VocabularyNavigator {
 
 
     private val wordClicks = PublishSubject.create<VocabularyWord>()

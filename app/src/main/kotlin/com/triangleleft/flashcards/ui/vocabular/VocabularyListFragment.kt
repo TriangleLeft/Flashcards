@@ -18,14 +18,13 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.vocabular.DaggerVocabularyListComponent
 import com.triangleleft.flashcards.di.vocabular.VocabularyListComponent
-import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.BaseFragment
 import com.triangleleft.flashcards.ui.main.MainActivity
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 
-class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabularyListView, VocabularyListViewState, VocabularyListPresenter>(), IVocabularyListView {
+class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyListView, VocabularyListViewState, VocabularyListPresenter>(), VocabularyListView {
 
     companion object {
 
@@ -50,7 +49,7 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
     private lateinit var vocabularyAdapter: VocabularyAdapter
     private var twoPane: Boolean = false
 
-    private val wordSelections = PublishSubject.create<VocabularyWordSelectEvent>()
+    private val wordSelections = PublishSubject.create<VocabularyListEvent.WordSelect>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -64,7 +63,6 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         vocabList.adapter = vocabularyAdapter
         vocabList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
-        swipeRefresh.setOnRefreshListener { presenter.onRefreshList() }
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.green)
 
         return view
@@ -83,7 +81,7 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         return DaggerVocabularyListComponent.builder().mainPageComponent((activity as MainActivity).component).build()
     }
 
-    override fun getMvpView(): IVocabularyListView {
+    override fun getMvpView(): VocabularyListView {
         return this
     }
 
@@ -127,19 +125,11 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, IVocabulary
         }
     }
 
-    override fun events(): Observable<ViewEvent> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun refreshes(): Observable<Unit> {
-        return swipeRefresh.refreshes()
-    }
-
-    override fun wordSelections(): Observable<VocabularyWordSelectEvent> {
-        return wordSelections
-    }
-
-    override fun loadListRetires(): Observable<Unit> {
-        return retryLoadButton.clicks()
+    override fun events(): Observable<VocabularyListEvent> {
+        return Observable.merge(
+                swipeRefresh.refreshes().map { VocabularyListEvent.Refresh },
+                wordSelections,
+                retryLoadButton.clicks().map { VocabularyListEvent.Load }
+        )
     }
 }

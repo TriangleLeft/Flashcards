@@ -69,7 +69,7 @@ public abstract class BaseActivity<Component extends IComponent, View extends IV
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(getClass().getSimpleName(), getPresenter().getViewState());
+        outState.putSerializable(getClass().getSimpleName(), getPresenter().getInstanceViewState());
     }
 
     @Override

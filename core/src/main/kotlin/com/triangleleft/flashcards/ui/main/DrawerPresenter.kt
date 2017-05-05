@@ -5,7 +5,7 @@ import com.triangleleft.flashcards.service.account.AccountModule
 import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.service.settings.SettingsModule
 import com.triangleleft.flashcards.ui.ViewAction
-import com.triangleleft.flashcards.ui.ViewState
+import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault
 import io.reactivex.Observable
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @ActivityScope
 class DrawerPresenter @Inject
 constructor(private val mainPresenter: MainPresenter, private val accountModule: AccountModule, private val settingsModule: SettingsModule)
-    : AbstractPresenter<DrawerView, ViewState>() {
+    : AbstractPresenter<DrawerView, DrawerViewState, ViewEvent>() {
 
     var currentLanguage: Language? = null
     private val scheduler: Scheduler? = null
@@ -35,7 +35,7 @@ constructor(private val mainPresenter: MainPresenter, private val accountModule:
         initialState = DrawerViewState(DrawerView.Page.CONTENT, userData.username, userData.avatar, userData.sortedLanguages, false)
     }
 
-    override fun onCreate(savedViewState: ViewState?) {
+    override fun onCreate(savedViewState: DrawerViewState?) {
         super.onCreate(savedViewState)
 
         val state = initialState
