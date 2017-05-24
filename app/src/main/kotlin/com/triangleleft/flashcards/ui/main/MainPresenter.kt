@@ -6,7 +6,7 @@ import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
-import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.PublishSubject

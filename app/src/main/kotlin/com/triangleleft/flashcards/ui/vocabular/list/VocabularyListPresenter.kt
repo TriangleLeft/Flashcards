@@ -5,7 +5,7 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.common.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
-import com.triangleleft.flashcards.ui.vocabular.VocabularyNavigator
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator
 import io.reactivex.Observable
 import io.reactivex.Observable.just
 import io.reactivex.ObservableTransformer

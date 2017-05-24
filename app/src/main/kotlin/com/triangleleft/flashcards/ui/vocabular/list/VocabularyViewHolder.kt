@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.vocabular
+package com.triangleleft.flashcards.ui.vocabular.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -8,6 +8,7 @@ import butterknife.ButterKnife
 import com.jakewharton.rxbinding2.view.RxView
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.vocabular.VocabularyStrengthView
 import io.reactivex.Observable
 
 class VocabularyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

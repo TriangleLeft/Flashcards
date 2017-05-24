@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.vocabular
+package com.triangleleft.flashcards.ui.vocabular.word
 
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -18,6 +18,7 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.BaseFragment
 import com.triangleleft.flashcards.ui.main.MainActivity
+import com.triangleleft.flashcards.ui.vocabular.VocabularyStrengthView
 import io.reactivex.Observable
 import org.slf4j.LoggerFactory
 import java.io.IOException

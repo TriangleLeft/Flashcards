@@ -2,8 +2,8 @@ package com.triangleleft.flashcards.di.vocabular;
 
 import com.triangleleft.flashcards.di.main.MainPageComponent;
 import com.triangleleft.flashcards.di.scope.FragmentScope;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordPresenter;
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyWordFragment;
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyWordPresenter;
 
 import dagger.Component;
 

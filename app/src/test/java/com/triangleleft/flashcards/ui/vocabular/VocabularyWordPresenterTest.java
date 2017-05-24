@@ -16,6 +16,9 @@
 
 package com.triangleleft.flashcards.ui.vocabular;
 
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyWordPresenter;
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyWordView;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

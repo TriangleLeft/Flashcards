@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
-import com.triangleleft.flashcards.ui.vocabular.VocabularyViewHolder
 import io.reactivex.subjects.PublishSubject
 
 class VocabularyAdapter(

@@ -5,6 +5,7 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListPresenter;
 import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListView;
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator;
 
 import org.junit.Before;
 import org.junit.Test;

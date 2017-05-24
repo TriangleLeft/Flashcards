@@ -16,8 +16,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
 import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListFragment;
+import com.triangleleft.flashcards.ui.vocabular.word.VocabularyWordFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
