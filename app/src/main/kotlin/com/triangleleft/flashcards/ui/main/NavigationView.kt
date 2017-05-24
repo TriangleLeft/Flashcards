@@ -25,6 +25,9 @@ import com.triangleleft.flashcards.di.main.MainPageComponent
 import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider
+import com.triangleleft.flashcards.ui.main.drawer.DrawerLanguagesAdapter
+import com.triangleleft.flashcards.ui.main.drawer.DrawerPresenter
+import com.triangleleft.flashcards.ui.main.drawer.DrawerView
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory

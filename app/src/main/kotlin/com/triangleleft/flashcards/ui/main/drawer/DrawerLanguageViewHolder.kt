@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.main
+package com.triangleleft.flashcards.ui.main.drawer
 
 import android.graphics.Typeface
 import android.support.v4.content.ContextCompat

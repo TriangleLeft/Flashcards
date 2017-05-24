@@ -3,6 +3,8 @@ package com.triangleleft.flashcards.ui.main;
 import com.triangleleft.flashcards.service.account.AccountModule;
 import com.triangleleft.flashcards.service.settings.SettingsModule;
 import com.triangleleft.flashcards.service.settings.UserData;
+import com.triangleleft.flashcards.ui.main.drawer.DrawerPresenter;
+import com.triangleleft.flashcards.ui.main.drawer.DrawerView;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.main
+package com.triangleleft.flashcards.ui.main.drawer
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

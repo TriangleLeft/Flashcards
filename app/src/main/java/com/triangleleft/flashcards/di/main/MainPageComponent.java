@@ -2,11 +2,11 @@ package com.triangleleft.flashcards.di.main;
 
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.scope.ActivityScope;
-import com.triangleleft.flashcards.ui.main.DrawerPresenter;
 import com.triangleleft.flashcards.ui.main.FlashcardSettingsDialog;
 import com.triangleleft.flashcards.ui.main.MainActivity;
 import com.triangleleft.flashcards.ui.main.MainPresenter;
 import com.triangleleft.flashcards.ui.main.NavigationView;
+import com.triangleleft.flashcards.ui.main.drawer.DrawerPresenter;
 import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator;
 
 import dagger.Component;
