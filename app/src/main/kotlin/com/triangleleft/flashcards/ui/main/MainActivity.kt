@@ -21,7 +21,7 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 
-class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, MainPresenter>(), IMainView {
+class MainActivity : BaseActivity<MainPageComponent, MainView, MainView.State, MainPresenter>(), MainView {
 
     @Bind(R.id.toolbar)
     lateinit var toolbar: Toolbar
@@ -76,7 +76,7 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
                 .build()
     }
 
-    override val mvpView: IMainView
+    override val mvpView: MainView
         get() = this
 
     override fun onBackPressed() {
@@ -119,16 +119,13 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
         //        }
     }
 
-    override fun render(viewState: MainViewState) {
+    override fun render(viewState: MainView.State) {
         toolbar.title = viewState.title
         val page = viewState.page
         when (page) {
-            is MainViewState.Page.List -> delegate.showList()
-            is MainViewState.Page.Exit -> finish()
-            is MainViewState.Page.Word -> {
-                val word = Optional.ofNullable(page.word)
-                delegate.showWord(word)
-            }
+            is MainView.State.Page.List -> delegate.showList()
+            is MainView.State.Page.Exit -> finish()
+            is MainView.State.Page.Word -> delegate.showWord(Optional.ofNullable(page.word))
         }
     }
 

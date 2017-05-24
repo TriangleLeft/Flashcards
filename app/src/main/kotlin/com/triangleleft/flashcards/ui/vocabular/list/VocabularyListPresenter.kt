@@ -1,14 +1,15 @@
 package com.triangleleft.flashcards.ui.vocabular.list
 
+import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.di.scope.FragmentScope
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.common.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
-import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator
 import io.reactivex.Observable
 import io.reactivex.Observable.just
 import io.reactivex.ObservableTransformer
+import io.reactivex.Observer
 import io.reactivex.Scheduler
 import org.slf4j.LoggerFactory
 import javax.inject.Inject
@@ -19,7 +20,8 @@ class VocabularyListPresenter
 @Inject
 constructor(
         private val vocabularyModule: VocabularyModule,
-        private val navigator: VocabularyNavigator,
+        @Named(MainPageModule.WORD_SELECTIONS)
+        private val wordSelections: Observer<VocabularyWord>,
         @Named(UI_SCHEDULER) scheduler: Scheduler)
     : AbstractRxPresenter<VocabularyListView, VocabularyListView.State, VocabularyListView.Event>(scheduler) {
 
@@ -38,7 +40,7 @@ constructor(
             events.flatMap {
                 when (it) {
                     is VocabularyListView.Event.WordSelect -> {
-                        navigator.showWord(it.word)
+                        wordSelections.onNext(it.word)
                         just(VocabularyListViewActions.selectWord(it.position))
                     }
                     VocabularyListView.Event.Refresh -> refreshWords()

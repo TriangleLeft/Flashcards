@@ -1,12 +1,13 @@
 package com.triangleleft.flashcards.ui.main
 
+import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.di.scope.ActivityScope
 import com.triangleleft.flashcards.service.account.AccountModule
 import com.triangleleft.flashcards.service.settings.Language
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
 import com.triangleleft.flashcards.ui.ViewEvent
+import com.triangleleft.flashcards.ui.common.ViewAction
 import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter
-import com.triangleleft.flashcards.ui.vocabular.word.VocabularyNavigator
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.PublishSubject
@@ -15,38 +16,30 @@ import javax.inject.Inject
 import javax.inject.Named
 
 @ActivityScope
-class MainPresenter @Inject constructor(
-        accountModule: AccountModule,
-        @Named(AbstractRxPresenter.UI_SCHEDULER) scheduler: Scheduler)
-    : AbstractRxPresenter<IMainView, MainViewState, ViewEvent>(scheduler), VocabularyNavigator {
+class MainPresenter
+@Inject
+constructor(
+        private val accountModule: AccountModule,
+        @Named(MainPageModule.WORD_SELECTIONS)
+        private val wordSelections: Observable<VocabularyWord>,
+        @Named(AbstractRxPresenter.UI_SCHEDULER)
+        scheduler: Scheduler)
+    : AbstractRxPresenter<MainView, MainView.State, ViewEvent>(scheduler) {
 
-
-    private val wordClicks = PublishSubject.create<VocabularyWord>()
     private val backPresses = PublishSubject.create<Any>()
-    private val initialState: MainViewState
 
-    init {
+    override fun onCreate(savedViewState: MainView.State?) {
+
         val userData = accountModule.userData.get()
-
         // It's possible that we are using account that doesn't have any languages
         val title = userData.currentLearningLanguage?.name ?: ""
+        val initialState = savedViewState ?: MainView.State(title, false, MainView.State.Page.List)
 
-        initialState = MainViewState(title, false, MainViewState.Page.List)
-    }
+        val actions = Observable.merge(
+                backPresses.map { MainViewActions.backpress() },
+                wordSelections.map { MainViewActions.wordClick(it) })
 
-    override fun onCreate(savedViewState: MainViewState?) {
-        val initialState = savedViewState ?: initialState
-
-        Observable.merge(
-                backPresses.map { MainViewActions.backress() },
-                wordClicks.map { MainViewActions.wordClick(it) })
-                .scan(initialState) { state, action -> action.reduce(state) }
-                .distinctUntilChanged()
-                .subscribe { viewStates.onNext(it) }
-    }
-
-    override fun showWord(word: VocabularyWord) {
-        wordClicks.onNext(word)
+        setup(actions, initialState)
     }
 
     fun onLanguageChanged(currentLanguage: Language) {
@@ -57,13 +50,22 @@ class MainPresenter @Inject constructor(
     }
 
 
-    private enum class Page {
-        LIST,
-        WORD
+    object MainViewActions {
+
+        fun backpress(): ViewAction<MainView.State> {
+            return ViewAction {
+                // Backing from list show exit, otherwise we should show list
+                val nextPage = if (it.page is MainView.State.Page.List) MainView.State.Page.Exit else MainView.State.Page.List
+                it.copy(page = nextPage)
+            }
+        }
+
+        fun wordClick(word: VocabularyWord): ViewAction<MainView.State> {
+            return ViewAction { it.copy(page = MainView.State.Page.Word(word)) }
+        }
     }
 
     companion object {
-
         private val logger = LoggerFactory.getLogger(MainPresenter::class.java)
     }
 }

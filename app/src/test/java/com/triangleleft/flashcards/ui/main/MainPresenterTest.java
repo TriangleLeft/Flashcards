@@ -19,7 +19,7 @@ public class MainPresenterTest {
     @Mock
     AccountModule accountModule;
     @Mock
-    IMainView view;
+    MainView view;
     @Mock
     UserData userData;
 

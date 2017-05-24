@@ -77,6 +77,10 @@ public class TabletWideDelegate implements IMainActivityDelegate {
     @Override
     public void showWord(Optional<VocabularyWord> word) {
         // Word is always show, so just update it's content
+        // FIXME: while it works in our case, would would we do if it's activity?
+        // What if we don't own it?
+        // I guess we should pass it through fragment
+        // Fragment would then send an event to presenter
         vocabularyWordFragment.getPresenter().showWord(word.orElse(null));
     }
 

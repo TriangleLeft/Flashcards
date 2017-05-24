@@ -23,7 +23,7 @@ import io.reactivex.Observable
 import org.slf4j.LoggerFactory
 import java.io.IOException
 
-class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, VocabularyWordView, VocabularyWordViewState, VocabularyWordPresenter>(), VocabularyWordView {
+class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, VocabularyWordView, VocabularyWordView.State, VocabularyWordPresenter>(), VocabularyWordView {
 
     @Bind(R.id.vocabulary_word_title)
     lateinit var titleView: TextView
@@ -47,9 +47,9 @@ class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, VocabularyW
     private val voiceOverPlayer = VoiceOverPlayer()
     private var word: VocabularyWord? = null
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_vocabular_word, container, false)
+        val view = inflater.inflate(R.layout.fragment_vocabular_word, container, false)
         ButterKnife.bind(this, view)
         return view
     }
@@ -83,7 +83,7 @@ class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, VocabularyW
         voiceOverPlayer.voice(word!!)
     }
 
-    override fun render(viewState: VocabularyWordViewState) {
+    override fun render(viewState: VocabularyWordView.State) {
         val word = viewState.word
         if (word != null) {
             flipper.displayedChild = CONTENT
