@@ -1,14 +1,16 @@
-package com.triangleleft.flashcards.ui.vocabular
+package com.triangleleft.flashcards.ui.vocabular.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.vocabular.VocabularyViewHolder
 import io.reactivex.subjects.PublishSubject
 
-class VocabularyAdapter(private val selectable: Boolean,
-                        private val wordSelections: PublishSubject<VocabularyListEvent.WordSelect>)
+class VocabularyAdapter(
+        private val selectable: Boolean,
+        private val wordSelections: PublishSubject<VocabularyListView.Event.WordSelect>)
     : RecyclerView.Adapter<VocabularyViewHolder>() {
 
     private val NO_POSITION = -1
@@ -30,7 +32,7 @@ class VocabularyAdapter(private val selectable: Boolean,
         holder.show(word, selectable && position == selectedPosition)
         holder.clicks().subscribe {
             setSelectedPosition(position)
-            wordSelections.onNext(VocabularyListEvent.WordSelect(word, position))
+            wordSelections.onNext(VocabularyListView.Event.WordSelect(word, position))
         }
     }
 

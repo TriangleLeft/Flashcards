@@ -1,4 +1,4 @@
-package com.triangleleft.flashcards.ui.vocabular
+package com.triangleleft.flashcards.ui.vocabular.list
 
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
@@ -24,7 +24,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import org.slf4j.LoggerFactory
 
-class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyListView, VocabularyListViewState, VocabularyListPresenter>(), VocabularyListView {
+class VocabularyListFragment
+    : BaseFragment<VocabularyListComponent, VocabularyListView, VocabularyListView.State, VocabularyListPresenter>(),
+        VocabularyListView {
 
     companion object {
 
@@ -49,7 +51,7 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyL
     private lateinit var vocabularyAdapter: VocabularyAdapter
     private var twoPane: Boolean = false
 
-    private val wordSelections = PublishSubject.create<VocabularyListEvent.WordSelect>()
+    private val wordSelections = PublishSubject.create<VocabularyListView.Event.WordSelect>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -84,12 +86,12 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyL
     override val mvpView: VocabularyListView
         get() = this
 
-    override fun render(viewState: VocabularyListViewState) {
+    override fun render(viewState: VocabularyListView.State) {
         val page = viewState.page
         when (page) {
-            is VocabularyListViewState.Page.Progress -> viewFlipper.displayedChild = PROGRESS
-            is VocabularyListViewState.Page.Error -> viewFlipper.displayedChild = ERROR
-            is VocabularyListViewState.Page.Content -> {
+            is VocabularyListView.State.Page.Progress -> viewFlipper.displayedChild = PROGRESS
+            is VocabularyListView.State.Page.Error -> viewFlipper.displayedChild = ERROR
+            is VocabularyListView.State.Page.Content -> {
                 // On one hand this looks like a business logic
                 // On the other, it's definitely a "list render"
                 if (page.list.isNotEmpty()) {
@@ -124,11 +126,11 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyL
         }
     }
 
-    override fun events(): Observable<VocabularyListEvent> {
+    override fun events(): Observable<VocabularyListView.Event> {
         return Observable.merge(
-                swipeRefresh.refreshes().map { VocabularyListEvent.Refresh },
+                swipeRefresh.refreshes().map { VocabularyListView.Event.Refresh },
                 wordSelections,
-                retryLoadButton.clicks().map { VocabularyListEvent.Load }
+                retryLoadButton.clicks().map { VocabularyListView.Event.Load }
         )
     }
 }

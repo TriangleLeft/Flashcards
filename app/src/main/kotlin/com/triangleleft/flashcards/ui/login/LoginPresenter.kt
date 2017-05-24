@@ -18,55 +18,45 @@ import javax.inject.Named
 
 
 @ActivityScope
-class LoginPresenter @Inject
-constructor(private val accountModule: AccountModule, private val loginModule: LoginModule,
-            @Named(AbstractRxPresenter.UI_SCHEDULER) uiScheduler: Scheduler)
-    : AbstractRxPresenter<LoginView, LoginViewState, LoginViewEvent>(uiScheduler) {
+class LoginPresenter
+@Inject
+constructor(
+        private val accountModule: AccountModule,
+        private val loginModule: LoginModule,
+        @Named(AbstractRxPresenter.UI_SCHEDULER) uiScheduler: Scheduler)
+    : AbstractRxPresenter<LoginView, LoginView.State, LoginView.Event>(uiScheduler) {
 
     companion object {
         private val logger = LoggerFactory.getLogger(LoginPresenter::class.java)
     }
 
-    // If we are already logged, and we have saved user data, advance immediately
-    private val initialState: LoginViewState
-        get() {
-            val login = accountModule.login.orElse("")
-            val rememberUser = accountModule.shouldRememberUser()
-            val isLogged = rememberUser && accountModule.userData.isPresent && accountModule.userId.isPresent
-            val page = if (isLogged) LoginViewState.Page.SUCCESS else LoginViewState.Page.CONTENT
-
-            return LoginViewState(login, "", false, false, false, false, rememberUser, page)
-        }
-
-    override fun onCreate(savedViewState: LoginViewState?) {
+    override fun onCreate(savedViewState: LoginView.State?) {
         logger.debug("onCreate() called with savedViewState = [{}]", savedViewState)
+
+        val login = accountModule.login.orElse("")
+        val rememberUser = accountModule.shouldRememberUser()
+        val isLogged = rememberUser && accountModule.userData.isPresent && accountModule.userId.isPresent
+        // If we are already logged, and we have saved user data, advance immediately
+        val page = if (isLogged) LoginView.State.Page.SUCCESS else LoginView.State.Page.CONTENT
+        val initialState: LoginView.State = LoginView.State(login, "", false, false, false, false, rememberUser, page)
 
         // So, if we have any savedViewState, use it, but always change to content page
         // as we don't want to be stuck on progress page
-        val state = savedViewState?.copy(page = LoginViewState.Page.CONTENT) ?: initialState
+        val state = savedViewState?.copy(page = LoginView.State.Page.CONTENT) ?: initialState
 
         // Map each event to appropriate view action
-        val transformer = ObservableTransformer<LoginViewEvent, ViewAction<LoginViewState>> {
+        val transformer = ObservableTransformer<LoginView.Event, ViewAction<LoginView.State>> {
             events ->
             events.flatMap {
                 when (it) {
-                    is SetLoginEvent -> just(LoginViewActions.setLogin(it.login))
-                    is SetPasswordEvent -> just(LoginViewActions.setPassword(it.password))
-                    is SetRememberUserEvent -> {
+                    is LoginView.Event.SetLoginEvent -> just(LoginViewActions.setLogin(it.login))
+                    is LoginView.Event.SetPasswordEvent -> just(LoginViewActions.setPassword(it.password))
+                    is LoginView.Event.SetRememberUserEvent -> {
                         accountModule.setRememberUser(it.rememberUser)
                         just(LoginViewActions.setRememberUser(it.rememberUser))
                     }
-                    is GenericErrorShownEvent -> Observable.empty()
-                    is LoginClickEvent -> loginModule.login(it.login, it.password)
-                            .map { _ -> LoginViewActions.success() }
-                            .startWith(LoginViewActions.progress())
-                            .onErrorReturn {
-                                when (it) {
-                                    is LoginException -> LoginViewActions.loginError()
-                                    is PasswordException -> LoginViewActions.passwordError()
-                                    else -> LoginViewActions.genericError()
-                                }
-                            }
+                    is LoginView.Event.GenericErrorShownEvent -> Observable.empty()
+                    is LoginView.Event.LoginClickEvent -> login(it.login, it.password)
                 }
             }
         }
@@ -74,13 +64,26 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
         setup(viewEvents().compose(transformer), state)
     }
 
+    fun login(login: String, password: String): Observable<ViewAction<LoginView.State>> {
+        return loginModule.login(login, password)
+                .map { _ -> LoginViewActions.success() }
+                .startWith(LoginViewActions.progress())
+                .onErrorReturn {
+                    when (it) {
+                        is LoginException -> LoginViewActions.loginError()
+                        is PasswordException -> LoginViewActions.passwordError()
+                        else -> LoginViewActions.genericError()
+                    }
+                }
+    }
+
     private object LoginViewActions {
 
-        fun setLogin(login: String): ViewAction<LoginViewState> {
+        fun setLogin(login: String): ViewAction<LoginView.State> {
             return ViewAction { it.copy(login = login, loginButtonEnabled = isLoginButtonEnabled(login, it.password)) }
         }
 
-        fun setPassword(password: String): ViewAction<LoginViewState> {
+        fun setPassword(password: String): ViewAction<LoginView.State> {
             return ViewAction { it.copy(password = password, loginButtonEnabled = isLoginButtonEnabled(it.login, password)) }
         }
 
@@ -88,28 +91,28 @@ constructor(private val accountModule: AccountModule, private val loginModule: L
             return TextUtils.hasText(login) && TextUtils.hasText(password)
         }
 
-        fun setRememberUser(rememberUser: Boolean): ViewAction<LoginViewState> {
+        fun setRememberUser(rememberUser: Boolean): ViewAction<LoginView.State> {
             return ViewAction { it.copy(shouldRememberUser = rememberUser) }
         }
 
-        fun loginError(): ViewAction<LoginViewState> {
-            return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, hasLoginError = true) }
+        fun loginError(): ViewAction<LoginView.State> {
+            return ViewAction { it.copy(page = LoginView.State.Page.CONTENT, hasLoginError = true) }
         }
 
-        fun passwordError(): ViewAction<LoginViewState> {
-            return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, hasPasswordError = true) }
+        fun passwordError(): ViewAction<LoginView.State> {
+            return ViewAction { it.copy(page = LoginView.State.Page.CONTENT, hasPasswordError = true) }
         }
 
-        fun genericError(): ViewAction<LoginViewState> {
-            return ViewAction { it.copy(page = LoginViewState.Page.CONTENT, hasGenericError = true) }
+        fun genericError(): ViewAction<LoginView.State> {
+            return ViewAction { it.copy(page = LoginView.State.Page.CONTENT, hasGenericError = true) }
         }
 
-        fun success(): ViewAction<LoginViewState> {
-            return ViewAction { it.copy(page = LoginViewState.Page.SUCCESS) }
+        fun success(): ViewAction<LoginView.State> {
+            return ViewAction { it.copy(page = LoginView.State.Page.SUCCESS) }
         }
 
-        fun progress(): ViewAction<LoginViewState> {
-            return ViewAction { it.copy(page = LoginViewState.Page.PROGRESS) }
+        fun progress(): ViewAction<LoginView.State> {
+            return ViewAction { it.copy(page = LoginView.State.Page.PROGRESS) }
         }
     }
 

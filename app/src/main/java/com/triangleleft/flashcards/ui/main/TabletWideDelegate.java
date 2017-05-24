@@ -10,8 +10,8 @@ import com.annimon.stream.Optional;
 import com.triangleleft.flashcards.R;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
 import com.triangleleft.flashcards.ui.common.DrawableUtils;
-import com.triangleleft.flashcards.ui.vocabular.VocabularyListFragment;
 import com.triangleleft.flashcards.ui.vocabular.VocabularyWordFragment;
+import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

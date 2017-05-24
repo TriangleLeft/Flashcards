@@ -3,6 +3,8 @@ package com.triangleleft.flashcards.ui.vocabular;
 import com.triangleleft.flashcards.Call;
 import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord;
+import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListPresenter;
+import com.triangleleft.flashcards.ui.vocabular.list.VocabularyListView;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory
 /**
  * A login screen that offers login via email/password.
  */
-class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewState, LoginPresenter>(), LoginView {
+class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginView.State, LoginPresenter>(), LoginView {
 
     @Bind(R.id.login_email)
     lateinit var loginView: EditText
@@ -53,7 +53,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
     @Bind(R.id.login_container)
     lateinit var container: View
 
-    private val states = PublishSubject.create<LoginViewState>()
+    private val states = PublishSubject.create<LoginView.State>()
     private val genericErrorShows = PublishSubject.create<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +89,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
     override val mvpView: LoginView
         get() = this
 
-    override fun render(viewState: LoginViewState) {
+    override fun render(viewState: LoginView.State) {
         logger.debug("render() called with {}", viewState)
         states.onNext(viewState)
     }
@@ -99,10 +99,10 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
         genericErrorShows.onNext(Any())
     }
 
-    private fun showPage(page: LoginViewState.Page) {
+    private fun showPage(page: LoginView.State.Page) {
         when (page) {
-            LoginViewState.Page.PROGRESS -> flipperView.displayedChild = PROGRESS
-            LoginViewState.Page.CONTENT -> {
+            LoginView.State.Page.PROGRESS -> flipperView.displayedChild = PROGRESS
+            LoginView.State.Page.CONTENT -> {
                 flipperView.displayedChild = CONTENT
                 if (loginView.error != null) {
                     loginView.requestFocus()
@@ -110,7 +110,7 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
                     passwordView.requestFocus()
                 }
             }
-            LoginViewState.Page.SUCCESS -> {
+            LoginView.State.Page.SUCCESS -> {
                 finish()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
@@ -149,14 +149,15 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
         rememberSwitch.isChecked = rememberUser
     }
 
-    override fun events(): Observable<LoginViewEvent> {
+    override fun events(): Observable<LoginView.Event> {
         return Observable.mergeArray(
-                RxTextView.textChanges(loginView).map { SetLoginEvent(it.toString()) },
-                RxTextView.textChanges(passwordView).map { SetPasswordEvent(it.toString()) },
-                RxView.clicks(loginButton)
-                        .map { LoginClickEvent(loginView.text.toString(), passwordView.text.toString()) },
-                RxCompoundButton.checkedChanges(rememberSwitch).map { SetRememberUserEvent(it) },
-                genericErrorShows.map { GenericErrorShownEvent }
+                RxTextView.textChanges(loginView).map { LoginView.Event.SetLoginEvent(it.toString()) },
+                RxTextView.textChanges(passwordView).map { LoginView.Event.SetPasswordEvent(it.toString()) },
+                RxView.clicks(loginButton).map {
+                    LoginView.Event.LoginClickEvent(loginView.text.toString(), passwordView.text.toString())
+                },
+                RxCompoundButton.checkedChanges(rememberSwitch).map { LoginView.Event.SetRememberUserEvent(it) },
+                genericErrorShows.map { LoginView.Event.GenericErrorShownEvent }
         )
     }
 
