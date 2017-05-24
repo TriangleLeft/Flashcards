@@ -24,7 +24,7 @@ public abstract class Call<T> {
         return new Call<T>() {
             @Override
             public void enqueue(Action<T> onData, Action<Throwable> onError) {
-                onData.call(data);
+
             }
 
             @Override
@@ -38,7 +38,7 @@ public abstract class Call<T> {
         return new Call<T>() {
             @Override
             public void enqueue(Action<T> onData, Action<Throwable> onError) {
-                onError.call(throwable);
+
             }
 
             @Override
@@ -53,7 +53,7 @@ public abstract class Call<T> {
     public abstract void cancel();
 
     public void enqueue(Observer<T> observer) {
-        enqueue(observer::onNext, observer::onError);
+
     }
 
     public <M> Call<M> map(Function<T, M> mapper) {
@@ -61,12 +61,12 @@ public abstract class Call<T> {
         return new Call<M>() {
             @Override
             public void enqueue(Action<M> onData, Action<Throwable> onError) {
-                self.enqueue(data -> onData.call(mapper.apply(data)), onError::call);
+
             }
 
             @Override
             public void cancel() {
-                self.cancel();
+
             }
         };
     }

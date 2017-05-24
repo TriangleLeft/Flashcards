@@ -5,7 +5,11 @@ import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 @FunctionsAreNonnullByDefault
 public class Actions {
     public static <T> Action<T> empty() {
-        return data -> {
+        return new Action<T>() {
+            @Override
+            public void call(T data) {
+
+            }
         };
     }
 }

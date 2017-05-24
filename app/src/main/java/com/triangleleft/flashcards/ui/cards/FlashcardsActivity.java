@@ -21,6 +21,7 @@ import com.triangleleft.flashcards.di.cards.CardsComponent;
 import com.triangleleft.flashcards.di.cards.DaggerCardsComponent;
 import com.triangleleft.flashcards.service.cards.FlashcardWord;
 import com.triangleleft.flashcards.service.cards.ReviewDirection;
+import com.triangleleft.flashcards.ui.FlashcardsApplication;
 import com.triangleleft.flashcards.ui.ViewState;
 import com.triangleleft.flashcards.ui.common.BaseActivity;
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
@@ -37,17 +38,17 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 
 @FunctionsAreNonnullByDefault
-public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcardsView, ViewState, FlashcardsPresenter> implements
-        IFlashcardsView {
+public class FlashcardsActivity extends BaseActivity<CardsComponent, FlashcardsView, ViewState, FlashcardsPresenter>
+        implements
+        FlashcardsView {
 
+    public static final String REVEAL_X = "revealX";
+    public static final String REVEAL_Y = "revealY";
     private static final int PROGRESS = 0;
     private static final int CARDS = 1;
     private static final int RESULT_NO_ERRORS = 2;
     private static final int RESULT_ERRORS = 3;
     private static final int ERROR = 4;
-    public static final String REVEAL_X = "revealX";
-    public static final String REVEAL_Y = "revealY";
-
     @Bind(R.id.view_flipper)
     ViewFlipper viewFlipper;
     @Bind(R.id.swipe_deck)
@@ -185,12 +186,14 @@ public class FlashcardsActivity extends BaseActivity<CardsComponent, IFlashcards
     @NonNull
     @Override
     protected CardsComponent buildComponent() {
-        return DaggerCardsComponent.builder().applicationComponent(getApplicationComponent()).build();
+        return DaggerCardsComponent.builder()
+                .applicationComponent(((FlashcardsApplication) getApplication()).getComponent())
+                .build();
     }
 
     @NonNull
     @Override
-    protected IFlashcardsView getMvpView() {
+    protected FlashcardsView getMvpView() {
         return this;
     }
 

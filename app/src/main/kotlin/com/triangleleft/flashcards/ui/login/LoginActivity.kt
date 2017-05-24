@@ -23,6 +23,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView
 import com.triangleleft.flashcards.R
 import com.triangleleft.flashcards.di.login.DaggerLoginActivityComponent
 import com.triangleleft.flashcards.di.login.LoginActivityComponent
+import com.triangleleft.flashcards.ui.FlashcardsApplication
 import com.triangleleft.flashcards.ui.common.BaseActivity
 import com.triangleleft.flashcards.ui.main.MainActivity
 import com.triangleleft.flashcards.ui.view.setTextIfChanged
@@ -81,13 +82,12 @@ class LoginActivity : BaseActivity<LoginActivityComponent, LoginView, LoginViewS
     override fun buildComponent(): LoginActivityComponent {
         logger.debug("buildComponent() called")
         return DaggerLoginActivityComponent.builder()
-                .applicationComponent(applicationComponent)
+                .applicationComponent((application as FlashcardsApplication).component)
                 .build()
     }
 
-    override fun getMvpView(): LoginView {
-        return this
-    }
+    override val mvpView: LoginView
+        get() = this
 
     override fun render(viewState: LoginViewState) {
         logger.debug("render() called with {}", viewState)

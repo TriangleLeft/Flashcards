@@ -1,11 +1,11 @@
 package com.triangleleft.flashcards.ui.view;
 
-import com.triangleleft.flashcards.R;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.triangleleft.flashcards.R;
 
 public class ViewFlipper extends android.widget.ViewFlipper {
 

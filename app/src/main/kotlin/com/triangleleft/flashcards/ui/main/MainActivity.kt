@@ -13,6 +13,7 @@ import com.triangleleft.flashcards.di.main.DaggerMainPageComponent
 import com.triangleleft.flashcards.di.main.MainPageComponent
 import com.triangleleft.flashcards.di.main.MainPageModule
 import com.triangleleft.flashcards.service.vocabular.VocabularyWord
+import com.triangleleft.flashcards.ui.FlashcardsApplication
 import com.triangleleft.flashcards.ui.ViewEvent
 import com.triangleleft.flashcards.ui.cards.FlashcardsActivity
 import com.triangleleft.flashcards.ui.common.BaseActivity
@@ -70,14 +71,13 @@ class MainActivity : BaseActivity<MainPageComponent, IMainView, MainViewState, M
 
     override fun buildComponent(): MainPageComponent {
         return DaggerMainPageComponent.builder()
-                .applicationComponent(applicationComponent)
+                .applicationComponent((application as FlashcardsApplication).component)
                 .mainPageModule(MainPageModule())
                 .build()
     }
 
-    override fun getMvpView(): IMainView {
-        return this
-    }
+    override val mvpView: IMainView
+        get() = this
 
     override fun onBackPressed() {
         if (delegate.isDrawerOpen) {

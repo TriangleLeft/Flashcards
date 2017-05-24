@@ -16,14 +16,14 @@
 
 package com.triangleleft.flashcards.ui.cards;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
 
 import java.util.List;
 

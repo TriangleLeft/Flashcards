@@ -38,7 +38,7 @@ public abstract class VocabularyWordDao implements VocabularyWordModel {
                         break;
                     }
                 }
-                result.add(VocabularyWord.create(
+                result.add(new VocabularyWord(
                     word.word_string(),
                     word.normalized_string(),
                     Optional.ofNullable(word.pos()),

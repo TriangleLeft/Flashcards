@@ -81,9 +81,8 @@ class VocabularyListFragment : BaseFragment<VocabularyListComponent, VocabularyL
         return DaggerVocabularyListComponent.builder().mainPageComponent((activity as MainActivity).component).build()
     }
 
-    override fun getMvpView(): VocabularyListView {
-        return this
-    }
+    override val mvpView: VocabularyListView
+        get() = this
 
     override fun render(viewState: VocabularyListViewState) {
         val page = viewState.page

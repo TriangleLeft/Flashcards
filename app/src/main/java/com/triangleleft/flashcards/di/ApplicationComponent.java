@@ -11,10 +11,8 @@ import com.triangleleft.flashcards.service.vocabular.VocabularyModule;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.common.ComponentManager;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
-import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter;
 import com.triangleleft.flashcards.util.PersistentStorage;
-
-import java.util.concurrent.Executor;
 
 import javax.inject.Named;
 
@@ -47,9 +45,6 @@ public interface ApplicationComponent extends IComponent {
 
     FlagImagesProvider flagImagesProvider();
 
-    @Named(AbstractPresenter.UI_SCHEDULER)
+    @Named(AbstractRxPresenter.UI_SCHEDULER)
     Scheduler uiScheduler();
-
-    @Named(AbstractPresenter.VIEW_EXECUTOR)
-    Executor uiThreadExecutor();
 }

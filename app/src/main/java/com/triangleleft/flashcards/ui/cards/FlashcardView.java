@@ -1,12 +1,5 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -15,6 +8,13 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+import com.triangleleft.flashcards.service.cards.ReviewDirection;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

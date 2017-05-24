@@ -14,16 +14,18 @@ import com.triangleleft.flashcards.BuildConfig;
 import com.triangleleft.flashcards.di.ApplicationComponent;
 import com.triangleleft.flashcards.di.ApplicationModule;
 import com.triangleleft.flashcards.di.DaggerApplicationComponent;
+import com.triangleleft.flashcards.ui.common.ComponentManager;
 import com.triangleleft.flashcards.ui.login.LoginActivity;
 import com.triangleleft.flashcards.util.Utils;
 
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
-public class FlashcardsApplication extends Application implements FlashcardsNavigator {
+public class FlashcardsApplication extends Application implements FlashcardsNavigator, BaseApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(FlashcardsApplication.class);
 
@@ -70,7 +72,15 @@ public class FlashcardsApplication extends Application implements FlashcardsNavi
         startActivity(intent);
     }
 
+    @NotNull
+    @Override
     public RefWatcher getRefWatcher() {
         return refWatcher;
+    }
+
+    @NotNull
+    @Override
+    public ComponentManager getComponentManager() {
+        return component.componentManager();
     }
 }

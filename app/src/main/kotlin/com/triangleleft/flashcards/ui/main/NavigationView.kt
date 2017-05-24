@@ -122,7 +122,7 @@ class NavigationView(context: Context, attrs: AttributeSet) : FrameLayout(contex
         component.inject(this)
         adapter = DrawerLanguagesAdapter(flagImagesProvider, languageClicks)
         recyclerView.adapter = adapter
-        presenter.onCreate()
+        presenter.onCreate(null)
         presenter.onBind(this)
     }
 

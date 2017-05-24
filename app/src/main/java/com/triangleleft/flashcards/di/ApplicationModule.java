@@ -11,17 +11,13 @@ import com.triangleleft.flashcards.service.account.SimpleAccountModule;
 import com.triangleleft.flashcards.service.vocabular.DbVocabularyWordsRepository;
 import com.triangleleft.flashcards.service.vocabular.VocabularySQLiteOpenHelper;
 import com.triangleleft.flashcards.service.vocabular.VocabularyWordsRepository;
-import com.triangleleft.flashcards.service.vocabular.rest.RestVocabularyModule;
 import com.triangleleft.flashcards.ui.FlashcardsApplication;
 import com.triangleleft.flashcards.ui.FlashcardsNavigator;
 import com.triangleleft.flashcards.ui.common.ComponentManager;
 import com.triangleleft.flashcards.ui.common.FlagImagesProvider;
 import com.triangleleft.flashcards.ui.common.SharedPreferencesPersistentStorage;
-import com.triangleleft.flashcards.ui.common.presenter.AbstractPresenter;
+import com.triangleleft.flashcards.ui.common.presenter.AbstractRxPresenter;
 import com.triangleleft.flashcards.util.PersistentStorage;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javax.inject.Named;
 
@@ -40,28 +36,9 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Named(AbstractPresenter.UI_SCHEDULER)
+    @Named(AbstractRxPresenter.UI_SCHEDULER)
     public Scheduler uiScheduler() {
         return AndroidSchedulers.mainThread();
-    }
-
-    @Provides
-    @Named(RestVocabularyModule.MAIN_EXECUTOR)
-    public Executor singleThreadExecutor() {
-        return Executors.newSingleThreadExecutor();
-    }
-
-    @ApplicationScope
-    @Provides
-    @Named(AbstractPresenter.VIEW_EXECUTOR)
-    public Executor uiThreadExecutor(Handler handler) {
-        return command -> {
-            if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
-                command.run();
-            } else {
-                handler.post(command);
-            }
-        };
     }
 
     @ApplicationScope
@@ -103,7 +80,7 @@ public class ApplicationModule {
     @ApplicationScope
     @Provides
     public ComponentManager componentManager() {
-        return ComponentManager.buildDefault();
+        return new ComponentManager();
     }
 
     @ApplicationScope

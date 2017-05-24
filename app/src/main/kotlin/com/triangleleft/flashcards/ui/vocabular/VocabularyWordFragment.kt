@@ -22,7 +22,7 @@ import io.reactivex.Observable
 import org.slf4j.LoggerFactory
 import java.io.IOException
 
-class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, IVocabularyWordView, VocabularyWordViewState, VocabularyWordPresenter>(), IVocabularyWordView {
+class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, VocabularyWordView, VocabularyWordViewState, VocabularyWordPresenter>(), VocabularyWordView {
 
     @Bind(R.id.vocabulary_word_title)
     lateinit var titleView: TextView
@@ -74,10 +74,8 @@ class VocabularyWordFragment : BaseFragment<VocabularyWordComponent, IVocabulary
         voiceOverPlayer.onResume()
     }
 
-    override fun getMvpView(): IVocabularyWordView {
-        logger.debug("getMvpView() called")
-        return this
-    }
+    override val mvpView: VocabularyWordView
+        get() = this
 
     @OnClick(R.id.vocabular_word_voice)
     fun onVoiceClick() {

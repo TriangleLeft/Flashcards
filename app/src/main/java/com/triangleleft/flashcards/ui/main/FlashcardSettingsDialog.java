@@ -1,11 +1,5 @@
 package com.triangleleft.flashcards.ui.main;
 
-import com.triangleleft.flashcards.R;
-import com.triangleleft.flashcards.service.account.AccountModule;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-import com.triangleleft.flashcards.service.settings.SettingsModule;
-import com.triangleleft.flashcards.service.settings.UserData;
-
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -13,6 +7,12 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.triangleleft.flashcards.R;
+import com.triangleleft.flashcards.service.account.AccountModule;
+import com.triangleleft.flashcards.service.cards.ReviewDirection;
+import com.triangleleft.flashcards.service.settings.SettingsModule;
+import com.triangleleft.flashcards.service.settings.UserData;
 
 import javax.inject.Inject;
 

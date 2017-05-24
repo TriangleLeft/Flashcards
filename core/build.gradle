@@ -1,17 +1,24 @@
-apply plugin: 'java'
+apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'net.ltgt.apt'
 apply plugin: 'jacoco'
 apply plugin: 'idea'
 apply from: '../dependencies.gradle'
-apply plugin: "kotlin"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-kapt"
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def sdkDir = properties.getProperty('sdk.dir')
+android {
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
-repositories {
-    maven { url "$sdkDir/extras/android/m2repository" }
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+    }
+
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 retrolambda {
@@ -22,26 +29,29 @@ jacoco {
     toolVersion = "0.7.6.201602180812"
 }
 
-jacocoTestReport {
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it, excludes: [
-                    '**/*AutoValue*.class', // AutoValue generated classes
-                    '**/*Lambda*',  // Generated lambdas
-                    '**/*_Factory*', // Dagger2 generated factories
-                    '**/*Module_*Factory*' // Dagger2 generated factories
-            ])
-        })
-    }
-}
+//jacocoTestReport {
+//    reports {
+//        xml.enabled = true
+//        html.enabled = true
+//    }
+//    afterEvaluate {
+//        classDirectories = files(classDirectories.files.collect {
+//            fileTree(dir: it, excludes: [
+//                    '**/*AutoValue*.class', // AutoValue generated classes
+//                    '**/*Lambda*',  // Generated lambdas
+//                    '**/*_Factory*', // Dagger2 generated factories
+//                    '**/*Module_*Factory*' // Dagger2 generated factories
+//            ])
+//        })
+//    }
+//}
 
-check.dependsOn jacocoTestReport
+//check.dependsOn jacocoTestReport
 
 dependencies {
+
+    provided "com.squareup.leakcanary:leakcanary-android-no-op:$LEAKCANARY_VERSION"
+    provided "com.android.support:appcompat-v7:$SUPPORT_VERSION"
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.2"
     compile "io.reactivex.rxjava2:rxjava:2.0.6"
@@ -53,18 +63,18 @@ dependencies {
     compile "com.android.support:support-annotations:$SUPPORT_VERSION"
 
     // use api as provided-only, we don't need it in jar
-    compileOnly "org.slf4j:slf4j-api:$SLF4J_VERSION"
+    provided "org.slf4j:slf4j-api:$SLF4J_VERSION"
 
     // Only annotations are used
     compile "com.squareup.retrofit2:retrofit:$RETROFIT_VERSION"
     compile "com.squareup.okhttp3:okhttp:$OKHTTP_VERSION"
 
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
-    apt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
 
     compile "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
-    apt "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
-    apt 'com.gabrielittner.auto.value:auto-value-with:1.0.0-rc1'
+    annotationProcessor "com.google.auto.value:auto-value:$AUTOVALUE_VERSION"
+    annotationProcessor 'com.gabrielittner.auto.value:auto-value-with:1.0.0-rc1'
 
     testCompile "org.mockito:mockito-core:$MOCKITO_VERSION"
     testCompile "junit:junit:$JUNIT_VERSION"

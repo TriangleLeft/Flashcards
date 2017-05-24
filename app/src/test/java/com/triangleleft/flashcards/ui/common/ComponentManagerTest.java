@@ -39,7 +39,7 @@ public class ComponentManagerTest {
 
     @Before
     public void before() {
-        manager = ComponentManager.buildDefault();
+        manager = new ComponentManager();
     }
 
     @Test

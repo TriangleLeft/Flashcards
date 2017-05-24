@@ -1,13 +1,13 @@
 package com.triangleleft.flashcards.service.vocabular;
 
+import android.database.sqlite.SQLiteDatabase;
+
 import com.triangleleft.flashcards.util.FunctionsAreNonnullByDefault;
 import com.triangleleft.service.vocabular.VocabularyWordModel;
 import com.triangleleft.service.vocabular.VocabularyWordTranslationModel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import android.database.sqlite.SQLiteDatabase;
 
 import java.util.List;
 

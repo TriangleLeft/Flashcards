@@ -1,11 +1,11 @@
 package com.triangleleft.flashcards.ui.cards;
 
-import com.triangleleft.flashcards.service.cards.FlashcardWord;
-import com.triangleleft.flashcards.service.cards.ReviewDirection;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
+import com.triangleleft.flashcards.service.cards.FlashcardWord;
+import com.triangleleft.flashcards.service.cards.ReviewDirection;
 
 import java.util.Collections;
 import java.util.List;
